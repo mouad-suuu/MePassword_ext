@@ -1,8 +1,6 @@
 import React from "react";
 import { Copy, Trash } from "lucide-react";
-import { EncryptedPassword } from "../../services/types";
-import CryptoManager from "../../services/Keys-managment/CryptoManager";
-import APIService from "../../services/db";
+import { Button } from "./ui/button";
 
 interface KeyItemProps {
   name: string;
@@ -24,12 +22,12 @@ const KeyItem: React.FC<KeyItemProps> = ({ name, value, created }) => {
           <p className="text-xs text-gray-500">Created: {created}</p>
         </div>
         <div className="flex space-x-2">
-          <button
+          <Button
             onClick={() => copyToClipboard(value)}
             className="p-2 hover:bg-gray-100 rounded-full"
           >
             <Copy className="w-4 h-4 text-gray-600" />
-          </button>
+          </Button>
           <button className="p-2 hover:bg-gray-100 rounded-full">
             <Trash className="w-4 h-4 text-red-600" />
           </button>
@@ -42,11 +40,8 @@ const KeyItem: React.FC<KeyItemProps> = ({ name, value, created }) => {
   );
 };
 
-interface PasswordsProps {
-  cryptoManager: CryptoManager;
-  apiService: APIService;
-}
-const Keys: React.FC<PasswordsProps> = ({ cryptoManager, apiService }) => {
+const Keys = () => {
+  // Example data - replace with your actual data source
   const keys = [
     {
       name: "API Key 1",
@@ -60,9 +55,9 @@ const Keys: React.FC<PasswordsProps> = ({ cryptoManager, apiService }) => {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-gray-800">Keys</h2>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+        <Button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
           Add New Key
-        </button>
+        </Button>
       </div>
       <div className="mt-4">
         {keys.map((key, index) => (

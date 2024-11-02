@@ -1,5 +1,6 @@
 import React from "react";
 import { Mail, Key, Shield } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface ProfileSectionProps {
   icon: React.ReactNode;
@@ -21,11 +22,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
   </div>
 );
 
-interface ProfileProps {
-  settings: any; // Replace 'any' with the actual settings type if known
-}
-
-const Profile: React.FC<ProfileProps> = ({ settings }) => {
+const Profile = () => {
   return (
     <div className="space-y-4">
       <div className="flex items-center space-x-4 mb-6">
@@ -56,9 +53,9 @@ const Profile: React.FC<ProfileProps> = ({ settings }) => {
         />
       </div>
 
-      <button className="w-full mt-6 bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+      <Button className="w-full mt-6 bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
         Sign Out
-      </button>
+      </Button>
     </div>
   );
 };

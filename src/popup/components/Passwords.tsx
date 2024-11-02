@@ -1,35 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Eye, EyeOff, Copy } from "lucide-react";
 import { Button } from "./ui/button";
-import CryptoManager from "../../services/Keys-managment/CryptoManager";
-import APIService from "../../services/db";
-import { EncryptedPassword } from "../../services/types";
 
-const PasswordItem: React.FC<
-  EncryptedPassword & { cryptoManager: CryptoManager }
-> = ({
-  encryptedWebsite,
-  encryptedUsername,
-  encryptedPassword,
-  cryptoManager,
+interface PasswordItemProps {
+  website: string;
+  username: string;
+  password: string;
+}
+
+const PasswordItem: React.FC<PasswordItemProps> = ({
+  website,
+  username,
+  password,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [website, setWebsite] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    const decryptData = async () => {
-      setWebsite(await cryptoManager.decryptPassword(encryptedWebsite as any));
-      setUsername(
-        await cryptoManager.decryptPassword(encryptedUsername as any)
-      );
-      setPassword(
-        await cryptoManager.decryptPassword(encryptedPassword as any)
-      );
-    };
-    decryptData();
-  }, [cryptoManager, encryptedWebsite, encryptedUsername, encryptedPassword]);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -68,39 +52,33 @@ const PasswordItem: React.FC<
     </div>
   );
 };
-interface PasswordsProps {
-  cryptoManager: CryptoManager;
-  apiService: APIService;
-}
-const Passwords: React.FC<PasswordsProps> = ({ cryptoManager, apiService }) => {
-  const [passwords, setPasswords] = useState<EncryptedPassword[]>([]);
 
-  // Add useEffect to fetch passwords when component mounts
-  useEffect(() => {
-    const fetchPasswords = async () => {
-      const encryptedPasswords = await apiService.getPasswords();
-      const decryptedPasswords = (encryptedPasswords?.data || []).map(
-        (encPass: EncryptedPassword) => ({
-          website: cryptoManager.decrypt(encPass.encryptedWebsite),
-          username: cryptoManager.decrypt(encPass.encryptedUsername),
-          password: cryptoManager.decrypt(encPass.encryptedPassword),
-        })
-      );
-      setPasswords(decryptedPasswords as any);
-    };
-
-    fetchPasswords().catch(console.error);
-  }, [cryptoManager, apiService]);
+const Passwords = () => {
+  // Example data - replace with your actual data source
+  const passwords = [
+    {
+      website: "example.com",
+      username: "user@example.com",
+      password: "********",
+    },
+    { website: "test.com", username: "testuser", password: "********" },
+  ];
 
   return (
     <div className="space-y-4">
-      {/* ... existing JSX ... */}
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-gray-800">Passwords</h2>
+        <Button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+          Add New
+        </Button>
+      </div>
       <div className="mt-4">
         {passwords.map((item, index) => (
-          <PasswordItem key={index} {...item} cryptoManager={cryptoManager} />
+          <PasswordItem key={index} {...item} />
         ))}
       </div>
     </div>
   );
 };
+
 export default Passwords;
