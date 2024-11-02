@@ -1,0 +1,1 @@
+{"version":3,"file":"background.js","mappings":";;;;;AAAa;AACb;AACA;AACA,CAAC","sources":["webpack://mepassword_ext/./src/background/background.ts"],"sourcesContent":["\"use strict\";\nchrome.action.onClicked.addListener((tab) => {\n    console.log(\"Extension icon clicked!\");\n});\n"],"names":[],"sourceRoot":""}
