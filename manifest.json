@@ -3,7 +3,7 @@
   "name": "MePassword",
   "version": "1.0.0",
   "description": "Password Management Extension",
-  "permissions": [],
+  "permissions": ["storage", "clipboardWrite"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
