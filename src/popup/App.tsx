@@ -4,7 +4,7 @@ import Passwords from "./components/Passwords";
 import Keys from "./components/keys";
 import Profile from "./components/profile";
 import Settings from "./components/Settings";
-import SecureSetup from "./components/Setup";
+import SetupEntry from "./components/setup/SetupEntry";
 import type { KeySet } from "../services/types";
 
 const App = () => {
@@ -33,7 +33,7 @@ const App = () => {
   };
 
   if (!isInitialized || needsKeyRotation) {
-    return <SecureSetup onComplete={handleSetupComplete} />;
+    return <SetupEntry />;
   }
 
   return (
@@ -41,13 +41,7 @@ const App = () => {
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <main className="p-4">
-        {activeTab === "passwords" && (
-          <Passwords
-            onPasswordAdded={() => {
-              console.log("adding password");
-            }}
-          />
-        )}
+        {activeTab === "passwords" && <Passwords />}
         {activeTab === "keys" && <Keys />}
         {activeTab === "profile" && <Profile />}
         {activeTab === "settings" && <Settings />}

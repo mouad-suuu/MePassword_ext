@@ -1,452 +1,303 @@
-import type { KeySet, SymmetricKeys } from "../types";
+/**
+ * TODO:
+ * this file will manage the encryption and decryption of the data.
+ * we start with the creation of the account geven the website and the auth key
+ * then we create the keys and store them in the local storage and give them to the user
+ * we send the asymmetric keys to the server to be stored in the database so the user have ones and the server have the other and bouth needed to decrypt the data, exept the keys that will be used to decrypte the website and the auth key (those will be stored in the database for the session time and by the user)
+ * we need a function to decrypte the website and the auth key, then we get the data from the database and decrypt them with the symmetric keys
+ * we will use the src/services/db.ts to manage the database and the local storage and use src\services\Keys-managment\SessionManager.ts to manage the session of the user
+ *  * Encryption Service
+ * TODO: Implement the following functionalities:
+ * 1. Key Generation:
+ *    - Generate RSA 4096-bit keypairs
+ *    - Generate AES-256-GCM keys
+ *    - Handle PBKDF2 key derivation
+ *
+ * 2. Encryption Operations:
+ *    - Encrypt/decrypt passwords
+ *    - Handle website data encryption
+ *    - Manage authentication tokens
+ *    - Implement zero-knowledge proofs
+ *
+ * 3. Key Exchange:
+ *    - Secure key transmission
+ *    - Key backup encryption
+ *    - Organization key sharing
+ *
+ * 4. Security Measures:
+ *    - Implement constant-time operations
+ *    - Handle secure random generation
+ *    - Protect against timing attacks
+ */
+import crypto from "crypto";
+import {
+  KeySet,
+  SymmetricKeys,
+  EncryptedPassword,
+  EncryptionKeys,
+} from "../types";
 
-class Encrypt {
-  private keySet: KeySet | null = null;
-  private readonly storagePrefix = "secure_pwd_mgr_";
-
-  /**
-   * Verifies if the browser environment supports all required cryptographic capabilities.
-   * Checks for secure context, Web Crypto API, and localStorage availability.
-   * @throws Error if any required capability is missing or storage access is denied
-   */
-  private async checkBrowserCapabilities(): Promise<void> {
-    // Check if running in a secure context
-    if (!window.isSecureContext) {
-      throw new Error("Application must run in a secure context (HTTPS)");
-    }
-
-    // Check for required Web Crypto API support
-    if (!window.crypto || !window.crypto.subtle) {
-      throw new Error("Web Crypto API is not supported in this environment");
-    }
-
-    // Check for required storage APIs
-    if (!window.localStorage) {
-      throw new Error("Local storage is not available");
-    }
-
-    try {
-      // Test storage access
-      const testKey = `${this.storagePrefix}test`;
-      localStorage.setItem(testKey, "test");
-      localStorage.removeItem(testKey);
-    } catch (error) {
-      throw new Error("Storage access is denied or quota is exceeded");
-    }
-  }
-
-  /**
-   * Initializes a complete set of cryptographic keys for the application.
-   * Generates RSA key pair and three AES-256 symmetric keys for website, auth, and data encryption.
-   * @returns {Promise<KeySet>} A complete set of cryptographic keys including RSA and AES keys
-   * @throws Error if key generation or initialization fails
-   */
-  public async InitializeKeys(): Promise<KeySet> {
-    try {
-      // Verify browser capabilities first
-      await this.checkBrowserCapabilities();
-
-      // Generate RSA key pair (4096-bit)
-      const rsaKeyPair = await window.crypto.subtle.generateKey(
-        {
-          name: "RSA-OAEP",
-          modulusLength: 4096,
-          publicExponent: new Uint8Array([1, 0, 1]),
-          hash: "SHA-256",
-        },
-        true,
-        ["encrypt", "decrypt"]
-      );
-
-      // Generate AES-256 keys with IV for website, auth, and data encryption
-      const generateSymmetricKey = async (): Promise<SymmetricKeys> => {
-        try {
-          const key = await window.crypto.subtle.generateKey(
-            {
-              name: "AES-GCM",
-              length: 256,
-            },
-            true,
-            ["encrypt", "decrypt"]
-          );
-          const rawKey = await window.crypto.subtle.exportKey("raw", key);
-          const iv = window.crypto.getRandomValues(new Uint8Array(12));
-
-          return {
-            key: this.arrayBufferToBase64(rawKey),
-            algorithm: "AES-GCM",
-            length: 256,
-            iv: this.arrayBufferToBase64(iv as any),
-          };
-        } catch (error: any) {
-          throw new Error(`Failed to generate symmetric key: ${error.message}`);
-        }
-      };
-
-      // Export RSA keys with error handling
-      const [exportedPublicKey, exportedPrivateKey] = await Promise.all([
-        window.crypto.subtle.exportKey("spki", rsaKeyPair.publicKey),
-        window.crypto.subtle.exportKey("pkcs8", rsaKeyPair.privateKey),
-      ]).catch((error) => {
-        throw new Error(`Failed to export RSA keys: ${error.message}`);
-      });
-
-      this.keySet = {
-        id: crypto.randomUUID(),
-        version: 1,
-        created: Date.now(),
-        lastRotated: Date.now(),
-        encryption: {
-          publicKey: {
-            key: this.arrayBufferToBase64(exportedPublicKey),
-            algorithm: "RSA-OAEP",
-            length: 4096,
-            format: "spki",
-          },
-          privateKey: {
-            key: this.arrayBufferToBase64(exportedPrivateKey),
-            algorithm: "RSA-OAEP",
-            length: 4096,
-            format: "pkcs8",
-            protected: false,
-          },
-        },
-        websiteKey: await generateSymmetricKey(),
-        authKey: await generateSymmetricKey(),
-        dataKey: await generateSymmetricKey(),
-      };
-
-      // Store initialization state
-      localStorage.setItem(
-        `${this.storagePrefix}initialized`,
-        JSON.stringify({ timestamp: Date.now() })
-      );
-
-      return this.keySet;
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
-      throw new Error(`Failed to initialize encryption: ${errorMessage}`);
-    }
-  }
-
-  /**
-   * Converts an ArrayBuffer to a Base64 string representation.
-   * @param {ArrayBuffer} buffer - The buffer to convert
-   * @returns {string} Base64 encoded string
-   */
-  private arrayBufferToBase64(buffer: ArrayBuffer): string {
-    const bytes = new Uint8Array(buffer);
-    let binary = "";
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  }
-
-  /**
-   * Converts a Base64 string back to an ArrayBuffer.
-   * @param {string} base64 - The Base64 string to convert
-   * @returns {ArrayBuffer} The decoded ArrayBuffer
-   */
-  private base64ToArrayBuffer(base64: string): ArrayBuffer {
-    const binaryString = atob(base64);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes.buffer;
-  }
-
-  /**
-   * Encrypts data using RSA-OAEP with a public key.
-   * @param {string} data - The data to encrypt
-   * @param {string} publicKey - Base64 encoded public key in SPKI format
-   * @returns {Promise<string>} Base64 encoded encrypted data
-   */
-  async encryptData(data: string, publicKey: string): Promise<string> {
-    // Use the Web Crypto API to encrypt the data
-    const encoder = new TextEncoder();
-    const encodedData = encoder.encode(data);
-
-    const importedKey = await crypto.subtle.importKey(
-      "spki",
-      Buffer.from(publicKey, "base64"),
-      {
-        name: "RSA-OAEP",
-        hash: "SHA-256",
+class EncryptionService {
+  private static generateRSAKeys(): EncryptionKeys {
+    const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+      modulusLength: 4096,
+      publicKeyEncoding: {
+        type: "spki",
+        format: "pem",
       },
-      false,
-      ["encrypt"]
-    );
-
-    const encryptedData = await crypto.subtle.encrypt(
-      { name: "RSA-OAEP" },
-      importedKey,
-      encodedData
-    );
-
-    return Buffer.from(encryptedData).toString("base64");
-  }
-
-  /**
-   * Encrypts data using AES-GCM symmetric encryption.
-   * @param {string} data - The data to encrypt
-   * @param {SymmetricKeys} symmetricKey - The symmetric key configuration including key and IV
-   * @returns {Promise<string>} Base64 encoded encrypted data
-   */
-  public async encryptSymmetric(
-    data: string,
-    symmetricKey: SymmetricKeys
-  ): Promise<string> {
-    const encoder = new TextEncoder();
-    const encodedData = encoder.encode(data);
-
-    const key = await crypto.subtle.importKey(
-      "raw",
-      Buffer.from(symmetricKey.key, "base64"),
-      { name: "AES-GCM" },
-      false,
-      ["encrypt"]
-    );
-
-    const encryptedData = await crypto.subtle.encrypt(
-      {
-        name: "AES-GCM",
-        iv: Buffer.from(symmetricKey.iv, "base64"),
+      privateKeyEncoding: {
+        type: "pkcs8",
+        format: "pem",
+        cipher: "aes-256-cbc",
+        passphrase: "secure-passphrase",
       },
-      key,
-      encodedData
-    );
-
-    return Buffer.from(encryptedData).toString("base64");
-  }
-
-  /**
-   * Decrypts data using AES-GCM symmetric encryption.
-   * @param {string} encryptedData - Base64 encoded encrypted data
-   * @param {SymmetricKeys} symmetricKey - The symmetric key configuration including key and IV
-   * @returns {Promise<string>} Decrypted data as string
-   */
-  public async decryptSymmetric(
-    encryptedData: string,
-    symmetricKey: SymmetricKeys
-  ): Promise<string> {
-    const key = await crypto.subtle.importKey(
-      "raw",
-      Buffer.from(symmetricKey.key, "base64"),
-      { name: "AES-GCM" },
-      false,
-      ["decrypt"]
-    );
-
-    const decryptedData = await crypto.subtle.decrypt(
-      {
-        name: "AES-GCM",
-        iv: Buffer.from(symmetricKey.iv, "base64"),
-      },
-      key,
-      Buffer.from(encryptedData, "base64")
-    );
-
-    return new TextDecoder().decode(decryptedData);
-  }
-
-  /**
-   * Initializes an account by encrypting website and authentication information.
-   * @param {string} website - The website URL or identifier
-   * @param {string} authKey - The authentication key
-   * @returns {Promise<{encryptedWebsite: string, encryptedAuthKey: string, keySet: KeySet}>}
-   */
-  public async InitAccount(
-    website: string,
-    authKey: string
-  ): Promise<{
-    encryptedWebsite: string;
-    encryptedAuthKey: string;
-    keySet: KeySet;
-  }> {
-    if (!this.keySet) {
-      this.keySet = await this.InitializeKeys();
-    }
-
-    const encryptedWebsite = await this.encryptSymmetric(
-      website,
-      this.keySet.websiteKey
-    );
-    const encryptedAuthKey = await this.encryptSymmetric(
-      authKey,
-      this.keySet.authKey
-    );
+    });
 
     return {
-      encryptedWebsite,
-      encryptedAuthKey,
-      keySet: this.keySet,
+      publicKey: {
+        key: publicKey.toString(),
+        algorithm: "RSA-OAEP",
+        length: 4096,
+        format: "spki",
+      },
+      privateKey: {
+        key: privateKey.toString(),
+        algorithm: "RSA-OAEP",
+        length: 4096,
+        format: "pkcs8",
+        protected: true,
+      },
     };
   }
 
-  /**
-   * Starts the extension by decrypting website and authentication information.
-   * @param {string} encryptedWebsite - The encrypted website data
-   * @param {string} encryptedAuthKey - The encrypted authentication key
-   * @param {KeySet} keySet - The key set used for decryption
-   * @returns {Promise<{website: string, authKey: string}>}
-   */
-  public async startExtensio(
-    encryptedWebsite: string,
-    encryptedAuthKey: string,
+  private static generateAESKeys(): SymmetricKeys {
+    const key = crypto.randomBytes(32).toString("hex");
+    const iv = crypto.randomBytes(12).toString("hex");
+    return {
+      key,
+      algorithm: "AES-GCM",
+      length: 256,
+      iv,
+    };
+  }
+
+  public static generateKeySet(
+    biometricType?: "fingerprint" | "faceid" | "other"
+  ): KeySet {
+    const encryption = this.generateRSAKeys();
+    const dataKey = this.generateAESKeys();
+    const biometric = biometricType
+      ? {
+          key: crypto.randomBytes(32).toString("hex"),
+          type: biometricType,
+          verified: false,
+        }
+      : undefined;
+
+    return {
+      id: crypto.randomUUID(),
+      version: 1,
+      created: Date.now(),
+      lastRotated: Date.now(),
+      encryption,
+      dataKey,
+      biometric,
+    };
+  }
+
+  public static encryptPassword(
+    password: EncryptedPassword,
     keySet: KeySet
-  ): Promise<{
-    website: string;
-    authKey: string;
-  }> {
-    const website = await this.decryptSymmetric(
-      encryptedWebsite,
-      keySet.websiteKey
-    );
-    const authKey = await this.decryptSymmetric(
-      encryptedAuthKey,
-      keySet.authKey
+  ): EncryptedPassword {
+    const { encryptedData, iv, algorithm, keyId } = password;
+    const cipher = crypto.createCipheriv(
+      algorithm,
+      keySet.dataKey.key,
+      Buffer.from(iv, "hex")
     );
 
-    return { website, authKey };
+    const encryptedWebsite = cipher.update(
+      encryptedData.website,
+      "utf8",
+      "hex"
+    );
+    const encryptedToken = cipher.update(
+      encryptedData.authToken,
+      "utf8",
+      "hex"
+    );
+    const encryptedPassword = cipher.update(
+      encryptedData.password,
+      "utf8",
+      "hex"
+    );
+    const encryptedNotes = encryptedData.notes
+      ? cipher.update(encryptedData.notes, "utf8", "hex")
+      : undefined;
+
+    return {
+      ...password,
+      encryptedData: {
+        website: encryptedWebsite + cipher.final("hex"),
+        authToken: encryptedToken + cipher.final("hex"),
+        password: encryptedPassword + cipher.final("hex"),
+        notes: encryptedNotes
+          ? encryptedNotes + cipher.final("hex")
+          : undefined,
+      },
+      keyId,
+    };
   }
 
-  /**
-   * Decrypts data using RSA-OAEP with a private key.
-   * @param {string} encryptedData - Base64 encoded encrypted data
-   * @param {string} privateKey - Base64 encoded private key in PKCS8 format
-   * @returns {Promise<string>} Decrypted data as string
-   */
-  public async decryptData(
-    encryptedData: string,
+  public static decryptPassword(
+    encryptedPassword: EncryptedPassword,
+    keySet: KeySet
+  ): EncryptedPassword {
+    const { encryptedData, iv, algorithm, keyId } = encryptedPassword;
+    const decipher = crypto.createDecipheriv(
+      algorithm,
+      keySet.dataKey.key,
+      Buffer.from(iv, "hex")
+    );
+
+    const decryptedWebsite =
+      decipher.update(encryptedData.website, "hex", "utf8") +
+      decipher.final("utf8");
+    const decryptedToken =
+      decipher.update(encryptedData.authToken, "hex", "utf8") +
+      decipher.final("utf8");
+    const decryptedPassword =
+      decipher.update(encryptedData.password, "hex", "utf8") +
+      decipher.final("utf8");
+    const decryptedNotes = encryptedData.notes
+      ? decipher.update(encryptedData.notes, "hex", "utf8") +
+        decipher.final("utf8")
+      : undefined;
+
+    return {
+      ...encryptedPassword,
+      encryptedData: {
+        website: decryptedWebsite,
+        authToken: decryptedToken,
+        password: decryptedPassword,
+        notes: decryptedNotes,
+      },
+      keyId,
+    };
+  }
+
+  public static async generateZKP(
+    message: string,
     privateKey: string
-  ): Promise<string> {
-    const importedKey = await crypto.subtle.importKey(
-      "pkcs8",
-      Buffer.from(privateKey, "base64"),
-      {
-        name: "RSA-OAEP",
-        hash: "SHA-256",
-      },
-      false,
-      ["decrypt"]
-    );
-
-    const decryptedData = await crypto.subtle.decrypt(
-      { name: "RSA-OAEP" },
-      importedKey,
-      Buffer.from(encryptedData, "base64")
-    );
-
-    return new TextDecoder().decode(decryptedData);
+  ): Promise<{ proof: string; publicKey: string }> {
+    // Implement zero-knowledge proof generation
+    // using the provided private key and message
+    // Return the proof and the corresponding public key
+    const { publicKey, privateKey: protectedPrivateKey } =
+      await this.generateRSAKeys();
+    const signature = crypto.sign("sha256", Buffer.from(message), {
+      key: protectedPrivateKey.key,
+      padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+    });
+    return {
+      proof: signature.toString("base64"),
+      publicKey: publicKey.key,
+    };
   }
 
-  /**
-   * Derives a cryptographic key from a password using PBKDF2.
-   * @param {string} password - The password to derive the key from
-   * @param {Object} options - Key derivation options
-   * @param {Uint8Array} options.salt - Salt for key derivation
-   * @param {number} options.iterations - Number of iterations for PBKDF2
-   * @param {number} options.keyLength - Length of the derived key in bits
-   * @returns {Promise<CryptoKey>} Derived cryptographic key
-   */
-  public async deriveKey(
-    password: string,
-    options: {
-      salt: Uint8Array;
-      iterations: number;
-      keyLength: number;
+  public static async verifyZKP(
+    message: string,
+    proof: string,
+    publicKey: string
+  ): Promise<boolean> {
+    // Implement zero-knowledge proof verification
+    // using the provided message, proof, and public key
+    // Return true if the proof is valid, false otherwise
+    try {
+      const verifier = crypto.createVerify("sha256");
+      verifier.update(message);
+      return verifier.verify(
+        {
+          key: publicKey,
+          padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+        },
+        Buffer.from(proof, "base64")
+      );
+    } catch (error) {
+      console.error("Error verifying ZKP:", error);
+      return false;
     }
-  ): Promise<CryptoKey> {
+  }
+
+  public static encryptWithConstantTime(
+    data: string,
+    key: string,
+    iv: string
+  ): string {
+    // Implement constant-time encryption
+    // using the provided data, key, and IV
+    // Return the encrypted data
+    const cipher = crypto.createCipheriv(
+      "aes-256-gcm",
+      Buffer.from(key, "hex"),
+      Buffer.from(iv, "hex")
+    );
+    cipher.setAutoPadding(false);
+    let encrypted = "";
+    for (let i = 0; i < data.length; i += 16) {
+      const block = data.slice(i, i + 16);
+      encrypted += cipher.update(block, "utf8", "hex");
+    }
+    encrypted += cipher.final("hex");
+    return encrypted;
+  }
+
+  public static decryptWithConstantTime(
+    encryptedData: string,
+    key: string,
+    iv: string
+  ): string {
+    // Implement constant-time decryption
+    // using the provided encrypted data, key, and IV
+    // Return the decrypted data
+    const decipher = crypto.createDecipheriv(
+      "aes-256-gcm",
+      Buffer.from(key, "hex"),
+      Buffer.from(iv, "hex")
+    );
+    decipher.setAutoPadding(false);
+    let decrypted = "";
+    for (let i = 0; i < encryptedData.length; i += 32) {
+      const block = encryptedData.slice(i, i + 32);
+      decrypted += decipher.update(block, "hex", "utf8");
+    }
+    decrypted += decipher.final("utf8");
+    return decrypted;
+  }
+
+  public static async deriveKey(password: string): Promise<CryptoKey> {
     const encoder = new TextEncoder();
-    const passwordBuffer = encoder.encode(password);
+    const salt = new Uint8Array(16); // You may want to store/retrieve a consistent salt
 
-    // Import password as raw key material
-    const baseKey = await window.crypto.subtle.importKey(
-      "raw",
-      passwordBuffer,
-      "PBKDF2",
-      false,
-      ["deriveBits", "deriveKey"]
-    );
-
-    // Derive the key using PBKDF2
-    return await window.crypto.subtle.deriveKey(
-      {
-        name: "PBKDF2",
-        salt: options.salt,
-        iterations: options.iterations,
-        hash: "SHA-256",
-      },
-      baseKey,
-      { name: "AES-GCM", length: options.keyLength },
-      true,
-      ["encrypt", "decrypt"]
-    );
-  }
-
-  /**
-   * Encrypts a private key using a master key for additional protection.
-   * @param {string} privateKeyBase64 - Base64 encoded private key
-   * @param {CryptoKey} masterKey - Master key for encryption
-   * @returns {Promise<string>} Protected private key as Base64 string
-   */
-  public async protectPrivateKey(
-    privateKeyBase64: string,
-    masterKey: CryptoKey
-  ): Promise<string> {
-    // Generate a random IV for encryption
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
-
-    // Encrypt the private key using the master key
-    const encryptedPrivateKey = await window.crypto.subtle.encrypt(
-      {
-        name: "AES-GCM",
-        iv: iv,
-      },
-      masterKey,
-      Buffer.from(privateKeyBase64, "base64")
-    );
-
-    // Combine IV and encrypted data
-    const combined = new Uint8Array(iv.length + encryptedPrivateKey.byteLength);
-    combined.set(iv);
-    combined.set(new Uint8Array(encryptedPrivateKey), iv.length);
-
-    // Return as base64 string
-    return Buffer.from(combined).toString("base64");
-  }
-
-  /**
-   * Decrypts a protected private key using the master key.
-   * @param {string} protectedKeyBase64 - Protected private key as Base64 string
-   * @param {CryptoKey} masterKey - Master key for decryption
-   * @returns {Promise<string>} Decrypted private key as Base64 string
-   */
-  public async decryptPrivateKey(
-    protectedKeyBase64: string,
-    masterKey: CryptoKey
-  ): Promise<string> {
-    const combined = Buffer.from(protectedKeyBase64, "base64");
-
-    // Extract IV and encrypted data
-    const iv = combined.slice(0, 12);
-    const encryptedData = combined.slice(12);
-
-    // Decrypt the private key
-    const decryptedPrivateKey = await window.crypto.subtle.decrypt(
-      {
-        name: "AES-GCM",
-        iv: iv,
-      },
-      masterKey,
-      encryptedData
-    );
-
-    return Buffer.from(decryptedPrivateKey).toString("base64");
+    return crypto.subtle
+      .importKey("raw", encoder.encode(password), "PBKDF2", false, [
+        "deriveKey",
+      ])
+      .then((baseKey) =>
+        crypto.subtle.deriveKey(
+          {
+            name: "PBKDF2",
+            salt,
+            iterations: 100000,
+            hash: "SHA-256",
+          },
+          baseKey,
+          { name: "AES-GCM", length: 256 },
+          true,
+          ["encrypt", "decrypt"]
+        )
+      );
   }
 }
 
-export default Encrypt;
+export default EncryptionService;

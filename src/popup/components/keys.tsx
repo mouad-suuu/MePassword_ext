@@ -1,5 +1,6 @@
 import React from "react";
 import { Copy, Trash } from "lucide-react";
+import APIService from "../../services/db";
 import { Button } from "./ui/button";
 
 interface KeyItemProps {
@@ -28,9 +29,9 @@ const KeyItem: React.FC<KeyItemProps> = ({ name, value, created }) => {
           >
             <Copy className="w-4 h-4 text-gray-600" />
           </Button>
-          <button className="p-2 hover:bg-gray-100 rounded-full">
+          <Button className="p-2 hover:bg-gray-100 rounded-full">
             <Trash className="w-4 h-4 text-red-600" />
-          </button>
+          </Button>
         </div>
       </div>
       <div className="mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded">
@@ -40,8 +41,7 @@ const KeyItem: React.FC<KeyItemProps> = ({ name, value, created }) => {
   );
 };
 
-const Keys = () => {
-  // Example data - replace with your actual data source
+const Keys: React.FC = () => {
   const keys = [
     {
       name: "API Key 1",
