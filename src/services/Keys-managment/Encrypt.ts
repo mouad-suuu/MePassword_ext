@@ -28,40 +28,103 @@
  *    - Implement constant-time operations
  *    - Handle secure random generation
  *    - Protect against timing attacks
- */
-import crypto from "crypto";
+ */ import { v4 as uuidv4 } from "uuid";
 import {
   KeySet,
   SymmetricKeys,
   EncryptedPassword,
   EncryptionKeys,
+  PasswordMetadata,
+  UserCredentials,
 } from "../types";
 
+// Add new interfaces after existing imports
+interface APICredentials {
+  website: string;
+  authToken: string;
+  password: string;
+}
+
+interface APISettingsPayload {
+  publicKey: string;
+  password: string | undefined;
+  deviceId: string;
+  timestamp: number;
+}
+
 class EncryptionService {
-  private static generateRSAKeys(): EncryptionKeys {
-    const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
-      modulusLength: 4096,
-      publicKeyEncoding: {
-        type: "spki",
-        format: "pem",
+  private static readonly SALT_LENGTH = 16;
+  private static readonly IV_LENGTH = 12;
+  private static readonly KEY_LENGTH = 32;
+  private static readonly PBKDF2_ITERATIONS = 100000;
+  private static readonly DEBUG = true;
+  private static logDebug(method: string, message: string, data?: any) {
+    if (this.DEBUG) {
+      console.log(`[EncryptionService:${method}] ${message}`, data || "");
+    }
+  }
+
+  // Add session storage property
+  private static sessionData = new Map<string, any>();
+
+  public static async generateKeyComponents(): Promise<{
+    rsaKeyPair: EncryptionKeys;
+    aesKey: SymmetricKeys;
+    formattedOutput: string;
+  }> {
+    const method = "generateKeyComponents";
+    this.logDebug(method, "Starting key component generation...");
+
+    try {
+      // Generate RSA key pair
+      const rsaKeyPair = await this.generateRSAKeyPair();
+
+      // Generate AES key
+      const aesKey = await this.generateAESKey();
+
+      // Format the output in the requested structure
+      const formattedOutput = this.formatKeyComponents(rsaKeyPair, aesKey);
+
+      return { rsaKeyPair, aesKey, formattedOutput };
+    } catch (error: any) {
+      throw new Error(`Failed to generate key components: ${error.message}`);
+    }
+  }
+
+  private static async generateRSAKeyPair(): Promise<EncryptionKeys> {
+    if (!window.crypto || !window.crypto.subtle) {
+      throw new Error("WebCrypto API is not available");
+    }
+
+    const keyPair = await window.crypto.subtle.generateKey(
+      {
+        name: "RSA-OAEP",
+        modulusLength: 4096,
+        publicExponent: new Uint8Array([1, 0, 1]),
+        hash: "SHA-256",
       },
-      privateKeyEncoding: {
-        type: "pkcs8",
-        format: "pem",
-        cipher: "aes-256-cbc",
-        passphrase: "secure-passphrase",
-      },
-    });
+      true,
+      ["encrypt", "decrypt"]
+    );
+
+    const publicKeyBuffer = await window.crypto.subtle.exportKey(
+      "spki",
+      keyPair.publicKey
+    );
+    const privateKeyBuffer = await window.crypto.subtle.exportKey(
+      "pkcs8",
+      keyPair.privateKey
+    );
 
     return {
       publicKey: {
-        key: publicKey.toString(),
+        key: this.bufferToBase64(publicKeyBuffer),
         algorithm: "RSA-OAEP",
         length: 4096,
         format: "spki",
       },
       privateKey: {
-        key: privateKey.toString(),
+        key: this.bufferToBase64(privateKeyBuffer),
         algorithm: "RSA-OAEP",
         length: 4096,
         format: "pkcs8",
@@ -70,32 +133,262 @@ class EncryptionService {
     };
   }
 
-  private static generateAESKeys(): SymmetricKeys {
-    const key = crypto.randomBytes(32).toString("hex");
-    const iv = crypto.randomBytes(12).toString("hex");
+  private static async generateAESKey(): Promise<SymmetricKeys> {
+    if (!window.crypto || !window.crypto.subtle) {
+      throw new Error("WebCrypto API is not available");
+    }
+
+    const iv = window.crypto.getRandomValues(new Uint8Array(this.IV_LENGTH));
+    const key = await window.crypto.subtle.generateKey(
+      {
+        name: "AES-GCM",
+        length: 256,
+      },
+      true,
+      ["encrypt", "decrypt"]
+    );
+
+    const keyBuffer = await window.crypto.subtle.exportKey("raw", key);
+
     return {
-      key,
+      key: this.bufferToBase64(keyBuffer),
       algorithm: "AES-GCM",
       length: 256,
-      iv,
+      iv: this.bufferToBase64(iv as any),
     };
   }
 
-  public static generateKeySet(
+  private static formatKeyComponents(
+    rsaKeys: EncryptionKeys,
+    aesKey: SymmetricKeys
+  ): string {
+    return [
+      "----------publickey----------------",
+      rsaKeys.publicKey.key,
+      "----------privatekey----------------",
+      rsaKeys.privateKey.key,
+      "----------aes-key----------------",
+      aesKey.key,
+      "----------aes-iv----------------",
+      aesKey.iv,
+    ].join("\n");
+  }
+
+  public static async encryptCredentials(
+    credentials: {
+      website: string;
+      authToken: string;
+      password?: string;
+    },
+    aesKey: SymmetricKeys
+  ): Promise<{
+    encryptedData: {
+      website: string;
+      authToken: string;
+      password?: string;
+    };
+    formattedOutput: string;
+  }> {
+    const key = await this.importAESKey(aesKey.key);
+    const iv = this.base64ToBuffer(aesKey.iv);
+
+    const encryptedData = {
+      website: await this.encryptString(credentials.website, key, iv),
+      authToken: await this.encryptString(credentials.authToken, key, iv),
+      password: credentials.password
+        ? await this.encryptString(credentials.password, key, iv)
+        : undefined,
+    };
+
+    const formattedOutput = [
+      "----------encrypted website----------------",
+      encryptedData.website,
+      "----------encrypted authkey----------------",
+      encryptedData.authToken,
+      credentials.password
+        ? "----------encrypted password----------------\n" +
+          encryptedData.password
+        : "",
+    ].join("\n");
+
+    return { encryptedData, formattedOutput };
+  }
+
+  public static async decryptCredentials(
+    encryptedData: {
+      website: string;
+      authToken: string;
+      password?: string;
+    },
+    aesKey: SymmetricKeys
+  ): Promise<{
+    website: string;
+    authToken: string;
+    password?: string;
+  }> {
+    const key = await this.importAESKey(aesKey.key);
+    const iv = this.base64ToBuffer(aesKey.iv);
+
+    return {
+      website: await this.decryptString(encryptedData.website, key, iv),
+      authToken: await this.decryptString(encryptedData.authToken, key, iv),
+      password: encryptedData.password
+        ? await this.decryptString(encryptedData.password, key, iv)
+        : undefined,
+    };
+  }
+
+  // Existing utility methods remain the same
+  private static async encryptString(
+    data: string,
+    key: CryptoKey,
+    iv: Uint8Array
+  ): Promise<string> {
+    const encoder = new TextEncoder();
+    const encryptedData = await window.crypto.subtle.encrypt(
+      {
+        name: "AES-GCM",
+        iv,
+      },
+      key,
+      encoder.encode(data)
+    );
+    return this.bufferToBase64(encryptedData);
+  }
+
+  private static async decryptString(
+    encryptedData: string,
+    key: CryptoKey,
+    iv: Uint8Array
+  ): Promise<string> {
+    const decoder = new TextDecoder();
+    const decryptedData = await window.crypto.subtle.decrypt(
+      {
+        name: "AES-GCM",
+        iv,
+      },
+      key,
+      this.base64ToBuffer(encryptedData)
+    );
+    return decoder.decode(decryptedData);
+  }
+
+  private static async importAESKey(keyBase64: string): Promise<CryptoKey> {
+    const keyData = this.base64ToBuffer(keyBase64);
+    return window.crypto.subtle.importKey(
+      "raw",
+      keyData,
+      {
+        name: "AES-GCM",
+        length: 256,
+      },
+      false,
+      ["encrypt", "decrypt"]
+    );
+  }
+
+  private static bufferToBase64(buffer: ArrayBuffer): string {
+    const bytes = new Uint8Array(buffer);
+    const binary = bytes.reduce(
+      (acc, byte) => acc + String.fromCharCode(byte),
+      ""
+    );
+    return btoa(binary);
+  }
+
+  private static base64ToBuffer(base64: string): Uint8Array {
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return bytes;
+  }
+
+  private static logError(method: string, error: any) {
+    console.error(`[EncryptionService:${method}] Error:`, {
+      message: error.message,
+      stack: error.stack,
+      details: error,
+    });
+  }
+
+  public async generateRSAKeys(): Promise<EncryptionKeys> {
+    const method = "generateRSAKeys";
+    EncryptionService.logDebug(method, "Starting RSA key generation...");
+
+    try {
+      // Validate WebCrypto API availability
+      if (!window.crypto || !window.crypto.subtle) {
+        throw new Error("WebCrypto API is not available in this environment");
+      }
+
+      const keyPair = await window.crypto.subtle.generateKey(
+        {
+          name: "RSA-OAEP",
+          modulusLength: 4096,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: "SHA-256",
+        },
+        true,
+        ["encrypt", "decrypt"]
+      );
+      console.log("RSA key pair generated successfully");
+
+      const publicKeyBuffer = await window.crypto.subtle.exportKey(
+        "spki",
+        keyPair.publicKey
+      );
+      const privateKeyBuffer = await window.crypto.subtle.exportKey(
+        "pkcs8",
+        keyPair.privateKey
+      );
+
+      EncryptionService.logDebug(method, "RSA keys generated successfully", {
+        publicKeyLength: publicKeyBuffer.byteLength,
+        privateKeyLength: privateKeyBuffer.byteLength,
+      });
+
+      return {
+        publicKey: {
+          key: EncryptionService.bufferToBase64(publicKeyBuffer),
+          algorithm: "RSA-OAEP",
+          length: 4096,
+          format: "spki",
+        },
+        privateKey: {
+          key: EncryptionService.bufferToBase64(privateKeyBuffer),
+          algorithm: "RSA-OAEP",
+          length: 4096,
+          format: "pkcs8",
+          protected: true,
+        },
+      };
+    } catch (error: any) {
+      EncryptionService.logError(method, error);
+      throw new Error(`Failed to generate RSA keys: ${error.message}`);
+    }
+  }
+
+  public static async generateKeySet(
     biometricType?: "fingerprint" | "faceid" | "other"
-  ): KeySet {
-    const encryption = this.generateRSAKeys();
-    const dataKey = this.generateAESKeys();
+  ): Promise<KeySet> {
+    const encryptionService = new EncryptionService();
+    const encryption = await encryptionService.generateRSAKeys();
+    const dataKey = await EncryptionService.generateAESKey();
+
     const biometric = biometricType
       ? {
-          key: crypto.randomBytes(32).toString("hex"),
+          key: this.bufferToBase64(
+            window.crypto.getRandomValues(new Uint8Array(32)).buffer
+          ),
           type: biometricType,
           verified: false,
         }
       : undefined;
 
     return {
-      id: crypto.randomUUID(),
+      id: uuidv4(),
       version: 1,
       created: Date.now(),
       lastRotated: Date.now(),
@@ -105,198 +398,382 @@ class EncryptionService {
     };
   }
 
-  public static encryptPassword(
-    password: EncryptedPassword,
+  public static async encryptPassword(
+    password: UserCredentials,
     keySet: KeySet
-  ): EncryptedPassword {
-    const { encryptedData, iv, algorithm, keyId } = password;
-    const cipher = crypto.createCipheriv(
-      algorithm,
-      keySet.dataKey.key,
-      Buffer.from(iv, "hex")
-    );
+  ): Promise<EncryptedPassword> {
+    const method = "encryptPassword";
 
-    const encryptedWebsite = cipher.update(
-      encryptedData.website,
-      "utf8",
-      "hex"
-    );
-    const encryptedToken = cipher.update(
-      encryptedData.authToken,
-      "utf8",
-      "hex"
-    );
-    const encryptedPassword = cipher.update(
-      encryptedData.password,
-      "utf8",
-      "hex"
-    );
-    const encryptedNotes = encryptedData.notes
-      ? cipher.update(encryptedData.notes, "utf8", "hex")
-      : undefined;
+    console.log("[DEBUG] Input password structure:", {
+      website: password?.website ? "[PRESENT]" : "[MISSING]",
+      authToken: password?.authToken ? "[PRESENT]" : "[MISSING]",
+      password: password?.password ? "[PRESENT]" : "[MISSING]",
+      notes: password?.notes ? "[PRESENT]" : "[MISSING]",
+    });
+    console.log("[DEBUG] Input keySet structure:", {
+      id: keySet?.id,
+      dataKeyPresent: keySet?.dataKey?.key ? true : false,
+      ivPresent: keySet?.dataKey?.iv ? true : false,
+    });
 
-    return {
-      ...password,
-      encryptedData: {
-        website: encryptedWebsite + cipher.final("hex"),
-        authToken: encryptedToken + cipher.final("hex"),
-        password: encryptedPassword + cipher.final("hex"),
-        notes: encryptedNotes
-          ? encryptedNotes + cipher.final("hex")
+    try {
+      // Input validation
+      if (!password?.website || !password?.authToken || !password?.password) {
+        throw new Error("Missing required password credentials");
+      }
+
+      if (!keySet?.dataKey?.key || !keySet?.dataKey?.iv) {
+        throw new Error("Invalid keySet structure");
+      }
+
+      const aesKey = await this.importAESKey(keySet.dataKey.key);
+      const iv = this.base64ToBuffer(keySet.dataKey.iv);
+
+      const encryptedData: any = {
+        website: await this.encryptString(password.website, aesKey, iv),
+        authToken: await this.encryptString(password.authToken, aesKey, iv),
+        password: await this.encryptString(password.password, aesKey, iv),
+        notes: password.notes
+          ? await this.encryptString(password.notes, aesKey, iv)
           : undefined,
-      },
-      keyId,
-    };
+      };
+
+      const metadata: PasswordMetadata = {
+        id: uuidv4(),
+        createdAt: Date.now(),
+        modifiedAt: Date.now(),
+        lastAccessed: Date.now(),
+        version: 1,
+        strength: "medium",
+      };
+
+      console.log("[DEBUG] Encrypted data structure:", {
+        metadata,
+        encryptedDataKeys: Object.keys(encryptedData),
+        keyId: keySet.id,
+        ivLength: keySet.dataKey.iv.length,
+        algorithm: keySet.dataKey.algorithm,
+      });
+
+      this.logDebug(method, "Password encrypted successfully", {
+        keySetId: keySet.id,
+        encryptedDataSize: JSON.stringify(encryptedData).length,
+      });
+
+      return {
+        ...metadata,
+        encryptedData,
+        keyId: keySet.id,
+        iv: keySet.dataKey.iv,
+        algorithm: keySet.dataKey.algorithm,
+      };
+    } catch (error: any) {
+      this.logError(method, error);
+      throw new Error(`Failed to encrypt password: ${error.message}`);
+    }
   }
 
-  public static decryptPassword(
+  public static async decryptPassword(
     encryptedPassword: EncryptedPassword,
     keySet: KeySet
-  ): EncryptedPassword {
-    const { encryptedData, iv, algorithm, keyId } = encryptedPassword;
-    const decipher = crypto.createDecipheriv(
-      algorithm,
-      keySet.dataKey.key,
-      Buffer.from(iv, "hex")
-    );
-
-    const decryptedWebsite =
-      decipher.update(encryptedData.website, "hex", "utf8") +
-      decipher.final("utf8");
-    const decryptedToken =
-      decipher.update(encryptedData.authToken, "hex", "utf8") +
-      decipher.final("utf8");
-    const decryptedPassword =
-      decipher.update(encryptedData.password, "hex", "utf8") +
-      decipher.final("utf8");
-    const decryptedNotes = encryptedData.notes
-      ? decipher.update(encryptedData.notes, "hex", "utf8") +
-        decipher.final("utf8")
-      : undefined;
-
-    return {
-      ...encryptedPassword,
-      encryptedData: {
-        website: decryptedWebsite,
-        authToken: decryptedToken,
-        password: decryptedPassword,
-        notes: decryptedNotes,
+  ): Promise<EncryptedPassword> {
+    console.log("[DEBUG] Input encrypted password structure:", {
+      metadata: {
+        id: encryptedPassword?.id,
+        keyId: encryptedPassword?.keyId,
+        algorithm: encryptedPassword?.algorithm,
       },
-      keyId,
-    };
+      encryptedDataKeys: encryptedPassword?.encryptedData
+        ? Object.keys(encryptedPassword.encryptedData)
+        : [],
+    });
+    console.log("[DEBUG] Input keySet structure:", {
+      id: keySet?.id,
+      dataKeyPresent: keySet?.dataKey?.key ? true : false,
+      ivPresent: keySet?.dataKey?.iv ? true : false,
+    });
+
+    console.log("Starting password decryption...");
+    console.log("the data passed is:", encryptedPassword);
+    try {
+      if (!encryptedPassword || !keySet) {
+        throw new Error("Invalid encryptedPassword or keySet provided");
+      }
+
+      const aesKey = await this.importAESKey(keySet.dataKey.key);
+      const iv = this.base64ToBuffer(keySet.dataKey.iv);
+      if (!encryptedPassword.encryptedData.website) {
+        throw new Error("Encrypted website data is missing or invalid");
+      }
+
+      const decryptedData: any = {
+        website: await this.decryptString(
+          encryptedPassword.encryptedData.website,
+          aesKey,
+          iv
+        ),
+        authToken: await this.decryptString(
+          encryptedPassword.encryptedData.authToken,
+          aesKey,
+          iv
+        ),
+        password: await this.decryptString(
+          encryptedPassword.encryptedData.password,
+          aesKey,
+          iv
+        ),
+        notes: encryptedPassword.encryptedData.notes
+          ? await this.decryptString(
+              encryptedPassword.encryptedData.notes,
+              aesKey,
+              iv
+            )
+          : undefined,
+      };
+
+      console.log("[DEBUG] Decrypted data structure:", {
+        decryptedDataKeys: Object.keys(decryptedData),
+        keyId: keySet.id,
+      });
+
+      console.log("Password decrypted successfully");
+      return {
+        ...encryptedPassword,
+        encryptedData: decryptedData,
+        keyId: keySet.id,
+      };
+    } catch (error: any) {
+      console.error("Password decryption failed:", error);
+      throw new Error(`Failed to decrypt password: ${error.message}`);
+    }
   }
 
   public static async generateZKP(
     message: string,
-    privateKey: string
+    privateKeyBase64: string
   ): Promise<{ proof: string; publicKey: string }> {
-    // Implement zero-knowledge proof generation
-    // using the provided private key and message
-    // Return the proof and the corresponding public key
-    const { publicKey, privateKey: protectedPrivateKey } =
-      await this.generateRSAKeys();
-    const signature = crypto.sign("sha256", Buffer.from(message), {
-      key: protectedPrivateKey.key,
-      padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
-    });
+    const privateKey = await this.importRSAPrivateKey(privateKeyBase64);
+    const encoder = new TextEncoder();
+    const data = encoder.encode(message);
+
+    const signature = await window.crypto.subtle.sign(
+      {
+        name: "RSA-PSS",
+        saltLength: 32,
+      },
+      privateKey,
+      data
+    );
+
     return {
-      proof: signature.toString("base64"),
-      publicKey: publicKey.key,
+      proof: this.bufferToBase64(signature),
+      publicKey: privateKeyBase64, // In a real ZKP system, you'd derive a public key
     };
   }
 
   public static async verifyZKP(
     message: string,
-    proof: string,
-    publicKey: string
+    proofBase64: string,
+    publicKeyBase64: string
   ): Promise<boolean> {
-    // Implement zero-knowledge proof verification
-    // using the provided message, proof, and public key
-    // Return true if the proof is valid, false otherwise
     try {
-      const verifier = crypto.createVerify("sha256");
-      verifier.update(message);
-      return verifier.verify(
+      const publicKey = await this.importRSAPublicKey(publicKeyBase64);
+      const proof = this.base64ToBuffer(proofBase64);
+      const encoder = new TextEncoder();
+      const data = encoder.encode(message);
+
+      return await window.crypto.subtle.verify(
         {
-          key: publicKey,
-          padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+          name: "RSA-PSS",
+          saltLength: 32,
         },
-        Buffer.from(proof, "base64")
+        publicKey,
+        proof,
+        data
       );
     } catch (error) {
-      console.error("Error verifying ZKP:", error);
+      console.error("ZKP verification failed:", error);
       return false;
     }
   }
 
-  public static encryptWithConstantTime(
-    data: string,
-    key: string,
-    iv: string
-  ): string {
-    // Implement constant-time encryption
-    // using the provided data, key, and IV
-    // Return the encrypted data
-    const cipher = crypto.createCipheriv(
-      "aes-256-gcm",
-      Buffer.from(key, "hex"),
-      Buffer.from(iv, "hex")
-    );
-    cipher.setAutoPadding(false);
-    let encrypted = "";
-    for (let i = 0; i < data.length; i += 16) {
-      const block = data.slice(i, i + 16);
-      encrypted += cipher.update(block, "utf8", "hex");
-    }
-    encrypted += cipher.final("hex");
-    return encrypted;
-  }
-
-  public static decryptWithConstantTime(
-    encryptedData: string,
-    key: string,
-    iv: string
-  ): string {
-    // Implement constant-time decryption
-    // using the provided encrypted data, key, and IV
-    // Return the decrypted data
-    const decipher = crypto.createDecipheriv(
-      "aes-256-gcm",
-      Buffer.from(key, "hex"),
-      Buffer.from(iv, "hex")
-    );
-    decipher.setAutoPadding(false);
-    let decrypted = "";
-    for (let i = 0; i < encryptedData.length; i += 32) {
-      const block = encryptedData.slice(i, i + 32);
-      decrypted += decipher.update(block, "hex", "utf8");
-    }
-    decrypted += decipher.final("utf8");
-    return decrypted;
-  }
-
   public static async deriveKey(password: string): Promise<CryptoKey> {
     const encoder = new TextEncoder();
-    const salt = new Uint8Array(16); // You may want to store/retrieve a consistent salt
+    const salt = window.crypto.getRandomValues(
+      new Uint8Array(this.SALT_LENGTH)
+    );
 
-    return crypto.subtle
-      .importKey("raw", encoder.encode(password), "PBKDF2", false, [
-        "deriveKey",
-      ])
-      .then((baseKey) =>
-        crypto.subtle.deriveKey(
-          {
-            name: "PBKDF2",
-            salt,
-            iterations: 100000,
-            hash: "SHA-256",
-          },
-          baseKey,
-          { name: "AES-GCM", length: 256 },
-          true,
-          ["encrypt", "decrypt"]
-        )
+    const baseKey = await window.crypto.subtle.importKey(
+      "raw",
+      encoder.encode(password),
+      "PBKDF2",
+      false,
+      ["deriveBits", "deriveKey"]
+    );
+
+    return window.crypto.subtle.deriveKey(
+      {
+        name: "PBKDF2",
+        salt,
+        iterations: this.PBKDF2_ITERATIONS,
+        hash: "SHA-256",
+      },
+      baseKey,
+      {
+        name: "AES-GCM",
+        length: 256,
+      },
+      true,
+      ["encrypt", "decrypt"]
+    );
+  }
+
+  private static async importRSAPublicKey(
+    keyBase64: string
+  ): Promise<CryptoKey> {
+    const keyData = this.base64ToBuffer(keyBase64);
+    return window.crypto.subtle.importKey(
+      "spki",
+      keyData,
+      {
+        name: "RSA-PSS",
+        hash: "SHA-256",
+      },
+      false,
+      ["verify"]
+    );
+  }
+
+  private static async importRSAPrivateKey(
+    keyBase64: string
+  ): Promise<CryptoKey> {
+    const keyData = this.base64ToBuffer(keyBase64);
+    return window.crypto.subtle.importKey(
+      "pkcs8",
+      keyData,
+      {
+        name: "RSA-PSS",
+        hash: "SHA-256",
+      },
+      false,
+      ["sign"]
+    );
+  }
+
+  /**
+   * Prepares and sends API settings with decrypted credentials
+   */
+  public static async prepareAndSendAPISettings(
+    encryptedCredentials: {
+      website: string;
+      authToken: string;
+      password: string | undefined;
+    },
+    aesKey: SymmetricKeys,
+    rsaPublicKey: string
+  ): Promise<Response> {
+    try {
+      const decryptedCredentials = await this.decryptCredentials(
+        encryptedCredentials,
+        aesKey
       );
+
+      const apiPayload: APISettingsPayload = {
+        publicKey: rsaPublicKey,
+        password: decryptedCredentials.password,
+        deviceId: uuidv4(),
+        timestamp: Date.now(),
+      };
+
+      return await this.sendToAPI(
+        apiPayload,
+        decryptedCredentials.website,
+        decryptedCredentials.authToken
+      );
+    } catch (error: any) {
+      throw new Error(
+        `Failed to prepare and send API settings: ${error.message}`
+      );
+    }
+  }
+
+  /**
+   * Sends the settings payload to the API
+   * we need to decrypt the credentials and then use them to send the request ({decrypted website}/api/settings)
+   */
+  private static async sendToAPI(
+    payload: APISettingsPayload,
+    website: string,
+    authToken: string
+  ): Promise<Response> {
+    try {
+      console.log("website:", website);
+      console.log("authToken:", authToken);
+      const response = await fetch(`${website}/api/settings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.statusText}`);
+      }
+
+      return response;
+    } catch (error: any) {
+      throw new Error(`API request failed: ${error.message}`);
+    }
+  }
+
+  /**
+   * Session management methods
+   */
+  public static generateSessionKey(): string {
+    return uuidv4();
+  }
+
+  public static storeSessionData(
+    sessionKey: string,
+    data: any,
+    expirationMs: number = 1800000
+  ): void {
+    this.sessionData.set(sessionKey, {
+      data,
+      expiration: Date.now() + expirationMs,
+    });
+
+    setTimeout(() => {
+      this.sessionData.delete(sessionKey);
+    }, expirationMs);
+  }
+
+  public static getSessionData(sessionKey: string): any {
+    const entry = this.sessionData.get(sessionKey);
+
+    if (!entry) {
+      return null;
+    }
+
+    if (Date.now() > entry.expiration) {
+      this.sessionData.delete(sessionKey);
+      return null;
+    }
+
+    return entry.data;
+  }
+
+  public static clearSessionData(sessionKey: string): void {
+    this.sessionData.delete(sessionKey);
+  }
+
+  /**
+   * Validates PIN format
+   */
+  public static validatePin(pin: string): boolean {
+    return /^\d{6}$/.test(pin);
   }
 }
 

@@ -1,451 +1,231 @@
-// import React, { useState, useEffect } from "react";
-// import { LockKeyhole, Key, Shield, AlertTriangle } from "lucide-react";
-// import { Alert, AlertDescription } from "./ui/alert";
-// import EncryptionService from "../../services/Keys-managment/Encrypt";
-// import { KeySet } from "../../services/types";
-// import  SessionManager  from "../../services/Keys-managment/SessionManager";
-// import DatabaseService from "../../services/db";
+import React, { useState, useEffect } from "react";
+import StoringService from "./../../services/db";
+import EncryptionService from "./../../services/Keys-managment/Encrypt";
+import {
+  KeySet,
+  EncryptedPassword,
+  ExtensionSettings,
+  UserCredentials,
+} from "../../services/types";
+import { Button } from "./ui/button";
 
-// interface SetupProps {
-//   onComplete: (keys: KeySet) => void;
-// }
+const StoringServiceTest: React.FC = () => {
+  const [keys, setKeys] = useState<KeySet | null>(null);
+  const [encryptedPassword, setEncryptedPassword] =
+    useState<EncryptedPassword | null>(null);
+  const [decryptedPassword, setDecryptedPassword] =
+    useState<UserCredentials | null>(null);
+  const [settings, setSettings] = useState<ExtensionSettings | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [allPasswords, setAllPasswords] = useState<EncryptedPassword[] | null>(
+    null
+  );
 
-// interface StoredCredentials {
-//   encryptedUrl: string;
-//   encryptedAuthKey: string;
-// }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const keysFromStorage = await StoringService.getKeysFromStorage();
+        setKeys(keysFromStorage);
 
-// interface SessionData {
-//   masterKey: CryptoKey;
-//   encryptionKeys: any;
-// }
+        const passwordFromStorage = await StoringService.getEncryptedPassword(
+          "testPassword"
+        );
+        setEncryptedPassword(passwordFromStorage);
 
-// /**
-//  * SecureSetup Component
-//  * Handles the initial setup and configuration of the password manager
-//  * @component
-//  * @param {SetupProps} props - Component properties
-//  * @returns {JSX.Element} Rendered setup wizard
-//  */
-// const SecureSetup: React.FC<SetupProps> = ({ onComplete }) => {
-//   const [isNewUser, setIsNewUser] = useState(true);
-//   const [step, setStep] = useState(1);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState("");
-//   const [masterPassword, setMasterPassword] = useState("");
-//   const [confirmPassword, setConfirmPassword] = useState("");
-//   const [website, setWebsite] = useState("");
-//   const [authKey, setAuthKey] = useState("");
-//   const [encryptionKeys, setEncryptionKeys] = useState(null);
-//   const sessionManager = SessionManager.instance;
+        const settingsFromStorage = await StoringService.getExtensionSettings();
+        setSettings(settingsFromStorage);
 
-//   /**
-//    * Checks for existing encryption keys on component mount
-//    * Updates isNewUser state based on localStorage data
-//    */
-//   useEffect(() => {
-//     const hasExistingKeys = localStorage.getItem("hasEncryptionKeys");
-//     if (hasExistingKeys) {
-//       setIsNewUser(false);
-//     }
-//   }, []);
+        const allPasswordsFromStorage =
+          await StoringService.getEncryptedPasswords();
+        setAllPasswords(allPasswordsFromStorage);
+      } catch (err) {
+        setError(
+          `Failed to fetch data: ${
+            err instanceof Error ? err.message : "Unknown error"
+          }`
+        );
+      }
+    };
+    fetchData();
+  }, []);
 
-//   /**
-//    * Validates the master password against security requirements
-//    * @param {string} password - The password to validate
-//    * @returns {string|null} Error message if validation fails, null if password is valid
-//    */
-//   const validateMasterPassword = (password: string) => {
-//     if (password.length < 2) return "Password must be at least 12 characters";
-//     return null;
-//   };
+  const handleStoreKeys = async () => {
+    try {
+      const newKeys = await EncryptionService.generateKeySet();
+      await StoringService.storeKeys(newKeys);
+      setKeys(await StoringService.getKeysFromStorage());
+      setError(null);
+    } catch (err) {
+      setError(
+        `Failed to store keys: ${
+          err instanceof Error ? err.message : "Unknown error"
+        }`
+      );
+    }
+  };
 
-//   /**
-//    * Initializes encryption for a new account
-//    * Generates master key and encryption keys, stores them securely
-//    * @async
-//    * @throws {Error} If encryption initialization fails
-//    */
-//   const initializeNewAccount = async () => {
-//     setLoading(true);
-//     setError("");
+  const handleStorePassword = async () => {
+    try {
+      if (!keys) throw new Error("No keys available for encryption");
 
-//     try {
-//       const passwordError = validateMasterPassword(masterPassword);
-//       if (passwordError) {
-//         setError(passwordError);
-//         return;
-//       }
+      const newPassword: UserCredentials = {
+        website: "example.com",
+        authToken: "abc123",
+        password: "secretPassword",
+      };
 
-//       if (masterPassword !== confirmPassword) {
-//         setError("Passwords do not match");
-//         return;
-//       }
+      const encryptedData = await EncryptionService.encryptPassword(
+        newPassword,
+        keys
+      );
+      await StoringService.storeEncryptedPassword(encryptedData);
+      setEncryptedPassword(
+        await StoringService.getEncryptedPassword("testPassword")
+      );
+      setError(null);
+    } catch (err) {
+      setError(
+        `Failed to store password: ${
+          err instanceof Error ? err.message : "Unknown error"
+        }`
+      );
+    }
+  };
 
-//       // Generate new key set using EncryptionService
-//       const keySet = EncryptionService.generateKeySet();
+  const handleDecryptPassword = async () => {
+    try {
+      if (!encryptedPassword || !keys)
+        throw new Error(
+          "No encrypted password or keys available for decryption"
+        );
 
-//       // Store keys securely using DatabaseService
-//       await DatabaseService.storeKeys(keySet);
+      const decryptedData = await EncryptionService.decryptPassword(
+        encryptedPassword,
+        keys
+      );
 
-//       // Start new session
-//       await sessionManager.initSession({
-//         masterKey: await EncryptionService.deriveKey(masterPassword),
-//         encryptionKeys: keySet,
-//       }, 3); // 3 days session
+      setDecryptedPassword(decryptedData.encryptedData); // Set decrypted data to state
+      setError(null);
+    } catch (err) {
+      setError(
+        `Failed to decrypt password: ${
+          err instanceof Error ? err.message : "Unknown error"
+        }`
+      );
+    }
+  };
 
-//       setEncryptionKeys(keySet as any);
-//       localStorage.setItem("hasEncryptionKeys", "true");
-//       setStep(2);
-//     } catch (error: any) {
-//       setError("Failed to initialize encryption: " + error.message);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+  const handleStoreSettings = async () => {
+    try {
+      const newSettings: ExtensionSettings = {
+        serverUrl: "",
+        authToken: "",
+        dataRetentionTime: 1800000,
+        autoLockTime: 1800000,
+        biometricEnabled: true,
+        theme: "dark",
+        autoFill: true,
+      };
+      await StoringService.storeExtensionSettings(newSettings);
+      setSettings(await StoringService.getExtensionSettings());
+      setError(null);
+    } catch (err) {
+      setError(
+        `Failed to store settings: ${
+          err instanceof Error ? err.message : "Unknown error"
+        }`
+      );
+    }
+  };
 
-//   /**
-//    * Handles website and authentication key setup
-//    * Encrypts and stores website credentials
-//    * @async
-//    * @throws {Error} If website setup fails
-//    */
-//   const handleWebsiteSetup = async () => {
-//     setLoading(true);
-//     setError("");
+  const handleGetAllData = async () => {
+    try {
+      const passwords = await StoringService.getEncryptedPasswords();
+      setAllPasswords(passwords);
+      setError(null);
+    } catch (err) {
+      setError(
+        `Failed to fetch all passwords: ${
+          err instanceof Error ? err.message : "Unknown error"
+        }`
+      );
+    }
+  };
 
-//     try {
-//       if (!website || !authKey) {
-//         setError("Website and authentication key are required");
-//         return;
-//       }
+  const handleDeletePassword = async () => {
+    try {
+      if (!encryptedPassword)
+        throw new Error("No encrypted password to delete");
+      await StoringService.deleteEncryptedPassword(encryptedPassword.id);
+      setEncryptedPassword(null);
+      setAllPasswords(await StoringService.getEncryptedPasswords());
+      setError(null);
+    } catch (err) {
+      setError(
+        `Failed to delete password: ${
+          err instanceof Error ? err.message : "Unknown error"
+        }`
+      );
+    }
+  };
 
-//       const sessionData = await sessionManager.getSessionData();
-//       if (!sessionData) {
-//         throw new Error("Session expired");
-//       }
+  const handleClearStorage = async () => {
+    try {
+      await StoringService.clearStorage();
+      setKeys(null);
+      setEncryptedPassword(null);
+      setDecryptedPassword(null);
+      setSettings(null);
+      setAllPasswords(null);
+      setError(null);
+    } catch (err) {
+      setError(
+        `Failed to clear storage: ${
+          err instanceof Error ? err.message : "Unknown error"
+        }`
+      );
+    }
+  };
 
-//       // Encrypt website data using EncryptionService
-//       const encryptedWebsite = EncryptionService.encryptWithConstantTime(
-//         website,
-//         sessionData.encryptionKeys.dataKey.key,
-//         sessionData.encryptionKeys.dataKey.iv
-//       );
+  return (
+    <div>
+      <h1>Storing Service Test</h1>
+      {error && (
+        <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
+      )}
+      <Button onClick={handleStoreKeys}>Store Keys</Button>
+      <Button onClick={handleStorePassword}>Store Password</Button>
+      <Button onClick={handleDecryptPassword} disabled={!allPasswords || !keys}>
+        Decrypt Password
+      </Button>
+      <Button onClick={handleStoreSettings}>Store Settings</Button>
+      <Button onClick={handleGetAllData}>Get All Passwords</Button>
+      <Button onClick={handleDeletePassword} disabled={!encryptedPassword}>
+        Delete Password
+      </Button>
+      <Button onClick={handleClearStorage}>Clear Storage</Button>
+      <h1>=============================Keys=============================</h1>
+      <pre>Keys: {JSON.stringify(keys, null, 2)}</pre>
+      <h1>
+        =============================Encrypted
+        Password=============================
+      </h1>
+      <pre>{JSON.stringify(encryptedPassword, null, 2)}</pre>
+      <h1>
+        =============================Decrypted
+        Password=============================
+      </h1>
+      <pre>{JSON.stringify(decryptedPassword, null, 2)}</pre>
+      <h1>
+        =============================Settings=============================
+      </h1>
+      <pre>{JSON.stringify(settings, null, 2)}</pre>
+      <h1>
+        ===========================All Passwords===========================
+      </h1>
+      <pre>{JSON.stringify(allPasswords, null, 2)}</pre>
+    </div>
+  );
+};
 
-//       const encryptedAuthKey = EncryptionService.encryptWithConstantTime(
-//         authKey,
-//         sessionData.encryptionKeys.dataKey.key,
-//         sessionData.encryptionKeys.dataKey.iv
-//       );
-
-//       // Store encrypted data
-//       const passwordData: EncryptedPassword = {
-//         id: crypto.randomUUID(),
-//         createdAt: Date.now(),
-//         modifiedAt: Date.now(),
-//         lastAccessed: Date.now(),
-//         version: 1,
-//         strength: "strong",
-//         encryptedData: {
-//           website: encryptedWebsite,
-//           username: "", // Initial empty username
-//           password: encryptedAuthKey,
-//         },
-//         iv: sessionData.encryptionKeys.dataKey.iv,
-//         algorithm: "AES-GCM",
-//         keyId: sessionData.encryptionKeys.id,
-//       };
-
-//       await DatabaseService.storeEncryptedPassword(passwordData);
-
-//       setEncryptionKeys(sessionData.encryptionKeys);
-//       onComplete(sessionData.encryptionKeys);
-//       setStep(3);
-//     } catch (error: any) {
-//       setError("Failed to encrypt website data: " + error.message);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   /**
-//    * Handles returning user authentication
-//    * Verifies master password and restores session
-//    * @async
-//    * @throws {Error} If authentication fails
-//    */
-//   const returnToExistingSetup = async () => {
-//     setLoading(true);
-//     setError("");
-
-//     try {
-//       const keySet = await DatabaseService.getKeysFromStorage();
-//       if (!keySet) {
-//         throw new Error("No existing keys found");
-//       }
-
-//       const masterKey = await EncryptionService.deriveKey(masterPassword);
-
-//       // Start new session with existing keys
-//       await sessionManager.startSession({
-//         masterKey,
-//         encryptionKeys: keySet,
-//       }, 3);
-
-//       setStep(4);
-//     } catch (error) {
-//       setError("Invalid master password");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   /**
-//    * Validates and sanitizes user input
-//    * @param {string} input - User input to validate
-//    * @returns {string} Sanitized input
-//    * @throws {Error} If input is invalid
-//    */
-//   const validateInput = (input: string): string => {
-//     if (!input?.trim()) {
-//       throw new Error("Input cannot be empty");
-//     }
-//     // Remove any potentially dangerous characters
-//     return input.trim().replace(/[<>]/g, "");
-//   };
-
-//   /**
-//    * Validates website URL format
-//    * @param {string} url - Website URL to validate
-//    * @returns {boolean} True if URL is valid
-//    */
-//   const isValidWebsiteUrl = (url: string): boolean => {
-//     try {
-//       new URL(url);
-//       return true;
-//     } catch {
-//       return false;
-//     }
-//   };
-
-//   /**
-//    * Error boundary for setup component
-//    * @param {Error} error - Error that occurred
-//    * @returns {JSX.Element} Error display component
-//    */
-//   const ErrorFallback = ({ error }: { error: Error }) => (
-//     <div className="error-container">
-//       <h2>Something went wrong</h2>
-//       <pre>{error.message}</pre>
-//       <button onClick={() => window.location.reload()}>Try again</button>
-//     </div>
-//   );
-
-//   /**
-//    * Verifies session persistence capability
-//    * @returns {Promise<boolean>} True if storage is available
-//    */
-//   const checkStorageAvailability = async (): Promise<boolean> => {
-//     try {
-//       const testKey = "test_storage_" + Date.now();
-//       await chrome.storage.local.set({ [testKey]: true });
-//       await chrome.storage.local.remove(testKey);
-//       return true;
-//     } catch {
-//       return false;
-//     }
-//   };
-
-//   useEffect(() => {
-//     return () => {
-//       // Cleanup sensitive data from memory
-//       setMasterPassword("");
-//       setConfirmPassword("");
-//       setAuthKey("");
-//     };
-//   }, []);
-
-//   return (
-//     <div className=" mx-auto p-6 space-y-8 min-w-[400px] min-h-96 bg-gray-50">
-//       {error && (
-//         <Alert variant="destructive">
-//           <AlertTriangle className="h-4 w-4" />
-//           <AlertDescription>{error}</AlertDescription>
-//         </Alert>
-//       )}
-
-//       {step === 1 && (
-//         <div className="space-y-6">
-//           <div className="text-center">
-//             <Shield className="mx-auto h-12 w-12 text-blue-600" />
-//             <h2 className="mt-4 text-2xl font-bold">Secure Password Manager</h2>
-//           </div>
-
-//           {isNewUser ? (
-//             <div className="space-y-4">
-//               <div>
-//                 <label className="block text-sm font-medium text-gray-700">
-//                   Master Password
-//                 </label>
-//                 <input
-//                   type="password"
-//                   value={masterPassword}
-//                   onChange={(e) => setMasterPassword(e.target.value)}
-//                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm h-8"
-//                   placeholder="Enter master password"
-//                 />
-//               </div>
-
-//               <div>
-//                 <label className="block text-sm font-medium text-gray-700">
-//                   Confirm Password
-//                 </label>
-//                 <input
-//                   type="password"
-//                   value={confirmPassword}
-//                   onChange={(e) => setConfirmPassword(e.target.value)}
-//                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm h-8"
-//                   placeholder="Confirm master password"
-//                 />
-//               </div>
-
-//               <on
-//                 onClick={initializeNewAccount}
-//                 disabled={loading}
-//                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-//               >
-//                 {loading ? "Initializing..." : "Create New Account"}
-//               </button>
-//             </div>
-//           ) : (
-//             <div className="space-y-4">
-//               <div>
-//                 <label className="block text-sm font-medium text-gray-700">
-//                   Master Password
-//                 </label>
-//                 <input
-//                   type="password"
-//                   value={masterPassword}
-//                   onChange={(e) => setMasterPassword(e.target.value)}
-//                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-//                   placeholder="Enter your master password"
-//                 />
-//               </div>
-
-//               <button
-//                 onClick={returnToExistingSetup}
-//                 disabled={loading}
-//                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-//               >
-//                 {loading ? "Verifying..." : "Continue Setup"}
-//               </button>
-//             </div>
-//           )}
-//         </div>
-//       )}
-
-//       {step === 2 && (
-//         <div className="space-y-6">
-//           <div className="bg-yellow-50 p-4 rounded-md">
-//             <div className="flex">
-//               <div className="flex-shrink-0">
-//                 <AlertTriangle className="h-5 w-5 text-yellow-400" />
-//               </div>
-//               <div className="ml-3">
-//                 <h3 className="text-sm font-medium text-yellow-800">
-//                   Backup Your Keys
-//                 </h3>
-//                 <div className="mt-2 text-sm text-yellow-700">
-//                   <p>
-//                     Store these keys securely. They cannot be recovered if lost!
-//                   </p>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-
-//           <pre className="bg-gray-100 p-4 rounded-md text-xs overflow-x-auto">
-//             {JSON.stringify(encryptionKeys, null, 2)}
-//           </pre>
-
-//           <button
-//             onClick={() => setStep(4)}
-//             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-//           >
-//             Continue to Website Setup
-//           </button>
-//         </div>
-//       )}
-
-//       {step === 4 && (
-//         <div className="space-y-6">
-//           <h3 className="text-lg font-medium">Website Configuration</h3>
-
-//           <div className="space-y-4">
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700">
-//                 Website URL
-//               </label>
-//               <input
-//                 type="text"
-//                 value={website}
-//                 onChange={(e) => setWebsite(e.target.value)}
-//                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-//                 placeholder="https://example.com"
-//               />
-//             </div>
-
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700">
-//                 Authentication Key
-//               </label>
-//               <input
-//                 type="password"
-//                 value={authKey}
-//                 onChange={(e) => setAuthKey(e.target.value)}
-//                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-//                 placeholder="Enter authentication key"
-//               />
-//             </div>
-
-//             <button
-//               onClick={handleWebsiteSetup}
-//               disabled={loading}
-//               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-//             >
-//               {loading ? "Processing..." : "Encrypt and Store"}
-//             </button>
-//           </div>
-//         </div>
-//       )}
-
-//       {step === 3 && (
-//         <div className="space-y-6">
-//           <h3 className="text-lg font-medium">Setup Complete</h3>
-
-//           <div className="bg-green-50 p-4 rounded-md">
-//             <div className="flex">
-//               <div className="flex-shrink-0">
-//                 <Key className="h-5 w-5 text-green-400" />
-//               </div>
-//               <div className="ml-3">
-//                 <h3 className="text-sm font-medium text-green-800">
-//                   Keys Generated Successfully
-//                 </h3>
-//                 <div className="mt-2 text-sm text-green-700">
-//                   <p>Store these keys securely for future access:</p>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-
-//           <pre className="bg-gray-100 p-4 rounded-md text-xs overflow-x-auto">
-//             {JSON.stringify(encryptionKeys, null, 2)}
-//           </pre>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default SecureSetup;
+export default StoringServiceTest;

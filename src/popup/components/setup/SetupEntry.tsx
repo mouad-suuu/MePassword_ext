@@ -1,206 +1,321 @@
-import React, { useState, useEffect } from "react";
-import AuthEntry from "./AuthEntry";
-import CreateAccount from "./CreateAccount";
-import EnterKeys from "./EnterKeys";
-import DatabaseService from "../../../services/db";
-import SessionManager from "../../../services/Keys-managment/SessionManager";
-import EncryptionService from "../../../services/Keys-managment/Encrypt";
+import React, { useState, useCallback } from "react";
+import { Upload, Plus, FileKey } from "lucide-react";
 import {
-  EncryptedPassword,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Alert, AlertDescription } from "../ui/alert";
+import EncryptionService from "../../../services/Keys-managment/Encrypt";
+import StoringService from "../../../services/db";
+import {
   KeySet,
   UserCredentials,
+  EncryptedPassword,
 } from "../../../services/types";
 
-const SetupEntry: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isNewUser, setIsNewUser] = useState(false);
-  const [hasKeys, setHasKeys] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+const StartupScreen = ({
+  onKeysLoaded,
+  onCreateAccount,
+}: {
+  onKeysLoaded: (keys: KeySet) => void;
+  onCreateAccount: () => void;
+}) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    checkUserStatus();
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
   }, []);
 
-  const checkUserStatus = async () => {
-    try {
-      setIsLoading(true);
-      const keys = await DatabaseService.getKeysFromStorage();
-      const hasStoredKeys = !!keys;
-      setHasKeys(hasStoredKeys);
+  const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
 
-      if (!hasStoredKeys) {
-        setIsNewUser(true);
-      } else {
-        // Check if there's an active session
-        const session = await SessionManager.instance.validateSession();
-        if (session) {
-          setIsAuthenticated(true);
-        }
+  const handleDrop = useCallback(
+    async (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      setIsDragging(false);
+      setError("");
+
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const keys = JSON.parse(text.split("---")[1]); // Extract keys between dashes
+        await StoringService.storeKeys(keys);
+        onKeysLoaded(keys);
+      } catch (err) {
+        setError("Invalid key file. Please try again.");
       }
-    } catch (error) {
-      console.error("Error checking user status:", error);
-      setIsNewUser(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleAuthenticate = async (credentials: UserCredentials) => {
-    try {
-      setIsLoading(true);
-      const encryptedData = await DatabaseService.getAllEncryptedPasswords();
-      const keySet = SessionManager.instance.getKeySet();
-
-      if (!encryptedData?.length || !keySet) {
-        throw new Error("No stored credentials found");
-      }
-
-      // Decrypt and verify stored credentials
-      const decryptedData = await EncryptionService.decryptPassword(
-        encryptedData[0],
-        keySet
-      );
-
-      if (
-        decryptedData.encryptedData.website === credentials.website &&
-        decryptedData.encryptedData.password === credentials.password
-      ) {
-        await SessionManager.instance.initSession("user-id");
-        setIsAuthenticated(true);
-      } else {
-        throw new Error("Invalid credentials");
-      }
-    } catch (error) {
-      console.error("Authentication failed:", error);
-      alert("Authentication failed: " + (error as Error).message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleCreateAccount = async (credentials: UserCredentials) => {
-    try {
-      setIsLoading(true);
-      // Generate new encryption keys
-      const keySet = EncryptionService.generateKeySet();
-      await DatabaseService.storeKeys(keySet);
-
-      // Encrypt and store user credentials
-      const encryptedData = await encryptUserData(credentials, keySet);
-      await DatabaseService.storeEncryptedPassword(encryptedData);
-
-      // Initialize session
-      await SessionManager.instance.initSession("user-id");
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.error("Account creation failed:", error);
-      alert("Account creation failed: " + (error as Error).message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleEnterKeys = async (keys: string) => {
-    try {
-      setIsLoading(true);
-      const parsedKeys = JSON.parse(keys) as KeySet;
-      await DatabaseService.storeKeys(parsedKeys);
-      await SessionManager.instance.initSession("user-id");
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.error("Invalid keys format:", error);
-      alert("Invalid keys format: " + (error as Error).message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const encryptUserData = async (
-    userData: UserCredentials,
-    keySet: KeySet
-  ): Promise<EncryptedPassword> => {
-    const id = crypto.randomUUID();
-    const ivArray = new Uint8Array(12);
-    crypto.getRandomValues(ivArray);
-    const iv = Array.from(ivArray)
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-    const timestamp = Date.now();
-
-    const encryptedData = {
-      website: await EncryptionService.encryptWithConstantTime(
-        userData.website,
-        keySet.dataKey.key,
-        iv
-      ),
-      authToken: await EncryptionService.encryptWithConstantTime(
-        userData.authToken,
-        keySet.dataKey.key,
-        iv
-      ),
-      password: await EncryptionService.encryptWithConstantTime(
-        userData.password,
-        keySet.dataKey.key,
-        iv
-      ),
-    };
-
-    return {
-      id,
-      encryptedData,
-      iv,
-      algorithm: keySet.dataKey.algorithm,
-      keyId: keySet.id,
-      createdAt: timestamp,
-      modifiedAt: timestamp,
-      lastAccessed: timestamp,
-      version: 1,
-      strength: "strong",
-    };
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-[400px] flex items-center justify-center">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    );
-  }
-
-  if (isAuthenticated) {
-    return (
-      <div className="min-h-[400px] p-4">
-        <h1 className="text-2xl font-bold mb-4">
-          Welcome to Your Secure Vault!
-        </h1>
-        {/* Add your authenticated content here */}
-      </div>
-    );
-  }
+    },
+    [onKeysLoaded]
+  );
 
   return (
-    <div className="min-h-[400px] p-4">
-      {isNewUser ? (
-        <div className="space-y-4">
-          <h1 className="text-2xl font-bold mb-4">Create New Account</h1>
-          <CreateAccount onCreateAccount={handleCreateAccount} />
-        </div>
-      ) : hasKeys ? (
-        <div className="space-y-4">
-          <h1 className="text-2xl font-bold mb-4">Enter Keys</h1>
-          <EnterKeys onEnterKeys={handleEnterKeys} />
-        </div>
-      ) : (
-        <div className="space-y-4">
-          <h1 className="text-2xl font-bold mb-4">Authentication</h1>
-          <AuthEntry
-            onAuthenticate={handleAuthenticate}
-            onBiometricAuth={() => {}} // Implement if needed
-          />
-        </div>
-      )}
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <Card className="w-96">
+        <CardHeader>
+          <CardTitle>Password Manager</CardTitle>
+          <CardDescription>
+            Drop your key file or create a new account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+              isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"
+            }`}
+          >
+            <Upload className="mx-auto h-12 w-12 text-gray-400" />
+            <p className="mt-2 text-sm text-gray-600">
+              Drag and drop your key file here
+            </p>
+          </div>
+          {error && (
+            <Alert variant="destructive" className="mt-4">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+        </CardContent>
+        <CardFooter>
+          <Button onClick={onCreateAccount} className="w-full">
+            <Plus className="mr-2 h-4 w-4" />
+            Create New Account
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 };
 
-export default SetupEntry;
+const CreateAccountForm = ({
+  onAccountCreated,
+}: {
+  onAccountCreated: (keys: KeySet) => void;
+}) => {
+  const [formData, setFormData] = useState<UserCredentials>({
+    website: "",
+    authToken: "",
+    password: "",
+    notes: "", // Optional
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      // Generate key components with proper typing
+      const keys: KeySet = {
+        id: crypto.randomUUID(),
+        version: 1,
+        created: Date.now(),
+        lastRotated: Date.now(),
+        encryption: {
+          publicKey: {
+            key: "",
+            algorithm: "RSA-OAEP",
+            length: 4096,
+            format: "spki",
+          },
+          privateKey: {
+            key: "",
+            algorithm: "RSA-OAEP",
+            length: 4096,
+            format: "pkcs8",
+            protected: false,
+          },
+        },
+        dataKey: {
+          key: "",
+          algorithm: "AES-GCM",
+          length: 256,
+          iv: "",
+        },
+      };
+
+      const { rsaKeyPair, aesKey, formattedOutput } =
+        await EncryptionService.generateKeyComponents();
+
+      // Create and store session key
+      const sessionKey = EncryptionService.generateSessionKey();
+      EncryptionService.storeSessionData(sessionKey, aesKey, 1800000); // 30 minutes
+
+      // Update the keys with generated values
+      keys.encryption = rsaKeyPair;
+      keys.dataKey = aesKey;
+
+      // Encrypt credentials
+      const { encryptedData, formattedOutput: encryptedOutput } =
+        await EncryptionService.encryptCredentials(
+          formData as UserCredentials & { password: string },
+          keys.dataKey
+        );
+
+      // Send to API
+      const apiResponse = await EncryptionService.prepareAndSendAPISettings(
+        encryptedData as any,
+        aesKey,
+        rsaKeyPair.publicKey.key
+      );
+
+      if (!apiResponse.ok) {
+        throw new Error("Failed to setup API settings");
+      }
+
+      // Store encrypted data and keys
+      await StoringService.storeKeys(keys);
+      await StoringService.storeEncryptedPassword(encryptedData as any);
+
+      // Generate key file content with encrypted credentials
+      const keyFileContent = `----------PRIVATEKEY----------------
+${keys.encryption.privateKey.key}
+----------PUBLICKEY----------------
+${keys.encryption.publicKey.key}
+----------AES-GCM------------------
+${keys.dataKey.key}
+----------IV----------------------
+${keys.dataKey.iv}
+----------ENCRYPTED-WEBSITE--------
+${encryptedData.website}
+----------ENCRYPTED-AUTH----------
+${encryptedData.authToken}
+----------METADATA----------------
+${keys.id}|${keys.version}|${keys.created}|${keys.lastRotated}`;
+
+      // Create and download key file
+      const blob = new Blob([keyFileContent], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "password-manager-keys.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+
+      // Clean up session data
+      EncryptionService.clearSessionData(sessionKey);
+
+      onAccountCreated(keys);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to create account. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <Card className="w-96">
+        <CardHeader>
+          <CardTitle>Create Account</CardTitle>
+          <CardDescription>
+            Enter your credentials to get started
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <Input
+                placeholder="Website"
+                value={formData.website}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, website: e.target.value }))
+                }
+                required
+              />
+            </div>
+            <div>
+              <Input
+                placeholder="Auth Token"
+                value={formData.authToken}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    authToken: e.target.value,
+                  }))
+                }
+                required
+              />
+            </div>
+            <div>
+              <Input
+                type="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, password: e.target.value }))
+                }
+                required
+              />
+            </div>
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            <Button type="submit" className="w-full" disabled={loading}>
+              <FileKey className="mr-2 h-4 w-4" />
+              {loading ? "Creating Account..." : "Create Account"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+const PasswordManager = () => {
+  const [stage, setStage] = useState<"startup" | "create" | "main">("startup");
+  const [keys, setKeys] = useState<KeySet | null>(null);
+
+  const handleKeysLoaded = (loadedKeys: KeySet) => {
+    setKeys(loadedKeys);
+    setStage("main");
+  };
+
+  const handleCreateAccount = () => {
+    setStage("create");
+  };
+
+  const handleAccountCreated = (newKeys: any) => {
+    setKeys(newKeys);
+    setStage("main");
+  };
+
+  switch (stage) {
+    case "startup":
+      return (
+        <StartupScreen
+          onKeysLoaded={handleKeysLoaded}
+          onCreateAccount={handleCreateAccount}
+        />
+      );
+    case "create":
+      return <CreateAccountForm onAccountCreated={handleAccountCreated} />;
+    case "main":
+      return <div>Main app interface goes here</div>;
+    default:
+      return null;
+  }
+};
+
+export default PasswordManager;

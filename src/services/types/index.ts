@@ -2,7 +2,9 @@ export interface ExtensionSettings {
   serverUrl: string;
   authToken: string;
   dataRetentionTime: number;
-  useBiometricAuth: boolean;
+  autoLockTime: number;
+  biometricEnabled: boolean;
+
   theme: "light" | "dark";
   autoFill: boolean;
 }
@@ -57,7 +59,7 @@ export interface KeySet {
   };
 }
 
-interface PasswordMetadata {
+export interface PasswordMetadata {
   id: string;
   createdAt: number;
   modifiedAt: number;
@@ -81,6 +83,7 @@ export interface UserCredentials {
   website: string;
   authToken: string;
   password: string;
+  notes?: string;
 }
 interface AuditLog {
   id: string;

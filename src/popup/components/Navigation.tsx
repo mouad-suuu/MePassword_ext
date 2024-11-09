@@ -31,10 +31,15 @@ const NavButton: React.FC<NavButtonProps> = ({
 
 interface NavigationProps {
   activeTab: string;
-  setActiveTab: (tab: string) => void;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+  onLogout: () => Promise<void>;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
+const Navigation: React.FC<NavigationProps> = ({
+  activeTab,
+  setActiveTab,
+  onLogout,
+}) => {
   return (
     <div className="bg-background">
       <div className="flex justify-around items-center p-2">
@@ -64,6 +69,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab }) => {
         />
       </div>
       <Separator />
+      <button onClick={onLogout}>Logout</button>
     </div>
   );
 };

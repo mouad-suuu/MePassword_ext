@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UserCredentials } from "../../../services/types";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 type AuthEntryProps = {
   onAuthenticate: (credentials: UserCredentials) => void;
@@ -40,7 +41,7 @@ const AuthEntry: React.FC<AuthEntryProps> = ({
   return (
     <div>
       <h2>Authenticate</h2>
-      <input
+      <Input
         type="text"
         value={credentials.website}
         onChange={(e) =>
@@ -48,7 +49,7 @@ const AuthEntry: React.FC<AuthEntryProps> = ({
         }
         placeholder="Website URL"
       />
-      <input
+      <Input
         type="text"
         value={credentials.authToken}
         onChange={(e) =>
@@ -56,7 +57,7 @@ const AuthEntry: React.FC<AuthEntryProps> = ({
         }
         placeholder="Auth Token"
       />
-      <input
+      <Input
         type="password"
         value={credentials.password}
         onChange={(e) =>

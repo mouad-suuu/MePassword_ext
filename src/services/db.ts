@@ -24,247 +24,177 @@
  *    - Queue offline changes
  *    - Handle conflict resolution
  *    - Maintain sync status
- */ import { KeySet, EncryptedPassword, ExtensionSettings } from "./types";
+ */
 import EncryptionService from "./Keys-managment/Encrypt";
+import {
+  KeySet,
+  EncryptedPassword,
+  ExtensionSettings,
+  UserCredentials,
+} from "./types";
 
-class DatabaseService {
+class StoringService {
   private static readonly STORAGE_PREFIX = "password-manager-";
   private static readonly SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days
 
   public static async getKeysFromStorage(): Promise<KeySet | null> {
-    const keysJSON = await this.getFromStorage("keys");
-    if (!keysJSON) return null;
-    const keys = JSON.parse(keysJSON) as KeySet;
+    try {
+      console.log("Attempting to retrieve keys from storage.");
+      const keysJSON = this.getFromStorageSync("keys");
+      if (!keysJSON) {
+        console.log("No keys found in storage.");
+        return null;
+      }
+      const keys = JSON.parse(keysJSON) as KeySet;
 
-    if (keys.lastRotated + this.SESSION_DURATION < Date.now()) {
-      await this.deleteFromStorage("keys");
+      if (keys.lastRotated + StoringService.SESSION_DURATION < Date.now()) {
+        console.log("Keys have expired, deleting from storage.");
+        this.deleteFromStorageSync("keys");
+        return null;
+      }
+
+      console.log("Keys retrieved successfully.");
+      return keys;
+    } catch (error) {
+      console.error("Error retrieving keys from storage:", error);
       return null;
     }
-
-    return keys;
   }
 
   public static async storeKeys(keys: KeySet): Promise<void> {
-    await this.storeInStorage("keys", JSON.stringify(keys));
+    try {
+      console.log("Storing keys in storage.");
+      console.log("Keys to be stored:", keys);
+      this.storeInStorageSync("keys", JSON.stringify(keys));
+      console.log("Keys stored successfully.", keys);
+    } catch (error) {
+      console.error("Error storing keys:", error);
+    }
   }
 
   public static async getEncryptedPassword(
     id: string
   ): Promise<EncryptedPassword | null> {
-    const passwordJSON = await this.getFromStorage(`password-${id}`);
-    return passwordJSON
-      ? (JSON.parse(passwordJSON) as EncryptedPassword)
-      : null;
+    try {
+      console.log(`Retrieving encrypted password for ID: ${id}`);
+      const passwordJSON = this.getFromStorageSync(`password-${id}`);
+      if (!passwordJSON) {
+        console.log(`No password found for ID: ${id}`);
+        return null;
+      }
+      console.log(`Password retrieved successfully for ID: ${id}`);
+      return JSON.parse(passwordJSON) as EncryptedPassword;
+    } catch (error) {
+      console.error(`Error retrieving password for ID: ${id}`, error);
+      return null;
+    }
   }
 
   public static async storeEncryptedPassword(
     password: EncryptedPassword
   ): Promise<void> {
-    await this.storeInStorage(
-      `password-${password.id}`,
-      JSON.stringify(password)
-    );
+    try {
+      console.log(`Storing encrypted password for ID: ${password.id}`);
+      this.storeInStorageSync(
+        `password-${password.id}`,
+        JSON.stringify(password)
+      );
+      console.log(`Password stored successfully for ID: ${password.id}`);
+    } catch (error) {
+      console.error(`Error storing password for ID: ${password.id}`, error);
+    }
   }
 
   public static async deleteEncryptedPassword(id: string): Promise<void> {
-    await this.deleteFromStorage(`password-${id}`);
+    try {
+      console.log(`Deleting encrypted password for ID: ${id}`);
+      this.deleteFromStorageSync(`password-${id}`);
+      console.log(`Password deleted successfully for ID: ${id}`);
+    } catch (error) {
+      console.error(`Error deleting password for ID: ${id}`, error);
+    }
   }
 
   public static async getExtensionSettings(): Promise<ExtensionSettings | null> {
-    const settingsJSON = await this.getFromStorage("settings");
-    return settingsJSON
-      ? (JSON.parse(settingsJSON) as ExtensionSettings)
-      : null;
+    try {
+      console.log("Retrieving extension settings.");
+      const settingsJSON = this.getFromStorageSync("settings");
+      if (!settingsJSON) {
+        console.log("No extension settings found in storage.");
+        return null;
+      }
+      console.log("Extension settings retrieved successfully.");
+      return JSON.parse(settingsJSON) as ExtensionSettings;
+    } catch (error) {
+      console.error("Error retrieving extension settings:", error);
+      return null;
+    }
   }
 
   public static async storeExtensionSettings(
     settings: ExtensionSettings
   ): Promise<void> {
-    await this.storeInStorage("settings", JSON.stringify(settings));
+    this.storeInStorageSync("settings", JSON.stringify(settings));
   }
 
-  private static async deleteFromStorage(key: string): Promise<void> {
+  private static deleteFromStorageSync(key: string): void {
     try {
-      await localStorage.removeItem(this.STORAGE_PREFIX + key);
+      localStorage.removeItem(this.STORAGE_PREFIX + key);
     } catch (error) {
       console.error("Error deleting from storage:", error);
     }
   }
 
-  public static async clearStorage(): Promise<void> {
+  public static clearStorage(): void {
     try {
-      await localStorage.clear();
+      localStorage.clear();
     } catch (error) {
       console.error("Error clearing storage:", error);
     }
   }
 
-  private static _offlineChanges: Array<{
-    id: string;
-    action: "create" | "update" | "delete";
-    data: EncryptedPassword;
-  }> = [];
-
-  public static async queueOfflineChange(
-    id: string,
-    action: "create" | "update" | "delete",
-    data: EncryptedPassword
-  ): Promise<void> {
-    this._offlineChanges.push({ id, action, data });
-  }
-
-  public static async syncOfflineChanges(): Promise<void> {
-    for (const change of this._offlineChanges) {
-      try {
-        switch (change.action) {
-          case "create":
-          case "update":
-            await this.storeEncryptedPassword(change.data);
-            break;
-          case "delete":
-            await this.deleteEncryptedPassword(change.id);
-            break;
-        }
-      } catch (error) {
-        console.error(
-          `Error syncing offline change (${change.action}) for ${change.id}:`,
-          error
-        );
-      }
-    }
-    this._offlineChanges = [];
-  }
-
-  // Encrypt data before storing
-  private static async storeInStorage(
-    key: string,
-    value: string
-  ): Promise<void> {
+  private static storeInStorageSync(key: string, value: string): void {
     try {
-      const keySet = await this.getKeysFromStorage();
-      if (!keySet) throw new Error("KeySet not found");
-
-      const encryptedValue = EncryptionService.encryptPassword(
-        {
-          encryptedData: { website: value, authToken: "", password: "" },
-          iv: "",
-          algorithm: "AES-GCM",
-          keyId: keySet.id,
-          id: "",
-          createdAt: 0,
-          modifiedAt: 0,
-          lastAccessed: 0,
-          version: 0,
-          strength: "medium",
-        },
-        keySet
-      ).encryptedData.website; // Use encryption here
-
-      await localStorage.setItem(this.STORAGE_PREFIX + key, encryptedValue);
+      localStorage.setItem(this.STORAGE_PREFIX + key, value);
     } catch (error) {
       console.error("Error storing in storage:", error);
     }
   }
 
-  // Decrypt data after retrieving
-  private static async getFromStorage(key: string): Promise<string | null> {
+  private static getFromStorageSync(key: string): string | null {
     try {
-      const encryptedValue = await localStorage.getItem(
-        this.STORAGE_PREFIX + key
-      );
-      if (!encryptedValue) return null;
-
-      const keySet = await this.getKeysFromStorage();
-      if (!keySet) throw new Error("KeySet not found");
-
-      const decryptedValue = EncryptionService.decryptPassword(
-        {
-          encryptedData: {
-            website: encryptedValue,
-            authToken: "",
-            password: "",
-          },
-          iv: "",
-          algorithm: "AES-GCM",
-          keyId: keySet.id,
-          id: "",
-          createdAt: 0,
-          modifiedAt: 0,
-          lastAccessed: 0,
-          version: 0,
-          strength: "medium",
-        },
-        keySet
-      ).encryptedData.website;
-
-      return decryptedValue;
+      return localStorage.getItem(this.STORAGE_PREFIX + key);
     } catch (error) {
       console.error("Error getting from storage:", error);
       return null;
     }
   }
 
-  public static async rotateKeys(): Promise<void> {
-    const newKeys = await EncryptionService.generateKeySet();
-    await this.storeKeys(newKeys);
-  }
-
-  public static async clearSessionData(): Promise<void> {
-    await this.deleteFromStorage("keys");
-    await this.clearStorage();
-  }
-
-  private static async resolveConflict(
-    id: string,
-    newData: EncryptedPassword
-  ): Promise<void> {
-    const currentData = await this.getEncryptedPassword(id);
-    if (!currentData || newData.modifiedAt > currentData.modifiedAt) {
-      await this.storeEncryptedPassword(newData);
-    }
-  }
-
-  private static _lastSyncTimestamp: number = 0;
-
-  public static async getSyncStatus(): Promise<{
-    offline: boolean;
-    lastSync: number;
-  }> {
-    return {
-      offline: this._offlineChanges.length > 0,
-      lastSync: this._lastSyncTimestamp,
-    };
-  }
-
-  public static async updateSyncTimestamp(): Promise<void> {
-    this._lastSyncTimestamp = Date.now();
-    await this.storeInStorage(
-      "lastSyncTimestamp",
-      String(this._lastSyncTimestamp)
-    );
-  }
-
-  public static async getAllEncryptedPasswords(): Promise<EncryptedPassword[]> {
-    const encryptedPasswords: EncryptedPassword[] = [];
+  public static async getEncryptedPasswords(): Promise<EncryptedPassword[]> {
     try {
+      console.log("Retrieving all encrypted passwords");
+      const passwords: EncryptedPassword[] = [];
+
+      // Iterate through localStorage to find password entries
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && key.startsWith(this.STORAGE_PREFIX + "password-")) {
-          const passwordJSON = await this.getFromStorage(
+        if (key?.startsWith(this.STORAGE_PREFIX + "password-")) {
+          const passwordJSON = this.getFromStorageSync(
             key.replace(this.STORAGE_PREFIX, "")
           );
           if (passwordJSON) {
-            encryptedPasswords.push(
-              JSON.parse(passwordJSON) as EncryptedPassword
-            );
+            passwords.push(JSON.parse(passwordJSON) as EncryptedPassword);
           }
         }
       }
+
+      console.log(`Retrieved ${passwords.length} passwords successfully`);
+      return passwords;
     } catch (error) {
-      console.error("Error retrieving encrypted passwords:", error);
+      console.error("Error retrieving all passwords:", error);
+      return [];
     }
-    return encryptedPasswords;
   }
 }
 
-export default DatabaseService;
+export default StoringService;
