@@ -37554,23 +37554,51 @@ module.exports = styleTagTransform;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SessionContext: () => (/* binding */ SessionContext),
 /* harmony export */   SessionProvider: () => (/* binding */ SessionProvider)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/sessionManagment/SessionManager */ "./src/services/sessionManagment/SessionManager.ts");
+/* harmony import */ var _popup_components_setup_SetupEntry__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../popup/components/setup/SetupEntry */ "./src/popup/components/setup/SetupEntry.tsx");
+/* harmony import */ var _popup_components_setup_PasswordPrompt__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../popup/components/setup/PasswordPrompt */ "./src/popup/components/setup/PasswordPrompt.tsx");
+
+
+
 
 
 const SessionProvider = ({ children, }) => {
-    console.log("SessionProvider: Rendering");
-    react__WEBPACK_IMPORTED_MODULE_1___default().useEffect(() => {
-        console.log("SessionProvider: Mounted");
-        return () => {
-            console.log("SessionProvider: Unmounted");
+    const [sessionSettings, setSessionSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [isPasswordValid, setIsPasswordValid] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [showSetup, setShowSetup] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [showPasswordPrompt, setShowPasswordPrompt] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const initializeSession = async () => {
+            try {
+                const settings = await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_2__.SessionManagementService.getSessionSettings();
+                console.log("Settings:", settings);
+                if (!settings || Object.keys(settings).length === 0) {
+                    setShowSetup(true);
+                }
+                else {
+                    setShowPasswordPrompt(true);
+                    setSessionSettings(settings);
+                }
+            }
+            catch (error) {
+                console.error("Error initializing session:", error);
+                setShowSetup(true);
+            }
         };
+        initializeSession();
     }, []);
-    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: children });
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(SessionContext.Provider, { value: { sessionSettings, isPasswordValid }, children: [showSetup && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_popup_components_setup_SetupEntry__WEBPACK_IMPORTED_MODULE_3__["default"], {}), showPasswordPrompt && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_popup_components_setup_PasswordPrompt__WEBPACK_IMPORTED_MODULE_4__["default"], {}), !showSetup && !showPasswordPrompt && isPasswordValid && children] }));
 };
+const SessionContext = react__WEBPACK_IMPORTED_MODULE_1___default().createContext({
+    sessionSettings: null,
+    isPasswordValid: false,
+});
 
 
 /***/ }),
@@ -38219,6 +38247,56 @@ const Profile = () => {
 
 /***/ }),
 
+/***/ "./src/popup/components/setup/PasswordPrompt.tsx":
+/*!*******************************************************!*\
+  !*** ./src/popup/components/setup/PasswordPrompt.tsx ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PasswordPrompt: () => (/* binding */ PasswordPrompt),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
+/* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
+/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../main */ "./src/popup/components/main.tsx");
+
+
+
+
+
+
+const PasswordPrompt = () => {
+    const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [isValid, setIsValid] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [errorMessage, setErrorMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await handleValidatePassword(password);
+    };
+    const handleValidatePassword = async (password) => {
+        const valid = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.validatePassword(password);
+        if (valid) {
+            //   await SessionManagementService.initialize(password);
+            setIsValid(true);
+        }
+        else {
+            setErrorMessage("Invalid password. Please try again.");
+            setPassword("");
+        }
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: !isValid ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "password-prompt", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Please enter your password" }), errorMessage && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-red-500 mb-4", children: errorMessage })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_2__.Input, { type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", children: "Submit" })] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_main__WEBPACK_IMPORTED_MODULE_5__["default"], {})) }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PasswordPrompt);
+
+
+/***/ }),
+
 /***/ "./src/popup/components/setup/SetupEntry.tsx":
 /*!***************************************************!*\
   !*** ./src/popup/components/setup/SetupEntry.tsx ***!
@@ -38232,9 +38310,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/upload.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/plus.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/file-key.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/upload.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/plus.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/file-key.js");
 /* harmony import */ var _ui_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/card */ "./src/popup/components/ui/card.tsx");
 /* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
@@ -38242,6 +38320,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
 /* harmony import */ var _services_StorageService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/StorageService */ "./src/services/StorageService.ts");
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../main */ "./src/popup/components/main.tsx");
+/* harmony import */ var _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/sessionManagment/SessionManager */ "./src/services/sessionManagment/SessionManager.ts");
+
 
 
 
@@ -38307,7 +38387,7 @@ const StartupScreen = ({ onKeysLoaded, onCreateAccount, }) => {
             setError("Invalid key file. Please try again.");
         }
     }, [onKeysLoaded]);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Password Manager" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Drop your key file or create a new account" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { onDragOver: handleDragOver, onDragLeave: handleDragLeave, onDrop: handleDrop, className: `border-2 border-dashed rounded-lg p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_9__["default"], { className: "mx-auto h-12 w-12 text-gray-400" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "mt-2 text-sm text-gray-600", children: "Drag and drop your key file here" })] }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", className: "mt-4", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardFooter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { onClick: onCreateAccount, className: "w-full", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"], { className: "mr-2 h-4 w-4" }), "Create New Account"] }) })] }) }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Password Manager" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Drop your key file or create a new account" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { onDragOver: handleDragOver, onDragLeave: handleDragLeave, onDrop: handleDrop, className: `border-2 border-dashed rounded-lg p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"], { className: "mx-auto h-12 w-12 text-gray-400" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "mt-2 text-sm text-gray-600", children: "Drag and drop your key file here" })] }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", className: "mt-4", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardFooter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { onClick: onCreateAccount, className: "w-full", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_11__["default"], { className: "mr-2 h-4 w-4" }), "Create New Account"] }) })] }) }));
 };
 const CreateAccountForm = ({ onAccountCreated, }) => {
     /**
@@ -38348,6 +38428,7 @@ const CreateAccountForm = ({ onAccountCreated, }) => {
             keys.Credentials = encryptedCredentials.encryptedData;
             // Store keys and handle encryption
             await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.storeKeys(keys);
+            await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
             console.log("keys are stored", keys);
             // Download keys file with new format
             const keysString = `-------private Key---------
@@ -38387,7 +38468,7 @@ ${keys.Credentials.authToken}`;
             setLoading(false);
         }
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Create Account" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Enter your credentials to get started" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Website", value: formData.server, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { server: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Auth Token", value: formData.authToken, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { authToken: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", placeholder: "Password", value: formData.password, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { password: e.target.value }))), required: true }) }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full", disabled: loading, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_11__["default"], { className: "mr-2 h-4 w-4" }), loading ? "Creating Account..." : "Create Account"] })] }) })] }) }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Create Account" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Enter your credentials to get started" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Website", value: formData.server, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { server: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Auth Token", value: formData.authToken, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { authToken: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", placeholder: "Password", value: formData.password, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { password: e.target.value }))), required: true }) }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full", disabled: loading, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_12__["default"], { className: "mr-2 h-4 w-4" }), loading ? "Creating Account..." : "Create Account"] })] }) })] }) }));
 };
 const PasswordManager = () => {
     const [stage, setStage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("startup");
@@ -38855,6 +38936,7 @@ class APIService {
     }
     static async validatePassword(password) {
         try {
+            console.log("Validating the password:", password);
             const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
             const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
                 key: storedKeys.AESKey,
@@ -38875,7 +38957,9 @@ class APIService {
             if (!response.ok) {
                 throw response;
             }
-            return (await response.json()).isValid;
+            const jsonResponse = await response.json();
+            console.log("Password is valid:", jsonResponse.isValid);
+            return jsonResponse.isValid;
         }
         catch (error) {
             return this.handleApiError(error, "SettingsPost");
@@ -39682,14 +39766,20 @@ class SessionManagementService {
         console.log("Initialized settings:", this.settings);
     }
     static async initialize() {
-        console.log("Static initialize called");
         try {
-            this.sessionSettings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.getSettingsFromStorage();
-            this.keys = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.getKeysFromStorage();
-            console.log("Session initialized successfully:", {
-                settings: this.sessionSettings,
-                hasKeys: !!this.keys,
-            });
+            console.log("Static initialize called");
+            const defaultSettings = {
+                autoLockTime: 1800000,
+                sessionTime: 86400000,
+                sessionStart: Date.now(),
+                pushNotifications: false,
+                biometricVerification: false,
+                biometricType: "fingerprint",
+                autoLockStart: Date.now(),
+                sessionExpiry: Date.now() + 86400000,
+                lastAccessTime: Date.now(),
+            };
+            await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.storeSettings(defaultSettings);
         }
         catch (error) {
             console.error("Failed to initialize session:", error);

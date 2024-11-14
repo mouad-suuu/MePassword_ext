@@ -13,8 +13,13 @@ import { Input } from "../ui/input";
 import { Alert, AlertDescription } from "../ui/alert";
 import EncryptionService from "../../../services/EncryptionService";
 import StoringService from "../../../services/StorageService";
-import { KeySet, UserCredentials } from "../../../services/types";
+import {
+  KeySet,
+  SessionSettings,
+  UserCredentials,
+} from "../../../services/types";
 import Main from "../main";
+import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
 
 const StartupScreen = ({
   onKeysLoaded,
@@ -175,6 +180,8 @@ const CreateAccountForm = ({
 
       // Store keys and handle encryption
       await StoringService.Keys.storeKeys(keys);
+
+      await SessionManagementService.initialize();
       console.log("keys are stored", keys);
 
       // Download keys file with new format

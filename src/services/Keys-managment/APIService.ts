@@ -67,6 +67,7 @@ export class APIService {
   }
   public static async validatePassword(password: string): Promise<boolean> {
     try {
+      console.log("Validating the password:", password);
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
       const decryptedCredentials =
         await CredentialCryptoService.decryptCredentials(
@@ -96,8 +97,9 @@ export class APIService {
       if (!response.ok) {
         throw response;
       }
-
-      return (await response.json()).isValid;
+      const jsonResponse = await response.json();
+      console.log("Password is valid:", jsonResponse.isValid);
+      return jsonResponse.isValid;
     } catch (error: any) {
       return this.handleApiError(error, "SettingsPost");
     }

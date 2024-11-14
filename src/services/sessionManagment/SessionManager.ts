@@ -20,7 +20,7 @@ export class SessionManagementService {
       sessionExpiry: Date.now() + 86400000,
       lastAccessTime: Date.now(),
       ...userSettings,
-    };
+    } as SessionSettings;
     console.log("Initialized settings:", this.settings);
   }
 
@@ -29,14 +29,20 @@ export class SessionManagementService {
   private static keys: KeySet | null = null;
 
   public static async initialize(): Promise<void> {
-    console.log("Static initialize called");
     try {
-      this.sessionSettings = await KeyStorage.getSettingsFromStorage();
-      this.keys = await KeyStorage.getKeysFromStorage();
-      console.log("Session initialized successfully:", {
-        settings: this.sessionSettings,
-        hasKeys: !!this.keys,
-      });
+      console.log("Static initialize called");
+      const defaultSettings: SessionSettings = {
+        autoLockTime: 1800000,
+        sessionTime: 86400000,
+        sessionStart: Date.now(),
+        pushNotifications: false,
+        biometricVerification: false,
+        biometricType: "fingerprint",
+        autoLockStart: Date.now(),
+        sessionExpiry: Date.now() + 86400000,
+        lastAccessTime: Date.now(),
+      };
+      await KeyStorage.storeSettings(defaultSettings);
     } catch (error) {
       console.error("Failed to initialize session:", error);
     }
