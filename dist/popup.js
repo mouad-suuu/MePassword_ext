@@ -597,17 +597,38 @@ video {
 .pointer-events-none {
   pointer-events: none;
 }
+.pointer-events-auto {
+  pointer-events: auto;
+}
+.fixed {
+  position: fixed;
+}
 .absolute {
   position: absolute;
 }
 .relative {
   position: relative;
 }
+.inset-0 {
+  inset: 0px;
+}
 .left-2 {
   left: 0.5rem;
 }
+.right-2 {
+  right: 0.5rem;
+}
+.top-0 {
+  top: 0px;
+}
+.top-2 {
+  top: 0.5rem;
+}
 .z-50 {
   z-index: 50;
+}
+.z-\\[100\\] {
+  z-index: 100;
 }
 .-mx-1 {
   margin-left: -0.25rem;
@@ -657,6 +678,9 @@ video {
 .inline-flex {
   display: inline-flex;
 }
+.hidden {
+  display: none;
+}
 .h-10 {
   height: 2.5rem;
 }
@@ -681,6 +705,9 @@ video {
 .h-6 {
   height: 1.5rem;
 }
+.h-8 {
+  height: 2rem;
+}
 .h-9 {
   height: 2.25rem;
 }
@@ -698,6 +725,9 @@ video {
 }
 .max-h-96 {
   max-height: 24rem;
+}
+.max-h-screen {
+  max-height: 100vh;
 }
 .min-h-96 {
   min-height: 24rem;
@@ -761,11 +791,17 @@ video {
 .flex-col {
   flex-direction: column;
 }
+.flex-col-reverse {
+  flex-direction: column-reverse;
+}
 .items-start {
   align-items: flex-start;
 }
 .items-center {
   align-items: center;
+}
+.justify-end {
+  justify-content: flex-end;
 }
 .justify-center {
   justify-content: center;
@@ -843,6 +879,9 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(59 130 246 / var(--tw-border-opacity));
 }
+.border-destructive {
+  border-color: hsl(var(--destructive));
+}
 .border-destructive\\/50 {
   border-color: hsl(var(--destructive) / 0.5);
 }
@@ -853,11 +892,19 @@ video {
 .border-input {
   border-color: hsl(var(--input));
 }
+.border-red-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity));
+}
 .border-transparent {
   border-color: transparent;
 }
 .bg-background {
   background-color: hsl(var(--background));
+}
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 .bg-blue-50 {
   --tw-bg-opacity: 1;
@@ -897,12 +944,22 @@ video {
 .bg-primary {
   background-color: hsl(var(--primary));
 }
+.bg-red-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
 .bg-secondary {
   background-color: hsl(var(--secondary));
+}
+.bg-transparent {
+  background-color: transparent;
 }
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.bg-opacity-50 {
+  --tw-bg-opacity: 0.5;
 }
 .p-1 {
   padding: 0.25rem;
@@ -946,11 +1003,22 @@ video {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
 .pl-8 {
   padding-left: 2rem;
 }
 .pr-2 {
   padding-right: 0.5rem;
+}
+.pr-8 {
+  padding-right: 2rem;
 }
 .pt-0 {
   padding-top: 0px;
@@ -1005,6 +1073,9 @@ video {
 .text-foreground {
   color: hsl(var(--foreground));
 }
+.text-foreground\\/50 {
+  color: hsl(var(--foreground) / 0.5);
+}
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -1037,9 +1108,13 @@ video {
 .text-primary-foreground {
   color: hsl(var(--primary-foreground));
 }
-.text-red-600 {
+.text-red-500 {
   --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
 }
 .text-secondary-foreground {
   color: hsl(var(--secondary-foreground));
@@ -1054,8 +1129,14 @@ video {
 .underline-offset-4 {
   text-underline-offset: 4px;
 }
+.opacity-0 {
+  opacity: 0;
+}
 .opacity-50 {
   opacity: 0.5;
+}
+.opacity-90 {
+  opacity: 0.9;
 }
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -1077,6 +1158,11 @@ video {
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.shadow-xl {
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1092,8 +1178,21 @@ video {
 .ring-offset-background {
   --tw-ring-offset-color: hsl(var(--background));
 }
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-opacity {
+  transition-property: opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -1236,6 +1335,10 @@ video {
   background-color: hsl(var(--primary) / 0.9);
 }
 
+.hover\\:bg-secondary:hover {
+  background-color: hsl(var(--secondary));
+}
+
 .hover\\:bg-secondary\\/80:hover {
   background-color: hsl(var(--secondary) / 0.8);
 }
@@ -1247,6 +1350,10 @@ video {
 .hover\\:text-amber-600:hover {
   --tw-text-opacity: 1;
   color: rgb(217 119 6 / var(--tw-text-opacity));
+}
+
+.hover\\:text-foreground:hover {
+  color: hsl(var(--foreground));
 }
 
 .hover\\:underline:hover {
@@ -1270,6 +1377,10 @@ video {
 
 .focus\\:text-accent-foreground:focus {
   color: hsl(var(--accent-foreground));
+}
+
+.focus\\:opacity-100:focus {
+  opacity: 1;
 }
 
 .focus\\:outline-none:focus {
@@ -1329,6 +1440,49 @@ video {
 
 .disabled\\:opacity-50:disabled {
   opacity: 0.5;
+}
+
+.group:hover .group-hover\\:opacity-100 {
+  opacity: 1;
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:border-muted\\/40 {
+  border-color: hsl(var(--muted) / 0.4);
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:text-red-300 {
+  --tw-text-opacity: 1;
+  color: rgb(252 165 165 / var(--tw-text-opacity));
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:hover\\:border-destructive\\/30:hover {
+  border-color: hsl(var(--destructive) / 0.3);
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:hover\\:bg-destructive:hover {
+  background-color: hsl(var(--destructive));
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:hover\\:text-destructive-foreground:hover {
+  color: hsl(var(--destructive-foreground));
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:hover\\:text-red-50:hover {
+  --tw-text-opacity: 1;
+  color: rgb(254 242 242 / var(--tw-text-opacity));
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:focus\\:ring-destructive:focus {
+  --tw-ring-color: hsl(var(--destructive));
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:focus\\:ring-red-400:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(248 113 113 / var(--tw-ring-opacity));
+}
+
+.group.destructive .group-\\[\\.destructive\\]\\:focus\\:ring-offset-red-600:focus {
+  --tw-ring-offset-color: #dc2626;
 }
 
 .peer:checked ~ .peer-checked\\:bg-blue-600 {
@@ -1406,6 +1560,21 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.data-\\[swipe\\=cancel\\]\\:translate-x-0[data-swipe="cancel"] {
+  --tw-translate-x: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.data-\\[swipe\\=end\\]\\:translate-x-\\[var\\(--radix-toast-swipe-end-x\\)\\][data-swipe="end"] {
+  --tw-translate-x: var(--radix-toast-swipe-end-x);
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.data-\\[swipe\\=move\\]\\:translate-x-\\[var\\(--radix-toast-swipe-move-x\\)\\][data-swipe="move"] {
+  --tw-translate-x: var(--radix-toast-swipe-move-x);
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .data-\\[state\\=checked\\]\\:bg-primary[data-state="checked"] {
   background-color: hsl(var(--primary));
 }
@@ -1416,6 +1585,10 @@ video {
 
 .data-\\[disabled\\]\\:opacity-50[data-disabled] {
   opacity: 0.5;
+}
+
+.data-\\[swipe\\=move\\]\\:transition-none[data-swipe="move"] {
+  transition-property: none;
 }
 
 .data-\\[state\\=open\\]\\:animate-in[data-state="open"] {
@@ -1438,8 +1611,22 @@ video {
   --tw-exit-translate-y: initial;
 }
 
+.data-\\[swipe\\=end\\]\\:animate-out[data-swipe="end"] {
+  animation-name: exit;
+  animation-duration: 150ms;
+  --tw-exit-opacity: initial;
+  --tw-exit-scale: initial;
+  --tw-exit-rotate: initial;
+  --tw-exit-translate-x: initial;
+  --tw-exit-translate-y: initial;
+}
+
 .data-\\[state\\=closed\\]\\:fade-out-0[data-state="closed"] {
   --tw-exit-opacity: 0;
+}
+
+.data-\\[state\\=closed\\]\\:fade-out-80[data-state="closed"] {
+  --tw-exit-opacity: 0.8;
 }
 
 .data-\\[state\\=open\\]\\:fade-in-0[data-state="open"] {
@@ -1470,8 +1657,46 @@ video {
   --tw-enter-translate-y: 0.5rem;
 }
 
+.data-\\[state\\=closed\\]\\:slide-out-to-right-full[data-state="closed"] {
+  --tw-exit-translate-x: 100%;
+}
+
+.data-\\[state\\=open\\]\\:slide-in-from-top-full[data-state="open"] {
+  --tw-enter-translate-y: -100%;
+}
+
 .dark\\:border-destructive:is(.dark *) {
   border-color: hsl(var(--destructive));
+}
+
+@media (min-width: 640px) {
+
+  .sm\\:bottom-0 {
+    bottom: 0px;
+  }
+
+  .sm\\:right-0 {
+    right: 0px;
+  }
+
+  .sm\\:top-auto {
+    top: auto;
+  }
+
+  .sm\\:flex-col {
+    flex-direction: column;
+  }
+
+  .data-\\[state\\=open\\]\\:sm\\:slide-in-from-bottom-full[data-state="open"] {
+    --tw-enter-translate-y: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .md\\:max-w-\\[420px\\] {
+    max-width: 420px;
+  }
 }
 
 .\\[\\&\\>span\\]\\:line-clamp-1>span {
@@ -1513,7 +1738,7 @@ video {
 .\\[\\&_p\\]\\:leading-relaxed p {
   line-height: 1.625;
 }
-`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,qBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,qBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,iBAAmB;EAAnB;AAAmB;AAAnB;EAAA,mBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA,kBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;EAAA,oBAAmB;EAAnB;AAAmB;AAAnB;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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1780,6 +2005,119 @@ var defaultAttributes = {
 
 /***/ }),
 
+/***/ "./node_modules/lucide-react/dist/esm/icons/copy.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/copy.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Copy)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Copy = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Copy", [
+  ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
+  ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
+]);
+
+
+//# sourceMappingURL=copy.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/eye-off.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/eye-off.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ EyeOff)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const EyeOff = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("EyeOff", [
+  [
+    "path",
+    {
+      d: "M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49",
+      key: "ct8e1f"
+    }
+  ],
+  ["path", { d: "M14.084 14.158a3 3 0 0 1-4.242-4.242", key: "151rxh" }],
+  [
+    "path",
+    {
+      d: "M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143",
+      key: "13bj9a"
+    }
+  ],
+  ["path", { d: "m2 2 20 20", key: "1ooewy" }]
+]);
+
+
+//# sourceMappingURL=eye-off.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/eye.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/eye.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Eye)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Eye = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Eye", [
+  [
+    "path",
+    {
+      d: "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",
+      key: "1nclc0"
+    }
+  ],
+  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+]);
+
+
+//# sourceMappingURL=eye.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-react/dist/esm/icons/file-key.js":
 /*!**************************************************************!*\
   !*** ./node_modules/lucide-react/dist/esm/icons/file-key.js ***!
@@ -1809,6 +2147,100 @@ const FileKey = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 
 
 //# sourceMappingURL=file-key.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/key.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/key.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Key)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Key = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Key", [
+  ["path", { d: "m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4", key: "g0fldk" }],
+  ["path", { d: "m21 2-9.6 9.6", key: "1j0ho8" }],
+  ["circle", { cx: "7.5", cy: "15.5", r: "5.5", key: "yqb3hr" }]
+]);
+
+
+//# sourceMappingURL=key.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/lock.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/lock.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Lock)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Lock = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Lock", [
+  ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
+  ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
+]);
+
+
+//# sourceMappingURL=lock.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/mail.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/mail.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Mail)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Mail = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Mail", [
+  ["rect", { width: "20", height: "16", x: "2", y: "4", rx: "2", key: "18n3k1" }],
+  ["path", { d: "m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7", key: "1ocrg3" }]
+]);
+
+
+//# sourceMappingURL=mail.js.map
 
 
 /***/ }),
@@ -1844,6 +2276,79 @@ const Plus = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("P
 
 /***/ }),
 
+/***/ "./node_modules/lucide-react/dist/esm/icons/settings.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/settings.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Settings)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Settings = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Settings", [
+  [
+    "path",
+    {
+      d: "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z",
+      key: "1qme2f"
+    }
+  ],
+  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+]);
+
+
+//# sourceMappingURL=settings.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/shield.js":
+/*!************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/shield.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Shield)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Shield = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Shield", [
+  [
+    "path",
+    {
+      d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+      key: "oel41y"
+    }
+  ]
+]);
+
+
+//# sourceMappingURL=shield.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-react/dist/esm/icons/upload.js":
 /*!************************************************************!*\
   !*** ./node_modules/lucide-react/dist/esm/icons/upload.js ***!
@@ -1872,6 +2377,37 @@ const Upload = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
 
 
 //# sourceMappingURL=upload.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/user.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/user.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ User)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const User = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("User", [
+  ["path", { d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", key: "975kel" }],
+  ["circle", { cx: "12", cy: "7", r: "4", key: "17ys0d" }]
+]);
+
+
+//# sourceMappingURL=user.js.map
 
 
 /***/ }),
@@ -37010,6 +37546,35 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/context/SessionContext.tsx":
+/*!****************************************!*\
+  !*** ./src/context/SessionContext.tsx ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SessionProvider: () => (/* binding */ SessionProvider)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+const SessionProvider = ({ children, }) => {
+    console.log("SessionProvider: Rendering");
+    react__WEBPACK_IMPORTED_MODULE_1___default().useEffect(() => {
+        console.log("SessionProvider: Mounted");
+        return () => {
+            console.log("SessionProvider: Unmounted");
+        };
+    }, []);
+    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: children });
+};
+
+
+/***/ }),
+
 /***/ "./src/popup/App.tsx":
 /*!***************************!*\
   !*** ./src/popup/App.tsx ***!
@@ -37024,143 +37589,632 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_setup_SetupEntry__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/setup/SetupEntry */ "./src/popup/components/setup/SetupEntry.tsx");
 
 
-// const App = () => {
-//   console.log("App component is rendering");
-//   const [activeTab, setActiveTab] = useState("passwords");
-//   const [isInitialized, setIsInitialized] = useState(false);
-//   const [needsKeyRotation, setNeedsKeyRotation] = useState(false);
-//   const [sessionStatus, setSessionStatus] = useState<{
-//     isValid: boolean;
-//     isLoading: boolean;
-//     error?: string;
-//   }>({
-//     isValid: false,
-//     isLoading: true,
-//   });
-//   useEffect(() => {
-//     console.log("Component mounted, checking session status...");
-//     checkSessionStatus();
-//     const intervalId = setInterval(() => {
-//       console.log("Checking session status...");
-//       checkSessionStatus();
-//     }, 60000);
-//     return () => {
-//       console.log("Component unmounted, clearing interval...");
-//       clearInterval(intervalId);
-//     };
-//   }, []);
-//   const checkSessionStatus = async () => {
-//     try {
-//       console.log("Validating session...");
-//       const isValid = await SessionManager.instance.validateSession();
-//       console.log("Session valid:", isValid);
-//       setSessionStatus({
-//         isValid,
-//         isLoading: false,
-//       });
-//       if (isValid) {
-//         const keySet = SessionManager.instance.getKeySet();
-//         const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
-//         const needsRotation = Date.now() - keySet.lastRotated > thirtyDaysInMs;
-//         console.log("Needs key rotation:", needsRotation);
-//         setNeedsKeyRotation(needsRotation);
-//       }
-//     } catch (error) {
-//       console.error("Error validating session:", error);
-//       setSessionStatus({
-//         isValid: false,
-//         isLoading: false,
-//         error: (error as Error).message,
-//       });
-//     }
-//   };
-//   const handleKeyRotation = async () => {
-//     try {
-//       console.log("Rotating keys...");
-//       await DatabaseService.rotateKeys();
-//       console.log("Keys rotated successfully.");
-//       setNeedsKeyRotation(false);
-//       await checkSessionStatus();
-//     } catch (error) {
-//       console.error("Error rotating keys:", error);
-//       setSessionStatus((prev) => ({
-//         ...prev,
-//         error: "Failed to rotate keys. Please try again.",
-//       }));
-//     }
-//   };
-//   const handleLogout = async () => {
-//     try {
-//       console.log("Logging out...");
-//       await SessionManager.instance.endSession();
-//       console.log("Logged out successfully.");
-//       setSessionStatus({
-//         isValid: false,
-//         isLoading: false,
-//       });
-//       setActiveTab("passwords");
-//     } catch (error) {
-//       console.error("Error logging out:", error);
-//     }
-//   };
-//   if (sessionStatus.isLoading) {
-//     return (
-//       <div className="min-w-[400px] min-h-96 bg-gray-50 flex items-center justify-center">
-//         <div className="text-gray-600">Loading...</div>
-//         <h1>4 testing the appearence</h1>
-//       </div>
-//     );
-//   }
-//   if (!sessionStatus.isValid) {
-//     return (
-//       <div className="min-w-[400px] min-h-96 bg-gray-50">
-//         <SetupEntry />
-//         {sessionStatus.error && (
-//           <Alert variant="destructive" className="mt-4">
-//             <AlertTitle>Error</AlertTitle>
-//             <h1>3 testing the appearence</h1>
-//             <AlertDescription>{sessionStatus.error}</AlertDescription>
-//           </Alert>
-//         )}
-//       </div>
-//     );
-//   }
-//   return (
-//     <div className="min-w-[400px] min-h-96 bg-gray-50">
-//       {needsKeyRotation && (
-//         <Alert variant="default" className="mb-4">
-//           <AlertTitle>Security Notice</AlertTitle>
-//           <AlertDescription>
-//             Your encryption keys need to be rotated for security.
-//             <button
-//               onClick={handleKeyRotation}
-//               className="ml-2 text-sm font-medium underline hover:text-amber-600"
-//             >
-//               Rotate Keys Now
-//             </button>
-//             <h1>2 testing the appearence</h1>
-//           </AlertDescription>
-//         </Alert>
-//       )}
-//       <Navigation
-//         activeTab={activeTab}
-//         setActiveTab={setActiveTab}
-//         onLogout={handleLogout}
-//       />
-//       <h1>1 testing the appearence</h1>
-//       <main className="p-4">
-//         {activeTab === "passwords" && <Passwords />}
-//         {activeTab === "keys" && <Keys />}
-//         {activeTab === "profile" && <Profile />}
-//         {activeTab === "settings" && <Settings />}
-//       </main>
-//     </div>
-//   );
-// };
 const App = () => {
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "min-w-[400px] min-h-96 bg-gray-50", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_setup_SetupEntry__WEBPACK_IMPORTED_MODULE_1__["default"], {}) }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
+
+
+/***/ }),
+
+/***/ "./src/popup/components/Navigation.tsx":
+/*!*********************************************!*\
+  !*** ./src/popup/components/Navigation.tsx ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Navigation: () => (/* binding */ Navigation)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/key.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/user.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/settings.js");
+/* harmony import */ var _components_ui_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ui/button */ "./src/popup/components/ui/button.tsx");
+/* harmony import */ var _components_ui_separator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ui/separator */ "./src/popup/components/ui/separator.tsx");
+
+
+
+
+const NavButton = ({ icon, label, isActive, onClick, }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_ui_button__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: isActive ? "secondary" : "ghost", size: "sm", onClick: onClick, className: "flex flex-col items-center gap-1 h-16 w-16", children: [icon, (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "text-xs", children: label })] }));
+};
+const Navigation = ({ activeTab, setActiveTab, }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-background", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-around items-center p-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], { className: "w-4 h-4" }), label: "Passwords", isActive: activeTab === "passwords", onClick: () => setActiveTab("passwords") }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], { className: "w-4 h-4" }), label: "Keys", isActive: activeTab === "keys", onClick: () => setActiveTab("keys") }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4" }), label: "Profile", isActive: activeTab === "profile", onClick: () => setActiveTab("profile") }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" }), label: "Settings", isActive: activeTab === "settings", onClick: () => setActiveTab("settings") })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_separator__WEBPACK_IMPORTED_MODULE_2__.Separator, {})] }));
+};
+
+
+/***/ }),
+
+/***/ "./src/popup/components/keys/AddKeysDialog.tsx":
+/*!*****************************************************!*\
+  !*** ./src/popup/components/keys/AddKeysDialog.tsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
+/* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
+/* harmony import */ var _ui_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/label */ "./src/popup/components/ui/label.tsx");
+/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+
+
+
+
+
+
+
+const AddKeysDialog = ({ open, onClose }) => {
+    const [website, setWebsite] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [username, setUsername] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const handleClose = () => {
+        console.log("Closing dialog and resetting state");
+        setWebsite("");
+        setUsername("");
+        setPassword("");
+        setError(null);
+        onClose();
+    };
+    // const validateInputs = (): string | null => {
+    //   if (!website.trim()) {
+    //     return "Website is required";
+    //   }
+    //   // try {
+    //   //   new URL(website); // Validate URL format
+    //   // } catch {
+    //   //   return "Please enter a valid URL (e.g., https://example.com)";
+    //   // }
+    //   // if (!username.trim()) {
+    //   //   return "Username/Email is required";
+    //   // }
+    //   // if (!password) {
+    //   //   return "Password is required";
+    //   // }
+    //   // if (password.length < 8) {
+    //   //   return "Password must be at least 8 characters long";
+    //   // }
+    //   return null;
+    // };
+    const handleSubmit = async (e) => {
+        var _a;
+        e.preventDefault();
+        setError(null);
+        setIsSubmitting(true);
+        try {
+            // Get settings
+            const settingsResponse = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.SettingGet();
+            console.log("Settings Response to add password:", settingsResponse);
+            if (!settingsResponse.ok) {
+                throw new Error("Failed to fetch encryption settings");
+            }
+            const Settings = await settingsResponse.json();
+            console.log("Parsed settings:", Settings);
+            // Check if Settings has the required data
+            if (!((_a = Settings === null || Settings === void 0 ? void 0 : Settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
+                throw new Error("No public key found in settings");
+            }
+            // Import public key
+            let publicKey;
+            try {
+                publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
+            }
+            catch (error) {
+                throw new Error("Invalid public key format");
+            }
+            // Encrypt data
+            let encryptedData;
+            try {
+                encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
+                    website: website.trim(),
+                    user: username.trim(),
+                    password,
+                }, publicKey);
+            }
+            catch (error) {
+                throw new Error("Failed to encrypt password data");
+            }
+            // Post encrypted data
+            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.KeysPost({
+                id: (0,uuid__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+                website: encryptedData.website,
+                user: encryptedData.user,
+                password: encryptedData.password,
+            });
+            if (!response.ok) {
+                throw new Error(`Failed to save password: ${response.statusText}`);
+            }
+            handleClose();
+        }
+        catch (error) {
+            console.error("Error saving password:", error);
+            setError(error instanceof Error
+                ? error.message
+                : "An unexpected error occurred. Please try again.");
+        }
+        finally {
+            setIsSubmitting(false);
+        }
+    };
+    function handleAddPassword() {
+        console.log("encrypred data:", {
+            website,
+            username,
+            password,
+        });
+    }
+    // Add loading state for better UX
+    const [isSubmitting, setIsSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white p-6 rounded-lg shadow-xl w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Add New Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "website", children: "Website" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Where to use", value: website, onChange: (e) => setWebsite(e.target.value), placeholder: "( a website like https://example.com )", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "username", children: "Username/Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Key name", value: username, onChange: (e) => setUsername(e.target.value), placeholder: "Token, API key, etc...", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "password", children: "The Key" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Key", type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", disabled: isSubmitting, children: isSubmitting ? "Saving..." : "Save Password" })] })] })] }) }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddKeysDialog);
+
+
+/***/ }),
+
+/***/ "./src/popup/components/keys/keys.tsx":
+/*!********************************************!*\
+  !*** ./src/popup/components/keys/keys.tsx ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
+/* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
+/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
+/* harmony import */ var _services_StorageService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/StorageService */ "./src/services/StorageService.ts");
+/* harmony import */ var _AddKeysDialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AddKeysDialog */ "./src/popup/components/keys/AddKeysDialog.tsx");
+
+
+
+
+
+
+
+const Keys = () => {
+    const [keys, setKeys] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [settings, setSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [showAddDialog, setShowAddDialog] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const fetchKeys = async () => {
+            try {
+                // Get stored keys and credentials
+                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.SettingGet();
+                console.log("Settings Response status:", response.status);
+                const responseText = await response.text();
+                console.log("Settings received");
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch settings: ${response.status} - ${responseText}`);
+                }
+                let fetchedSettings;
+                try {
+                    fetchedSettings = JSON.parse(responseText);
+                    console.log("Settings parsed successfully");
+                    setSettings(fetchedSettings);
+                }
+                catch (parseError) {
+                    throw new Error(`Invalid JSON response: ${parseError}\nReceived: ${responseText.substring(0, 200)}...`);
+                }
+            }
+            catch (error) {
+                console.error("Settings fetch error:", error);
+                setError(`Settings Error: ${error}`);
+                return;
+            }
+            try {
+                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.KeysGet();
+                console.log("Keys Response status:", response.status);
+                const responseText = await response.text();
+                console.log("Keys received:", responseText.substring(0, 100));
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch keys: ${response.status}`);
+                }
+                const data = JSON.parse(responseText);
+                const storedKeys = await _services_StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].Keys.getKeysFromStorage();
+                if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
+                    throw new Error("No private key found in stored credentials");
+                }
+                const privateKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
+                if (!privateKey) {
+                    throw new Error("Failed to import private key");
+                }
+                if (!data.keys || data.keys.length === 0) {
+                    console.log("No keys found in data");
+                    setKeys([]);
+                    return;
+                }
+                try {
+                    const decryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.decryptWithRSA(data.keys, privateKey);
+                    console.log("Decrypted Data:", data);
+                    if (!decryptedData) {
+                        throw new Error("Decryption returned null or undefined");
+                    }
+                    if (Array.isArray(decryptedData)) {
+                        setKeys(decryptedData.map((item) => ({
+                            id: data.keys.id,
+                            website: item.website,
+                            user: item.user,
+                            password: item.password,
+                        })));
+                    }
+                    else {
+                        throw new Error("Decrypted data is not an array");
+                    }
+                }
+                catch (decryptError) {
+                    console.error("Decryption error:", decryptError);
+                    setError(`Failed to decrypt keys: ${decryptError}`);
+                    setKeys([]);
+                }
+            }
+            catch (error) {
+                console.error("Keys fetch error:", error);
+                setError(error instanceof Error
+                    ? `Keys Error: ${error.message}`
+                    : "Failed to fetch keys");
+            }
+        };
+        fetchKeys();
+    }, []);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Keys" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(keys) && keys.length > 0 ? (keys.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(KeyItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No keys saved yet. Click \"Add New\" to add your first key." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddKeysDialog__WEBPACK_IMPORTED_MODULE_5__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false) })] }));
+};
+const KeyItem = ({ website, user, password, }) => {
+    const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4 text-gray-600" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4 text-gray-600" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "w-4 h-4 text-gray-600" }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Keys);
+
+
+/***/ }),
+
+/***/ "./src/popup/components/main.tsx":
+/*!***************************************!*\
+  !*** ./src/popup/components/main.tsx ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/settings.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _keys_keys__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./keys/keys */ "./src/popup/components/keys/keys.tsx");
+/* harmony import */ var _password_Passwords__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./password/Passwords */ "./src/popup/components/password/Passwords.tsx");
+/* harmony import */ var _profile_profile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./profile/profile */ "./src/popup/components/profile/profile.tsx");
+/* harmony import */ var _ui_alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/alert */ "./src/popup/components/ui/alert.tsx");
+/* harmony import */ var _Navigation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Navigation */ "./src/popup/components/Navigation.tsx");
+
+
+
+
+
+
+
+
+const Main = () => {
+    const [activeTab, setActiveTab] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("passwords");
+    const [needsKeyRotation, setNeedsKeyRotation] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const handleLogout = async () => {
+        try {
+            // TODO: Implement logout functionality
+            console.log("Logging out...");
+            setActiveTab("passwords");
+        }
+        catch (error) {
+            console.error("Error logging out:", error);
+        }
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [needsKeyRotation && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "default", className: "mb-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertTitle, { children: "Security Notice" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: ["Your encryption keys need to be rotated for security.", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: () => setNeedsKeyRotation(false), className: "ml-2 text-sm font-medium underline hover:text-amber-600", children: "Rotate Keys Now" })] })] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Navigation__WEBPACK_IMPORTED_MODULE_6__.Navigation, { activeTab: activeTab, setActiveTab: setActiveTab }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("main", { className: "p-4", children: [activeTab === "passwords" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_password_Passwords__WEBPACK_IMPORTED_MODULE_3__["default"], {}), activeTab === "keys" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_keys_keys__WEBPACK_IMPORTED_MODULE_2__["default"], {}), activeTab === "profile" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_profile_profile__WEBPACK_IMPORTED_MODULE_4__["default"], {}), activeTab === "settings" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], {})] })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Main);
+
+
+/***/ }),
+
+/***/ "./src/popup/components/password/AddPasswordDialog.tsx":
+/*!*************************************************************!*\
+  !*** ./src/popup/components/password/AddPasswordDialog.tsx ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
+/* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
+/* harmony import */ var _ui_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/label */ "./src/popup/components/ui/label.tsx");
+/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+
+
+
+
+
+
+
+const AddPasswordDialog = ({ open, onClose, }) => {
+    const [website, setWebsite] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [username, setUsername] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const handleClose = () => {
+        console.log("Closing dialog and resetting state");
+        setWebsite("");
+        setUsername("");
+        setPassword("");
+        setError(null);
+        onClose();
+    };
+    // const validateInputs = (): string | null => {
+    //   if (!website.trim()) {
+    //     return "Website is required";
+    //   }
+    //   // try {
+    //   //   new URL(website); // Validate URL format
+    //   // } catch {
+    //   //   return "Please enter a valid URL (e.g., https://example.com)";
+    //   // }
+    //   // if (!username.trim()) {
+    //   //   return "Username/Email is required";
+    //   // }
+    //   // if (!password) {
+    //   //   return "Password is required";
+    //   // }
+    //   // if (password.length < 8) {
+    //   //   return "Password must be at least 8 characters long";
+    //   // }
+    //   return null;
+    // };
+    const handleSubmit = async (e) => {
+        var _a;
+        e.preventDefault();
+        setError(null);
+        setIsSubmitting(true);
+        try {
+            // Get settings
+            const settingsResponse = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.SettingGet();
+            console.log("Settings Response to add password:", settingsResponse);
+            if (!settingsResponse.ok) {
+                throw new Error("Failed to fetch encryption settings");
+            }
+            const Settings = await settingsResponse.json();
+            console.log("Parsed settings:", Settings);
+            // Check if Settings has the required data
+            if (!((_a = Settings === null || Settings === void 0 ? void 0 : Settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
+                throw new Error("No public key found in settings");
+            }
+            // Import public key
+            let publicKey;
+            try {
+                publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
+            }
+            catch (error) {
+                throw new Error("Invalid public key format");
+            }
+            // Encrypt data
+            let encryptedData;
+            try {
+                encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
+                    website: website.trim(),
+                    user: username.trim(),
+                    password,
+                }, publicKey);
+            }
+            catch (error) {
+                throw new Error("Failed to encrypt password data");
+            }
+            // Post encrypted data
+            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.PasswordPost({
+                id: (0,uuid__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+                website: encryptedData.website,
+                user: encryptedData.user,
+                password: encryptedData.password,
+            });
+            if (!response.ok) {
+                throw new Error(`Failed to save password: ${response.statusText}`);
+            }
+            handleClose();
+        }
+        catch (error) {
+            console.error("Error saving password:", error);
+            setError(error instanceof Error
+                ? error.message
+                : "An unexpected error occurred. Please try again.");
+        }
+        finally {
+            setIsSubmitting(false);
+        }
+    };
+    function handleAddPassword() {
+        console.log("encrypred data:", {
+            website,
+            username,
+            password,
+        });
+    }
+    // Add loading state for better UX
+    const [isSubmitting, setIsSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white p-6 rounded-lg shadow-xl w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Add New Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "website", children: "Website" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "website", value: website, onChange: (e) => setWebsite(e.target.value), placeholder: "https://example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "username", children: "Username/Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "username", value: username, onChange: (e) => setUsername(e.target.value), placeholder: "user@example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "password", children: "Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "password", type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", disabled: isSubmitting, children: isSubmitting ? "Saving..." : "Save Password" })] })] })] }) }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddPasswordDialog);
+
+
+/***/ }),
+
+/***/ "./src/popup/components/password/Passwords.tsx":
+/*!*****************************************************!*\
+  !*** ./src/popup/components/password/Passwords.tsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
+/* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
+/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
+/* harmony import */ var _services_StorageService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/StorageService */ "./src/services/StorageService.ts");
+/* harmony import */ var _AddPasswordDialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AddPasswordDialog */ "./src/popup/components/password/AddPasswordDialog.tsx");
+
+
+
+
+
+
+
+const Passwords = () => {
+    const [passwords, setPasswords] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [settings, setSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [showAddDialog, setShowAddDialog] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const fetchPasswords = async () => {
+            try {
+                // Get stored keys and credentials
+                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.SettingGet();
+                console.log("Settings Response status:", response.status);
+                const responseText = await response.text();
+                console.log("Settings received");
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch settings: ${response.status} - ${responseText}`);
+                }
+                let fetchedSettings;
+                try {
+                    fetchedSettings = JSON.parse(responseText);
+                    console.log("Settings parsed successfully");
+                    setSettings(fetchedSettings);
+                }
+                catch (parseError) {
+                    throw new Error(`Invalid JSON response: ${parseError}\nReceived: ${responseText.substring(0, 200)}...`);
+                }
+            }
+            catch (error) {
+                console.error("Settings fetch error:", error);
+                setError(`Settings Error: ${error}`);
+                return;
+            }
+            try {
+                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.PasswordsGet();
+                console.log("Passwords Response status:", response.status);
+                const responseText = await response.text();
+                console.log("Passwords received:", responseText.substring(0, 100));
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch passwords: ${response.status}`);
+                }
+                const data = JSON.parse(responseText);
+                const storedKeys = await _services_StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].Keys.getKeysFromStorage();
+                if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
+                    throw new Error("No private key found in stored credentials");
+                }
+                const privateKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
+                if (!privateKey) {
+                    throw new Error("Failed to import private key");
+                }
+                try {
+                    const decryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.decryptWithRSA(data.passwords, privateKey);
+                    console.log("Decrypted Data:", data);
+                    if (!decryptedData) {
+                        throw new Error("Decryption returned null or undefined");
+                    }
+                    if (Array.isArray(decryptedData)) {
+                        setPasswords(decryptedData.map((item) => ({
+                            id: data.passwords.id,
+                            website: item.website,
+                            user: item.user,
+                            password: item.password,
+                        })));
+                    }
+                    else {
+                        throw new Error("Decrypted data is not an array");
+                    }
+                }
+                catch (decryptError) {
+                    console.error("Decryption error:", decryptError);
+                    setError(`Failed to decrypt passwords: ${decryptError}`);
+                    setPasswords([]);
+                }
+            }
+            catch (error) {
+                console.error("Passwords fetch error:", error);
+                setError(error instanceof Error
+                    ? `Passwords Error: ${error.message}`
+                    : "Failed to fetch passwords");
+            }
+        };
+        fetchPasswords();
+    }, []);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_5__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false) })] }));
+};
+const PasswordItem = ({ website, user, password, }) => {
+    const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "w-4 h-4 " }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Passwords);
+
+
+/***/ }),
+
+/***/ "./src/popup/components/profile/profile.tsx":
+/*!**************************************************!*\
+  !*** ./src/popup/components/profile/profile.tsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/mail.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/key.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/shield.js");
+/* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
+
+
+
+const ProfileSection = ({ icon, title, content, }) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex items-start space-x-3 p-4 bg-white rounded-lg shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "p-2 bg-blue-50 rounded-full", children: icon }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: title }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-sm text-gray-600", children: content })] })] }));
+const Profile = () => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex items-center space-x-4 mb-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "text-2xl text-white font-semibold", children: "JD" }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "John Doe" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-sm text-gray-600", children: "Premium Account" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-3", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ProfileSection, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_2__["default"], { className: "w-5 h-5 text-blue-600" }), title: "Email", content: "john.doe@example.com" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ProfileSection, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], { className: "w-5 h-5 text-blue-600" }), title: "Password Last Changed", content: "2 months ago" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ProfileSection, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], { className: "w-5 h-5 text-blue-600" }), title: "Two-Factor Authentication", content: "Enabled" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_1__.Button, { className: "w-full mt-6 bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors", children: "Sign Out" })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Profile);
 
 
 /***/ }),
@@ -37178,15 +38232,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/upload.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/plus.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/file-key.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/upload.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/plus.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/file-key.js");
 /* harmony import */ var _ui_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/card */ "./src/popup/components/ui/card.tsx");
 /* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
 /* harmony import */ var _ui_alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ui/alert */ "./src/popup/components/ui/alert.tsx");
-/* harmony import */ var _services_Keys_managment_Encrypt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/Keys-managment/Encrypt */ "./src/services/Keys-managment/Encrypt.ts");
-/* harmony import */ var _services_db__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/db */ "./src/services/db.ts");
+/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
+/* harmony import */ var _services_StorageService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/StorageService */ "./src/services/StorageService.ts");
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../main */ "./src/popup/components/main.tsx");
+
 
 
 
@@ -37216,22 +38272,53 @@ const StartupScreen = ({ onKeysLoaded, onCreateAccount, }) => {
             return;
         try {
             const text = await file.text();
-            const keys = JSON.parse(text.split("---")[1]); // Extract keys between dashes
-            await _services_db__WEBPACK_IMPORTED_MODULE_7__["default"].storeKeys(keys);
+            const lines = text.split("\n");
+            const keys = {
+                privateKey: "",
+                AESKey: "",
+                IV: "",
+                Credentials: {
+                    server: "",
+                    authToken: "",
+                },
+            };
+            // Parse the file content
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].includes("private Key")) {
+                    keys.privateKey = lines[i + 1].trim();
+                }
+                else if (lines[i].includes("AES key")) {
+                    keys.AESKey = lines[i + 1].trim();
+                }
+                else if (lines[i].includes("-------iv")) {
+                    keys.IV = lines[i + 1].trim();
+                }
+                else if (lines[i].includes("server")) {
+                    keys.Credentials.server = lines[i + 1].trim();
+                }
+                else if (lines[i].includes("auth key")) {
+                    keys.Credentials.authToken = lines[i + 1].trim();
+                }
+            }
+            await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.storeKeys(keys);
             onKeysLoaded(keys);
         }
         catch (err) {
             setError("Invalid key file. Please try again.");
         }
     }, [onKeysLoaded]);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Password Manager" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Drop your key file or create a new account" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { onDragOver: handleDragOver, onDragLeave: handleDragLeave, onDrop: handleDrop, className: `border-2 border-dashed rounded-lg p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "mx-auto h-12 w-12 text-gray-400" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "mt-2 text-sm text-gray-600", children: "Drag and drop your key file here" })] }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", className: "mt-4", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardFooter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { onClick: onCreateAccount, className: "w-full", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_9__["default"], { className: "mr-2 h-4 w-4" }), "Create New Account"] }) })] }) }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Password Manager" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Drop your key file or create a new account" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { onDragOver: handleDragOver, onDragLeave: handleDragLeave, onDrop: handleDrop, className: `border-2 border-dashed rounded-lg p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_9__["default"], { className: "mx-auto h-12 w-12 text-gray-400" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "mt-2 text-sm text-gray-600", children: "Drag and drop your key file here" })] }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", className: "mt-4", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardFooter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { onClick: onCreateAccount, className: "w-full", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"], { className: "mr-2 h-4 w-4" }), "Create New Account"] }) })] }) }));
 };
 const CreateAccountForm = ({ onAccountCreated, }) => {
+    /**
+     *  TODO: encrypt the cridentials before saving them
+     *  TODO: send the password and public key to the server qith the settings
+     * Done
+     */
     const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
-        website: "",
+        server: "",
         authToken: "",
         password: "",
-        notes: "", // Optional
     });
     const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
@@ -37242,74 +38329,53 @@ const CreateAccountForm = ({ onAccountCreated, }) => {
         try {
             // Generate key components with proper typing
             const keys = {
-                id: crypto.randomUUID(),
-                version: 1,
-                created: Date.now(),
-                lastRotated: Date.now(),
-                encryption: {
-                    publicKey: {
-                        key: "",
-                        algorithm: "RSA-OAEP",
-                        length: 4096,
-                        format: "spki",
-                    },
-                    privateKey: {
-                        key: "",
-                        algorithm: "RSA-OAEP",
-                        length: 4096,
-                        format: "pkcs8",
-                        protected: false,
-                    },
-                },
-                dataKey: {
-                    key: "",
-                    algorithm: "AES-GCM",
-                    length: 256,
-                    iv: "",
+                privateKey: "",
+                AESKey: "",
+                IV: "",
+                Credentials: {
+                    server: "",
+                    authToken: "",
+                    password: "",
                 },
             };
-            const { rsaKeyPair, aesKey, formattedOutput } = await _services_Keys_managment_Encrypt__WEBPACK_IMPORTED_MODULE_6__["default"].generateKeyComponents();
-            // Create and store session key
-            const sessionKey = _services_Keys_managment_Encrypt__WEBPACK_IMPORTED_MODULE_6__["default"].generateSessionKey();
-            _services_Keys_managment_Encrypt__WEBPACK_IMPORTED_MODULE_6__["default"].storeSessionData(sessionKey, aesKey, 1800000); // 30 minutes
-            // Update the keys with generated values
-            keys.encryption = rsaKeyPair;
-            keys.dataKey = aesKey;
-            // Encrypt credentials
-            const { encryptedData, formattedOutput: encryptedOutput } = await _services_Keys_managment_Encrypt__WEBPACK_IMPORTED_MODULE_6__["default"].encryptCredentials(formData, keys.dataKey);
-            // Send to API
-            const apiResponse = await _services_Keys_managment_Encrypt__WEBPACK_IMPORTED_MODULE_6__["default"].prepareAndSendAPISettings(encryptedData, aesKey, rsaKeyPair.publicKey.key);
-            if (!apiResponse.ok) {
-                throw new Error("Failed to setup API settings");
-            }
-            // Store encrypted data and keys
-            await _services_db__WEBPACK_IMPORTED_MODULE_7__["default"].storeKeys(keys);
-            await _services_db__WEBPACK_IMPORTED_MODULE_7__["default"].storeEncryptedPassword(encryptedData);
-            // Generate key file content with encrypted credentials
-            const keyFileContent = `----------PRIVATEKEY----------------
-${keys.encryption.privateKey.key}
-----------PUBLICKEY----------------
-${keys.encryption.publicKey.key}
-----------AES-GCM------------------
-${keys.dataKey.key}
-----------IV----------------------
-${keys.dataKey.iv}
-----------ENCRYPTED-WEBSITE--------
-${encryptedData.website}
-----------ENCRYPTED-AUTH----------
-${encryptedData.authToken}
-----------METADATA----------------
-${keys.id}|${keys.version}|${keys.created}|${keys.lastRotated}`;
-            // Create and download key file
-            const blob = new Blob([keyFileContent], { type: "text/plain" });
+            // Generate encryption keys
+            const { rsaKeyPair, aesKey } = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__["default"].KeyGeneration.generateKeyComponents();
+            // Update keys with generated values
+            keys.privateKey = rsaKeyPair.privateKey.key;
+            keys.AESKey = aesKey.key;
+            keys.IV = aesKey.iv;
+            const encryptedCredentials = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__["default"].CredentialCrypto.encryptCredentials(formData, aesKey);
+            keys.Credentials = encryptedCredentials.encryptedData;
+            // Store keys and handle encryption
+            await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.storeKeys(keys);
+            console.log("keys are stored", keys);
+            // Download keys file with new format
+            const keysString = `-------private Key---------
+${keys.privateKey}
+-------AES key-------------
+${keys.AESKey}
+-------iv-------------
+${keys.IV}
+--------server----------
+${keys.Credentials.server}
+-------auth key-------
+${keys.Credentials.authToken}`;
+            const blob = new Blob([keysString], { type: "text/plain" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "password-manager-keys.txt";
+            a.download = "mepassword-keys.txt";
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            // Clean up session data
-            _services_Keys_managment_Encrypt__WEBPACK_IMPORTED_MODULE_6__["default"].clearSessionData(sessionKey);
+            try {
+                await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__["default"].API.SettingsPost(rsaKeyPair.publicKey.key);
+                console.log("settings sent to API");
+            }
+            catch (error) {
+                console.error("Error sending settings to API:", error);
+            }
             onAccountCreated(keys);
         }
         catch (err) {
@@ -37321,7 +38387,7 @@ ${keys.id}|${keys.version}|${keys.created}|${keys.lastRotated}`;
             setLoading(false);
         }
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Create Account" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Enter your credentials to get started" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Website", value: formData.website, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { website: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Auth Token", value: formData.authToken, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { authToken: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", placeholder: "Password", value: formData.password, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { password: e.target.value }))), required: true }) }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full", disabled: loading, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_10__["default"], { className: "mr-2 h-4 w-4" }), loading ? "Creating Account..." : "Create Account"] })] }) })] }) }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Create Account" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Enter your credentials to get started" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Website", value: formData.server, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { server: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Auth Token", value: formData.authToken, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { authToken: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", placeholder: "Password", value: formData.password, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { password: e.target.value }))), required: true }) }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full", disabled: loading, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_11__["default"], { className: "mr-2 h-4 w-4" }), loading ? "Creating Account..." : "Create Account"] })] }) })] }) }));
 };
 const PasswordManager = () => {
     const [stage, setStage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("startup");
@@ -37343,7 +38409,7 @@ const PasswordManager = () => {
         case "create":
             return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(CreateAccountForm, { onAccountCreated: handleAccountCreated });
         case "main":
-            return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: "Main app interface goes here" });
+            return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_main__WEBPACK_IMPORTED_MODULE_8__["default"], {});
         default:
             return null;
     }
@@ -37588,6 +38654,89 @@ Input.displayName = "Input";
 
 /***/ }),
 
+/***/ "./src/popup/components/ui/label.tsx":
+/*!*******************************************!*\
+  !*** ./src/popup/components/ui/label.tsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Label: () => (/* binding */ Label)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _radix_ui_react_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @radix-ui/react-label */ "./node_modules/@radix-ui/react-label/dist/index.mjs");
+/* harmony import */ var class_variance_authority__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! class-variance-authority */ "./node_modules/class-variance-authority/dist/index.mjs");
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils */ "./src/popup/lib/utils.ts");
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+
+
+
+
+
+const labelVariants = (0,class_variance_authority__WEBPACK_IMPORTED_MODULE_2__.cva)("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70");
+const Label = react__WEBPACK_IMPORTED_MODULE_1__.forwardRef((_a, ref) => {
+    var { className } = _a, props = __rest(_a, ["className"]);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_radix_ui_react_label__WEBPACK_IMPORTED_MODULE_4__.Root, Object.assign({ ref: ref, className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_3__.cn)(labelVariants(), className) }, props)));
+});
+Label.displayName = _radix_ui_react_label__WEBPACK_IMPORTED_MODULE_4__.Root.displayName;
+
+
+
+/***/ }),
+
+/***/ "./src/popup/components/ui/separator.tsx":
+/*!***********************************************!*\
+  !*** ./src/popup/components/ui/separator.tsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Separator: () => (/* binding */ Separator)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _radix_ui_react_separator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @radix-ui/react-separator */ "./node_modules/@radix-ui/react-separator/dist/index.mjs");
+/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/utils */ "./src/popup/lib/utils.ts");
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+
+
+
+
+const Separator = react__WEBPACK_IMPORTED_MODULE_1__.forwardRef((_a, ref) => {
+    var { className, orientation = "horizontal", decorative = true } = _a, props = __rest(_a, ["className", "orientation", "decorative"]);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_radix_ui_react_separator__WEBPACK_IMPORTED_MODULE_3__.Root, Object.assign({ ref: ref, decorative: decorative, orientation: orientation, className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_2__.cn)("shrink-0 bg-border", orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]", className) }, props)));
+});
+Separator.displayName = _radix_ui_react_separator__WEBPACK_IMPORTED_MODULE_3__.Root.displayName;
+
+
+
+/***/ }),
+
 /***/ "./src/popup/lib/utils.ts":
 /*!********************************!*\
   !*** ./src/popup/lib/utils.ts ***!
@@ -37609,17 +38758,824 @@ function cn(...inputs) {
 
 /***/ }),
 
-/***/ "./src/services/Keys-managment/Encrypt.ts":
-/*!************************************************!*\
-  !*** ./src/services/Keys-managment/Encrypt.ts ***!
-  \************************************************/
+/***/ "./src/services/EncryptionService.ts":
+/*!*******************************************!*\
+  !*** ./src/services/EncryptionService.ts ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* harmony import */ var _Keys_managment_KeyGeneration__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Keys-managment/KeyGeneration */ "./src/services/Keys-managment/KeyGeneration.ts");
+/* harmony import */ var _Keys_managment_CredentialCrypto__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Keys-managment/CredentialCrypto */ "./src/services/Keys-managment/CredentialCrypto.ts");
+/* harmony import */ var _Keys_managment_ZeroKnowledgeProof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Keys-managment/ZeroKnowledgeProof */ "./src/services/Keys-managment/ZeroKnowledgeProof.ts");
+/* harmony import */ var _sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sessionManagment/SessionManager */ "./src/services/sessionManagment/SessionManager.ts");
+/* harmony import */ var _Keys_managment_APIService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Keys-managment/APIService */ "./src/services/Keys-managment/APIService.ts");
+/* harmony import */ var _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Keys-managment/CryptoUtils */ "./src/services/Keys-managment/CryptoUtils.ts");
+
+
+
+
+
+
+class EncryptionService {
+}
+EncryptionService.KeyGeneration = _Keys_managment_KeyGeneration__WEBPACK_IMPORTED_MODULE_0__.KeyGenerationService;
+EncryptionService.CredentialCrypto = _Keys_managment_CredentialCrypto__WEBPACK_IMPORTED_MODULE_1__.CredentialCryptoService;
+EncryptionService.ZeroKnowledgeProof = _Keys_managment_ZeroKnowledgeProof__WEBPACK_IMPORTED_MODULE_2__.ZeroKnowledgeProofService;
+EncryptionService.Session = _sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_3__.SessionManagementService;
+EncryptionService.API = _Keys_managment_APIService__WEBPACK_IMPORTED_MODULE_4__.APIService;
+EncryptionService.Utils = _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_5__.CryptoUtils;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EncryptionService);
+
+
+/***/ }),
+
+/***/ "./src/services/Keys-managment/APIService.ts":
+/*!***************************************************!*\
+  !*** ./src/services/Keys-managment/APIService.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   APIService: () => (/* binding */ APIService)
+/* harmony export */ });
+/* harmony import */ var _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CredentialCrypto */ "./src/services/Keys-managment/CredentialCrypto.ts");
+/* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+
+
+
+class APIService {
+    static async handleApiError(error, endpoint) {
+        if (error instanceof Response) {
+            const errorBody = await error
+                .text()
+                .catch(() => "Unable to read error response");
+            throw new Error(`API ${endpoint} failed with status ${error.status}: ${errorBody}`);
+        }
+        if (error instanceof Error) {
+            throw new Error(`${endpoint} error: ${error.message}`);
+        }
+        throw new Error(`Unexpected ${endpoint} error: ${String(error)}`);
+    }
+    static async SettingsPost(publicKey) {
+        try {
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/settings`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                },
+                body: JSON.stringify({
+                    publicKey: publicKey,
+                    password: decryptedCredentials.password,
+                    deviceId: (0,uuid__WEBPACK_IMPORTED_MODULE_2__["default"])(),
+                    timestamp: Date.now(),
+                }),
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "SettingsPost");
+        }
+    }
+    static async validatePassword(password) {
+        try {
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/settings/validate`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                },
+                body: JSON.stringify({
+                    password: password,
+                }),
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return (await response.json()).isValid;
+        }
+        catch (error) {
+            return this.handleApiError(error, "SettingsPost");
+        }
+    }
+    static async SettingGet() {
+        try {
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/settings`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "SettingGet");
+        }
+    }
+    static async SettingsPut(settings) {
+        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+        try {
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            }).catch((error) => {
+                throw new Error(`Credential decryption failed: ${error.message}`);
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/settings`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                },
+                body: JSON.stringify(settings),
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "SettingsPut");
+        }
+    }
+    static async PasswordsGet() {
+        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+        try {
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "PasswordsGet");
+        }
+    }
+    static async PasswordPost(data) {
+        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+        try {
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            }).catch((error) => {
+                throw new Error(`Credential decryption failed: ${error.message}`);
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                },
+                body: JSON.stringify(data),
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "PasswordPost");
+        }
+    }
+    static async PasswordPut(data) {
+        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+        try {
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            }).catch((error) => {
+                throw new Error(`Credential decryption failed: ${error.message}`);
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                },
+                body: JSON.stringify(data),
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "PasswordPut");
+        }
+    }
+    static async KeysGet() {
+        try {
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/keys`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "KeysGet");
+        }
+    }
+    static async KeysPost(data) {
+        try {
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/keys `, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                },
+                body: JSON.stringify(data),
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "KeysPost");
+        }
+    }
+    static async KeysPut(data) {
+        try {
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            });
+            const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
+                },
+                body: JSON.stringify(data),
+            });
+            if (!response.ok) {
+                throw response;
+            }
+            return response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "KeysPut");
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/services/Keys-managment/CredentialCrypto.ts":
+/*!*********************************************************!*\
+  !*** ./src/services/Keys-managment/CredentialCrypto.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CredentialCryptoService: () => (/* binding */ CredentialCryptoService)
+/* harmony export */ });
+/* harmony import */ var _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CryptoUtils */ "./src/services/Keys-managment/CryptoUtils.ts");
+/* harmony import */ var _additionals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./additionals */ "./src/services/Keys-managment/additionals.ts");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+
+
+ // Importing UUID library
+class CredentialCryptoService {
+    static async encryptCredentials(credentials, aesKey) {
+        const key = await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.importAESKey(aesKey.key);
+        const iv = _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.base64ToBuffer(aesKey.iv);
+        const encryptedData = {
+            server: await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.encryptString(credentials.server, key, iv),
+            authToken: await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.encryptString(credentials.authToken, key, iv),
+            password: credentials.password
+                ? await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.encryptString(credentials.password, key, iv)
+                : undefined,
+        };
+        const formattedOutput = [
+            "----------encrypted website----------------",
+            encryptedData.server,
+            "----------encrypted authkey----------------",
+            encryptedData.authToken,
+            credentials.password
+                ? "----------encrypted password----------------\n" +
+                    encryptedData.password
+                : "",
+        ].join("\n");
+        return { encryptedData, formattedOutput };
+    }
+    static async decryptCredentials(encryptedData, aesKey) {
+        try {
+            const key = await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.importAESKey(aesKey.key);
+            const iv = _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.base64ToBuffer(aesKey.iv);
+            return {
+                server: await this.decryptString(encryptedData.server, key, iv),
+                authToken: await this.decryptString(encryptedData.authToken, key, iv),
+                password: encryptedData.password
+                    ? await this.decryptString(encryptedData.password, key, iv)
+                    : undefined,
+            };
+        }
+        catch (error) {
+            console.error("Decryption failed:", error);
+            throw new Error("Failed to decrypt credentials.");
+        }
+    }
+    static async encryptPassword(password, keySet) {
+        const method = "encryptPassword";
+        console.log("[DEBUG] Input password structure:", {
+            website: (password === null || password === void 0 ? void 0 : password.website) ? "[PRESENT]" : "[MISSING]",
+            user: (password === null || password === void 0 ? void 0 : password.user) ? "[PRESENT]" : "[MISSING]",
+            password: (password === null || password === void 0 ? void 0 : password.password) ? "[PRESENT]" : "[MISSING]",
+        });
+        try {
+            if (!(password === null || password === void 0 ? void 0 : password.website) || !(password === null || password === void 0 ? void 0 : password.user) || !(password === null || password === void 0 ? void 0 : password.password)) {
+                throw new Error("Missing required password credentials");
+            }
+            const aesKey = await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.importAESKey(keySet.AESKey);
+            const iv = _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.base64ToBuffer(keySet.IV);
+            const encryptedData = {
+                id: (0,uuid__WEBPACK_IMPORTED_MODULE_2__["default"])(),
+                website: await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.encryptString(password.website, aesKey, iv),
+                user: password.user,
+                password: await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.encryptString(password.password, aesKey, iv),
+            };
+            const metadata = {
+                id: (0,uuid__WEBPACK_IMPORTED_MODULE_2__["default"])(),
+                createdAt: Date.now(),
+                modifiedAt: Date.now(),
+                lastAccessed: Date.now(),
+                version: 1,
+                strength: "medium",
+            };
+            console.log("[DEBUG] Encrypted data structure:", {
+                metadata,
+                encryptedDataKeys: Object.keys(encryptedData),
+                ivLength: keySet.IV.length,
+            });
+            return Object.assign(Object.assign({}, encryptedData), { MetaData: metadata });
+        }
+        catch (error) {
+            _additionals__WEBPACK_IMPORTED_MODULE_1__["default"].logError(method, error);
+            throw new Error(`Failed to encrypt password: ${error.message}`);
+        }
+    }
+    static formatKeyComponents(rsaKeys, aesKey) {
+        return [
+            "----------public key----------------",
+            rsaKeys.publicKey.key,
+            "----------private key----------------",
+            rsaKeys.privateKey.key,
+            "----------aes-key----------------",
+            aesKey.key,
+            "----------aes-iv----------------",
+            aesKey.iv,
+        ].join("\n");
+    }
+    static async decryptString(encryptedData, key, iv) {
+        const decoder = new TextDecoder();
+        const decryptedData = await window.crypto.subtle.decrypt({
+            name: "AES-GCM",
+            iv,
+        }, key, _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.base64ToBuffer(encryptedData));
+        return decoder.decode(decryptedData);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/services/Keys-managment/CryptoUtils.ts":
+/*!****************************************************!*\
+  !*** ./src/services/Keys-managment/CryptoUtils.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CryptoUtils: () => (/* binding */ CryptoUtils)
+/* harmony export */ });
+/* harmony import */ var _KeyGeneration__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyGeneration */ "./src/services/Keys-managment/KeyGeneration.ts");
+
+class CryptoUtils {
+    static async deriveKey(password) {
+        const encoder = new TextEncoder();
+        const salt = window.crypto.getRandomValues(new Uint8Array(_KeyGeneration__WEBPACK_IMPORTED_MODULE_0__.KeyGenerationService.SALT_LENGTH));
+        const baseKey = await window.crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits", "deriveKey"]);
+        return window.crypto.subtle.deriveKey({
+            name: "PBKDF2",
+            salt,
+            iterations: _KeyGeneration__WEBPACK_IMPORTED_MODULE_0__.KeyGenerationService.PBKDF2_ITERATIONS,
+            hash: "SHA-256",
+        }, baseKey, {
+            name: "AES-GCM",
+            length: 256,
+        }, true, ["encrypt", "decrypt"]);
+    }
+    static validatePin(pin) {
+        return /^\d{6}$/.test(pin);
+    }
+    static async encryptString(data, key, iv) {
+        const encoder = new TextEncoder();
+        const encryptedData = await window.crypto.subtle.encrypt({
+            name: "AES-GCM",
+            iv,
+        }, key, encoder.encode(data));
+        return this.bufferToBase64(encryptedData);
+    }
+    static async importRSAPublicKey(keyBase64) {
+        const keyData = this.base64ToBuffer(keyBase64);
+        return window.crypto.subtle.importKey("spki", keyData, {
+            name: "RSA-OAEP",
+            hash: "SHA-256",
+        }, false, ["encrypt"]);
+    }
+    static async importAESKey(keyBase64) {
+        const keyData = CryptoUtils.base64ToBuffer(keyBase64);
+        return window.crypto.subtle.importKey("raw", keyData, {
+            name: "AES-GCM",
+            length: 256,
+        }, false, ["encrypt", "decrypt"]);
+    }
+    static async encryptWithRSA(data, publicKey) {
+        const encoder = new TextEncoder();
+        // Encrypt each field separately
+        const encryptedWebsite = await window.crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, encoder.encode(data.website));
+        const encryptedUser = await window.crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, encoder.encode(data.user));
+        const encryptedPassword = await window.crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, encoder.encode(data.password));
+        return {
+            website: this.bufferToBase64(encryptedWebsite),
+            user: this.bufferToBase64(encryptedUser),
+            password: this.bufferToBase64(encryptedPassword),
+        };
+    }
+    static bufferToBase64(buffer) {
+        const bytes = new Uint8Array(buffer);
+        const binary = bytes.reduce((acc, byte) => acc + String.fromCharCode(byte), "");
+        return btoa(binary);
+    }
+    static base64ToBuffer(base64) {
+        try {
+            console.log("Decoding base64 string", {
+                base64Length: base64.length,
+                base64Preview: base64.substring(0, 50),
+            });
+            const cleanBase64 = base64.trim().replace(/\s/g, "");
+            const padded = (() => {
+                const pad = cleanBase64.length % 4;
+                return pad ? cleanBase64 + "=".repeat(4 - pad) : cleanBase64;
+            })();
+            if (!/^[A-Za-z0-9+/]*={0,2}$/.test(padded)) {
+                throw new Error("Invalid base64 string format");
+            }
+            const binary = atob(padded);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            return bytes;
+        }
+        catch (error) {
+            console.error("Base64 decoding failed:", {
+                error,
+                inputLength: base64 === null || base64 === void 0 ? void 0 : base64.length,
+                inputPreview: base64 === null || base64 === void 0 ? void 0 : base64.substring(0, 50),
+            });
+            throw new Error(`Base64 decoding failed: ${error}`);
+        }
+    }
+    static async importRSAPrivateKey(keyBase64) {
+        try {
+            console.log("Importing RSA private key", {
+                keyBase64Preview: keyBase64.substring(0, 50),
+            });
+            if (!keyBase64 || !keyBase64.match(/^[A-Za-z0-9+/]*={0,2}$/)) {
+                throw new Error("Invalid base64-encoded RSA private key");
+            }
+            const keyData = this.base64ToBuffer(keyBase64);
+            const privateKey = await window.crypto.subtle.importKey("pkcs8", keyData, { name: "RSA-OAEP", hash: "SHA-256" }, false, ["decrypt"]);
+            console.log("RSA private key imported successfully");
+            return privateKey;
+        }
+        catch (error) {
+            console.error("RSA private key import failed:", error);
+            throw error;
+        }
+    }
+    static async decryptWithRSA(encryptedData, privateKey) {
+        try {
+            console.log("Starting RSA decryption process", {
+                keyAlgorithm: privateKey.algorithm,
+                keyUsages: privateKey.usages,
+                dataLength: encryptedData === null || encryptedData === void 0 ? void 0 : encryptedData.length,
+            });
+            if (!Array.isArray(encryptedData) || encryptedData.length === 0) {
+                throw new Error("Input data must be a non-empty array");
+            }
+            const decoder = new TextDecoder("utf-8");
+            const decryptedData = await Promise.all(encryptedData.map(async (item, index) => {
+                var _a, _b, _c, _d, _e, _f;
+                try {
+                    console.log(`Decrypting item ${index}`, {
+                        websiteLength: (_a = item.website) === null || _a === void 0 ? void 0 : _a.length,
+                        userLength: (_b = item.user) === null || _b === void 0 ? void 0 : _b.length,
+                        passwordLength: (_c = item.password) === null || _c === void 0 ? void 0 : _c.length,
+                        websitePreview: (_d = item.website) === null || _d === void 0 ? void 0 : _d.substring(0, 50),
+                        userPreview: (_e = item.user) === null || _e === void 0 ? void 0 : _e.substring(0, 50),
+                        passwordPreview: (_f = item.password) === null || _f === void 0 ? void 0 : _f.substring(0, 50),
+                    });
+                    const websiteBuffer = await window.crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, this.base64ToBuffer(item.website));
+                    const userBuffer = await window.crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, this.base64ToBuffer(item.user));
+                    const passwordBuffer = await window.crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, this.base64ToBuffer(item.password));
+                    console.log(`Successfully decrypted item ${index}`);
+                    console.log("RSA decryption process completed successfully", decoder.decode(websiteBuffer), decoder.decode(userBuffer), decoder.decode(passwordBuffer));
+                    return {
+                        website: decoder.decode(websiteBuffer),
+                        user: decoder.decode(userBuffer),
+                        password: decoder.decode(passwordBuffer),
+                    };
+                }
+                catch (error) {
+                    console.error(`Error decrypting item ${index}:`, error);
+                    return null;
+                }
+            }));
+            const validDecryptedData = decryptedData.filter((item) => item !== null);
+            if (validDecryptedData.length === 0) {
+                throw new Error("All decryption attempts failed");
+            }
+            return validDecryptedData;
+        }
+        catch (error) {
+            console.error("RSA decryption error:", {
+                name: error,
+                message: error,
+                stack: error,
+            });
+            throw error;
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/services/Keys-managment/KeyGeneration.ts":
+/*!******************************************************!*\
+  !*** ./src/services/Keys-managment/KeyGeneration.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   KeyGenerationService: () => (/* binding */ KeyGenerationService)
+/* harmony export */ });
+/* harmony import */ var _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CryptoUtils */ "./src/services/Keys-managment/CryptoUtils.ts");
+/* harmony import */ var _CredentialCrypto__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CredentialCrypto */ "./src/services/Keys-managment/CredentialCrypto.ts");
+/* harmony import */ var _additionals__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./additionals */ "./src/services/Keys-managment/additionals.ts");
+
+
+
+class KeyGenerationService {
+    static async generateKeyComponents() {
+        const rsaKeyPair = await this.generateRSAKeyPair();
+        const aesKey = await this.generateAESKey();
+        const formattedOutput = _CredentialCrypto__WEBPACK_IMPORTED_MODULE_1__.CredentialCryptoService.formatKeyComponents(rsaKeyPair, aesKey);
+        return { rsaKeyPair, aesKey, formattedOutput };
+    }
+    static async generateKeySet(biometricType) {
+        const encryption = await this.generateRSAKeyPair();
+        const dataKey = await this.generateAESKey();
+        return {
+            RSAkeys: encryption,
+            AESKey: dataKey,
+        };
+    }
+    static async generateRSAKeyPair() {
+        if (!window.crypto || !window.crypto.subtle) {
+            throw new Error("WebCrypto API is not available");
+        }
+        const keyPair = await window.crypto.subtle.generateKey({
+            name: "RSA-OAEP",
+            modulusLength: 4096,
+            publicExponent: new Uint8Array([1, 0, 1]),
+            hash: "SHA-256",
+        }, true, ["encrypt", "decrypt"]);
+        const publicKeyBuffer = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
+        const privateKeyBuffer = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+        return {
+            publicKey: {
+                key: _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(publicKeyBuffer),
+                algorithm: "RSA-OAEP",
+                length: 4096,
+                format: "spki",
+            },
+            privateKey: {
+                key: _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(privateKeyBuffer),
+                algorithm: "RSA-OAEP",
+                length: 4096,
+                format: "pkcs8",
+                protected: true,
+            },
+        };
+    }
+    static async generateAESKey() {
+        if (!window.crypto || !window.crypto.subtle) {
+            throw new Error("WebCrypto API is not available");
+        }
+        const iv = window.crypto.getRandomValues(new Uint8Array(this.IV_LENGTH));
+        const key = await window.crypto.subtle.generateKey({
+            name: "AES-GCM",
+            length: 256,
+        }, true, ["encrypt", "decrypt"]);
+        const keyBuffer = await window.crypto.subtle.exportKey("raw", key);
+        return {
+            key: _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(keyBuffer),
+            algorithm: "AES-GCM",
+            length: 256,
+            iv: _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(iv),
+        };
+    }
+    async generateRSAKeys() {
+        const method = "generateRSAKeys";
+        _additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logDebug(method, "Starting RSA key generation...");
+        try {
+            // Validate WebCrypto API availability
+            if (!window.crypto || !window.crypto.subtle) {
+                throw new Error("WebCrypto API is not available in this environment");
+            }
+            const keyPair = await window.crypto.subtle.generateKey({
+                name: "RSA-OAEP",
+                modulusLength: 4096,
+                publicExponent: new Uint8Array([1, 0, 1]),
+                hash: "SHA-256",
+            }, true, ["encrypt", "decrypt"]);
+            console.log("RSA key pair generated successfully");
+            const publicKeyBuffer = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
+            const privateKeyBuffer = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+            _additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logDebug(method, "RSA keys generated successfully", {
+                publicKeyLength: publicKeyBuffer.byteLength,
+                privateKeyLength: privateKeyBuffer.byteLength,
+            });
+            return {
+                publicKey: {
+                    key: _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(publicKeyBuffer),
+                    algorithm: "RSA-OAEP",
+                    length: 4096,
+                    format: "spki",
+                },
+                privateKey: {
+                    key: _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(privateKeyBuffer),
+                    algorithm: "RSA-OAEP",
+                    length: 4096,
+                    format: "pkcs8",
+                    protected: true,
+                },
+            };
+        }
+        catch (error) {
+            _additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logError(method, error);
+            throw new Error(`Failed to generate RSA keys: ${error.message}`);
+        }
+    }
+}
+KeyGenerationService.SALT_LENGTH = 16;
+KeyGenerationService.IV_LENGTH = 12;
+KeyGenerationService.KEY_LENGTH = 32;
+KeyGenerationService.PBKDF2_ITERATIONS = 100000;
+
+
+/***/ }),
+
+/***/ "./src/services/Keys-managment/ZeroKnowledgeProof.ts":
+/*!***********************************************************!*\
+  !*** ./src/services/Keys-managment/ZeroKnowledgeProof.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ZeroKnowledgeProofService: () => (/* binding */ ZeroKnowledgeProofService)
+/* harmony export */ });
+/* harmony import */ var _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CryptoUtils */ "./src/services/Keys-managment/CryptoUtils.ts");
+
+class ZeroKnowledgeProofService {
+    static async generateZKP(message, privateKeyBase64) {
+        const privateKey = await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.importRSAPrivateKey(privateKeyBase64);
+        const encoder = new TextEncoder();
+        const data = encoder.encode(message);
+        const signature = await window.crypto.subtle.sign({
+            name: "RSA-PSS",
+            saltLength: 32,
+        }, privateKey, data);
+        return {
+            proof: _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(signature),
+            publicKey: privateKeyBase64, // In a real ZKP system, you'd derive a public key
+        };
+    }
+    static async verifyZKP(message, proofBase64, publicKeyBase64) {
+        try {
+            const publicKey = await _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.importRSAPublicKey(publicKeyBase64);
+            const proof = _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.base64ToBuffer(proofBase64);
+            const encoder = new TextEncoder();
+            const data = encoder.encode(message);
+            return await window.crypto.subtle.verify({
+                name: "RSA-PSS",
+                saltLength: 32,
+            }, publicKey, proof, data);
+        }
+        catch (error) {
+            console.error("ZKP verification failed:", error);
+            return false;
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/services/Keys-managment/additionals.ts":
+/*!****************************************************!*\
+  !*** ./src/services/Keys-managment/additionals.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /**
  * TODO:
  * this file will manage the encryption and decryption of the data.
@@ -37650,155 +39606,12 @@ __webpack_require__.r(__webpack_exports__);
  *    - Implement constant-time operations
  *    - Handle secure random generation
  *    - Protect against timing attacks
- */ 
-class EncryptionService {
+ */
+class AdditionalMethods {
     static logDebug(method, message, data) {
         if (this.DEBUG) {
             console.log(`[EncryptionService:${method}] ${message}`, data || "");
         }
-    }
-    static async generateKeyComponents() {
-        const method = "generateKeyComponents";
-        this.logDebug(method, "Starting key component generation...");
-        try {
-            // Generate RSA key pair
-            const rsaKeyPair = await this.generateRSAKeyPair();
-            // Generate AES key
-            const aesKey = await this.generateAESKey();
-            // Format the output in the requested structure
-            const formattedOutput = this.formatKeyComponents(rsaKeyPair, aesKey);
-            return { rsaKeyPair, aesKey, formattedOutput };
-        }
-        catch (error) {
-            throw new Error(`Failed to generate key components: ${error.message}`);
-        }
-    }
-    static async generateRSAKeyPair() {
-        if (!window.crypto || !window.crypto.subtle) {
-            throw new Error("WebCrypto API is not available");
-        }
-        const keyPair = await window.crypto.subtle.generateKey({
-            name: "RSA-OAEP",
-            modulusLength: 4096,
-            publicExponent: new Uint8Array([1, 0, 1]),
-            hash: "SHA-256",
-        }, true, ["encrypt", "decrypt"]);
-        const publicKeyBuffer = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
-        const privateKeyBuffer = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
-        return {
-            publicKey: {
-                key: this.bufferToBase64(publicKeyBuffer),
-                algorithm: "RSA-OAEP",
-                length: 4096,
-                format: "spki",
-            },
-            privateKey: {
-                key: this.bufferToBase64(privateKeyBuffer),
-                algorithm: "RSA-OAEP",
-                length: 4096,
-                format: "pkcs8",
-                protected: true,
-            },
-        };
-    }
-    static async generateAESKey() {
-        if (!window.crypto || !window.crypto.subtle) {
-            throw new Error("WebCrypto API is not available");
-        }
-        const iv = window.crypto.getRandomValues(new Uint8Array(this.IV_LENGTH));
-        const key = await window.crypto.subtle.generateKey({
-            name: "AES-GCM",
-            length: 256,
-        }, true, ["encrypt", "decrypt"]);
-        const keyBuffer = await window.crypto.subtle.exportKey("raw", key);
-        return {
-            key: this.bufferToBase64(keyBuffer),
-            algorithm: "AES-GCM",
-            length: 256,
-            iv: this.bufferToBase64(iv),
-        };
-    }
-    static formatKeyComponents(rsaKeys, aesKey) {
-        return [
-            "----------publickey----------------",
-            rsaKeys.publicKey.key,
-            "----------privatekey----------------",
-            rsaKeys.privateKey.key,
-            "----------aes-key----------------",
-            aesKey.key,
-            "----------aes-iv----------------",
-            aesKey.iv,
-        ].join("\n");
-    }
-    static async encryptCredentials(credentials, aesKey) {
-        const key = await this.importAESKey(aesKey.key);
-        const iv = this.base64ToBuffer(aesKey.iv);
-        const encryptedData = {
-            website: await this.encryptString(credentials.website, key, iv),
-            authToken: await this.encryptString(credentials.authToken, key, iv),
-            password: credentials.password
-                ? await this.encryptString(credentials.password, key, iv)
-                : undefined,
-        };
-        const formattedOutput = [
-            "----------encrypted website----------------",
-            encryptedData.website,
-            "----------encrypted authkey----------------",
-            encryptedData.authToken,
-            credentials.password
-                ? "----------encrypted password----------------\n" +
-                    encryptedData.password
-                : "",
-        ].join("\n");
-        return { encryptedData, formattedOutput };
-    }
-    static async decryptCredentials(encryptedData, aesKey) {
-        const key = await this.importAESKey(aesKey.key);
-        const iv = this.base64ToBuffer(aesKey.iv);
-        return {
-            website: await this.decryptString(encryptedData.website, key, iv),
-            authToken: await this.decryptString(encryptedData.authToken, key, iv),
-            password: encryptedData.password
-                ? await this.decryptString(encryptedData.password, key, iv)
-                : undefined,
-        };
-    }
-    // Existing utility methods remain the same
-    static async encryptString(data, key, iv) {
-        const encoder = new TextEncoder();
-        const encryptedData = await window.crypto.subtle.encrypt({
-            name: "AES-GCM",
-            iv,
-        }, key, encoder.encode(data));
-        return this.bufferToBase64(encryptedData);
-    }
-    static async decryptString(encryptedData, key, iv) {
-        const decoder = new TextDecoder();
-        const decryptedData = await window.crypto.subtle.decrypt({
-            name: "AES-GCM",
-            iv,
-        }, key, this.base64ToBuffer(encryptedData));
-        return decoder.decode(decryptedData);
-    }
-    static async importAESKey(keyBase64) {
-        const keyData = this.base64ToBuffer(keyBase64);
-        return window.crypto.subtle.importKey("raw", keyData, {
-            name: "AES-GCM",
-            length: 256,
-        }, false, ["encrypt", "decrypt"]);
-    }
-    static bufferToBase64(buffer) {
-        const bytes = new Uint8Array(buffer);
-        const binary = bytes.reduce((acc, byte) => acc + String.fromCharCode(byte), "");
-        return btoa(binary);
-    }
-    static base64ToBuffer(base64) {
-        const binary = atob(base64);
-        const bytes = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i++) {
-            bytes[i] = binary.charCodeAt(i);
-        }
-        return bytes;
     }
     static logError(method, error) {
         console.error(`[EncryptionService:${method}] Error:`, {
@@ -37807,391 +39620,235 @@ class EncryptionService {
             details: error,
         });
     }
-    async generateRSAKeys() {
-        const method = "generateRSAKeys";
-        EncryptionService.logDebug(method, "Starting RSA key generation...");
-        try {
-            // Validate WebCrypto API availability
-            if (!window.crypto || !window.crypto.subtle) {
-                throw new Error("WebCrypto API is not available in this environment");
-            }
-            const keyPair = await window.crypto.subtle.generateKey({
-                name: "RSA-OAEP",
-                modulusLength: 4096,
-                publicExponent: new Uint8Array([1, 0, 1]),
-                hash: "SHA-256",
-            }, true, ["encrypt", "decrypt"]);
-            console.log("RSA key pair generated successfully");
-            const publicKeyBuffer = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
-            const privateKeyBuffer = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
-            EncryptionService.logDebug(method, "RSA keys generated successfully", {
-                publicKeyLength: publicKeyBuffer.byteLength,
-                privateKeyLength: privateKeyBuffer.byteLength,
-            });
-            return {
-                publicKey: {
-                    key: EncryptionService.bufferToBase64(publicKeyBuffer),
-                    algorithm: "RSA-OAEP",
-                    length: 4096,
-                    format: "spki",
-                },
-                privateKey: {
-                    key: EncryptionService.bufferToBase64(privateKeyBuffer),
-                    algorithm: "RSA-OAEP",
-                    length: 4096,
-                    format: "pkcs8",
-                    protected: true,
-                },
-            };
-        }
-        catch (error) {
-            EncryptionService.logError(method, error);
-            throw new Error(`Failed to generate RSA keys: ${error.message}`);
-        }
-    }
-    static async generateKeySet(biometricType) {
-        const encryptionService = new EncryptionService();
-        const encryption = await encryptionService.generateRSAKeys();
-        const dataKey = await EncryptionService.generateAESKey();
-        const biometric = biometricType
-            ? {
-                key: this.bufferToBase64(window.crypto.getRandomValues(new Uint8Array(32)).buffer),
-                type: biometricType,
-                verified: false,
-            }
-            : undefined;
-        return {
-            id: (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])(),
-            version: 1,
-            created: Date.now(),
-            lastRotated: Date.now(),
-            encryption,
-            dataKey,
-            biometric,
-        };
-    }
-    static async encryptPassword(password, keySet) {
-        var _a, _b, _c, _d;
-        const method = "encryptPassword";
-        console.log("[DEBUG] Input password structure:", {
-            website: (password === null || password === void 0 ? void 0 : password.website) ? "[PRESENT]" : "[MISSING]",
-            authToken: (password === null || password === void 0 ? void 0 : password.authToken) ? "[PRESENT]" : "[MISSING]",
-            password: (password === null || password === void 0 ? void 0 : password.password) ? "[PRESENT]" : "[MISSING]",
-            notes: (password === null || password === void 0 ? void 0 : password.notes) ? "[PRESENT]" : "[MISSING]",
-        });
-        console.log("[DEBUG] Input keySet structure:", {
-            id: keySet === null || keySet === void 0 ? void 0 : keySet.id,
-            dataKeyPresent: ((_a = keySet === null || keySet === void 0 ? void 0 : keySet.dataKey) === null || _a === void 0 ? void 0 : _a.key) ? true : false,
-            ivPresent: ((_b = keySet === null || keySet === void 0 ? void 0 : keySet.dataKey) === null || _b === void 0 ? void 0 : _b.iv) ? true : false,
-        });
-        try {
-            // Input validation
-            if (!(password === null || password === void 0 ? void 0 : password.website) || !(password === null || password === void 0 ? void 0 : password.authToken) || !(password === null || password === void 0 ? void 0 : password.password)) {
-                throw new Error("Missing required password credentials");
-            }
-            if (!((_c = keySet === null || keySet === void 0 ? void 0 : keySet.dataKey) === null || _c === void 0 ? void 0 : _c.key) || !((_d = keySet === null || keySet === void 0 ? void 0 : keySet.dataKey) === null || _d === void 0 ? void 0 : _d.iv)) {
-                throw new Error("Invalid keySet structure");
-            }
-            const aesKey = await this.importAESKey(keySet.dataKey.key);
-            const iv = this.base64ToBuffer(keySet.dataKey.iv);
-            const encryptedData = {
-                website: await this.encryptString(password.website, aesKey, iv),
-                authToken: await this.encryptString(password.authToken, aesKey, iv),
-                password: await this.encryptString(password.password, aesKey, iv),
-                notes: password.notes
-                    ? await this.encryptString(password.notes, aesKey, iv)
-                    : undefined,
-            };
-            const metadata = {
-                id: (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])(),
-                createdAt: Date.now(),
-                modifiedAt: Date.now(),
-                lastAccessed: Date.now(),
-                version: 1,
-                strength: "medium",
-            };
-            console.log("[DEBUG] Encrypted data structure:", {
-                metadata,
-                encryptedDataKeys: Object.keys(encryptedData),
-                keyId: keySet.id,
-                ivLength: keySet.dataKey.iv.length,
-                algorithm: keySet.dataKey.algorithm,
-            });
-            this.logDebug(method, "Password encrypted successfully", {
-                keySetId: keySet.id,
-                encryptedDataSize: JSON.stringify(encryptedData).length,
-            });
-            return Object.assign(Object.assign({}, metadata), { encryptedData, keyId: keySet.id, iv: keySet.dataKey.iv, algorithm: keySet.dataKey.algorithm });
-        }
-        catch (error) {
-            this.logError(method, error);
-            throw new Error(`Failed to encrypt password: ${error.message}`);
-        }
-    }
-    static async decryptPassword(encryptedPassword, keySet) {
-        var _a, _b;
-        console.log("[DEBUG] Input encrypted password structure:", {
-            metadata: {
-                id: encryptedPassword === null || encryptedPassword === void 0 ? void 0 : encryptedPassword.id,
-                keyId: encryptedPassword === null || encryptedPassword === void 0 ? void 0 : encryptedPassword.keyId,
-                algorithm: encryptedPassword === null || encryptedPassword === void 0 ? void 0 : encryptedPassword.algorithm,
-            },
-            encryptedDataKeys: (encryptedPassword === null || encryptedPassword === void 0 ? void 0 : encryptedPassword.encryptedData)
-                ? Object.keys(encryptedPassword.encryptedData)
-                : [],
-        });
-        console.log("[DEBUG] Input keySet structure:", {
-            id: keySet === null || keySet === void 0 ? void 0 : keySet.id,
-            dataKeyPresent: ((_a = keySet === null || keySet === void 0 ? void 0 : keySet.dataKey) === null || _a === void 0 ? void 0 : _a.key) ? true : false,
-            ivPresent: ((_b = keySet === null || keySet === void 0 ? void 0 : keySet.dataKey) === null || _b === void 0 ? void 0 : _b.iv) ? true : false,
-        });
-        console.log("Starting password decryption...");
-        console.log("the data passed is:", encryptedPassword);
-        try {
-            if (!encryptedPassword || !keySet) {
-                throw new Error("Invalid encryptedPassword or keySet provided");
-            }
-            const aesKey = await this.importAESKey(keySet.dataKey.key);
-            const iv = this.base64ToBuffer(keySet.dataKey.iv);
-            if (!encryptedPassword.encryptedData.website) {
-                throw new Error("Encrypted website data is missing or invalid");
-            }
-            const decryptedData = {
-                website: await this.decryptString(encryptedPassword.encryptedData.website, aesKey, iv),
-                authToken: await this.decryptString(encryptedPassword.encryptedData.authToken, aesKey, iv),
-                password: await this.decryptString(encryptedPassword.encryptedData.password, aesKey, iv),
-                notes: encryptedPassword.encryptedData.notes
-                    ? await this.decryptString(encryptedPassword.encryptedData.notes, aesKey, iv)
-                    : undefined,
-            };
-            console.log("[DEBUG] Decrypted data structure:", {
-                decryptedDataKeys: Object.keys(decryptedData),
-                keyId: keySet.id,
-            });
-            console.log("Password decrypted successfully");
-            return Object.assign(Object.assign({}, encryptedPassword), { encryptedData: decryptedData, keyId: keySet.id });
-        }
-        catch (error) {
-            console.error("Password decryption failed:", error);
-            throw new Error(`Failed to decrypt password: ${error.message}`);
-        }
-    }
-    static async generateZKP(message, privateKeyBase64) {
-        const privateKey = await this.importRSAPrivateKey(privateKeyBase64);
-        const encoder = new TextEncoder();
-        const data = encoder.encode(message);
-        const signature = await window.crypto.subtle.sign({
-            name: "RSA-PSS",
-            saltLength: 32,
-        }, privateKey, data);
-        return {
-            proof: this.bufferToBase64(signature),
-            publicKey: privateKeyBase64, // In a real ZKP system, you'd derive a public key
-        };
-    }
-    static async verifyZKP(message, proofBase64, publicKeyBase64) {
-        try {
-            const publicKey = await this.importRSAPublicKey(publicKeyBase64);
-            const proof = this.base64ToBuffer(proofBase64);
-            const encoder = new TextEncoder();
-            const data = encoder.encode(message);
-            return await window.crypto.subtle.verify({
-                name: "RSA-PSS",
-                saltLength: 32,
-            }, publicKey, proof, data);
-        }
-        catch (error) {
-            console.error("ZKP verification failed:", error);
-            return false;
-        }
-    }
-    static async deriveKey(password) {
-        const encoder = new TextEncoder();
-        const salt = window.crypto.getRandomValues(new Uint8Array(this.SALT_LENGTH));
-        const baseKey = await window.crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits", "deriveKey"]);
-        return window.crypto.subtle.deriveKey({
-            name: "PBKDF2",
-            salt,
-            iterations: this.PBKDF2_ITERATIONS,
-            hash: "SHA-256",
-        }, baseKey, {
-            name: "AES-GCM",
-            length: 256,
-        }, true, ["encrypt", "decrypt"]);
-    }
-    static async importRSAPublicKey(keyBase64) {
-        const keyData = this.base64ToBuffer(keyBase64);
-        return window.crypto.subtle.importKey("spki", keyData, {
-            name: "RSA-PSS",
-            hash: "SHA-256",
-        }, false, ["verify"]);
-    }
-    static async importRSAPrivateKey(keyBase64) {
-        const keyData = this.base64ToBuffer(keyBase64);
-        return window.crypto.subtle.importKey("pkcs8", keyData, {
-            name: "RSA-PSS",
-            hash: "SHA-256",
-        }, false, ["sign"]);
-    }
-    /**
-     * Prepares and sends API settings with decrypted credentials
-     */
-    static async prepareAndSendAPISettings(encryptedCredentials, aesKey, rsaPublicKey) {
-        try {
-            const decryptedCredentials = await this.decryptCredentials(encryptedCredentials, aesKey);
-            const apiPayload = {
-                publicKey: rsaPublicKey,
-                password: decryptedCredentials.password,
-                deviceId: (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])(),
-                timestamp: Date.now(),
-            };
-            return await this.sendToAPI(apiPayload, decryptedCredentials.website, decryptedCredentials.authToken);
-        }
-        catch (error) {
-            throw new Error(`Failed to prepare and send API settings: ${error.message}`);
-        }
-    }
-    /**
-     * Sends the settings payload to the API
-     * we need to decrypt the credentials and then use them to send the request ({decrypted website}/api/settings)
-     */
-    static async sendToAPI(payload, website, authToken) {
-        try {
-            console.log("website:", website);
-            console.log("authToken:", authToken);
-            const response = await fetch(`${website}/api/settings`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${authToken}`,
-                },
-                body: JSON.stringify(payload),
-            });
-            if (!response.ok) {
-                throw new Error(`API request failed: ${response.statusText}`);
-            }
-            return response;
-        }
-        catch (error) {
-            throw new Error(`API request failed: ${error.message}`);
-        }
-    }
-    /**
-     * Session management methods
-     */
-    static generateSessionKey() {
-        return (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])();
-    }
-    static storeSessionData(sessionKey, data, expirationMs = 1800000) {
-        this.sessionData.set(sessionKey, {
-            data,
-            expiration: Date.now() + expirationMs,
-        });
-        setTimeout(() => {
-            this.sessionData.delete(sessionKey);
-        }, expirationMs);
-    }
-    static getSessionData(sessionKey) {
-        const entry = this.sessionData.get(sessionKey);
-        if (!entry) {
-            return null;
-        }
-        if (Date.now() > entry.expiration) {
-            this.sessionData.delete(sessionKey);
-            return null;
-        }
-        return entry.data;
-    }
-    static clearSessionData(sessionKey) {
-        this.sessionData.delete(sessionKey);
-    }
-    /**
-     * Validates PIN format
-     */
-    static validatePin(pin) {
-        return /^\d{6}$/.test(pin);
-    }
 }
-EncryptionService.SALT_LENGTH = 16;
-EncryptionService.IV_LENGTH = 12;
-EncryptionService.KEY_LENGTH = 32;
-EncryptionService.PBKDF2_ITERATIONS = 100000;
-EncryptionService.DEBUG = true;
+AdditionalMethods.SALT_LENGTH = 16;
+AdditionalMethods.IV_LENGTH = 12;
+AdditionalMethods.KEY_LENGTH = 32;
+AdditionalMethods.PBKDF2_ITERATIONS = 100000;
+AdditionalMethods.DEBUG = true;
 // Add session storage property
-EncryptionService.sessionData = new Map();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EncryptionService);
+AdditionalMethods.sessionData = new Map();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdditionalMethods);
 
 
 /***/ }),
 
-/***/ "./src/services/db.ts":
-/*!****************************!*\
-  !*** ./src/services/db.ts ***!
-  \****************************/
+/***/ "./src/services/StorageService.ts":
+/*!****************************************!*\
+  !*** ./src/services/StorageService.ts ***!
+  \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-class StoringService {
-    static async getKeysFromStorage() {
+/* harmony import */ var _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage/KeyStorage */ "./src/services/storage/KeyStorage.ts");
+/* harmony import */ var _storage_CredentialStorage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storage/CredentialStorage */ "./src/services/storage/CredentialStorage.ts");
+/* harmony import */ var _storage_LocalStorageManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storage/LocalStorageManager */ "./src/services/storage/LocalStorageManager.ts");
+
+
+
+class StorageService {
+}
+StorageService.Keys = _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage;
+StorageService.Credentials = _storage_CredentialStorage__WEBPACK_IMPORTED_MODULE_1__.CredentialStorage;
+StorageService.Storage = _storage_LocalStorageManager__WEBPACK_IMPORTED_MODULE_2__.LocalStorageManager;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StorageService);
+
+
+/***/ }),
+
+/***/ "./src/services/sessionManagment/SessionManager.ts":
+/*!*********************************************************!*\
+  !*** ./src/services/sessionManagment/SessionManager.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SessionManagementService: () => (/* binding */ SessionManagementService)
+/* harmony export */ });
+/* harmony import */ var _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storage/KeyStorage */ "./src/services/storage/KeyStorage.ts");
+/* harmony import */ var _storage_LocalStorageManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storage/LocalStorageManager */ "./src/services/storage/LocalStorageManager.ts");
+
+
+class SessionManagementService {
+    constructor(userSettings = {}) {
+        this.sessionActive = false;
+        console.log("SessionManagementService constructor called", userSettings);
+        // Simplify initial settings
+        this.settings = Object.assign({ autoLockTime: 1800000, sessionTime: 86400000, sessionStart: Date.now(), pushNotifications: false, biometricVerification: false, biometricType: "fingerprint", autoLockStart: Date.now(), sessionExpiry: Date.now() + 86400000, lastAccessTime: Date.now() }, userSettings);
+        console.log("Initialized settings:", this.settings);
+    }
+    static async initialize() {
+        console.log("Static initialize called");
         try {
-            console.log("Attempting to retrieve keys from storage.");
-            const keysJSON = this.getFromStorageSync("keys");
-            if (!keysJSON) {
-                console.log("No keys found in storage.");
-                return null;
-            }
-            const keys = JSON.parse(keysJSON);
-            if (keys.lastRotated + StoringService.SESSION_DURATION < Date.now()) {
-                console.log("Keys have expired, deleting from storage.");
-                this.deleteFromStorageSync("keys");
-                return null;
-            }
-            console.log("Keys retrieved successfully.");
-            return keys;
+            this.sessionSettings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.getSettingsFromStorage();
+            this.keys = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.getKeysFromStorage();
+            console.log("Session initialized successfully:", {
+                settings: this.sessionSettings,
+                hasKeys: !!this.keys,
+            });
         }
         catch (error) {
-            console.error("Error retrieving keys from storage:", error);
-            return null;
+            console.error("Failed to initialize session:", error);
         }
     }
-    static async storeKeys(keys) {
-        try {
-            console.log("Storing keys in storage.");
-            console.log("Keys to be stored:", keys);
-            this.storeInStorageSync("keys", JSON.stringify(keys));
-            console.log("Keys stored successfully.", keys);
-        }
-        catch (error) {
-            console.error("Error storing keys:", error);
-        }
-    }
-    static async getEncryptedPassword(id) {
-        try {
-            console.log(`Retrieving encrypted password for ID: ${id}`);
-            const passwordJSON = this.getFromStorageSync(`password-${id}`);
-            if (!passwordJSON) {
-                console.log(`No password found for ID: ${id}`);
-                return null;
+    static async getSessionSettings() {
+        console.log("Getting session settings");
+        if (!this.sessionSettings) {
+            try {
+                this.sessionSettings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.getSettingsFromStorage();
+                console.log("Retrieved settings from storage:", this.sessionSettings);
             }
-            console.log(`Password retrieved successfully for ID: ${id}`);
-            return JSON.parse(passwordJSON);
+            catch (error) {
+                console.error("Failed to get settings:", error);
+                throw error;
+            }
         }
-        catch (error) {
-            console.error(`Error retrieving password for ID: ${id}`, error);
-            return null;
+        return this.sessionSettings;
+    }
+    static async updateSessionSettings(newSettings) {
+        this.sessionSettings = newSettings;
+        console.log("Updating session settings.");
+        await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.storeSettings(newSettings);
+        console.log("Session settings updated successfully.");
+    }
+    static async getKeys() {
+        if (!this.keys) {
+            console.log("Keys not found in memory, retrieving from storage.");
+            this.keys = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.getKeysFromStorage();
+        }
+        return this.keys;
+    }
+    static async updateKeys(newKeys) {
+        this.keys = newKeys;
+        console.log("Updating keys.");
+        await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.storeKeys(newKeys);
+        console.log("Keys updated successfully.");
+    }
+    static async clearSession() {
+        console.log("Clearing session data.");
+        await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.storeSettings({});
+        await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.storeKeys({});
+        this.sessionSettings = null;
+        this.keys = null;
+        console.log("Session data cleared.");
+    }
+    /**
+     * Initialize session settings. Fetch settings from the user's server if available and merge.
+     * Call this method during login or when the app initializes.
+     */
+    async initializeSession() {
+        const serverSettings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage.getSettingsFromStorage();
+        this.settings = Object.assign(Object.assign({}, this.settings), serverSettings);
+        this.startSessionTimer();
+    }
+    /**
+     * Starts a new session timer and updates sessionStart.
+     * This is used to track the overall session duration.
+     */
+    startSessionTimer() {
+        this.settings.sessionStart = Date.now();
+        this.sessionActive = true;
+    }
+    /**
+     * Checks if the session has expired based on session time settings.
+     * Ends the session if the time has exceeded.
+     */
+    checkSessionExpiration() {
+        const currentTime = Date.now();
+        const sessionExpiry = this.settings.sessionStart + this.settings.sessionTime;
+        if (currentTime >= sessionExpiry) {
+            this.endSession();
         }
     }
-    static async storeEncryptedPassword(password) {
+    /**
+     * Ends the current session and clears any local data.
+     */
+    endSession() {
+        _storage_LocalStorageManager__WEBPACK_IMPORTED_MODULE_1__.LocalStorageManager.clearStorage();
+        this.sessionActive = false;
+        // Additional actions such as redirecting to login or showing a notification
+    }
+    /**
+     * Starts a short-lock timer for quick reauthentication within a limited time.
+     * Should be called upon successful password entry or biometric verification.
+     */
+    startShortLockTimer() {
+        this.settings.autoLockStart = Date.now();
+    }
+    /**
+     * Checks if the short-lock timer has expired based on auto-lock settings.
+     * Returns true if the user needs to re-authenticate, false otherwise.
+     */
+    checkShortLockExpiration() {
+        const currentTime = Date.now();
+        const shortLockExpiry = this.settings.autoLockStart + this.settings.autoLockTime;
+        return currentTime >= shortLockExpiry;
+    }
+    /**
+     * Manually triggers short-lock to end early, requiring re-authentication.
+     */
+    endShortLock() {
+        this.settings.autoLockStart = 0;
+    }
+    /**
+     * Enable or disable biometric authentication based on settings.
+     * Ensures that biometric setup is available on the device.
+     */
+    async configureBiometric() {
+        if (this.settings.biometricVerification) {
+            const isSupported = await this.checkBiometricSupport();
+            if (!isSupported) {
+                throw new Error(`Biometric type ${this.settings.biometricType} is not supported.`);
+            }
+            // Proceed with biometric setup if supported
+        }
+    }
+    /**
+     * Checks if the device supports the specified biometric type.
+     * @returns boolean - True if supported, false otherwise.
+     */
+    async checkBiometricSupport() {
+        // Implement device-specific biometric check
+        return true; // Placeholder
+    }
+    /**
+     * Save session settings to the user's server for persistence between logins.
+     * This replaces centralized storage and ensures security within the user's environment.
+     */
+    async saveSessionSettings() {
+        // Implement a call to save settings directly to the user's server
+    }
+}
+// Simplify static methods to focus on core functionality
+SessionManagementService.sessionSettings = null;
+SessionManagementService.keys = null;
+
+
+/***/ }),
+
+/***/ "./src/services/storage/CredentialStorage.ts":
+/*!***************************************************!*\
+  !*** ./src/services/storage/CredentialStorage.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CredentialStorage: () => (/* binding */ CredentialStorage)
+/* harmony export */ });
+/* harmony import */ var _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LocalStorageManager */ "./src/services/storage/LocalStorageManager.ts");
+
+class CredentialStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.LocalStorageManager {
+    static async storeEncryptedCredentials(credentials) {
         try {
-            console.log(`Storing encrypted password for ID: ${password.id}`);
-            this.storeInStorageSync(`password-${password.id}`, JSON.stringify(password));
-            console.log(`Password stored successfully for ID: ${password.id}`);
+            this.storeInStorageSync("Credentials", JSON.stringify(credentials));
         }
         catch (error) {
-            console.error(`Error storing password for ID: ${password.id}`, error);
+            console.error(`Error storing Credentials`, error);
         }
     }
     static async deleteEncryptedPassword(id) {
@@ -38204,84 +39861,142 @@ class StoringService {
             console.error(`Error deleting password for ID: ${id}`, error);
         }
     }
-    static async getExtensionSettings() {
+    static async getEncryptedCridentials_Keys() {
         try {
-            console.log("Retrieving extension settings.");
-            const settingsJSON = this.getFromStorageSync("settings");
-            if (!settingsJSON) {
-                console.log("No extension settings found in storage.");
-                return null;
+            console.log("Retrieving encrypted credentials");
+            const credentialsJSON = await this.getFromStorageSync("Keys");
+            if (credentialsJSON) {
+                const credentials = JSON.parse(credentialsJSON);
+                console.log("Retrieved credentials successfully");
+                return credentials;
             }
-            console.log("Extension settings retrieved successfully.");
-            return JSON.parse(settingsJSON);
+            return null;
         }
         catch (error) {
-            console.error("Error retrieving extension settings:", error);
+            console.error("Error retrieving credentials:", error);
             return null;
         }
     }
-    static async storeExtensionSettings(settings) {
-        this.storeInStorageSync("settings", JSON.stringify(settings));
-    }
-    static deleteFromStorageSync(key) {
+}
+
+
+/***/ }),
+
+/***/ "./src/services/storage/KeyStorage.ts":
+/*!********************************************!*\
+  !*** ./src/services/storage/KeyStorage.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   KeyStorage: () => (/* binding */ KeyStorage)
+/* harmony export */ });
+/* harmony import */ var _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LocalStorageManager */ "./src/services/storage/LocalStorageManager.ts");
+
+class KeyStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.LocalStorageManager {
+    static async getKeysFromStorage() {
         try {
-            localStorage.removeItem(this.STORAGE_PREFIX + key);
+            const keysJSON = await this.getFromStorageSync("keys");
+            if (!keysJSON) {
+                console.log("No keys found in storage.");
+                return {};
+            }
+            const keys = JSON.parse(keysJSON);
+            return keys;
         }
         catch (error) {
-            console.error("Error deleting from storage:", error);
+            console.error("Error retrieving keys from storage:", error);
+            return {};
         }
     }
-    static clearStorage() {
+    static async storeKeys(keys) {
         try {
-            localStorage.clear();
+            console.log("Storing keys in storage.");
+            await this.storeInStorageSync("keys", JSON.stringify(keys));
+            console.log("Keys stored successfully.");
+        }
+        catch (error) {
+            console.error("Error storing keys:", error);
+        }
+    }
+    static async getSettingsFromStorage() {
+        try {
+            const settingsJSON = await this.getFromStorageSync("settings");
+            if (!settingsJSON) {
+                console.log("No settings found in storage.");
+                return {};
+            }
+            const settings = JSON.parse(settingsJSON);
+            return settings;
+        }
+        catch (error) {
+            console.error("Error retrieving settings from storage:", error);
+            return {};
+        }
+    }
+    static async storeSettings(settings) {
+        try {
+            console.log("Storing settings in storage.");
+            await this.storeInStorageSync("settings", JSON.stringify(settings));
+            console.log("Settings stored successfully.");
+        }
+        catch (error) {
+            console.error("Error storing settings:", error);
+        }
+    }
+}
+KeyStorage.SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+
+/***/ }),
+
+/***/ "./src/services/storage/LocalStorageManager.ts":
+/*!*****************************************************!*\
+  !*** ./src/services/storage/LocalStorageManager.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LocalStorageManager: () => (/* binding */ LocalStorageManager)
+/* harmony export */ });
+class LocalStorageManager {
+    static async storeInStorageSync(key, value) {
+        try {
+            await Promise.resolve(localStorage.setItem(this.STORAGE_PREFIX + key, value));
+        }
+        catch (error) {
+            console.error(`Error storing key "${key}" in storage:`, error);
+        }
+    }
+    static async getFromStorageSync(key) {
+        try {
+            return await Promise.resolve(localStorage.getItem(this.STORAGE_PREFIX + key));
+        }
+        catch (error) {
+            console.error(`Error retrieving key "${key}" from storage:`, error);
+            return null;
+        }
+    }
+    static async deleteFromStorageSync(key) {
+        try {
+            await Promise.resolve(localStorage.removeItem(this.STORAGE_PREFIX + key));
+        }
+        catch (error) {
+            console.error(`Error deleting key "${key}" from storage:`, error);
+        }
+    }
+    static async clearStorage() {
+        try {
+            await Promise.resolve(localStorage.clear());
         }
         catch (error) {
             console.error("Error clearing storage:", error);
         }
     }
-    static storeInStorageSync(key, value) {
-        try {
-            localStorage.setItem(this.STORAGE_PREFIX + key, value);
-        }
-        catch (error) {
-            console.error("Error storing in storage:", error);
-        }
-    }
-    static getFromStorageSync(key) {
-        try {
-            return localStorage.getItem(this.STORAGE_PREFIX + key);
-        }
-        catch (error) {
-            console.error("Error getting from storage:", error);
-            return null;
-        }
-    }
-    static async getEncryptedPasswords() {
-        try {
-            console.log("Retrieving all encrypted passwords");
-            const passwords = [];
-            // Iterate through localStorage to find password entries
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key === null || key === void 0 ? void 0 : key.startsWith(this.STORAGE_PREFIX + "password-")) {
-                    const passwordJSON = this.getFromStorageSync(key.replace(this.STORAGE_PREFIX, ""));
-                    if (passwordJSON) {
-                        passwords.push(JSON.parse(passwordJSON));
-                    }
-                }
-            }
-            console.log(`Retrieved ${passwords.length} passwords successfully`);
-            return passwords;
-        }
-        catch (error) {
-            console.error("Error retrieving all passwords:", error);
-            return [];
-        }
-    }
 }
-StoringService.STORAGE_PREFIX = "password-manager-";
-StoringService.SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StoringService);
+LocalStorageManager.STORAGE_PREFIX = "password-manager-";
 
 
 /***/ }),
@@ -38313,6 +40028,158 @@ function composeRefs(...refs) {
 function useComposedRefs(...refs) {
   return react__WEBPACK_IMPORTED_MODULE_0__.useCallback(composeRefs(...refs), refs);
 }
+
+//# sourceMappingURL=index.mjs.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@radix-ui/react-label/dist/index.mjs":
+/*!***********************************************************!*\
+  !*** ./node_modules/@radix-ui/react-label/dist/index.mjs ***!
+  \***********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Label: () => (/* binding */ Label),
+/* harmony export */   Root: () => (/* binding */ Root)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @radix-ui/react-primitive */ "./node_modules/@radix-ui/react-primitive/dist/index.mjs");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+"use client";
+
+// packages/react/label/src/Label.tsx
+
+
+
+var NAME = "Label";
+var Label = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((props, forwardedRef) => {
+  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(
+    _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_2__.Primitive.label,
+    {
+      ...props,
+      ref: forwardedRef,
+      onMouseDown: (event) => {
+        const target = event.target;
+        if (target.closest("button, input, select, textarea")) return;
+        props.onMouseDown?.(event);
+        if (!event.defaultPrevented && event.detail > 1) event.preventDefault();
+      }
+    }
+  );
+});
+Label.displayName = NAME;
+var Root = Label;
+
+//# sourceMappingURL=index.mjs.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@radix-ui/react-primitive/dist/index.mjs":
+/*!***************************************************************!*\
+  !*** ./node_modules/@radix-ui/react-primitive/dist/index.mjs ***!
+  \***************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Primitive: () => (/* binding */ Primitive),
+/* harmony export */   Root: () => (/* binding */ Root),
+/* harmony export */   dispatchDiscreteCustomEvent: () => (/* binding */ dispatchDiscreteCustomEvent)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _radix_ui_react_slot__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @radix-ui/react-slot */ "./node_modules/@radix-ui/react-slot/dist/index.mjs");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+// packages/react/primitive/src/Primitive.tsx
+
+
+
+
+var NODES = [
+  "a",
+  "button",
+  "div",
+  "form",
+  "h2",
+  "h3",
+  "img",
+  "input",
+  "label",
+  "li",
+  "nav",
+  "ol",
+  "p",
+  "span",
+  "svg",
+  "ul"
+];
+var Primitive = NODES.reduce((primitive, node) => {
+  const Node = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((props, forwardedRef) => {
+    const { asChild, ...primitiveProps } = props;
+    const Comp = asChild ? _radix_ui_react_slot__WEBPACK_IMPORTED_MODULE_3__.Slot : node;
+    if (typeof window !== "undefined") {
+      window[Symbol.for("radix-ui")] = true;
+    }
+    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Comp, { ...primitiveProps, ref: forwardedRef });
+  });
+  Node.displayName = `Primitive.${node}`;
+  return { ...primitive, [node]: Node };
+}, {});
+function dispatchDiscreteCustomEvent(target, event) {
+  if (target) react_dom__WEBPACK_IMPORTED_MODULE_1__.flushSync(() => target.dispatchEvent(event));
+}
+var Root = Primitive;
+
+//# sourceMappingURL=index.mjs.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@radix-ui/react-separator/dist/index.mjs":
+/*!***************************************************************!*\
+  !*** ./node_modules/@radix-ui/react-separator/dist/index.mjs ***!
+  \***************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Root: () => (/* binding */ Root),
+/* harmony export */   Separator: () => (/* binding */ Separator)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @radix-ui/react-primitive */ "./node_modules/@radix-ui/react-primitive/dist/index.mjs");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+// packages/react/separator/src/Separator.tsx
+
+
+
+var NAME = "Separator";
+var DEFAULT_ORIENTATION = "horizontal";
+var ORIENTATIONS = ["horizontal", "vertical"];
+var Separator = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((props, forwardedRef) => {
+  const { decorative, orientation: orientationProp = DEFAULT_ORIENTATION, ...domProps } = props;
+  const orientation = isValidOrientation(orientationProp) ? orientationProp : DEFAULT_ORIENTATION;
+  const ariaOrientation = orientation === "vertical" ? orientation : void 0;
+  const semanticProps = decorative ? { role: "none" } : { "aria-orientation": ariaOrientation, role: "separator" };
+  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(
+    _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_2__.Primitive.div,
+    {
+      "data-orientation": orientation,
+      ...semanticProps,
+      ...domProps,
+      ref: forwardedRef
+    }
+  );
+});
+Separator.displayName = NAME;
+function isValidOrientation(orientation) {
+  return ORIENTATIONS.includes(orientation);
+}
+var Root = Separator;
 
 //# sourceMappingURL=index.mjs.map
 
@@ -41102,7 +42969,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({ randomUUID });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmF0aXZlLWJyb3dzZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvbmF0aXZlLWJyb3dzZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxVQUFVLEdBQ2QsT0FBTyxNQUFNLEtBQUssV0FBVyxJQUFJLE1BQU0sQ0FBQyxVQUFVLElBQUksTUFBTSxDQUFDLFVBQVUsQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLENBQUM7QUFFdkYsZUFBZSxFQUFFLFVBQVUsRUFBRSxDQUFDIn0=
+
 
 /***/ }),
 
@@ -41117,7 +42984,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/i);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmVnZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvcmVnZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZUFBZSwwSkFBMEosQ0FBQyJ9
+
 
 /***/ }),
 
@@ -41142,7 +43009,7 @@ function rng() {
     }
     return getRandomValues(rnds8);
 }
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicm5nLWJyb3dzZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvcm5nLWJyb3dzZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBSUEsSUFBSSxlQUEwRCxDQUFDO0FBRS9ELE1BQU0sS0FBSyxHQUFHLElBQUksVUFBVSxDQUFDLEVBQUUsQ0FBQyxDQUFDO0FBRWpDLE1BQU0sQ0FBQyxPQUFPLFVBQVUsR0FBRztJQUV6QixJQUFJLENBQUMsZUFBZSxFQUFFLENBQUM7UUFDckIsSUFBSSxPQUFPLE1BQU0sS0FBSyxXQUFXLElBQUksQ0FBQyxNQUFNLENBQUMsZUFBZSxFQUFFLENBQUM7WUFDN0QsTUFBTSxJQUFJLEtBQUssQ0FDYiwwR0FBMEcsQ0FDM0csQ0FBQztRQUNKLENBQUM7UUFFRCxlQUFlLEdBQUcsTUFBTSxDQUFDLGVBQWUsQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLENBQUM7SUFDeEQsQ0FBQztJQUVELE9BQU8sZUFBZSxDQUFDLEtBQUssQ0FBQyxDQUFDO0FBQ2hDLENBQUMifQ==
+
 
 /***/ }),
 
@@ -41193,7 +43060,7 @@ function stringify(arr, offset = 0) {
     return uuid;
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stringify);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3RyaW5naWZ5LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL3N0cmluZ2lmeS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLFFBQVEsTUFBTSxlQUFlLENBQUM7QUFNckMsTUFBTSxTQUFTLEdBQWEsRUFBRSxDQUFDO0FBRS9CLEtBQUssSUFBSSxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsR0FBRyxHQUFHLEVBQUUsRUFBRSxDQUFDLEVBQUUsQ0FBQztJQUM3QixTQUFTLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxHQUFHLEtBQUssQ0FBQyxDQUFDLFFBQVEsQ0FBQyxFQUFFLENBQUMsQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztBQUNwRCxDQUFDO0FBRUQsTUFBTSxVQUFVLGVBQWUsQ0FBQyxHQUFlLEVBQUUsTUFBTSxHQUFHLENBQUM7SUFNekQsT0FBTyxDQUNMLFNBQVMsQ0FBQyxHQUFHLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxDQUFDO1FBQzFCLFNBQVMsQ0FBQyxHQUFHLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxDQUFDO1FBQzFCLFNBQVMsQ0FBQyxHQUFHLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxDQUFDO1FBQzFCLFNBQVMsQ0FBQyxHQUFHLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxDQUFDO1FBQzFCLEdBQUc7UUFDSCxTQUFTLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUMsQ0FBQztRQUMxQixTQUFTLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUMsQ0FBQztRQUMxQixHQUFHO1FBQ0gsU0FBUyxDQUFDLEdBQUcsQ0FBQyxNQUFNLEdBQUcsQ0FBQyxDQUFDLENBQUM7UUFDMUIsU0FBUyxDQUFDLEdBQUcsQ0FBQyxNQUFNLEdBQUcsQ0FBQyxDQUFDLENBQUM7UUFDMUIsR0FBRztRQUNILFNBQVMsQ0FBQyxHQUFHLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxDQUFDO1FBQzFCLFNBQVMsQ0FBQyxHQUFHLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxDQUFDO1FBQzFCLEdBQUc7UUFDSCxTQUFTLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxFQUFFLENBQUMsQ0FBQztRQUMzQixTQUFTLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxFQUFFLENBQUMsQ0FBQztRQUMzQixTQUFTLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxFQUFFLENBQUMsQ0FBQztRQUMzQixTQUFTLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxFQUFFLENBQUMsQ0FBQztRQUMzQixTQUFTLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxFQUFFLENBQUMsQ0FBQztRQUMzQixTQUFTLENBQUMsR0FBRyxDQUFDLE1BQU0sR0FBRyxFQUFFLENBQUMsQ0FBQyxDQUM1QixDQUFDLFdBQVcsRUFBRSxDQUFDO0FBQ2xCLENBQUM7QUFFRCxTQUFTLFNBQVMsQ0FBQyxHQUFlLEVBQUUsTUFBTSxHQUFHLENBQUM7SUFDNUMsTUFBTSxJQUFJLEdBQUcsZUFBZSxDQUFDLEdBQUcsRUFBRSxNQUFNLENBQUMsQ0FBQztJQU8xQyxJQUFJLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxFQUFFLENBQUM7UUFDcEIsTUFBTSxTQUFTLENBQUMsNkJBQTZCLENBQUMsQ0FBQztJQUNqRCxDQUFDO0lBRUQsT0FBTyxJQUFJLENBQUM7QUFDZCxDQUFDO0FBRUQsZUFBZSxTQUFTLENBQUMifQ==
+
 
 /***/ }),
 
@@ -41231,7 +43098,7 @@ function v4(options, buf, offset) {
     return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_2__.unsafeStringify)(rnds);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (v4);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidjQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvdjQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0EsT0FBTyxNQUFNLE1BQU0sYUFBYSxDQUFDO0FBQ2pDLE9BQU8sR0FBRyxNQUFNLFVBQVUsQ0FBQztBQUMzQixPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0sZ0JBQWdCLENBQUM7QUFJakQsU0FBUyxFQUFFLENBQUMsT0FBeUIsRUFBRSxHQUFnQixFQUFFLE1BQWU7SUFDdEUsSUFBSSxNQUFNLENBQUMsVUFBVSxJQUFJLENBQUMsR0FBRyxJQUFJLENBQUMsT0FBTyxFQUFFLENBQUM7UUFDMUMsT0FBTyxNQUFNLENBQUMsVUFBVSxFQUFFLENBQUM7SUFDN0IsQ0FBQztJQUVELE9BQU8sR0FBRyxPQUFPLElBQUksRUFBRSxDQUFDO0lBRXhCLE1BQU0sSUFBSSxHQUFHLE9BQU8sQ0FBQyxNQUFNLElBQUksQ0FBQyxPQUFPLENBQUMsR0FBRyxJQUFJLEdBQUcsQ0FBQyxFQUFFLENBQUM7SUFHdEQsSUFBSSxDQUFDLENBQUMsQ0FBQyxHQUFHLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxHQUFHLElBQUksQ0FBQyxHQUFHLElBQUksQ0FBQztJQUNsQyxJQUFJLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDLEdBQUcsSUFBSSxDQUFDLEdBQUcsSUFBSSxDQUFDO0lBR2xDLElBQUksR0FBRyxFQUFFLENBQUM7UUFDUixNQUFNLEdBQUcsTUFBTSxJQUFJLENBQUMsQ0FBQztRQUVyQixLQUFLLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsRUFBRSxFQUFFLEVBQUUsQ0FBQyxFQUFFLENBQUM7WUFDNUIsR0FBRyxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUMsR0FBRyxJQUFJLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDNUIsQ0FBQztRQUVELE9BQU8sR0FBRyxDQUFDO0lBQ2IsQ0FBQztJQUVELE9BQU8sZUFBZSxDQUFDLElBQUksQ0FBQyxDQUFDO0FBQy9CLENBQUM7QUFFRCxlQUFlLEVBQUUsQ0FBQyJ9
+
 
 /***/ }),
 
@@ -41251,7 +43118,7 @@ function validate(uuid) {
     return typeof uuid === 'string' && _regex_js__WEBPACK_IMPORTED_MODULE_0__["default"].test(uuid);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validate);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmFsaWRhdGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvdmFsaWRhdGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxLQUFLLE1BQU0sWUFBWSxDQUFDO0FBRS9CLFNBQVMsUUFBUSxDQUFDLElBQWE7SUFDN0IsT0FBTyxPQUFPLElBQUksS0FBSyxRQUFRLElBQUksS0FBSyxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztBQUN0RCxDQUFDO0FBRUQsZUFBZSxRQUFRLENBQUMifQ==
+
 
 /***/ })
 
@@ -41353,6 +43220,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App */ "./src/popup/App.tsx");
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index.css */ "./src/popup/index.css");
+/* harmony import */ var _context_SessionContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../context/SessionContext */ "./src/context/SessionContext.tsx");
+
 
 
 
@@ -41366,7 +43235,7 @@ if (!rootElement) {
 else {
     console.log("Root element found");
     const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_2__.createRoot)(rootElement);
-    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)((react__WEBPACK_IMPORTED_MODULE_1___default().StrictMode), { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_App__WEBPACK_IMPORTED_MODULE_3__["default"], {}) }));
+    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)((react__WEBPACK_IMPORTED_MODULE_1___default().StrictMode), { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_context_SessionContext__WEBPACK_IMPORTED_MODULE_5__.SessionProvider, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_App__WEBPACK_IMPORTED_MODULE_3__["default"], {}) }) }));
 }
 
 })();

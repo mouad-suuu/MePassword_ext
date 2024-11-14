@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Bell, Lock, Shield, Moon } from "lucide-react";
-import { ExtensionSettings } from "../../services/types";
+import { APISettingsPayload } from "../../../services/types";
 
 interface SettingItemProps {
   icon: ReactNode;
@@ -28,8 +28,8 @@ const SettingItem: React.FC<SettingItemProps> = ({
 );
 
 interface SettingsProps {
-  settings: ExtensionSettings;
-  onUpdateSettings: (newSettings: ExtensionSettings) => Promise<void>;
+  settings: APISettingsPayload;
+  onUpdateSettings: (newSettings: APISettingsPayload) => Promise<void>;
   onReset: () => Promise<void>;
 }
 

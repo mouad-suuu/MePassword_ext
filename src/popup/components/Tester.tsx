@@ -1,43 +1,34 @@
 import React, { useState, useEffect } from "react";
-import StoringService from "./../../services/db";
-import EncryptionService from "./../../services/Keys-managment/Encrypt";
-import {
-  KeySet,
-  EncryptedPassword,
-  ExtensionSettings,
-  UserCredentials,
-} from "../../services/types";
+import StoringService from "./../../services/StorageService";
+import EncryptionService from "../../services/EncryptionService";
+import { KeySet, UserCredentials, SymmetricKeys } from "../../services/types";
 import { Button } from "./ui/button";
 
 const StoringServiceTest: React.FC = () => {
   const [keys, setKeys] = useState<KeySet | null>(null);
-  const [encryptedPassword, setEncryptedPassword] =
-    useState<EncryptedPassword | null>(null);
-  const [decryptedPassword, setDecryptedPassword] =
-    useState<UserCredentials | null>(null);
-  const [settings, setSettings] = useState<ExtensionSettings | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [allPasswords, setAllPasswords] = useState<EncryptedPassword[] | null>(
+
+  const [encryptedPassword, setEncryptedPassword] = useState<KeySet | null>(
     null
   );
+  const [decryptedPassword, setDecryptedPassword] =
+    useState<UserCredentials | null>(null);
+
+  const [error, setError] = useState<string | null>(null);
+  const [allPasswords, setAllPasswords] = useState<KeySet | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const keysFromStorage = await StoringService.getKeysFromStorage();
-        setKeys(keysFromStorage);
+        const keysFromStorage = await StoringService.Keys.getKeysFromStorage();
+        setKeys(keysFromStorage as any);
 
-        const passwordFromStorage = await StoringService.getEncryptedPassword(
-          "testPassword"
-        );
+        const passwordFromStorage =
+          await StoringService.Credentials.getEncryptedCridentials_Keys();
         setEncryptedPassword(passwordFromStorage);
 
-        const settingsFromStorage = await StoringService.getExtensionSettings();
-        setSettings(settingsFromStorage);
-
         const allPasswordsFromStorage =
-          await StoringService.getEncryptedPasswords();
-        setAllPasswords(allPasswordsFromStorage);
+          await StoringService.Credentials.getEncryptedCridentials_Keys();
+        setAllPasswords(allPasswordsFromStorage as any);
       } catch (err) {
         setError(
           `Failed to fetch data: ${
@@ -51,9 +42,18 @@ const StoringServiceTest: React.FC = () => {
 
   const handleStoreKeys = async () => {
     try {
-      const newKeys = await EncryptionService.generateKeySet();
-      await StoringService.storeKeys(newKeys);
-      setKeys(await StoringService.getKeysFromStorage());
+      const passwordFromStorage =
+        await StoringService.Credentials.getEncryptedCridentials_Keys();
+      setEncryptedPassword(passwordFromStorage);
+      const newKeys = await EncryptionService.KeyGeneration.generateKeySet();
+      const formattedKeys = {
+        privateKey: newKeys.RSAkeys.privateKey.key,
+        AESKey: newKeys.AESKey.key,
+        IV: newKeys.AESKey.iv,
+        Credentials: passwordFromStorage?.Credentials,
+      };
+      await StoringService.Keys.storeKeys(formattedKeys as any);
+      setKeys(await StoringService.Keys.getKeysFromStorage());
       setError(null);
     } catch (err) {
       setError(
@@ -67,20 +67,35 @@ const StoringServiceTest: React.FC = () => {
   const handleStorePassword = async () => {
     try {
       if (!keys) throw new Error("No keys available for encryption");
-
+      const keysFromStorage = await StoringService.Keys.getKeysFromStorage();
+      if (!keys || !keysFromStorage)
+        throw new Error("No keys available for encryption");
       const newPassword: UserCredentials = {
-        website: "example.com",
+        server: "example.com",
         authToken: "abc123",
         password: "secretPassword",
       };
 
-      const encryptedData = await EncryptionService.encryptPassword(
-        newPassword,
-        keys
-      );
-      await StoringService.storeEncryptedPassword(encryptedData);
+      const encryptedData =
+        await EncryptionService.CredentialCrypto.encryptCredentials(
+          newPassword,
+          {
+            key: keys.AESKey,
+            algorithm: "AES-GCM",
+            length: 256,
+            iv: keys.IV,
+          }
+        );
+      const data: KeySet = {
+        privateKey: keys.privateKey,
+        AESKey: keys.AESKey,
+        IV: keys.IV,
+        Credentials: encryptedData.encryptedData,
+      };
+      await StoringService.Credentials.storeEncryptedCredentials(data);
       setEncryptedPassword(
-        await StoringService.getEncryptedPassword("testPassword")
+        (await StoringService.Credentials.getEncryptedCridentials_Keys()) ||
+          null
       );
       setError(null);
     } catch (err) {
@@ -99,12 +114,18 @@ const StoringServiceTest: React.FC = () => {
           "No encrypted password or keys available for decryption"
         );
 
-      const decryptedData = await EncryptionService.decryptPassword(
-        encryptedPassword,
-        keys
-      );
+      const decryptedData =
+        await EncryptionService.CredentialCrypto.decryptCredentials(
+          encryptedPassword.Credentials,
+          {
+            key: encryptedPassword.AESKey,
+            algorithm: "AES-GCM",
+            length: 256,
+            iv: encryptedPassword.IV,
+          }
+        );
 
-      setDecryptedPassword(decryptedData.encryptedData); // Set decrypted data to state
+      setDecryptedPassword(decryptedData as UserCredentials);
       setError(null);
     } catch (err) {
       setError(
@@ -115,33 +136,11 @@ const StoringServiceTest: React.FC = () => {
     }
   };
 
-  const handleStoreSettings = async () => {
-    try {
-      const newSettings: ExtensionSettings = {
-        serverUrl: "",
-        authToken: "",
-        dataRetentionTime: 1800000,
-        autoLockTime: 1800000,
-        biometricEnabled: true,
-        theme: "dark",
-        autoFill: true,
-      };
-      await StoringService.storeExtensionSettings(newSettings);
-      setSettings(await StoringService.getExtensionSettings());
-      setError(null);
-    } catch (err) {
-      setError(
-        `Failed to store settings: ${
-          err instanceof Error ? err.message : "Unknown error"
-        }`
-      );
-    }
-  };
-
   const handleGetAllData = async () => {
     try {
-      const passwords = await StoringService.getEncryptedPasswords();
-      setAllPasswords(passwords);
+      const passwords =
+        await StoringService.Credentials.getEncryptedCridentials_Keys();
+      setAllPasswords(passwords as any);
       setError(null);
     } catch (err) {
       setError(
@@ -156,9 +155,11 @@ const StoringServiceTest: React.FC = () => {
     try {
       if (!encryptedPassword)
         throw new Error("No encrypted password to delete");
-      await StoringService.deleteEncryptedPassword(encryptedPassword.id);
+      await StoringService.Storage.clearStorage();
       setEncryptedPassword(null);
-      setAllPasswords(await StoringService.getEncryptedPasswords());
+      setAllPasswords(
+        await StoringService.Credentials.getEncryptedCridentials_Keys()
+      );
       setError(null);
     } catch (err) {
       setError(
@@ -171,11 +172,11 @@ const StoringServiceTest: React.FC = () => {
 
   const handleClearStorage = async () => {
     try {
-      await StoringService.clearStorage();
+      await StoringService.Storage.clearStorage();
       setKeys(null);
       setEncryptedPassword(null);
       setDecryptedPassword(null);
-      setSettings(null);
+
       setAllPasswords(null);
       setError(null);
     } catch (err) {
@@ -198,7 +199,7 @@ const StoringServiceTest: React.FC = () => {
       <Button onClick={handleDecryptPassword} disabled={!allPasswords || !keys}>
         Decrypt Password
       </Button>
-      <Button onClick={handleStoreSettings}>Store Settings</Button>
+
       <Button onClick={handleGetAllData}>Get All Passwords</Button>
       <Button onClick={handleDeletePassword} disabled={!encryptedPassword}>
         Delete Password
@@ -216,10 +217,6 @@ const StoringServiceTest: React.FC = () => {
         Password=============================
       </h1>
       <pre>{JSON.stringify(decryptedPassword, null, 2)}</pre>
-      <h1>
-        =============================Settings=============================
-      </h1>
-      <pre>{JSON.stringify(settings, null, 2)}</pre>
       <h1>
         ===========================All Passwords===========================
       </h1>

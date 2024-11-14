@@ -11,13 +11,10 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Alert, AlertDescription } from "../ui/alert";
-import EncryptionService from "../../../services/Keys-managment/Encrypt";
-import StoringService from "../../../services/db";
-import {
-  KeySet,
-  UserCredentials,
-  EncryptedPassword,
-} from "../../../services/types";
+import EncryptionService from "../../../services/EncryptionService";
+import StoringService from "../../../services/StorageService";
+import { KeySet, UserCredentials } from "../../../services/types";
+import Main from "../main";
 
 const StartupScreen = ({
   onKeysLoaded,
@@ -50,8 +47,33 @@ const StartupScreen = ({
 
       try {
         const text = await file.text();
-        const keys = JSON.parse(text.split("---")[1]); // Extract keys between dashes
-        await StoringService.storeKeys(keys);
+        const lines = text.split("\n");
+        const keys: KeySet = {
+          privateKey: "",
+          AESKey: "",
+          IV: "",
+          Credentials: {
+            server: "",
+            authToken: "",
+          },
+        };
+
+        // Parse the file content
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].includes("private Key")) {
+            keys.privateKey = lines[i + 1].trim();
+          } else if (lines[i].includes("AES key")) {
+            keys.AESKey = lines[i + 1].trim();
+          } else if (lines[i].includes("-------iv")) {
+            keys.IV = lines[i + 1].trim();
+          } else if (lines[i].includes("server")) {
+            keys.Credentials.server = lines[i + 1].trim();
+          } else if (lines[i].includes("auth key")) {
+            keys.Credentials.authToken = lines[i + 1].trim();
+          }
+        }
+
+        await StoringService.Keys.storeKeys(keys);
         onKeysLoaded(keys);
       } catch (err) {
         setError("Invalid key file. Please try again.");
@@ -105,11 +127,15 @@ const CreateAccountForm = ({
 }: {
   onAccountCreated: (keys: KeySet) => void;
 }) => {
+  /**
+   *  TODO: encrypt the cridentials before saving them
+   *  TODO: send the password and public key to the server qith the settings
+   * Done
+   */
   const [formData, setFormData] = useState<UserCredentials>({
-    website: "",
+    server: "",
     authToken: "",
     password: "",
-    notes: "", // Optional
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -122,94 +148,63 @@ const CreateAccountForm = ({
     try {
       // Generate key components with proper typing
       const keys: KeySet = {
-        id: crypto.randomUUID(),
-        version: 1,
-        created: Date.now(),
-        lastRotated: Date.now(),
-        encryption: {
-          publicKey: {
-            key: "",
-            algorithm: "RSA-OAEP",
-            length: 4096,
-            format: "spki",
-          },
-          privateKey: {
-            key: "",
-            algorithm: "RSA-OAEP",
-            length: 4096,
-            format: "pkcs8",
-            protected: false,
-          },
-        },
-        dataKey: {
-          key: "",
-          algorithm: "AES-GCM",
-          length: 256,
-          iv: "",
+        privateKey: "",
+        AESKey: "",
+        IV: "",
+        Credentials: {
+          server: "",
+          authToken: "",
+          password: "",
         },
       };
 
-      const { rsaKeyPair, aesKey, formattedOutput } =
-        await EncryptionService.generateKeyComponents();
+      // Generate encryption keys
+      const { rsaKeyPair, aesKey } =
+        await EncryptionService.KeyGeneration.generateKeyComponents();
 
-      // Create and store session key
-      const sessionKey = EncryptionService.generateSessionKey();
-      EncryptionService.storeSessionData(sessionKey, aesKey, 1800000); // 30 minutes
-
-      // Update the keys with generated values
-      keys.encryption = rsaKeyPair;
-      keys.dataKey = aesKey;
-
-      // Encrypt credentials
-      const { encryptedData, formattedOutput: encryptedOutput } =
-        await EncryptionService.encryptCredentials(
-          formData as UserCredentials & { password: string },
-          keys.dataKey
+      // Update keys with generated values
+      keys.privateKey = rsaKeyPair.privateKey.key;
+      keys.AESKey = aesKey.key;
+      keys.IV = aesKey.iv;
+      const encryptedCredentials =
+        await EncryptionService.CredentialCrypto.encryptCredentials(
+          formData,
+          aesKey
         );
+      keys.Credentials = encryptedCredentials.encryptedData;
 
-      // Send to API
-      const apiResponse = await EncryptionService.prepareAndSendAPISettings(
-        encryptedData as any,
-        aesKey,
-        rsaKeyPair.publicKey.key
-      );
+      // Store keys and handle encryption
+      await StoringService.Keys.storeKeys(keys);
+      console.log("keys are stored", keys);
 
-      if (!apiResponse.ok) {
-        throw new Error("Failed to setup API settings");
-      }
+      // Download keys file with new format
+      const keysString = `-------private Key---------
+${keys.privateKey}
+-------AES key-------------
+${keys.AESKey}
+-------iv-------------
+${keys.IV}
+--------server----------
+${keys.Credentials.server}
+-------auth key-------
+${keys.Credentials.authToken}`;
 
-      // Store encrypted data and keys
-      await StoringService.storeKeys(keys);
-      await StoringService.storeEncryptedPassword(encryptedData as any);
-
-      // Generate key file content with encrypted credentials
-      const keyFileContent = `----------PRIVATEKEY----------------
-${keys.encryption.privateKey.key}
-----------PUBLICKEY----------------
-${keys.encryption.publicKey.key}
-----------AES-GCM------------------
-${keys.dataKey.key}
-----------IV----------------------
-${keys.dataKey.iv}
-----------ENCRYPTED-WEBSITE--------
-${encryptedData.website}
-----------ENCRYPTED-AUTH----------
-${encryptedData.authToken}
-----------METADATA----------------
-${keys.id}|${keys.version}|${keys.created}|${keys.lastRotated}`;
-
-      // Create and download key file
-      const blob = new Blob([keyFileContent], { type: "text/plain" });
+      const blob = new Blob([keysString], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "password-manager-keys.txt";
+      a.download = "mepassword-keys.txt";
+      document.body.appendChild(a);
       a.click();
+      document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      // Clean up session data
-      EncryptionService.clearSessionData(sessionKey);
-
+      try {
+        await EncryptionService.API.SettingsPost(rsaKeyPair.publicKey.key);
+        console.log("settings sent to API");
+      } catch (error) {
+        console.error("Error sending settings to API:", error);
+      }
       onAccountCreated(keys);
     } catch (err) {
       setError(
@@ -236,9 +231,9 @@ ${keys.id}|${keys.version}|${keys.created}|${keys.lastRotated}`;
             <div>
               <Input
                 placeholder="Website"
-                value={formData.website}
+                value={formData.server}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, website: e.target.value }))
+                  setFormData((prev) => ({ ...prev, server: e.target.value }))
                 }
                 required
               />
@@ -312,7 +307,7 @@ const PasswordManager = () => {
     case "create":
       return <CreateAccountForm onAccountCreated={handleAccountCreated} />;
     case "main":
-      return <div>Main app interface goes here</div>;
+      return <Main />;
     default:
       return null;
   }

@@ -31,14 +31,12 @@ const NavButton: React.FC<NavButtonProps> = ({
 
 interface NavigationProps {
   activeTab: string;
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
-  onLogout: () => Promise<void>;
+  setActiveTab: (tab: string) => void;
 }
 
-const Navigation: React.FC<NavigationProps> = ({
+export const Navigation: React.FC<NavigationProps> = ({
   activeTab,
   setActiveTab,
-  onLogout,
 }) => {
   return (
     <div className="bg-background">
@@ -69,9 +67,6 @@ const Navigation: React.FC<NavigationProps> = ({
         />
       </div>
       <Separator />
-      <button onClick={onLogout}>Logout</button>
     </div>
   );
 };
-
-export default Navigation;

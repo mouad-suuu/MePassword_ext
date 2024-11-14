@@ -1,6 +1,6 @@
 import React from "react";
 import { Mail, Key, Shield } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 interface ProfileSectionProps {
   icon: React.ReactNode;
