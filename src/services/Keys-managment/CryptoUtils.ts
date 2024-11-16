@@ -128,11 +128,6 @@ export class CryptoUtils {
 
   public static base64ToBuffer(base64: string): Uint8Array {
     try {
-      console.log("Decoding base64 string", {
-        base64Length: base64.length,
-        base64Preview: base64.substring(0, 50),
-      });
-
       const cleanBase64 = base64.trim().replace(/\s/g, "");
       const padded = (() => {
         const pad = cleanBase64.length % 4;
@@ -200,8 +195,14 @@ export class CryptoUtils {
         dataLength: encryptedData?.length,
       });
 
-      if (!Array.isArray(encryptedData) || encryptedData.length === 0) {
-        throw new Error("Input data must be a non-empty array");
+      // Return empty array if no data is provided
+      if (
+        !encryptedData ||
+        !Array.isArray(encryptedData) ||
+        encryptedData.length === 0
+      ) {
+        console.log("No encrypted data to decrypt, returning empty array");
+        return [];
       }
 
       const decoder = new TextDecoder("utf-8");

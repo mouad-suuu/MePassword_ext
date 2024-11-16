@@ -1,27 +1,25 @@
+import EncryptionService from "../EncryptionService";
 import { KeyStorage } from "../storage/KeyStorage";
 import { LocalStorageManager } from "../storage/LocalStorageManager";
-import { KeySet, SessionSettings } from "../types";
+import { APISettingsPayload, KeySet, SessionSettings } from "../types";
+import AdditionalMethods from "../Keys-managment/additionals";
 
 export class SessionManagementService {
   private settings: SessionSettings;
-  private sessionActive: boolean = false;
 
   constructor(userSettings: Partial<SessionSettings> = {}) {
-    console.log("SessionManagementService constructor called", userSettings);
-    // Simplify initial settings
     this.settings = {
-      autoLockTime: 1800000, // 30 minutes
-      sessionTime: 86400000, // 24 hours
-      sessionStart: Date.now(),
+      autoLockTime: 0, // 5 minutes
+      sessionTime: 0, // 24 hours
+      sessionStart: 0,
       pushNotifications: false,
       biometricVerification: false,
       biometricType: "fingerprint",
-      autoLockStart: Date.now(),
-      sessionExpiry: Date.now() + 86400000,
-      lastAccessTime: Date.now(),
+      autoLockStart: 0,
+      sessionExpiry: 0,
+      lastAccessTime: 0,
       ...userSettings,
     } as SessionSettings;
-    console.log("Initialized settings:", this.settings);
   }
 
   // Simplify static methods to focus on core functionality
@@ -32,17 +30,18 @@ export class SessionManagementService {
     try {
       console.log("Static initialize called");
       const defaultSettings: SessionSettings = {
-        autoLockTime: 1800000,
-        sessionTime: 86400000,
+        autoLockTime: 1000 * 60 * 5,
+        sessionTime: 86400000 * 30,
         sessionStart: Date.now(),
         pushNotifications: false,
         biometricVerification: false,
         biometricType: "fingerprint",
         autoLockStart: Date.now(),
-        sessionExpiry: Date.now() + 86400000,
+        sessionExpiry: Date.now() + 86400000 * 30,
         lastAccessTime: Date.now(),
       };
       await KeyStorage.storeSettings(defaultSettings);
+      await SessionManagementService.updateSessionSettings(defaultSettings);
     } catch (error) {
       console.error("Failed to initialize session:", error);
     }
@@ -69,6 +68,11 @@ export class SessionManagementService {
     console.log("Updating session settings.");
     await KeyStorage.storeSettings(newSettings);
     console.log("Session settings updated successfully.");
+    const settingsType: Partial<APISettingsPayload> = {
+      sessionSettings: newSettings,
+    };
+    await EncryptionService.API.SettingsPut(settingsType);
+    console.log("Session settings updated in storage.");
   }
 
   public static async getKeys(): Promise<KeySet> {
@@ -94,45 +98,38 @@ export class SessionManagementService {
     this.keys = null;
     console.log("Session data cleared.");
   }
-  /**
-   * Initialize session settings. Fetch settings from the user's server if available and merge.
-   * Call this method during login or when the app initializes.
-   */
-  async initializeSession() {
-    const serverSettings = await KeyStorage.getSettingsFromStorage();
-    this.settings = { ...this.settings, ...serverSettings };
-    this.startSessionTimer();
-  }
-
-  /**
-   * Starts a new session timer and updates sessionStart.
-   * This is used to track the overall session duration.
-   */
-  private startSessionTimer() {
-    this.settings.sessionStart = Date.now();
-    this.sessionActive = true;
-  }
 
   /**
    * Checks if the session has expired based on session time settings.
    * Ends the session if the time has exceeded.
    */
-  checkSessionExpiration() {
-    const currentTime = Date.now();
-    const sessionExpiry =
-      this.settings.sessionStart + this.settings.sessionTime;
-    if (currentTime >= sessionExpiry) {
-      this.endSession();
-    }
-  }
+  public async checkSessionExpiration(): Promise<boolean> {
+    try {
+      const settings = await KeyStorage.getSettingsFromStorage();
 
-  /**
-   * Ends the current session and clears any local data.
-   */
-  endSession() {
-    LocalStorageManager.clearStorage();
-    this.sessionActive = false;
-    // Additional actions such as redirecting to login or showing a notification
+      // If no settings exist, we consider the session expired
+      if (!settings || Object.keys(settings).length === 0) {
+        console.log("No settings found, considering session expired");
+        return true;
+      }
+
+      if (!settings.sessionStart || !settings.sessionTime) {
+        console.log("Invalid session settings: missing required fields");
+        return true;
+      }
+
+      const currentTime = Date.now();
+      const sessionExpiry = settings.sessionStart + settings.sessionTime;
+      const remainingTime = sessionExpiry - currentTime;
+
+      AdditionalMethods.logTime("Time until session expiry", remainingTime);
+      AdditionalMethods.logTime("Session duration", settings.sessionTime);
+
+      return currentTime >= sessionExpiry;
+    } catch (error) {
+      console.log("Failed to check session expiration:", error);
+      return true;
+    }
   }
 
   /**
@@ -147,18 +144,26 @@ export class SessionManagementService {
    * Checks if the short-lock timer has expired based on auto-lock settings.
    * Returns true if the user needs to re-authenticate, false otherwise.
    */
-  checkShortLockExpiration(): boolean {
+  public async checkShortLockExpiration(): Promise<boolean> {
+    const settings = await KeyStorage.getSettingsFromStorage();
     const currentTime = Date.now();
-    const shortLockExpiry =
-      this.settings.autoLockStart + this.settings.autoLockTime;
-    return currentTime >= shortLockExpiry;
+    const shortLockExpiry = settings.autoLockStart + settings.autoLockTime;
+    const remainingTime = shortLockExpiry - currentTime;
+
+    AdditionalMethods.logTime("Time until short lock expiry", remainingTime);
+    AdditionalMethods.logTime("Short lock duration", settings.autoLockTime);
+
+    return currentTime <= shortLockExpiry;
   }
 
   /**
    * Manually triggers short-lock to end early, requiring re-authentication.
    */
-  endShortLock() {
-    this.settings.autoLockStart = 0;
+  public async endShortLock() {
+    const settings = await KeyStorage.getSettingsFromStorage();
+    await KeyStorage.updateSettings({
+      autoLockStart: settings.autoLockStart + settings.autoLockTime,
+    });
   }
 
   /**
@@ -184,13 +189,5 @@ export class SessionManagementService {
   private async checkBiometricSupport(): Promise<boolean> {
     // Implement device-specific biometric check
     return true; // Placeholder
-  }
-
-  /**
-   * Save session settings to the user's server for persistence between logins.
-   * This replaces centralized storage and ensures security within the user's environment.
-   */
-  async saveSessionSettings() {
-    // Implement a call to save settings directly to the user's server
   }
 }

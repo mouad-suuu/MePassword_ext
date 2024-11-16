@@ -45,6 +45,35 @@ class AdditionalMethods {
   // Add session storage property
   public static sessionData = new Map<string, any>();
 
+  private static formatTime(milliseconds: number): string {
+    const days = Math.floor(milliseconds / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(milliseconds / (1000 * 60 * 60));
+    const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
+    const ms = milliseconds % 1000;
+
+    const parts = [];
+    if (days > 0) parts.push(`${days}d`);
+    if (hours > 0) parts.push(`${hours}h`);
+    if (minutes > 0) parts.push(`${minutes}m`);
+    if (seconds > 0) parts.push(`${seconds}s`);
+    if (ms > 0) parts.push(`${ms}ms`);
+
+    return parts.join(" ") || "0ms";
+  }
+
+  /**
+   * Logs debug message with execution time
+   */
+  public static logTime(message: string, timeInMs: number) {
+    if (this.DEBUG) {
+      const formattedTime = this.formatTime(timeInMs);
+      console.log(` ${message} (took ${formattedTime})`);
+    }
+  }
+
+  // Add session storage property
+
   public static logError(method: string, error: any) {
     console.error(`[EncryptionService:${method}] Error:`, {
       message: error.message,

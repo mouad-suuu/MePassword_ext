@@ -144,7 +144,7 @@ const AddKeysDialog: React.FC<AddPasswordDialogProps> = ({ open, onClose }) => {
       }`}
     >
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">
-        <h2 className="text-xl font-semibold mb-4">Add New Password</h2>
+        <h2 className="text-xl font-semibold mb-4">Add New Key</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="website">Website</Label>

@@ -4,6 +4,8 @@ import { Button } from "../ui/button";
 import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
 import EncryptionService from "../../../services/EncryptionService";
 import Main from "../main";
+import { Lock, Key, AlertCircle } from "lucide-react";
+import { KeyStorage } from "../../../services/storage/KeyStorage";
 
 export const PasswordPrompt: React.FC = () => {
   const [password, setPassword] = useState<string>("");
@@ -19,6 +21,9 @@ export const PasswordPrompt: React.FC = () => {
     const valid = await EncryptionService.API.validatePassword(password);
     if (valid) {
       //   await SessionManagementService.initialize(password);
+      await KeyStorage.updateSettings({
+        autoLockStart: Date.now(),
+      });
       setIsValid(true);
     } else {
       setErrorMessage("Invalid password. Please try again.");
@@ -29,19 +34,41 @@ export const PasswordPrompt: React.FC = () => {
   return (
     <>
       {!isValid ? (
-        <div className="password-prompt">
-          <h2>Please enter your password</h2>
+        <div className="min-w-[400px] min-h-96 bg-gray-50 flex flex-col items-center justify-center p-8">
+          <div className="mb-6 text-primary">
+            <Lock size={48} className="mx-auto mb-2" />
+          </div>
+
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+            Welcome Back
+          </h2>
+
           {errorMessage && (
-            <div className="text-red-500 mb-4">{errorMessage}</div>
+            <div className="flex items-center gap-2 text-red-500 mb-6 bg-red-50 p-3 rounded-lg w-full">
+              <AlertCircle size={18} />
+              <span>{errorMessage}</span>
+            </div>
           )}
-          <form onSubmit={handleSubmit}>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <Button type="submit">Submit</Button>
+
+          <form onSubmit={handleSubmit} className="w-full space-y-4">
+            <div className="relative">
+              <Key
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                size={18}
+              />
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="pl-10 py-5"
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <Button type="submit" className="w-full py-5 text-base font-medium">
+              Unlock
+            </Button>
           </form>
         </div>
       ) : (

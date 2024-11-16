@@ -5,6 +5,7 @@ import Passwords from "./password/Passwords";
 import Profile from "./profile/profile";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Navigation } from "./Navigation";
+import { SettingsComponent } from "./profile/Settings";
 
 const Main = () => {
   const [activeTab, setActiveTab] = useState("passwords");
@@ -21,7 +22,7 @@ const Main = () => {
   };
 
   return (
-    <div>
+    <div className="min-w-[400px] min-h-96 bg-gray-50">
       {needsKeyRotation && (
         <Alert variant="default" className="mb-4">
           <AlertTitle>Security Notice</AlertTitle>
@@ -42,7 +43,7 @@ const Main = () => {
         {activeTab === "passwords" && <Passwords />}
         {activeTab === "keys" && <Keys />}
         {activeTab === "profile" && <Profile />}
-        {activeTab === "settings" && <Settings />}
+        {activeTab === "settings" && <SettingsComponent />}
       </main>
     </div>
   );

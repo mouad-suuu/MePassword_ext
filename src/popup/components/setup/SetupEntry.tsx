@@ -289,8 +289,11 @@ const PasswordManager = () => {
   const [stage, setStage] = useState<"startup" | "create" | "main">("startup");
   const [keys, setKeys] = useState<KeySet | null>(null);
 
-  const handleKeysLoaded = (loadedKeys: KeySet) => {
+  const handleKeysLoaded = async (loadedKeys: KeySet) => {
     setKeys(loadedKeys);
+    // Initialize session timing
+    await SessionManagementService.initialize();
+
     setStage("main");
   };
 
@@ -298,8 +301,11 @@ const PasswordManager = () => {
     setStage("create");
   };
 
-  const handleAccountCreated = (newKeys: any) => {
+  const handleAccountCreated = async (newKeys: KeySet) => {
     setKeys(newKeys);
+    // Initialize session timing
+    await SessionManagementService.initialize();
+
     setStage("main");
   };
 

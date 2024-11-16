@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import { Bell, Lock, Shield, Moon } from "lucide-react";
-import { APISettingsPayload } from "../../../services/types";
+import { useState, useEffect } from "react";
+import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
+import { KeyStorage } from "../../../services/storage/KeyStorage";
 
 interface SettingItemProps {
   icon: ReactNode;
@@ -27,13 +29,38 @@ const SettingItem: React.FC<SettingItemProps> = ({
   </div>
 );
 
-interface SettingsProps {
-  settings: APISettingsPayload;
-  onUpdateSettings: (newSettings: APISettingsPayload) => Promise<void>;
-  onReset: () => Promise<void>;
-}
+export const SettingsComponent: React.FC = () => {
+  const [settings, setSettings] = useState({
+    pushNotifications: false,
+    autoLockTime: 300000, // 5 minutes default
+    sessionTime: 432000000, // 5 days default
+  });
 
-const Settings: React.FC = ({}) => {
+  useEffect(() => {
+    // Load initial settings
+    const loadSettings = async () => {
+      const sessionSettings =
+        await SessionManagementService.getSessionSettings();
+      setSettings({
+        pushNotifications: sessionSettings.pushNotifications,
+        autoLockTime: sessionSettings.autoLockTime,
+        sessionTime: sessionSettings.sessionTime,
+      });
+    };
+    loadSettings();
+  }, []);
+
+  const handleSettingChange = async (key: string, value: any) => {
+    const newSettings = { ...settings, [key]: value };
+    setSettings(newSettings);
+
+    // Update session settings
+    await SessionManagementService.updateSessionSettings({
+      ...(await SessionManagementService.getSessionSettings()),
+      [key]: value,
+    });
+  };
+
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Settings</h2>
@@ -46,7 +73,14 @@ const Settings: React.FC = ({}) => {
         >
           <div className="flex items-center">
             <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" className="sr-only peer" />
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={settings.pushNotifications}
+                onChange={(e) =>
+                  handleSettingChange("pushNotifications", e.target.checked)
+                }
+              />
               <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
             </label>
           </div>
@@ -57,7 +91,16 @@ const Settings: React.FC = ({}) => {
           title="Auto-Lock"
           description="Automatically lock after inactivity"
         >
-          <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+          <select
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+            value={settings.autoLockTime / 60000} // Convert to minutes
+            onChange={(e) =>
+              handleSettingChange(
+                "autoLockTime",
+                Number(e.target.value) * 60000
+              )
+            }
+          >
             <option value="5">5 minutes</option>
             <option value="10">10 minutes</option>
             <option value="30">30 minutes</option>
@@ -65,32 +108,28 @@ const Settings: React.FC = ({}) => {
         </SettingItem>
 
         <SettingItem
-          icon={<Shield className="w-5 h-5 text-gray-600" />}
-          title="Security Level"
-          description="Set your preferred security level"
+          icon={<Lock className="w-5 h-5 text-gray-600" />}
+          title="Session time"
+          description="Automatically Delete all the data from the browser (you'll need to enter the keys again)"
         >
-          <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+          <select
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+            value={settings.sessionTime / 86400000} // Convert to days
+            onChange={(e) =>
+              handleSettingChange(
+                "sessionTime",
+                Number(e.target.value) * 86400000
+              )
+            }
+          >
+            <option value="5">5 days</option>
+            <option value="10">10 days</option>
+            <option value="30">30 days</option>
+            <option value="60">60 days</option>
+            <option value="90">90 days</option>
           </select>
-        </SettingItem>
-
-        <SettingItem
-          icon={<Moon className="w-5 h-5 text-gray-600" />}
-          title="Dark Mode"
-          description="Toggle dark mode theme"
-        >
-          <div className="flex items-center">
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" className="sr-only peer" />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
-          </div>
         </SettingItem>
       </div>
     </div>
   );
 };
-
-export default Settings;

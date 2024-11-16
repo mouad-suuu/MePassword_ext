@@ -53,4 +53,16 @@ export class KeyStorage extends LocalStorageManager {
       console.error("Error storing settings:", error);
     }
   }
+
+  public static async updateSettings(
+    newSettings: Partial<SessionSettings>
+  ): Promise<void> {
+    try {
+      const currentSettings = await this.getSettingsFromStorage();
+      const updatedSettings = { ...currentSettings, ...newSettings };
+      await this.storeSettings(updatedSettings);
+    } catch (error) {
+      console.error("Error updating settings:", error);
+    }
+  }
 }

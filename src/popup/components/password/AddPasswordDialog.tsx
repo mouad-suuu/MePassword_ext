@@ -150,7 +150,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
         <h2 className="text-xl font-semibold mb-4">Add New Password</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="website">Website</Label>
+            <Label htmlFor="website">Website/Where to use</Label>
             <Input
               id="website"
               value={website}
