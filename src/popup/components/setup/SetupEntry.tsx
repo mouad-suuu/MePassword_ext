@@ -122,6 +122,7 @@ const StartupScreen = ({
       }
 
       setFileContent(keys);
+      await StoringService.Keys.storeKeys(keys);
       setShowPasswordPrompt(true);
     } catch (err) {
       setError("Invalid key file. Please try again.");
