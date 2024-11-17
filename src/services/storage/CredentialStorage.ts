@@ -1,12 +1,12 @@
+import StorageService from "../StorageService";
 import { KeySet } from "../types";
-import { LocalStorageManager } from "./LocalStorageManager";
 
-export class CredentialStorage extends LocalStorageManager {
+export class CredentialStorage {
   public static async storeEncryptedCredentials(
     credentials: KeySet
   ): Promise<void> {
     try {
-      this.storeInStorageSync("Credentials", JSON.stringify(credentials));
+      StorageService.SecureStorage.storeKeys(credentials);
     } catch (error) {
       console.error(`Error storing Credentials`, error);
     }
@@ -15,7 +15,7 @@ export class CredentialStorage extends LocalStorageManager {
   public static async deleteEncryptedPassword(id: string): Promise<void> {
     try {
       console.log(`Deleting encrypted password for ID: ${id}`);
-      this.deleteFromStorageSync(`password-${id}`);
+
       console.log(`Password deleted successfully for ID: ${id}`);
     } catch (error) {
       console.error(`Error deleting password for ID: ${id}`, error);
@@ -25,10 +25,11 @@ export class CredentialStorage extends LocalStorageManager {
   public static async getEncryptedCridentials_Keys(): Promise<KeySet | null> {
     try {
       console.log("Retrieving encrypted credentials");
-      const credentialsJSON = await this.getFromStorageSync("Keys");
+      const credentialsJSON =
+        await StorageService.SecureStorage.getKeysFromStorage();
 
       if (credentialsJSON) {
-        const credentials = JSON.parse(credentialsJSON) as KeySet;
+        const credentials = credentialsJSON;
         console.log("Retrieved credentials successfully");
         return credentials;
       }

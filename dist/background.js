@@ -918,7 +918,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage/KeyStorage */ "./src/services/storage/KeyStorage.ts");
 /* harmony import */ var _storage_CredentialStorage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storage/CredentialStorage */ "./src/services/storage/CredentialStorage.ts");
-/* harmony import */ var _storage_LocalStorageManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storage/LocalStorageManager */ "./src/services/storage/LocalStorageManager.ts");
+/* harmony import */ var _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storage/WindowsHelloStorage */ "./src/services/storage/WindowsHelloStorage.ts");
 
 
 
@@ -926,7 +926,7 @@ class StorageService {
 }
 StorageService.Keys = _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_0__.KeyStorage;
 StorageService.Credentials = _storage_CredentialStorage__WEBPACK_IMPORTED_MODULE_1__.CredentialStorage;
-StorageService.Storage = _storage_LocalStorageManager__WEBPACK_IMPORTED_MODULE_2__.LocalStorageManager;
+StorageService.SecureStorage = _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_2__.SecureStorageService;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StorageService);
 
 
@@ -1083,6 +1083,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storage/KeyStorage */ "./src/services/storage/KeyStorage.ts");
 /* harmony import */ var _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Keys-managment/additionals */ "./src/services/Keys-managment/additionals.ts");
 /* harmony import */ var _auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth/WebAuthnService */ "./src/services/auth/WebAuthnService.ts");
+/* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
+
 
 
 
@@ -1105,7 +1107,7 @@ class SessionManagementService {
                 sessionExpiry: Date.now() + 86400000 * 30,
                 lastAccessTime: Date.now(),
             };
-            await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.storeSettings(defaultSettings);
+            await _StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].SecureStorage.storeSettings(defaultSettings);
             await SessionManagementService.updateSessionSettings(defaultSettings);
             console.log("Session initialized with default settings:", defaultSettings);
         }
@@ -1133,7 +1135,7 @@ class SessionManagementService {
     static async updateSessionSettings(newSettings) {
         this.sessionSettings = Object.assign(Object.assign({}, this.sessionSettings), newSettings);
         console.log("Updating session settings.");
-        await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.storeSettings(this.sessionSettings);
+        await _StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].SecureStorage.storeSettings(this.sessionSettings);
         console.log("Session settings updated successfully.");
         const settingsType = {
             sessionSettings: this.sessionSettings,
@@ -1160,7 +1162,7 @@ class SessionManagementService {
     }
     static async clearSession() {
         console.log("Clearing session data.");
-        await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.storeSettings({});
+        await _StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].SecureStorage.storeSettings({});
         await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.storeKeys({});
         this.sessionSettings = null;
         this.keys = null;
@@ -1281,12 +1283,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CredentialStorage: () => (/* binding */ CredentialStorage)
 /* harmony export */ });
-/* harmony import */ var _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LocalStorageManager */ "./src/services/storage/LocalStorageManager.ts");
+/* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
 
-class CredentialStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.LocalStorageManager {
+class CredentialStorage {
     static async storeEncryptedCredentials(credentials) {
         try {
-            this.storeInStorageSync("Credentials", JSON.stringify(credentials));
+            _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].SecureStorage.storeKeys(credentials);
         }
         catch (error) {
             console.error(`Error storing Credentials`, error);
@@ -1295,7 +1297,6 @@ class CredentialStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0_
     static async deleteEncryptedPassword(id) {
         try {
             console.log(`Deleting encrypted password for ID: ${id}`);
-            this.deleteFromStorageSync(`password-${id}`);
             console.log(`Password deleted successfully for ID: ${id}`);
         }
         catch (error) {
@@ -1305,9 +1306,9 @@ class CredentialStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0_
     static async getEncryptedCridentials_Keys() {
         try {
             console.log("Retrieving encrypted credentials");
-            const credentialsJSON = await this.getFromStorageSync("Keys");
+            const credentialsJSON = await _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].SecureStorage.getKeysFromStorage();
             if (credentialsJSON) {
-                const credentials = JSON.parse(credentialsJSON);
+                const credentials = credentialsJSON;
                 console.log("Retrieved credentials successfully");
                 return credentials;
             }
@@ -1333,9 +1334,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   KeyStorage: () => (/* binding */ KeyStorage)
 /* harmony export */ });
-/* harmony import */ var _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LocalStorageManager */ "./src/services/storage/LocalStorageManager.ts");
+/* harmony import */ var _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WindowsHelloStorage */ "./src/services/storage/WindowsHelloStorage.ts");
 
-class KeyStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.LocalStorageManager {
+class KeyStorage {
     /**
      * function to get the cridintials from the browser storage
      * export interface KeySet {
@@ -1352,12 +1353,15 @@ class KeyStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.Local
      */
     static async getKeysFromStorage() {
         try {
-            const keysJSON = await this.getFromStorageSync("keys");
-            if (!keysJSON) {
-                console.log("No keys found in storage.");
-                return {};
+            try {
+                console.log("===========getting keysin windows storage=================");
+                await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.getKeysFromStorage();
             }
-            const keys = JSON.parse(keysJSON);
+            catch (error) {
+                console.error("===============Error getting keys=====================");
+            }
+            const keysJSON = await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.getKeysFromStorage();
+            const keys = keysJSON;
             return keys;
         }
         catch (error) {
@@ -1370,8 +1374,15 @@ class KeyStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.Local
      */
     static async storeKeys(keys) {
         try {
+            try {
+                console.log("===========Storing keysin windows storage=================");
+                await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.storeKeys(keys);
+            }
+            catch (error) {
+                console.error("===============Error storing keys=====================");
+            }
             console.log("Storing keys in storage.");
-            await this.storeInStorageSync("keys", JSON.stringify(keys));
+            await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.storeKeys(keys);
             console.log("Keys stored successfully.");
         }
         catch (error) {
@@ -1396,12 +1407,8 @@ class KeyStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.Local
      */
     static async getSettingsFromStorage() {
         try {
-            const settingsJSON = await this.getFromStorageSync("settings");
-            if (!settingsJSON) {
-                console.log("No settings found in storage.");
-                return {};
-            }
-            const settings = JSON.parse(settingsJSON);
+            const settingsJSON = await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.getSettingsFromStorage();
+            const settings = settingsJSON;
             return settings;
         }
         catch (error) {
@@ -1415,7 +1422,7 @@ class KeyStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.Local
     static async storeSettings(settings) {
         try {
             console.log("Storing settings in storage.");
-            await this.storeInStorageSync("settings", JSON.stringify(settings));
+            await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.storeSettings(settings);
             console.log("Settings stored successfully.");
         }
         catch (error) {
@@ -1429,7 +1436,7 @@ class KeyStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.Local
         try {
             const currentSettings = await this.getSettingsFromStorage();
             const updatedSettings = Object.assign(Object.assign({}, currentSettings), newSettings);
-            await this.storeSettings(updatedSettings);
+            await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.storeSettings(updatedSettings);
         }
         catch (error) {
             console.error("Error updating settings:", error);
@@ -1440,52 +1447,234 @@ class KeyStorage extends _LocalStorageManager__WEBPACK_IMPORTED_MODULE_0__.Local
 
 /***/ }),
 
-/***/ "./src/services/storage/LocalStorageManager.ts":
+/***/ "./src/services/storage/WindowsHelloStorage.ts":
 /*!*****************************************************!*\
-  !*** ./src/services/storage/LocalStorageManager.ts ***!
+  !*** ./src/services/storage/WindowsHelloStorage.ts ***!
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   LocalStorageManager: () => (/* binding */ LocalStorageManager)
+/* harmony export */   SecureStorageService: () => (/* binding */ SecureStorageService)
 /* harmony export */ });
-class LocalStorageManager {
-    static async storeInStorageSync(key, value) {
+class SecureStorageService {
+    /**
+     * Stores sensitive data (KeySet) using Windows Hello protection
+     */
+    // public static async storeProtectedData(data: KeySet): Promise<void> {
+    //   try {
+    //     // First, verify biometric authentication
+    //     const isAuthenticated = await WebAuthnService.verifyBiometric();
+    //     if (!isAuthenticated) {
+    //       throw new Error(
+    //         "Biometric authentication required for storing protected data"
+    //       );
+    //     }
+    //     // Encrypt the sensitive data
+    //     const encoder = new TextEncoder();
+    //     const dataBuffer = encoder.encode(JSON.stringify(data));
+    //     // Generate a new AES key for data encryption
+    //     const aesKey = await crypto.subtle.generateKey(
+    //       { name: "AES-GCM", length: 256 },
+    //       true,
+    //       ["encrypt", "decrypt"]
+    //     );
+    //     // Generate random IV
+    //     const iv = crypto.getRandomValues(new Uint8Array(12));
+    //     // Encrypt the data
+    //     const encryptedData = await crypto.subtle.encrypt(
+    //       { name: "AES-GCM", iv },
+    //       aesKey,
+    //       dataBuffer
+    //     );
+    //     // Export the AES key
+    //     const exportedKey = await crypto.subtle.exportKey("raw", aesKey);
+    //     // Store the encrypted data and IV
+    //     const storageData = {
+    //       encryptedData: Array.from(new Uint8Array(encryptedData)),
+    //       iv: Array.from(iv),
+    //       key: Array.from(new Uint8Array(exportedKey)),
+    //     };
+    //     await chrome.storage.local.set({
+    //       [this.STORAGE_KEYS.PROTECTED_DATA]: storageData,
+    //     });
+    //   } catch (error) {
+    //     console.error("Error storing protected data:", error);
+    //     throw error;
+    //   }
+    // }
+    // /**
+    //  * Retrieves protected data using Windows Hello verification
+    //  */
+    // public static async getProtectedData(): Promise<KeySet | null> {
+    //   try {
+    //     // Verify biometric authentication
+    //     const isAuthenticated = await WebAuthnService.verifyBiometric();
+    //     if (!isAuthenticated) {
+    //       throw new Error(
+    //         "Biometric authentication required for accessing protected data"
+    //       );
+    //     }
+    //     const result = await chrome.storage.local.get([
+    //       this.STORAGE_KEYS.PROTECTED_DATA,
+    //     ]);
+    //     const storageData = result[this.STORAGE_KEYS.PROTECTED_DATA];
+    //     if (!storageData) {
+    //       return null;
+    //     }
+    //     // Import the AES key
+    //     const keyBuffer = new Uint8Array(storageData.key);
+    //     const aesKey = await crypto.subtle.importKey(
+    //       "raw",
+    //       keyBuffer,
+    //       { name: "AES-GCM", length: 256 },
+    //       false,
+    //       ["decrypt"]
+    //     );
+    //     // Decrypt the data
+    //     const decryptedBuffer = await crypto.subtle.decrypt(
+    //       { name: "AES-GCM", iv: new Uint8Array(storageData.iv) },
+    //       aesKey,
+    //       new Uint8Array(storageData.encryptedData)
+    //     );
+    //     const decoder = new TextDecoder();
+    //     const decryptedData = JSON.parse(decoder.decode(decryptedBuffer));
+    //     return decryptedData as KeySet;
+    //   } catch (error) {
+    //     console.error("Error retrieving protected data:", error);
+    //     throw error;
+    //   }
+    // }
+    /**
+     * Stores session data with automatic expiration
+     */
+    static async storeKeys(Keys) {
+        console.log("###########################Storing keys:", Keys);
         try {
-            await Promise.resolve(localStorage.setItem(this.STORAGE_PREFIX + key, value));
+            await chrome.storage.local.set({
+                [this.STORAGE_KEYS.PROTECTED_DATA]: Object.assign(Object.assign({}, Keys), { lastUpdated: Date.now() }),
+            });
+            console.log("###########################Keys stored successfully.");
         }
         catch (error) {
-            console.error(`Error storing key "${key}" in storage:`, error);
+            console.error("Error storing session data:", error);
+            throw error;
         }
     }
-    static async getFromStorageSync(key) {
+    /**
+     * Retrieves session data if not expired
+     */
+    static async getKeysFromStorage() {
+        console.log("###########################Retrieving keys from storage...");
         try {
-            return await Promise.resolve(localStorage.getItem(this.STORAGE_PREFIX + key));
+            const result = await chrome.storage.local.get([
+                this.STORAGE_KEYS.PROTECTED_DATA,
+            ]);
+            const Keys = result[this.STORAGE_KEYS.PROTECTED_DATA];
+            if (!Keys) {
+                console.log("###########################No Keys found.");
+                return null;
+            }
+            console.log("###########################Keys retrieved:", Keys);
+            return Keys;
         }
         catch (error) {
-            console.error(`Error retrieving key "${key}" from storage:`, error);
-            return null;
+            console.error("Error retrieving session data:", error);
+            throw error;
         }
     }
-    static async deleteFromStorageSync(key) {
+    static async storeSettings(settings) {
+        console.log("###########################Storing settings:", settings);
         try {
-            await Promise.resolve(localStorage.removeItem(this.STORAGE_PREFIX + key));
+            await chrome.storage.local.set({
+                [this.STORAGE_KEYS.SESSION_DATA]: Object.assign(Object.assign({}, settings), { lastUpdated: Date.now() }),
+            });
+            console.log("###########################Settings stored successfully.");
         }
         catch (error) {
-            console.error(`Error deleting key "${key}" from storage:`, error);
+            console.error("Error storing session data:", error);
+            throw error;
         }
     }
-    static async clearStorage() {
+    /**
+     * Retrieves session data if not expired
+     */
+    static async getSettingsFromStorage() {
+        console.log("###########################Retrieving settings from storage...");
         try {
-            await Promise.resolve(localStorage.clear());
+            const result = await chrome.storage.local.get([
+                this.STORAGE_KEYS.SESSION_DATA,
+            ]);
+            const sessionData = result[this.STORAGE_KEYS.SESSION_DATA];
+            if (!sessionData) {
+                console.log("###########################No session settings found.");
+                return null;
+            }
+            // Check if session has expired
+            const currentTime = Date.now();
+            if (currentTime > sessionData.sessionExpiry) {
+                console.log("###########################Session has expired, clearing session data.");
+                await this.clearSessionData();
+                return null;
+            }
+            console.log("###########################Session settings retrieved:", sessionData);
+            return sessionData;
+        }
+        catch (error) {
+            console.error("Error retrieving session data:", error);
+            throw error;
+        }
+    }
+    /**
+     * Clears all stored data
+     */
+    static async clearAllData() {
+        console.log("###########################Clearing all stored data...");
+        try {
+            await chrome.storage.local.clear();
+            console.log("###########################All data cleared successfully.");
         }
         catch (error) {
             console.error("Error clearing storage:", error);
+            throw error;
+        }
+    }
+    /**
+     * Clears only session data
+     */
+    static async clearSessionData() {
+        console.log("###########################Clearing session data...");
+        try {
+            await chrome.storage.local.remove([this.STORAGE_KEYS.SESSION_DATA]);
+            console.log("###########################Session data cleared successfully.");
+        }
+        catch (error) {
+            console.error("Error clearing session data:", error);
+            throw error;
+        }
+    }
+    /**
+     * Updates the session settings
+     */
+    static async updateSettings(newSettings) {
+        console.log("###########################Updating settings with:", newSettings);
+        try {
+            const currentSettings = await this.getSettingsFromStorage();
+            const updatedSettings = Object.assign(Object.assign(Object.assign({}, currentSettings), newSettings), { lastUpdated: Date.now() });
+            await this.storeSettings(updatedSettings);
+            console.log("###########################Settings updated successfully.");
+        }
+        catch (error) {
+            console.error("Error updating session settings:", error);
+            throw error;
         }
     }
 }
-LocalStorageManager.STORAGE_PREFIX = "password-manager-";
+SecureStorageService.STORAGE_KEYS = {
+    PROTECTED_DATA: "protectedData",
+    SESSION_DATA: "sessionData",
+    PUBLIC_DATA: "publicData",
+};
 
 
 /***/ }),

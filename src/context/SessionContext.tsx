@@ -50,7 +50,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
           await sessionManagementService.checkSessionExpiration();
         if (isSessionExpired) {
           console.log("Session expired, clearing storage");
-          StorageService.Storage.clearStorage();
+          StorageService.SecureStorage.clearAllData();
           setShowSetup(true);
           return;
         }

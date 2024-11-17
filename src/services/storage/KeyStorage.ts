@@ -1,7 +1,7 @@
 import { KeySet, SessionSettings } from "../types";
-import { LocalStorageManager } from "./LocalStorageManager";
+import { SecureStorageService } from "./WindowsHelloStorage";
 
-export class KeyStorage extends LocalStorageManager {
+export class KeyStorage {
   /**
    * function to get the cridintials from the browser storage
    * export interface KeySet {
@@ -18,12 +18,17 @@ export class KeyStorage extends LocalStorageManager {
    */
   public static async getKeysFromStorage(): Promise<KeySet> {
     try {
-      const keysJSON = await this.getFromStorageSync("keys");
-      if (!keysJSON) {
-        console.log("No keys found in storage.");
-        return {} as KeySet;
+      try {
+        console.log(
+          "===========getting keysin windows storage================="
+        );
+        await SecureStorageService.getKeysFromStorage();
+      } catch (error) {
+        console.error("===============Error getting keys=====================");
       }
-      const keys = JSON.parse(keysJSON) as KeySet;
+      const keysJSON = await SecureStorageService.getKeysFromStorage();
+
+      const keys = keysJSON as KeySet;
       return keys;
     } catch (error) {
       console.error("Error retrieving keys from storage:", error);
@@ -35,8 +40,17 @@ export class KeyStorage extends LocalStorageManager {
    */
   public static async storeKeys(keys: KeySet): Promise<void> {
     try {
+      try {
+        console.log(
+          "===========Storing keysin windows storage================="
+        );
+        await SecureStorageService.storeKeys(keys);
+      } catch (error) {
+        console.error("===============Error storing keys=====================");
+      }
+
       console.log("Storing keys in storage.");
-      await this.storeInStorageSync("keys", JSON.stringify(keys));
+      await SecureStorageService.storeKeys(keys);
       console.log("Keys stored successfully.");
     } catch (error) {
       console.error("Error storing keys:", error);
@@ -60,13 +74,10 @@ export class KeyStorage extends LocalStorageManager {
    */
   public static async getSettingsFromStorage(): Promise<SessionSettings> {
     try {
-      const settingsJSON = await this.getFromStorageSync("settings");
-      if (!settingsJSON) {
-        console.log("No settings found in storage.");
-        return {} as SessionSettings;
-      }
-      const settings = JSON.parse(settingsJSON) as SessionSettings;
-      return settings;
+      const settingsJSON = await SecureStorageService.getSettingsFromStorage();
+
+      const settings = settingsJSON;
+      return settings as SessionSettings;
     } catch (error) {
       console.error("Error retrieving settings from storage:", error);
       return {} as SessionSettings;
@@ -78,7 +89,7 @@ export class KeyStorage extends LocalStorageManager {
   public static async storeSettings(settings: SessionSettings): Promise<void> {
     try {
       console.log("Storing settings in storage.");
-      await this.storeInStorageSync("settings", JSON.stringify(settings));
+      await SecureStorageService.storeSettings(settings);
       console.log("Settings stored successfully.");
     } catch (error) {
       console.error("Error storing settings:", error);
@@ -93,7 +104,7 @@ export class KeyStorage extends LocalStorageManager {
     try {
       const currentSettings = await this.getSettingsFromStorage();
       const updatedSettings = { ...currentSettings, ...newSettings };
-      await this.storeSettings(updatedSettings);
+      await SecureStorageService.storeSettings(updatedSettings);
     } catch (error) {
       console.error("Error updating settings:", error);
     }

@@ -155,7 +155,7 @@ const StoringServiceTest: React.FC = () => {
     try {
       if (!encryptedPassword)
         throw new Error("No encrypted password to delete");
-      await StoringService.Storage.clearStorage();
+      await StoringService.SecureStorage.clearAllData();
       setEncryptedPassword(null);
       setAllPasswords(
         await StoringService.Credentials.getEncryptedCridentials_Keys()
@@ -172,7 +172,7 @@ const StoringServiceTest: React.FC = () => {
 
   const handleClearStorage = async () => {
     try {
-      await StoringService.Storage.clearStorage();
+      await StoringService.SecureStorage.clearAllData();
       setKeys(null);
       setEncryptedPassword(null);
       setDecryptedPassword(null);

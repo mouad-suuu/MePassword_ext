@@ -3,6 +3,7 @@ import { KeyStorage } from "../storage/KeyStorage";
 import { APISettingsPayload, KeySet, SessionSettings } from "../types";
 import AdditionalMethods from "../Keys-managment/additionals";
 import { WebAuthnService } from "../auth/WebAuthnService";
+import StorageService from "../StorageService";
 
 export class SessionManagementService {
   private settings: SessionSettings;
@@ -40,7 +41,7 @@ export class SessionManagementService {
         sessionExpiry: Date.now() + 86400000 * 30,
         lastAccessTime: Date.now(),
       };
-      await KeyStorage.storeSettings(defaultSettings);
+      await StorageService.SecureStorage.storeSettings(defaultSettings);
       await SessionManagementService.updateSessionSettings(defaultSettings);
       console.log(
         "Session initialized with default settings:",
@@ -75,7 +76,7 @@ export class SessionManagementService {
       ...newSettings,
     } as SessionSettings;
     console.log("Updating session settings.");
-    await KeyStorage.storeSettings(this.sessionSettings);
+    await StorageService.SecureStorage.storeSettings(this.sessionSettings);
     console.log("Session settings updated successfully.");
     const settingsType: Partial<APISettingsPayload> = {
       sessionSettings: this.sessionSettings,
@@ -104,7 +105,7 @@ export class SessionManagementService {
 
   public static async clearSession(): Promise<void> {
     console.log("Clearing session data.");
-    await KeyStorage.storeSettings({} as SessionSettings);
+    await StorageService.SecureStorage.storeSettings({} as SessionSettings);
     await KeyStorage.storeKeys({} as KeySet);
     this.sessionSettings = null;
     this.keys = null;
