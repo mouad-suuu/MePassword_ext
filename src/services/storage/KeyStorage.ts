@@ -56,22 +56,7 @@ export class KeyStorage {
       console.error("Error storing keys:", error);
     }
   }
-  /**
-   * function to get the session settings from the browser storage
-   * export interface SessionSettings {
-  pushNotifications: boolean; // Toggle notifications
-  autoLockTime: number; // Time in ms or mins before auto-lock
-  autoLockStart: number; // Timestamp of last auto-lock
-  sessionStart: number; // Timestamp when session started
-  sessionTime: number; // Total session time allowed before logout
-  sessionExpiry?: number; // Timestamp for scheduled session expiration
-  lastAccessTime?: number; // Timestamp of last session access (for inactivity checks)
-  biometricVerification: boolean; // Use biometrics for verification
-  biometricType: "face" | "fingerprint" | "none"; // Supported biometric types
-  biometricPassword?: string; // Fallback password if biometrics fail
-  lockOnLeave?: boolean; // Auto-lock on window blur/focus loss
-}
-   */
+
   public static async getSettingsFromStorage(): Promise<SessionSettings> {
     try {
       const settingsJSON = await SecureStorageService.getSettingsFromStorage();

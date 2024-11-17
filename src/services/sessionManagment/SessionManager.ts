@@ -121,7 +121,7 @@ export class SessionManagementService {
       const settings = await KeyStorage.getSettingsFromStorage();
 
       // If no settings exist, we consider the session expired
-      if (!settings || Object.keys(settings).length === 0) {
+      if (!settings) {
         console.log("No settings found, considering session expired");
         return true;
       }

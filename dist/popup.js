@@ -40372,7 +40372,7 @@ class SessionManagementService {
         try {
             const settings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.getSettingsFromStorage();
             // If no settings exist, we consider the session expired
-            if (!settings || Object.keys(settings).length === 0) {
+            if (!settings) {
                 console.log("No settings found, considering session expired");
                 return true;
             }
@@ -40585,22 +40585,6 @@ class KeyStorage {
             console.error("Error storing keys:", error);
         }
     }
-    /**
-     * function to get the session settings from the browser storage
-     * export interface SessionSettings {
-    pushNotifications: boolean; // Toggle notifications
-    autoLockTime: number; // Time in ms or mins before auto-lock
-    autoLockStart: number; // Timestamp of last auto-lock
-    sessionStart: number; // Timestamp when session started
-    sessionTime: number; // Total session time allowed before logout
-    sessionExpiry?: number; // Timestamp for scheduled session expiration
-    lastAccessTime?: number; // Timestamp of last session access (for inactivity checks)
-    biometricVerification: boolean; // Use biometrics for verification
-    biometricType: "face" | "fingerprint" | "none"; // Supported biometric types
-    biometricPassword?: string; // Fallback password if biometrics fail
-    lockOnLeave?: boolean; // Auto-lock on window blur/focus loss
-  }
-     */
     static async getSettingsFromStorage() {
         try {
             const settingsJSON = await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.getSettingsFromStorage();
