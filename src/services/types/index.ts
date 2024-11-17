@@ -14,7 +14,7 @@ export interface SessionSettings {
   sessionExpiry?: number; // Timestamp for scheduled session expiration
   lastAccessTime?: number; // Timestamp of last session access (for inactivity checks)
   biometricVerification: boolean; // Use biometrics for verification
-  biometricType: "face" | "fingerprint"; // Supported biometric types
+  biometricType: "face" | "fingerprint" | "none"; // Supported biometric types
   biometricPassword?: string; // Fallback password if biometrics fail
   lockOnLeave?: boolean; // Auto-lock on window blur/focus loss
 }
@@ -35,9 +35,11 @@ export interface APISettingsPayload {
     autoLockTime: number;
     sessionTime: number;
     lastAccessTime?: number;
+    biometricVerification: boolean;
+    biometricType: BiometricType;
   };
 }
-
+export type BiometricType = "face" | "fingerprint" | "none";
 // types to be sent to the server as passwords and keys
 
 export interface NewEncryptedPassword {
@@ -45,7 +47,7 @@ export interface NewEncryptedPassword {
   website: string;
   user: string;
   password: string;
-  MetaData?: PasswordMetadata;
+  formData?: LoginFormData;
 }
 
 // types used in other types needed
@@ -94,13 +96,10 @@ interface AuditLog {
     failureReason?: string;
   };
 }
-export interface PasswordMetadata {
-  id: string;
-  createdAt: number;
-  modifiedAt: number;
-  lastAccessed: number;
-  version: number;
-  strength: "weak" | "medium" | "strong";
+export interface LoginFormData {
+  url: string;
+  title: string;
+  timestamp: string;
 }
 export type SetupStage =
   | "initial"

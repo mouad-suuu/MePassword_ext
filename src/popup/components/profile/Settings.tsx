@@ -1,8 +1,9 @@
 import React, { ReactNode } from "react";
-import { Bell, Lock, Shield, Moon } from "lucide-react";
+import { Bell, Lock, Shield, Moon, Fingerprint } from "lucide-react";
 import { useState, useEffect } from "react";
 import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
 import { KeyStorage } from "../../../services/storage/KeyStorage";
+import EncryptionService from "../../../services/EncryptionService";
 
 interface SettingItemProps {
   icon: ReactNode;
@@ -32,19 +33,24 @@ const SettingItem: React.FC<SettingItemProps> = ({
 export const SettingsComponent: React.FC = () => {
   const [settings, setSettings] = useState({
     pushNotifications: false,
-    autoLockTime: 300000, // 5 minutes default
-    sessionTime: 432000000, // 5 days default
+    autoLockTime: 300000,
+    sessionTime: 432000000,
+    biometricVerification: false,
   });
 
   useEffect(() => {
     // Load initial settings
     const loadSettings = async () => {
-      const sessionSettings =
-        await SessionManagementService.getSessionSettings();
+      const respose = await EncryptionService.API.SettingGet();
+      const settings = await respose.json();
+      const sessionSettings = settings.settings.sessionSettings;
+      console.log("Parsed settings:", settings);
+      console.log("Session settings:", sessionSettings);
       setSettings({
         pushNotifications: sessionSettings.pushNotifications,
         autoLockTime: sessionSettings.autoLockTime,
         sessionTime: sessionSettings.sessionTime,
+        biometricVerification: sessionSettings.biometricVerification,
       });
     };
     loadSettings();
@@ -59,6 +65,33 @@ export const SettingsComponent: React.FC = () => {
       ...(await SessionManagementService.getSessionSettings()),
       [key]: value,
     });
+  };
+
+  const handleBiometricToggle = async (checked: boolean) => {
+    try {
+      console.log("Toggling biometric:", checked);
+      const sessionManager = new SessionManagementService();
+      await sessionManager.configureBiometric(checked);
+
+      // Update local state immediately after successful configuration
+      setSettings((prev) => ({
+        ...prev,
+        biometricVerification: checked,
+      }));
+
+      // Refresh settings from storage
+      const updatedSettings = await KeyStorage.getSettingsFromStorage();
+      console.log("Updated settings after toggle:", updatedSettings);
+    } catch (error) {
+      console.error("Failed to configure biometric:", error);
+      // Revert the checkbox if there's an error
+      setSettings((prev) => ({
+        ...prev,
+        biometricVerification: !checked,
+      }));
+      // Show error message to user
+      // You can add a toast notification here
+    }
   };
 
   return (
@@ -93,7 +126,7 @@ export const SettingsComponent: React.FC = () => {
         >
           <select
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-            value={settings.autoLockTime / 60000} // Convert to minutes
+            value={String(settings.autoLockTime / 60000)} // Convert to string to match option values
             onChange={(e) =>
               handleSettingChange(
                 "autoLockTime",
@@ -101,6 +134,7 @@ export const SettingsComponent: React.FC = () => {
               )
             }
           >
+            <option value="0.5">30 seconds</option>
             <option value="5">5 minutes</option>
             <option value="10">10 minutes</option>
             <option value="30">30 minutes</option>
@@ -114,7 +148,7 @@ export const SettingsComponent: React.FC = () => {
         >
           <select
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-            value={settings.sessionTime / 86400000} // Convert to days
+            value={String(settings.sessionTime / 86400000)} // Convert to string to match option values
             onChange={(e) =>
               handleSettingChange(
                 "sessionTime",
@@ -128,6 +162,24 @@ export const SettingsComponent: React.FC = () => {
             <option value="60">60 days</option>
             <option value="90">90 days</option>
           </select>
+        </SettingItem>
+
+        <SettingItem
+          icon={<Fingerprint className="w-5 h-5 text-gray-600" />}
+          title="Biometric Authentication"
+          description="Use Windows Hello or Touch ID for quick access"
+        >
+          <div className="flex items-center">
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={settings.biometricVerification}
+                onChange={(e) => handleBiometricToggle(e.target.checked)}
+              />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
         </SettingItem>
       </div>
     </div>

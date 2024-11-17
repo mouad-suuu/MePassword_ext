@@ -38,19 +38,19 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
     const checkSession = async () => {
       try {
         console.log("Checking session status...");
-        const isSessionExpired =
-          await sessionManagementService.checkSessionExpiration();
+        const settings = await KeyStorage.getSettingsFromStorage();
 
-        if (isSessionExpired) {
-          console.log("Session expired, clearing storage");
-          StorageService.Storage.clearStorage();
+        if (!settings || Object.keys(settings).length === 0) {
+          console.log("No settings found - new setup required");
           setShowSetup(true);
           return;
         }
 
-        const settings = await KeyStorage.getSettingsFromStorage();
-        if (!settings || Object.keys(settings).length === 0) {
-          console.log("No settings found");
+        const isSessionExpired =
+          await sessionManagementService.checkSessionExpiration();
+        if (isSessionExpired) {
+          console.log("Session expired, clearing storage");
+          StorageService.Storage.clearStorage();
           setShowSetup(true);
           return;
         }

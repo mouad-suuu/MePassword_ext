@@ -3,7 +3,20 @@
   "name": "MePassword",
   "version": "1.0.0",
   "description": "Password Management Extension",
-  "permissions": ["storage", "clipboardWrite"],
+  "permissions": [
+    "storage",
+    "clipboardWrite",
+    "webAuthn",
+    "activeTab",
+    "scripting",
+    "notifications"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content.js"]
+    }
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

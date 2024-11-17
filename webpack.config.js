@@ -9,8 +9,8 @@ module.exports = {
   devtool: "source-map",
   entry: {
     popup: "./src/popup/index.tsx",
-    background: "./src/background/background.ts",
     content: "./src/content/content.ts",
+    background: "./src/background/background.ts",
   },
   module: {
     rules: [

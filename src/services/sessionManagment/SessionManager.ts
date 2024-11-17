@@ -1,8 +1,8 @@
 import EncryptionService from "../EncryptionService";
 import { KeyStorage } from "../storage/KeyStorage";
-import { LocalStorageManager } from "../storage/LocalStorageManager";
 import { APISettingsPayload, KeySet, SessionSettings } from "../types";
 import AdditionalMethods from "../Keys-managment/additionals";
+import { WebAuthnService } from "../auth/WebAuthnService";
 
 export class SessionManagementService {
   private settings: SessionSettings;
@@ -35,13 +35,17 @@ export class SessionManagementService {
         sessionStart: Date.now(),
         pushNotifications: false,
         biometricVerification: false,
-        biometricType: "fingerprint",
+        biometricType: "none",
         autoLockStart: Date.now(),
         sessionExpiry: Date.now() + 86400000 * 30,
         lastAccessTime: Date.now(),
       };
       await KeyStorage.storeSettings(defaultSettings);
       await SessionManagementService.updateSessionSettings(defaultSettings);
+      console.log(
+        "Session initialized with default settings:",
+        defaultSettings
+      );
     } catch (error) {
       console.error("Failed to initialize session:", error);
     }
@@ -57,19 +61,24 @@ export class SessionManagementService {
         console.error("Failed to get settings:", error);
         throw error;
       }
+    } else {
+      console.log("Using cached session settings:", this.sessionSettings);
     }
     return this.sessionSettings;
   }
 
   public static async updateSessionSettings(
-    newSettings: SessionSettings
+    newSettings: Partial<SessionSettings>
   ): Promise<void> {
-    this.sessionSettings = newSettings;
+    this.sessionSettings = {
+      ...this.sessionSettings,
+      ...newSettings,
+    } as SessionSettings;
     console.log("Updating session settings.");
-    await KeyStorage.storeSettings(newSettings);
+    await KeyStorage.storeSettings(this.sessionSettings);
     console.log("Session settings updated successfully.");
     const settingsType: Partial<APISettingsPayload> = {
-      sessionSettings: newSettings,
+      sessionSettings: this.sessionSettings,
     };
     await EncryptionService.API.SettingsPut(settingsType);
     console.log("Session settings updated in storage.");
@@ -79,6 +88,9 @@ export class SessionManagementService {
     if (!this.keys) {
       console.log("Keys not found in memory, retrieving from storage.");
       this.keys = await KeyStorage.getKeysFromStorage();
+      console.log("Keys retrieved from storage:", this.keys);
+    } else {
+      console.log("Using cached keys:", this.keys);
     }
     return this.keys;
   }
@@ -170,24 +182,54 @@ export class SessionManagementService {
    * Enable or disable biometric authentication based on settings.
    * Ensures that biometric setup is available on the device.
    */
-  async configureBiometric() {
-    if (this.settings.biometricVerification) {
-      const isSupported = await this.checkBiometricSupport();
-      if (!isSupported) {
-        throw new Error(
-          `Biometric type ${this.settings.biometricType} is not supported.`
-        );
+  async configureBiometric(enable: boolean = true) {
+    try {
+      console.log("Configuring biometric:", enable);
+
+      if (enable) {
+        const isSupported = await WebAuthnService.isWebAuthnSupported();
+        if (!isSupported) {
+          throw new Error(
+            "Biometric authentication is not supported on this device"
+          );
+        }
+
+        const username = "user"; // Get this from your user management system
+        const registered = await WebAuthnService.registerBiometric(username);
+
+        if (registered) {
+          const biometricType = WebAuthnService.detectBiometricType();
+          const settings = await SessionManagementService.getSessionSettings();
+
+          const updatedSettings = {
+            ...settings,
+            biometricVerification: true,
+            biometricType: biometricType,
+          };
+
+          await SessionManagementService.updateSessionSettings(updatedSettings);
+          console.log("Biometric settings updated:", updatedSettings);
+        } else {
+          throw new Error("Failed to register biometric");
+        }
+      } else {
+        const settings = await SessionManagementService.getSessionSettings();
+        const updatedSettings = {
+          ...settings,
+          biometricVerification: false,
+          biometricType: "none" as const,
+        };
+
+        await SessionManagementService.updateSessionSettings(updatedSettings);
+        console.log("Biometric disabled:", updatedSettings);
       }
-      // Proceed with biometric setup if supported
+    } catch (error) {
+      console.error("Error in configureBiometric:", error);
+      throw error;
     }
   }
 
-  /**
-   * Checks if the device supports the specified biometric type.
-   * @returns boolean - True if supported, false otherwise.
-   */
-  private async checkBiometricSupport(): Promise<boolean> {
-    // Implement device-specific biometric check
-    return true; // Placeholder
+  public async checkBiometricType(): Promise<"face" | "fingerprint" | "none"> {
+    return WebAuthnService.detectBiometricType();
   }
 }

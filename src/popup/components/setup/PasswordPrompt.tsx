@@ -1,16 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
 import EncryptionService from "../../../services/EncryptionService";
 import Main from "../main";
-import { Lock, Key, AlertCircle } from "lucide-react";
+import { Lock, Key, AlertCircle, Fingerprint } from "lucide-react";
 import { KeyStorage } from "../../../services/storage/KeyStorage";
+import { WebAuthnService } from "../../../services/auth/WebAuthnService";
 
 export const PasswordPrompt: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isBiometricAvailable, setIsBiometricAvailable] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    checkBiometricAvailability();
+  }, []);
+
+  const checkBiometricAvailability = async () => {
+    try {
+      console.log("Checking biometric availability...");
+      const settings = await KeyStorage.getSettingsFromStorage();
+      console.log("Current settings:", settings);
+
+      const isSupported = await WebAuthnService.isWebAuthnSupported();
+      console.log("WebAuthn supported:", isSupported);
+
+      setIsBiometricAvailable(isSupported && settings.biometricVerification);
+      console.log(
+        "Biometric available:",
+        isSupported && settings.biometricVerification
+      );
+    } catch (error) {
+      console.error("Error checking biometric availability:", error);
+    }
+  };
+
+  const handleBiometricAuth = async () => {
+    try {
+      console.log("Starting biometric authentication...");
+      const isValid = await WebAuthnService.verifyBiometric();
+      console.log("Biometric verification result:", isValid);
+
+      if (isValid) {
+        console.log("Biometric authentication successful");
+        await KeyStorage.updateSettings({
+          autoLockStart: Date.now(),
+        });
+        setIsValid(true);
+      } else {
+        console.log("Biometric verification failed");
+        setErrorMessage("Biometric verification failed");
+      }
+    } catch (error) {
+      console.error("Biometric authentication error:", error);
+      setErrorMessage("Biometric authentication error. Please use password.");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +83,16 @@ export const PasswordPrompt: React.FC = () => {
     <>
       {!isValid ? (
         <div className="min-w-[400px] min-h-96 bg-gray-50 flex flex-col items-center justify-center p-8">
+          {isBiometricAvailable && (
+            <Button
+              onClick={handleBiometricAuth}
+              className="mb-4 flex items-center gap-2"
+            >
+              <Fingerprint className="w-5 h-5" />
+              Use Biometric Login
+            </Button>
+          )}
+
           <div className="mb-6 text-primary">
             <Lock size={48} className="mx-auto mb-2" />
           </div>

@@ -12,17 +12,22 @@ import { v4 as uuidv4 } from "uuid";
 interface AddPasswordDialogProps {
   open: boolean;
   onClose: () => void;
+  prefilledData?: {
+    website?: string;
+    username?: string;
+    password?: string;
+  };
 }
 
 const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
   open,
   onClose,
+  prefilledData = {},
 }) => {
-  const [website, setWebsite] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [website, setWebsite] = useState(prefilledData.website || "");
+  const [username, setUsername] = useState(prefilledData.username || "");
+  const [password, setPassword] = useState(prefilledData.password || "");
   const [error, setError] = useState<string | null>(null);
-
   const handleClose = () => {
     console.log("Closing dialog and resetting state");
     setWebsite("");

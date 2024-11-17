@@ -3,8 +3,8 @@ import {
   SymmetricKeys,
   EncryptionKeys,
   KeySet,
-  PasswordMetadata,
   AsymmetricKeys,
+  LoginFormData,
 } from "../types";
 import { CryptoUtils } from "./CryptoUtils";
 import AdditionalMethods from "./additionals";
@@ -115,13 +115,10 @@ export class CredentialCryptoService {
         ),
       };
 
-      const metadata: PasswordMetadata = {
-        id: uuidv4(),
-        createdAt: Date.now(),
-        modifiedAt: Date.now(),
-        lastAccessed: Date.now(),
-        version: 1,
-        strength: "medium",
+      const metadata: LoginFormData = {
+        url: "test",
+        title: "test",
+        timestamp: "test",
       };
 
       console.log("[DEBUG] Encrypted data structure:", {
@@ -132,7 +129,7 @@ export class CredentialCryptoService {
 
       return {
         ...encryptedData,
-        MetaData: metadata,
+        formData: metadata,
       };
     } catch (error: any) {
       AdditionalMethods.logError(method, error);

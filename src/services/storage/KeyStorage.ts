@@ -2,8 +2,20 @@ import { KeySet, SessionSettings } from "../types";
 import { LocalStorageManager } from "./LocalStorageManager";
 
 export class KeyStorage extends LocalStorageManager {
-  private static readonly SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days
-
+  /**
+   * function to get the cridintials from the browser storage
+   * export interface KeySet {
+  privateKey: string;
+  AESKey: string;
+  IV: string;
+  Credentials: UserCredentials;
+}
+  export interface UserCredentials {
+  server: string;
+  authToken: string;
+  password?: string;
+}
+   */
   public static async getKeysFromStorage(): Promise<KeySet> {
     try {
       const keysJSON = await this.getFromStorageSync("keys");
@@ -18,7 +30,9 @@ export class KeyStorage extends LocalStorageManager {
       return {} as KeySet;
     }
   }
-
+  /**
+   * function to post the cridintials from the browser storage
+   */
   public static async storeKeys(keys: KeySet): Promise<void> {
     try {
       console.log("Storing keys in storage.");
@@ -28,7 +42,22 @@ export class KeyStorage extends LocalStorageManager {
       console.error("Error storing keys:", error);
     }
   }
-
+  /**
+   * function to get the session settings from the browser storage
+   * export interface SessionSettings {
+  pushNotifications: boolean; // Toggle notifications
+  autoLockTime: number; // Time in ms or mins before auto-lock
+  autoLockStart: number; // Timestamp of last auto-lock
+  sessionStart: number; // Timestamp when session started
+  sessionTime: number; // Total session time allowed before logout
+  sessionExpiry?: number; // Timestamp for scheduled session expiration
+  lastAccessTime?: number; // Timestamp of last session access (for inactivity checks)
+  biometricVerification: boolean; // Use biometrics for verification
+  biometricType: "face" | "fingerprint" | "none"; // Supported biometric types
+  biometricPassword?: string; // Fallback password if biometrics fail
+  lockOnLeave?: boolean; // Auto-lock on window blur/focus loss
+}
+   */
   public static async getSettingsFromStorage(): Promise<SessionSettings> {
     try {
       const settingsJSON = await this.getFromStorageSync("settings");
@@ -43,7 +72,9 @@ export class KeyStorage extends LocalStorageManager {
       return {} as SessionSettings;
     }
   }
-
+  /**
+   * function to post the session settings from the browser storage
+   */
   public static async storeSettings(settings: SessionSettings): Promise<void> {
     try {
       console.log("Storing settings in storage.");
@@ -53,7 +84,9 @@ export class KeyStorage extends LocalStorageManager {
       console.error("Error storing settings:", error);
     }
   }
-
+  /**
+   * function to update the session settings from the browser storage
+   */
   public static async updateSettings(
     newSettings: Partial<SessionSettings>
   ): Promise<void> {
