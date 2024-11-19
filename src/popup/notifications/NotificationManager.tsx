@@ -1,53 +1,66 @@
-// notifications/NotificationManager.tsx
 import React from "react";
 import { createRoot } from "react-dom/client";
-import AddPasswordDialog from "../components/password/AddPasswordDialog";
+import AddPasswordDialogProps from "../components/password/AddPasswordDialog";
+import { SessionProvider } from "../../context/SessionContext";
 
 class NotificationManager {
+  private static instance: NotificationManager;
   private container: HTMLDivElement | null = null;
   private root: ReturnType<typeof createRoot> | null = null;
 
   constructor() {
+    if (NotificationManager.instance) {
+      return NotificationManager.instance;
+    }
+    NotificationManager.instance = this;
     this.init();
   }
 
-  /**
-   * Initializes the notification container and mounts it to the DOM.
-   */
   private init() {
+    const existingContainer = document.getElementById(
+      "password-manager-notification"
+    );
+    if (existingContainer) {
+      existingContainer.remove();
+    }
+
     this.container = document.createElement("div");
     this.container.id = "password-manager-notification";
     document.body.appendChild(this.container);
     this.root = createRoot(this.container);
   }
 
-  /**
-   * Shows the AddPasswordDialog with pre-filled data.
-   *
-   * @param prefilledData - Object containing website, username, and optional password.
-   */
-  public show(prefilledData?: {
-    website?: string;
-    user?: string;
-    password?: string;
-  }) {
-    const handleClose = () => {
-      this.dismiss();
-    };
+  public async show(prefilledData: {
+    website: string;
+    user: string;
+    password: string;
+  }): Promise<void> {
+    return new Promise((resolve) => {
+      const handleClose = () => {
+        this.dismiss();
+        resolve();
+      };
+      console.log("=========================================", prefilledData);
+      if (!this.root) {
+        this.init();
+      }
 
-    // Render the AddPasswordDialog with dynamic props
-    this.root?.render(
-      <AddPasswordDialog
-        open={true}
-        onClose={handleClose}
-        prefilledData={prefilledData}
-      />
-    );
+      this.root?.render(
+        <React.StrictMode>
+          <AddPasswordDialogProps
+            open={true}
+            onClose={handleClose}
+            prefilledData={{
+              website: prefilledData.website,
+              username: prefilledData.user,
+              password: prefilledData.password,
+            }}
+          />
+        </React.StrictMode>
+      );
+    });
   }
 
-  /**
-   * Dismisses the notification by unmounting it.
-   */
   private dismiss() {
     this.root?.render(null);
   }

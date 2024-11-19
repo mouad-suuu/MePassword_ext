@@ -34813,10 +34813,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const AddPasswordDialog = ({ open, onClose, prefilledData = {}, }) => {
-    const [website, setWebsite] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(prefilledData.website || "");
-    const [username, setUsername] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(prefilledData.username || "");
-    const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(prefilledData.password || "");
+const AddPasswordDialog = ({ open, onClose, prefilledData = {
+    website: "",
+    username: "",
+    password: "",
+}, }) => {
+    const [website, setWebsite] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(prefilledData.website);
+    const [username, setUsername] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(prefilledData.username);
+    const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(prefilledData.password);
     const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const handleClose = () => {
         console.log("Closing dialog and resetting state");
@@ -34868,8 +34872,10 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {}, }) => {
             let publicKey;
             try {
                 publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
+                console.log("Public key imported successfully:", publicKey);
             }
             catch (error) {
+                console.error("Error importing public key:", error);
                 throw new Error("Invalid public key format");
             }
             // Encrypt data
@@ -34877,11 +34883,13 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {}, }) => {
             try {
                 encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
                     website: website.trim(),
-                    user: username.trim(),
+                    user: username,
                     password,
                 }, publicKey);
+                console.log("Encrypted data:", encryptedData);
             }
             catch (error) {
+                console.error("Error encrypting password data:", error);
                 throw new Error("Failed to encrypt password data");
             }
             // Post encrypted data
@@ -34891,6 +34899,7 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {}, }) => {
                 user: encryptedData.user,
                 password: encryptedData.password,
             });
+            console.log("Response from saving password:", response);
             if (!response.ok) {
                 throw new Error(`Failed to save password: ${response.statusText}`);
             }
@@ -35101,8 +35110,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
-/* harmony import */ var _components_password_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/password/AddPasswordDialog */ "./src/popup/components/password/AddPasswordDialog.tsx");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var _components_password_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/password/AddPasswordDialog */ "./src/popup/components/password/AddPasswordDialog.tsx");
+
 
 
 
@@ -35110,33 +35122,40 @@ class NotificationManager {
     constructor() {
         this.container = null;
         this.root = null;
+        if (NotificationManager.instance) {
+            return NotificationManager.instance;
+        }
+        NotificationManager.instance = this;
         this.init();
     }
-    /**
-     * Initializes the notification container and mounts it to the DOM.
-     */
     init() {
+        const existingContainer = document.getElementById("password-manager-notification");
+        if (existingContainer) {
+            existingContainer.remove();
+        }
         this.container = document.createElement("div");
         this.container.id = "password-manager-notification";
         document.body.appendChild(this.container);
-        this.root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(this.container);
+        this.root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_2__.createRoot)(this.container);
     }
-    /**
-     * Shows the AddPasswordDialog with pre-filled data.
-     *
-     * @param prefilledData - Object containing website, username, and optional password.
-     */
-    show(prefilledData) {
-        var _a;
-        const handleClose = () => {
-            this.dismiss();
-        };
-        // Render the AddPasswordDialog with dynamic props
-        (_a = this.root) === null || _a === void 0 ? void 0 : _a.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_password_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_2__["default"], { open: true, onClose: handleClose, prefilledData: prefilledData }));
+    async show(prefilledData) {
+        return new Promise((resolve) => {
+            var _a;
+            const handleClose = () => {
+                this.dismiss();
+                resolve();
+            };
+            console.log("=========================================", prefilledData);
+            if (!this.root) {
+                this.init();
+            }
+            (_a = this.root) === null || _a === void 0 ? void 0 : _a.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)((react__WEBPACK_IMPORTED_MODULE_1___default().StrictMode), { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_password_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_3__["default"], { open: true, onClose: handleClose, prefilledData: {
+                        website: prefilledData.website,
+                        username: prefilledData.user,
+                        password: prefilledData.password,
+                    } }) }));
+        });
     }
-    /**
-     * Dismisses the notification by unmounting it.
-     */
     dismiss() {
         var _a;
         (_a = this.root) === null || _a === void 0 ? void 0 : _a.render(null);
@@ -40010,42 +40029,141 @@ class CredentialDetector {
         this.mutationObserver = new MutationObserver(this.handleDOMChanges.bind(this));
         this.setupMutationObserver();
     }
+    // Sets up the mutation observer to watch for changes in the DOM
     setupMutationObserver() {
         this.mutationObserver.observe(document.documentElement, {
             childList: true,
             subtree: true,
         });
     }
+    // Finds the username field in the form relative to the password field
+    findUsernameField(form, passwordField) {
+        var _a, _b, _c, _d, _e, _f, _g, _h;
+        // First try to find username/email input before the password field
+        const allInputs = Array.from(form.getElementsByTagName("input"));
+        const passwordIndex = allInputs.indexOf(passwordField);
+        // Look for inputs before the password field first
+        const previousInputs = allInputs.slice(0, passwordIndex);
+        for (const input of previousInputs.reverse()) {
+            if (input.type === "text" ||
+                input.type === "email" ||
+                ((_a = input.name) === null || _a === void 0 ? void 0 : _a.toLowerCase().includes("user")) ||
+                ((_b = input.name) === null || _b === void 0 ? void 0 : _b.toLowerCase().includes("email")) ||
+                ((_c = input.id) === null || _c === void 0 ? void 0 : _c.toLowerCase().includes("user")) ||
+                ((_d = input.id) === null || _d === void 0 ? void 0 : _d.toLowerCase().includes("email"))) {
+                return input;
+            }
+        }
+        // If no username field found before password, check after
+        const nextInputs = allInputs.slice(passwordIndex + 1);
+        for (const input of nextInputs) {
+            if (input.type === "text" ||
+                input.type === "email" ||
+                ((_e = input.name) === null || _e === void 0 ? void 0 : _e.toLowerCase().includes("user")) ||
+                ((_f = input.name) === null || _f === void 0 ? void 0 : _f.toLowerCase().includes("email")) ||
+                ((_g = input.id) === null || _g === void 0 ? void 0 : _g.toLowerCase().includes("user")) ||
+                ((_h = input.id) === null || _h === void 0 ? void 0 : _h.toLowerCase().includes("email"))) {
+                return input;
+            }
+        }
+        // Fallback to the original selector method
+        return (form.querySelector(FORM_SELECTORS.USERNAME_INPUTS.join(",")) || undefined);
+    }
+    // Extracts credentials from the form elements
+    extractCredentials(formElements) {
+        const { passwordField, usernameField } = formElements;
+        if (!passwordField.value) {
+            return null;
+        }
+        const credentials = {
+            website: window.location.origin,
+            user: usernameField === null || usernameField === void 0 ? void 0 : usernameField.value,
+            password: passwordField.value,
+            formData: {
+                url: window.location.href,
+                title: document.title,
+                timestamp: new Date().toISOString(),
+            },
+        };
+        console.log("CONTENT:  Extracted credentials:", Object.assign(Object.assign({}, credentials), { password: "***" }));
+        return credentials;
+    }
+    // Notifies about detected credentials and sends a message to the background script
+    async notifyCredentialDetection(credentials) {
+        if (!credentials.password)
+            return;
+        const credentialKey = `${credentials.website}-${credentials.user}-${credentials.password}`;
+        if (this.lastDetectedCredentials &&
+            `${this.lastDetectedCredentials.website}-${this.lastDetectedCredentials.user}-${this.lastDetectedCredentials.password}` ===
+                credentialKey) {
+            return;
+        }
+        this.lastDetectedCredentials = credentials;
+        try {
+            // Show notification
+            console.log("================================================================", credentials);
+            await _popup_notifications_NotificationManager__WEBPACK_IMPORTED_MODULE_0__["default"].show({
+                website: credentials.website || "",
+                user: credentials.user || "",
+                password: credentials.password || "",
+            });
+            // Send message to background script
+            const message = {
+                type: "DETECTED_CREDENTIALS",
+                payload: {
+                    website: credentials.website || "",
+                    user: credentials.user || "",
+                    password: credentials.password || "",
+                    formData: credentials.formData,
+                },
+            };
+            await chrome.runtime.sendMessage(message);
+            console.debug("Credential detection message sent successfully");
+        }
+        catch (error) {
+            console.error("Error in notifyCredentialDetection:", error);
+        }
+    }
+    // Handles changes in the DOM and processes new elements
     async handleDOMChanges(mutations) {
-        console.log("DOM changes detected:", mutations);
+        console.log("CONTENT:  DOM changes detected:", mutations);
         for (const mutation of mutations) {
+            console.log("CONTENT:  Processing mutation:", mutation);
             if (mutation.type === "childList") {
                 const addedNodes = Array.from(mutation.addedNodes);
-                console.log("Added nodes:", addedNodes);
+                console.log("CONTENT:  Added nodes:", addedNodes);
                 for (const node of addedNodes) {
                     if (node instanceof HTMLElement) {
+                        console.log("CONTENT:  Processing new element:", node);
                         await this.processNewElement(node);
                     }
                 }
             }
         }
     }
+    // Processes a new element added to the DOM
     async processNewElement(element) {
-        console.log("Processing new element:", element);
-        // Look for forms within the new element
+        console.log("CONTENT:  Processing new element:", element);
         const forms = element.querySelectorAll("form");
-        forms.forEach((form) => this.attachFormListeners(form));
-        // Also look for password fields that might not be in forms
+        console.log("CONTENT:  Found forms:", forms);
+        forms.forEach((form) => {
+            console.log("CONTENT:  Attaching listeners to form:", form);
+            this.attachFormListeners(form);
+        });
         const passwordFields = element.querySelectorAll(FORM_SELECTORS.PASSWORD_INPUTS.join(","));
+        console.log("CONTENT:  Found password fields:", passwordFields);
         passwordFields.forEach((field) => {
             const parentForm = field.closest("form");
             if (!parentForm) {
+                console.log("CONTENT:  Creating virtual form for password field:", field);
                 this.createVirtualForm(field);
             }
         });
     }
+    // Creates a virtual form for a password field if it doesn't belong to a form
     createVirtualForm(passwordField) {
         var _a;
+        console.log("CONTENT:  Creating virtual form for password field:", passwordField);
         const virtualForm = document.createElement("form");
         virtualForm.setAttribute("data-virtual-form", "true");
         (_a = passwordField.parentElement) === null || _a === void 0 ? void 0 : _a.insertBefore(virtualForm, passwordField);
@@ -40053,6 +40171,7 @@ class CredentialDetector {
         passwordField.remove();
         this.attachFormListeners(virtualForm);
     }
+    // Finds form elements including password and username fields
     findFormElements(form) {
         const passwordField = form.querySelector(FORM_SELECTORS.PASSWORD_INPUTS.join(","));
         if (!passwordField) {
@@ -40067,114 +40186,71 @@ class CredentialDetector {
             submitButton: submitButton,
         };
     }
-    findUsernameField(form, passwordField) {
-        const inputs = Array.from(form.querySelectorAll(FORM_SELECTORS.USERNAME_INPUTS.join(",")));
-        // Sort inputs by their position in the DOM relative to the password field
-        return inputs
-            .filter((input) => input !== passwordField)
-            .sort((a, b) => {
-            const aDistance = this.getDistanceToPassword(a, passwordField);
-            const bDistance = this.getDistanceToPassword(b, passwordField);
-            return aDistance - bDistance;
-        })[0];
-    }
+    // Calculates the distance between an element and the password field
     getDistanceToPassword(element, passwordField) {
         const rect1 = element.getBoundingClientRect();
         const rect2 = passwordField.getBoundingClientRect();
         return Math.abs(rect1.top - rect2.top);
     }
+    // Attaches event listeners to the form for submission and input changes
     attachFormListeners(form) {
+        console.log("CONTENT:  Attaching form listeners for form:", form);
         if (this.observedForms.has(form)) {
+            console.log("CONTENT:  Form already observed:", form);
             return;
         }
         try {
             const formElements = this.findFormElements(form);
+            console.log("CONTENT:  Form elements found:", formElements);
             this.observedForms.add(form);
-            // Listen for form submission
-            form.addEventListener("submit", (e) => this.handleFormSubmission(e, formElements));
-            // Listen for input changes
-            formElements.passwordField.addEventListener("input", this.debounce(() => this.handleInputChange(formElements), 500));
-            // Listen for password field focus
-            formElements.passwordField.addEventListener("focus", () => this.handlePasswordFocus(formElements));
+            form.addEventListener("submit", (e) => {
+                console.log("CONTENT:  Form submitted:", formElements);
+                this.handleFormSubmission(e, formElements);
+            });
+            formElements.passwordField.addEventListener("input", this.debounce(() => {
+                console.log("CONTENT:  Input changed in password field:", formElements);
+                this.handleInputChange(formElements);
+            }, 500));
+            formElements.passwordField.addEventListener("focus", () => {
+                console.log("CONTENT:  Password field focused:", formElements);
+                this.handlePasswordFocus(formElements);
+            });
         }
         catch (error) {
             console.debug("Failed to attach listeners to form:", error);
         }
     }
+    // Handles form submission and extracts credentials
     async handleFormSubmission(event, formElements) {
-        console.log("Form submitted:", formElements);
+        console.log("CONTENT:  Handling form submission:", formElements);
         const credentials = this.extractCredentials(formElements);
         if (credentials) {
-            console.log("Extracted credentials:", credentials);
+            console.log("CONTENT:  Extracted credentials:", credentials);
             await this.notifyCredentialDetection(credentials);
         }
     }
+    // Handles input changes in the password field and notifies credential detection
     async handleInputChange(formElements) {
+        console.log("CONTENT:  Handling input change:", formElements);
         const credentials = this.extractCredentials(formElements);
         if (credentials) {
+            console.log("CONTENT:  Credentials extracted on input change:", credentials);
             if (this.detectionTimeout) {
                 clearTimeout(this.detectionTimeout);
             }
             this.detectionTimeout = setTimeout(() => {
+                console.log("Notifying credential detection after input change:", credentials);
                 this.notifyCredentialDetection(credentials);
             }, 1000);
         }
     }
+    // Handles focus event on the password field and notifies credential detection
     async handlePasswordFocus(formElements) {
-        // Trigger the password save prompt when focusing on password field
+        console.log("CONTENT:  Handling password focus:", formElements);
         const credentials = this.extractCredentials(formElements);
         if (credentials) {
+            console.log("Notifying credential detection on password focus:", credentials);
             await this.notifyCredentialDetection(credentials);
-        }
-    }
-    extractCredentials(formElements) {
-        const { passwordField, usernameField } = formElements;
-        if (!passwordField.value) {
-            return null;
-        }
-        return {
-            website: window.location.origin,
-            user: (usernameField === null || usernameField === void 0 ? void 0 : usernameField.value) || "",
-            password: passwordField.value,
-            formData: {
-                url: window.location.href,
-                title: document.title,
-                timestamp: new Date().toISOString(),
-            },
-        };
-    }
-    async notifyCredentialDetection(credentials) {
-        console.log("Notifying credential detection:", credentials);
-        // Prevent duplicate notifications for the same credentials
-        const credentialKey = `${credentials.website}-${credentials.user}-${credentials.password}`;
-        if (this.lastDetectedCredentials &&
-            `${this.lastDetectedCredentials.website}-${this.lastDetectedCredentials.user}-${this.lastDetectedCredentials.password}` ===
-                credentialKey) {
-            return;
-        }
-        this.lastDetectedCredentials = credentials;
-        // Show notification to user
-        _popup_notifications_NotificationManager__WEBPACK_IMPORTED_MODULE_0__["default"].show({
-            website: credentials.website,
-            user: credentials.user,
-            password: credentials.password,
-        });
-        // Send message to background script
-        const message = {
-            type: "DETECTED_CREDENTIALS",
-            payload: {
-                website: credentials.website || "",
-                user: credentials.user || "",
-                password: credentials.password || "",
-                formData: credentials.formData,
-            },
-        };
-        try {
-            await chrome.runtime.sendMessage(message);
-            console.debug("Credential detection message sent successfully");
-        }
-        catch (error) {
-            console.error("Failed to send credential detection message:", error);
         }
     }
     debounce(func, wait) {
@@ -40187,24 +40263,27 @@ class CredentialDetector {
         };
     }
     initialize() {
-        // Process existing forms
+        console.log("CONTENT:  Initializing CredentialDetector...");
         document.querySelectorAll("form").forEach((form) => {
+            console.log("CONTENT:  Attaching listeners to existing form:", form);
             this.attachFormListeners(form);
         });
-        // Process password fields that might not be in forms
         document
             .querySelectorAll(FORM_SELECTORS.PASSWORD_INPUTS.join(","))
             .forEach((field) => {
             if (!field.closest("form")) {
+                console.log("Creating virtual form for existing password field:", field);
                 this.createVirtualForm(field);
             }
         });
     }
 }
 // Initialize the detector
+console.log("CONTENT:  Initializing CredentialDetector instance...");
+// Initialize the detector
 const detector = new CredentialDetector();
 detector.initialize();
-// Re-run initialization when page content changes significantly
+// Re-initialize on URL changes
 let lastUrl = location.href;
 new MutationObserver(() => {
     if (location.href !== lastUrl) {

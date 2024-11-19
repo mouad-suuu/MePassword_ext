@@ -13,20 +13,24 @@ interface AddPasswordDialogProps {
   open: boolean;
   onClose: () => void;
   prefilledData?: {
-    website?: string;
-    username?: string;
-    password?: string;
+    website: string;
+    username: string;
+    password: string;
   };
 }
 
 const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
   open,
   onClose,
-  prefilledData = {},
+  prefilledData = {
+    website: "",
+    username: "",
+    password: "",
+  },
 }) => {
-  const [website, setWebsite] = useState(prefilledData.website || "");
-  const [username, setUsername] = useState(prefilledData.username || "");
-  const [password, setPassword] = useState(prefilledData.password || "");
+  const [website, setWebsite] = useState(prefilledData.website);
+  const [username, setUsername] = useState(prefilledData.username);
+  const [password, setPassword] = useState(prefilledData.password);
   const [error, setError] = useState<string | null>(null);
   const handleClose = () => {
     console.log("Closing dialog and resetting state");
@@ -90,7 +94,9 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
         publicKey = await EncryptionService.Utils.importRSAPublicKey(
           Settings.settings.publicKey
         );
+        console.log("Public key imported successfully:", publicKey);
       } catch (error) {
+        console.error("Error importing public key:", error);
         throw new Error("Invalid public key format");
       }
 
@@ -100,12 +106,14 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
         encryptedData = await EncryptionService.Utils.encryptWithRSA(
           {
             website: website.trim(),
-            user: username.trim(),
+            user: username,
             password,
           },
           publicKey
         );
+        console.log("Encrypted data:", encryptedData);
       } catch (error) {
+        console.error("Error encrypting password data:", error);
         throw new Error("Failed to encrypt password data");
       }
 
@@ -116,6 +124,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
         user: encryptedData.user,
         password: encryptedData.password,
       });
+      console.log("Response from saving password:", response);
 
       if (!response.ok) {
         throw new Error(`Failed to save password: ${response.statusText}`);
