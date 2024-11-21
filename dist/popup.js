@@ -37875,8 +37875,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
 /* harmony import */ var _ui_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/label */ "./src/popup/components/ui/label.tsx");
 /* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
-
 
 
 
@@ -37902,41 +37900,31 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
         onClose();
     };
     const saveKey = async () => {
-        var _a;
         setIsSubmitting(true);
+        setError(null);
         try {
-            console.log("Save key - Update mode:", isUpdateMode);
-            console.log("Save key - Existing key ID:", existingKeyId);
-            const settingsResponse = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.SettingGet();
-            if (!settingsResponse.ok) {
-                throw new Error("Failed to fetch encryption settings");
-            }
-            const Settings = await settingsResponse.json();
-            if (!((_a = Settings === null || Settings === void 0 ? void 0 : Settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
-                throw new Error("No public key found in settings");
-            }
-            const publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
-            const encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
+            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.KeysPost({
                 website: website.trim(),
-                user: username,
+                user: username.trim(),
                 password,
-            }, publicKey);
-            const response = isUpdateMode
-                ? await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.KeysPut(existingKeyId, {
-                    password: encryptedData.password,
-                })
-                : await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.KeysPost({
-                    id: (0,uuid__WEBPACK_IMPORTED_MODULE_6__["default"])(),
-                    website: encryptedData.website,
-                    user: encryptedData.user,
-                    password: encryptedData.password,
-                });
+            });
+            const data = await response.json();
+            if (response.status === 409) {
+                // Conflict - duplicate found
+                console.log("Duplicate password found:", data);
+                setConfirmationMessage("A password for this website and username already exists. Would you like to update it?");
+                setShowConfirmation(true);
+                setIsUpdateMode(true);
+                setExistingKeyId(data.existingId);
+                return;
+            }
             if (!response.ok) {
-                throw new Error(`Failed to ${isUpdateMode ? "update" : "save"} key: ${response.statusText}`);
+                throw new Error(`Failed to save password: ${response.statusText}`);
             }
             handleClose();
         }
         catch (error) {
+            console.error("Error saving password:", error);
             setError(error instanceof Error
                 ? error.message
                 : "An unexpected error occurred. Please try again.");
@@ -38013,14 +38001,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
 /* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
-/* harmony import */ var _services_StorageService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/StorageService */ "./src/services/StorageService.ts");
-/* harmony import */ var _AddKeysDialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AddKeysDialog */ "./src/popup/components/keys/AddKeysDialog.tsx");
-
+/* harmony import */ var _AddKeysDialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AddKeysDialog */ "./src/popup/components/keys/AddKeysDialog.tsx");
 
 
 
@@ -38029,107 +38015,40 @@ __webpack_require__.r(__webpack_exports__);
 
 const Keys = () => {
     const [keys, setKeys] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
-    const [settings, setSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [settings, setSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const [showAddDialog, setShowAddDialog] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         const fetchKeys = async () => {
             try {
-                // Get stored keys and credentials
-                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.SettingGet();
-                console.log("Settings Response status:", response.status);
-                const responseText = await response.text();
-                console.log("Settings received");
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch settings: ${response.status} - ${responseText}`);
+                // Get settings
+                const settingsResponse = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.SettingGet();
+                if (!settingsResponse.ok) {
+                    throw new Error(`Failed to fetch settings: ${settingsResponse.status}`);
                 }
-                let fetchedSettings;
-                try {
-                    fetchedSettings = JSON.parse(responseText);
-                    console.log("Settings parsed successfully");
-                    setSettings(fetchedSettings);
-                }
-                catch (parseError) {
-                    throw new Error(`Invalid JSON response: ${parseError}\nReceived: ${responseText.substring(0, 200)}...`);
-                }
+                const fetchedSettings = await settingsResponse.json();
+                setSettings(fetchedSettings);
+                // Get decrypted keys - this now returns the array directly
+                const decryptedKeys = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.KeysGet();
+                setKeys(decryptedKeys);
             }
             catch (error) {
-                console.error("Settings fetch error:", error);
-                setError(`Settings Error: ${error}`);
-                return;
-            }
-            try {
-                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.KeysGet();
-                console.log("Keys Response status:", response.status);
-                const responseText = await response.text();
-                console.log("Keys received:", responseText.substring(0, 100));
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch keys: ${response.status}`);
-                }
-                const data = JSON.parse(responseText);
-                const storedKeys = await _services_StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].Keys.getKeysFromStorage();
-                if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
-                    throw new Error("No private key found in stored credentials");
-                }
-                const privateKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
-                if (!privateKey) {
-                    throw new Error("Failed to import private key");
-                }
-                if (!data.keys || data.keys.length === 0) {
-                    console.log("No keys found in data");
-                    setKeys([]);
-                    return;
-                }
-                try {
-                    const decryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.decryptWithRSA(data.keys, privateKey);
-                    console.log("Raw keys data:", data.keys);
-                    console.log("Decrypted Data:", decryptedData);
-                    if (!decryptedData) {
-                        throw new Error("Decryption returned null or undefined");
-                    }
-                    if (Array.isArray(decryptedData)) {
-                        const mappedKeys = decryptedData.map((item, index) => {
-                            console.log("Mapping key:", {
-                                originalId: data.keys[index].id,
-                                decryptedItem: item,
-                            });
-                            return {
-                                id: data.keys[index].id,
-                                website: item.website,
-                                user: item.user,
-                                password: item.password,
-                            };
-                        });
-                        console.log("Final mapped keys:", mappedKeys);
-                        setKeys(mappedKeys);
-                    }
-                    else {
-                        throw new Error("Decrypted data is not an array");
-                    }
-                }
-                catch (decryptError) {
-                    console.error("Decryption error:", decryptError);
-                    setError(`Failed to decrypt keys: ${decryptError}`);
-                    setKeys([]);
-                }
-            }
-            catch (error) {
-                console.error("Keys fetch error:", error);
+                console.error("Error fetching data:", error);
                 setError(error instanceof Error
-                    ? `Keys Error: ${error.message}`
-                    : "Failed to fetch keys");
+                    ? error.message
+                    : "An unexpected error occurred");
             }
         };
         fetchKeys();
     }, []);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Keys" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(keys) && keys.length > 0 ? (keys.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(KeyItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No keys saved yet. Click \"Add New\" to add your first key." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddKeysDialog__WEBPACK_IMPORTED_MODULE_5__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false), existingKeys: keys })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Keys" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: keys.length > 0 ? (keys.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(KeyItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No keys saved yet. Click \"Add New\" to add your first key." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddKeysDialog__WEBPACK_IMPORTED_MODULE_4__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false), existingKeys: keys })] }));
 };
-const KeyItem = ({ website, user, password, }) => {
+const KeyItem = ({ website, user, password }) => {
     const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4 text-gray-600" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4 text-gray-600" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "w-4 h-4 text-gray-600" }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4 text-gray-600" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4 text-gray-600" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4 text-gray-600" }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Keys);
 
@@ -38202,8 +38121,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
 /* harmony import */ var _ui_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/label */ "./src/popup/components/ui/label.tsx");
 /* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
-
 
 
 
@@ -38233,29 +38150,13 @@ const AddPasswordDialog = ({ open, onClose, existingPasswords, prefilledData = {
         onClose();
     };
     const savePassword = async () => {
-        var _a;
         setIsSubmitting(true);
         setError(null);
         try {
-            const settingsResponse = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.SettingGet();
-            if (!settingsResponse.ok) {
-                throw new Error("Failed to fetch encryption settings");
-            }
-            const Settings = await settingsResponse.json();
-            if (!((_a = Settings === null || Settings === void 0 ? void 0 : Settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
-                throw new Error("No public key found in settings");
-            }
-            const publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
-            const encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
+            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.PasswordPost({
                 website: website.trim(),
                 user: username.trim(),
                 password,
-            }, publicKey);
-            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.PasswordPost({
-                id: (0,uuid__WEBPACK_IMPORTED_MODULE_6__["default"])(),
-                website: encryptedData.website,
-                user: encryptedData.user,
-                password: encryptedData.password,
             });
             const data = await response.json();
             if (response.status === 409) {
@@ -38348,14 +38249,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
 /* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
-/* harmony import */ var _services_StorageService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/StorageService */ "./src/services/StorageService.ts");
-/* harmony import */ var _AddPasswordDialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AddPasswordDialog */ "./src/popup/components/password/AddPasswordDialog.tsx");
-
+/* harmony import */ var _AddPasswordDialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AddPasswordDialog */ "./src/popup/components/password/AddPasswordDialog.tsx");
 
 
 
@@ -38373,86 +38272,32 @@ const Passwords = () => {
                 // Get stored keys and credentials
                 const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.SettingGet();
                 console.log("Settings Response status:", response.status);
-                const responseText = await response.text();
-                console.log("Settings received");
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch settings: ${response.status} - ${responseText}`);
+                    throw new Error(`Failed to fetch settings: ${response.status}`);
                 }
-                let fetchedSettings;
-                try {
-                    fetchedSettings = JSON.parse(responseText);
-                    console.log("Settings parsed successfully");
-                    setSettings(fetchedSettings);
-                }
-                catch (parseError) {
-                    throw new Error(`Invalid JSON response: ${parseError}\nReceived: ${responseText.substring(0, 200)}...`);
-                }
+                const settings = await response.json();
+                setSettings(settings);
+                // Fetch and decrypt passwords
+                const passwords = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.PasswordsGet();
+                setPasswords(passwords);
             }
             catch (error) {
-                console.error("Settings fetch error:", error);
-                setError(`Settings Error: ${error}`);
-                return;
-            }
-            try {
-                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.PasswordsGet();
-                console.log("Passwords Response status:", response.status);
-                const responseText = await response.text();
-                console.log("Passwords received:", responseText.substring(0, 100));
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch passwords: ${response.status}`);
-                }
-                const data = JSON.parse(responseText);
-                const storedKeys = await _services_StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].Keys.getKeysFromStorage();
-                if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
-                    throw new Error("No private key found in stored credentials");
-                }
-                const privateKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
-                if (!privateKey) {
-                    throw new Error("Failed to import private key");
-                }
-                try {
-                    const decryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.decryptWithRSA(data.passwords, privateKey);
-                    console.log("Decrypted Data:", data);
-                    if (!decryptedData) {
-                        throw new Error("Decryption returned null or undefined");
-                    }
-                    if (Array.isArray(decryptedData)) {
-                        console.log("Raw password data:", data.passwords);
-                        console.log("Decrypted data:", decryptedData);
-                        setPasswords(decryptedData.map((item, index) => ({
-                            id: data.passwords[index].id,
-                            website: item.website,
-                            user: item.user,
-                            password: item.password,
-                        })));
-                    }
-                    else {
-                        throw new Error("Decrypted data is not an array");
-                    }
-                }
-                catch (decryptError) {
-                    console.error("Decryption error:", decryptError);
-                    setError(`Failed to decrypt passwords: ${decryptError}`);
-                    setPasswords([]);
-                }
-            }
-            catch (error) {
-                console.error("Passwords fetch error:", error);
+                console.error("Error fetching data:", error);
                 setError(error instanceof Error
-                    ? `Passwords Error: ${error.message}`
-                    : "Failed to fetch passwords");
+                    ? error.message
+                    : "An unexpected error occurred");
             }
         };
         fetchPasswords();
     }, []);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_5__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false), existingPasswords: passwords })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_4__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false), existingPasswords: passwords })] }));
 };
 const PasswordItem = ({ website, user, password, }) => {
     const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "w-4 h-4 " }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4 " }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Passwords);
 
@@ -39308,7 +39153,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CredentialCrypto */ "./src/services/Keys-managment/CredentialCrypto.ts");
 /* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* harmony import */ var _EncryptionService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../EncryptionService */ "./src/services/EncryptionService.ts");
+
 
 
 
@@ -39343,7 +39190,7 @@ class APIService {
                 body: JSON.stringify({
                     publicKey: publicKey,
                     password: decryptedCredentials.password,
-                    deviceId: (0,uuid__WEBPACK_IMPORTED_MODULE_2__["default"])(),
+                    deviceId: (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])(),
                     timestamp: Date.now(),
                 }),
             });
@@ -39459,30 +39306,72 @@ class APIService {
             if (!response.ok) {
                 throw response;
             }
-            return response;
+            const data = await response.json();
+            if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
+                throw new Error("No private key found in stored credentials");
+            }
+            const privateKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
+            if (!privateKey) {
+                throw new Error("Failed to import private key");
+            }
+            const decryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.decryptWithRSA(data.passwords, privateKey);
+            if (!decryptedData) {
+                throw new Error("Decryption returned null or undefined");
+            }
+            if (!Array.isArray(decryptedData)) {
+                throw new Error("Decrypted data is not an array");
+            }
+            return decryptedData.map((item, index) => ({
+                id: data.passwords[index].id,
+                website: item.website,
+                user: item.user,
+                password: item.password,
+            }));
         }
         catch (error) {
             return this.handleApiError(error, "PasswordsGet");
         }
     }
     static async PasswordPost(data) {
+        var _a;
         const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
         try {
+            // Get decrypted credentials
             const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
                 key: storedKeys.AESKey,
                 iv: storedKeys.IV,
                 algorithm: "AES-GCM",
                 length: 256,
-            }).catch((error) => {
-                throw new Error(`Credential decryption failed: ${error.message}`);
             });
+            // Fetch public key from settings
+            const settingsResponse = await this.SettingGet();
+            if (!settingsResponse.ok) {
+                throw new Error("Failed to fetch encryption settings");
+            }
+            const settings = await settingsResponse.json();
+            if (!((_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
+                throw new Error("No public key found in settings");
+            }
+            // Encrypt the data
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
+            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
+                website: data.website.trim(),
+                user: data.user.trim(),
+                password: data.password,
+            }, publicKey);
+            // Send encrypted data
             const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${decryptedCredentials.authToken}`,
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    id: (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])(),
+                    website: encryptedData.website,
+                    user: encryptedData.user,
+                    password: encryptedData.password,
+                }),
             });
             if (!response.ok) {
                 throw response;
@@ -39494,6 +39383,7 @@ class APIService {
         }
     }
     static async PasswordPut(id, data) {
+        var _a;
         const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
         try {
             const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
@@ -39501,16 +39391,30 @@ class APIService {
                 iv: storedKeys.IV,
                 algorithm: "AES-GCM",
                 length: 256,
-            }).catch((error) => {
-                throw new Error(`Credential decryption failed: ${error.message}`);
             });
+            // Fetch public key from settings
+            const settingsResponse = await this.SettingGet();
+            if (!settingsResponse.ok) {
+                throw new Error("Failed to fetch encryption settings");
+            }
+            const settings = await settingsResponse.json();
+            if (!((_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
+                throw new Error("No public key found in settings");
+            }
+            // Encrypt the data
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
+            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
+                website: data.website.trim(),
+                user: data.user.trim(),
+                password: data.password,
+            }, publicKey);
             const response = await fetch(`${decryptedCredentials.server}/api/passwords/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${decryptedCredentials.authToken}`,
                 },
-                body: JSON.stringify(Object.assign(Object.assign({}, data), { id })),
+                body: JSON.stringify(Object.assign(Object.assign({}, encryptedData), { id })),
             });
             if (!response.ok) {
                 throw response;
@@ -39540,13 +39444,34 @@ class APIService {
             if (!response.ok) {
                 throw response;
             }
-            return response;
+            const data = await response.json();
+            if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
+                throw new Error("No private key found in stored credentials");
+            }
+            const privateKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
+            if (!privateKey) {
+                throw new Error("Failed to import private key");
+            }
+            const decryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.decryptWithRSA(data.keys, privateKey);
+            if (!decryptedData) {
+                throw new Error("Decryption returned null or undefined");
+            }
+            if (!Array.isArray(decryptedData)) {
+                throw new Error("Decrypted data is not an array");
+            }
+            return decryptedData.map((item, index) => ({
+                id: data.keys[index].id,
+                website: item.website,
+                user: item.user,
+                password: item.password,
+            }));
         }
         catch (error) {
             return this.handleApiError(error, "KeysGet");
         }
     }
     static async KeysPost(data) {
+        var _a;
         try {
             const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
             const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
@@ -39555,13 +39480,29 @@ class APIService {
                 algorithm: "AES-GCM",
                 length: 256,
             });
-            const response = await fetch(`${decryptedCredentials.server}/api/keys `, {
+            // Fetch public key from settings
+            const settingsResponse = await this.SettingGet();
+            if (!settingsResponse.ok) {
+                throw new Error("Failed to fetch encryption settings");
+            }
+            const settings = await settingsResponse.json();
+            if (!((_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
+                throw new Error("No public key found in settings");
+            }
+            // Encrypt the data
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
+            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
+                website: data.website.trim(),
+                user: data.user.trim(),
+                password: data.password,
+            }, publicKey);
+            const response = await fetch(`${decryptedCredentials.server}/api/keys`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${decryptedCredentials.authToken}`,
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(Object.assign({ id: (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])() }, encryptedData)),
             });
             if (!response.ok) {
                 throw response;
@@ -39573,23 +39514,38 @@ class APIService {
         }
     }
     static async KeysPut(id, data) {
-        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+        var _a;
         try {
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
             const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
                 key: storedKeys.AESKey,
                 iv: storedKeys.IV,
                 algorithm: "AES-GCM",
                 length: 256,
-            }).catch((error) => {
-                throw new Error(`Credential decryption failed: ${error.message}`);
             });
+            // Fetch public key from settings
+            const settingsResponse = await this.SettingGet();
+            if (!settingsResponse.ok) {
+                throw new Error("Failed to fetch encryption settings");
+            }
+            const settings = await settingsResponse.json();
+            if (!((_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
+                throw new Error("No public key found in settings");
+            }
+            // Encrypt the data
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
+            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
+                website: data.website.trim(),
+                user: data.user.trim(),
+                password: data.password,
+            }, publicKey);
             const response = await fetch(`${decryptedCredentials.server}/api/keys/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${decryptedCredentials.authToken}`,
                 },
-                body: JSON.stringify(Object.assign(Object.assign({}, data), { id })),
+                body: JSON.stringify(Object.assign(Object.assign({}, encryptedData), { id })),
             });
             if (!response.ok) {
                 throw response;
@@ -39597,7 +39553,7 @@ class APIService {
             return response;
         }
         catch (error) {
-            return this.handleApiError(error, "PasswordPut");
+            return this.handleApiError(error, "KeysPut");
         }
     }
 }

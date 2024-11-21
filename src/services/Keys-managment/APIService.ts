@@ -7,6 +7,8 @@ import {
 import { CredentialCryptoService } from "./CredentialCrypto";
 import StoringService from "../StorageService";
 import { v4 as uuidv4 } from "uuid";
+import EncryptionService from "../EncryptionService";
+
 export class APIService {
   private static async handleApiError(
     error: any,
@@ -176,7 +178,14 @@ export class APIService {
       return this.handleApiError(error, "SettingsPut");
     }
   }
-  public static async PasswordsGet(): Promise<Response> {
+  public static async PasswordsGet(): Promise<
+    {
+      id: string;
+      website: string;
+      user: string;
+      password: string;
+    }[]
+  > {
     const storedKeys = await StoringService.Keys.getKeysFromStorage();
     try {
       const decryptedCredentials =
@@ -200,20 +209,57 @@ export class APIService {
           },
         }
       );
+
       if (!response.ok) {
         throw response;
       }
-      return response;
+
+      const data = await response.json();
+
+      if (!storedKeys?.privateKey) {
+        throw new Error("No private key found in stored credentials");
+      }
+
+      const privateKey = await EncryptionService.Utils.importRSAPrivateKey(
+        storedKeys.privateKey
+      );
+
+      if (!privateKey) {
+        throw new Error("Failed to import private key");
+      }
+
+      const decryptedData = await EncryptionService.Utils.decryptWithRSA(
+        data.passwords,
+        privateKey
+      );
+
+      if (!decryptedData) {
+        throw new Error("Decryption returned null or undefined");
+      }
+
+      if (!Array.isArray(decryptedData)) {
+        throw new Error("Decrypted data is not an array");
+      }
+
+      return decryptedData.map((item, index) => ({
+        id: data.passwords[index].id,
+        website: item.website,
+        user: item.user,
+        password: item.password,
+      }));
     } catch (error: any) {
       return this.handleApiError(error, "PasswordsGet");
     }
   }
-  public static async PasswordPost(
-    data: NewEncryptedPassword
-  ): Promise<Response> {
+  public static async PasswordPost(data: {
+    website: string;
+    user: string;
+    password: string;
+  }): Promise<Response> {
     const storedKeys = await StoringService.Keys.getKeysFromStorage();
 
     try {
+      // Get decrypted credentials
       const decryptedCredentials =
         await CredentialCryptoService.decryptCredentials(
           storedKeys.Credentials,
@@ -223,10 +269,33 @@ export class APIService {
             algorithm: "AES-GCM",
             length: 256,
           }
-        ).catch((error) => {
-          throw new Error(`Credential decryption failed: ${error.message}`);
-        });
+        );
 
+      // Fetch public key from settings
+      const settingsResponse = await this.SettingGet();
+      if (!settingsResponse.ok) {
+        throw new Error("Failed to fetch encryption settings");
+      }
+
+      const settings = await settingsResponse.json();
+      if (!settings?.settings?.publicKey) {
+        throw new Error("No public key found in settings");
+      }
+
+      // Encrypt the data
+      const publicKey = await EncryptionService.Utils.importRSAPublicKey(
+        settings.settings.publicKey
+      );
+      const encryptedData = await EncryptionService.Utils.encryptWithRSA(
+        {
+          website: data.website.trim(),
+          user: data.user.trim(),
+          password: data.password,
+        },
+        publicKey
+      );
+
+      // Send encrypted data
       const response = await fetch(
         `${decryptedCredentials.server}/api/passwords`,
         {
@@ -235,7 +304,12 @@ export class APIService {
             "Content-Type": "application/json",
             Authorization: `Bearer ${decryptedCredentials.authToken}`,
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify({
+            id: uuidv4(),
+            website: encryptedData.website,
+            user: encryptedData.user,
+            password: encryptedData.password,
+          }),
         }
       );
 
@@ -250,7 +324,11 @@ export class APIService {
   }
   public static async PasswordPut(
     id: string,
-    data: Partial<NewEncryptedPassword>
+    data: {
+      website: string;
+      user: string;
+      password: string;
+    }
   ): Promise<Response> {
     const storedKeys = await StoringService.Keys.getKeysFromStorage();
 
@@ -264,9 +342,31 @@ export class APIService {
             algorithm: "AES-GCM",
             length: 256,
           }
-        ).catch((error) => {
-          throw new Error(`Credential decryption failed: ${error.message}`);
-        });
+        );
+
+      // Fetch public key from settings
+      const settingsResponse = await this.SettingGet();
+      if (!settingsResponse.ok) {
+        throw new Error("Failed to fetch encryption settings");
+      }
+
+      const settings = await settingsResponse.json();
+      if (!settings?.settings?.publicKey) {
+        throw new Error("No public key found in settings");
+      }
+
+      // Encrypt the data
+      const publicKey = await EncryptionService.Utils.importRSAPublicKey(
+        settings.settings.publicKey
+      );
+      const encryptedData = await EncryptionService.Utils.encryptWithRSA(
+        {
+          website: data.website.trim(),
+          user: data.user.trim(),
+          password: data.password,
+        },
+        publicKey
+      );
 
       const response = await fetch(
         `${decryptedCredentials.server}/api/passwords/${id}`,
@@ -277,7 +377,7 @@ export class APIService {
             Authorization: `Bearer ${decryptedCredentials.authToken}`,
           },
           body: JSON.stringify({
-            ...data,
+            ...encryptedData,
             id,
           }),
         }
@@ -292,7 +392,14 @@ export class APIService {
       return this.handleApiError(error, "PasswordPut");
     }
   }
-  public static async KeysGet(): Promise<Response> {
+  public static async KeysGet(): Promise<
+    {
+      id: string;
+      website: string;
+      user: string;
+      password: string;
+    }[]
+  > {
     try {
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
       const decryptedCredentials =
@@ -313,15 +420,53 @@ export class APIService {
           "Content-Type": "application/json",
         },
       });
+
       if (!response.ok) {
         throw response;
       }
-      return response;
+
+      const data = await response.json();
+
+      if (!storedKeys?.privateKey) {
+        throw new Error("No private key found in stored credentials");
+      }
+
+      const privateKey = await EncryptionService.Utils.importRSAPrivateKey(
+        storedKeys.privateKey
+      );
+
+      if (!privateKey) {
+        throw new Error("Failed to import private key");
+      }
+
+      const decryptedData = await EncryptionService.Utils.decryptWithRSA(
+        data.keys,
+        privateKey
+      );
+
+      if (!decryptedData) {
+        throw new Error("Decryption returned null or undefined");
+      }
+
+      if (!Array.isArray(decryptedData)) {
+        throw new Error("Decrypted data is not an array");
+      }
+
+      return decryptedData.map((item, index) => ({
+        id: data.keys[index].id,
+        website: item.website,
+        user: item.user,
+        password: item.password,
+      }));
     } catch (error: any) {
       return this.handleApiError(error, "KeysGet");
     }
   }
-  public static async KeysPost(data: NewEncryptedPassword): Promise<Response> {
+  public static async KeysPost(data: {
+    website: string;
+    user: string;
+    password: string;
+  }): Promise<Response> {
     try {
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
       const decryptedCredentials =
@@ -335,13 +480,40 @@ export class APIService {
           }
         );
 
-      const response = await fetch(`${decryptedCredentials.server}/api/keys `, {
+      // Fetch public key from settings
+      const settingsResponse = await this.SettingGet();
+      if (!settingsResponse.ok) {
+        throw new Error("Failed to fetch encryption settings");
+      }
+
+      const settings = await settingsResponse.json();
+      if (!settings?.settings?.publicKey) {
+        throw new Error("No public key found in settings");
+      }
+
+      // Encrypt the data
+      const publicKey = await EncryptionService.Utils.importRSAPublicKey(
+        settings.settings.publicKey
+      );
+      const encryptedData = await EncryptionService.Utils.encryptWithRSA(
+        {
+          website: data.website.trim(),
+          user: data.user.trim(),
+          password: data.password,
+        },
+        publicKey
+      );
+
+      const response = await fetch(`${decryptedCredentials.server}/api/keys`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${decryptedCredentials.authToken}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          id: uuidv4(),
+          ...encryptedData,
+        }),
       });
 
       if (!response.ok) {
@@ -355,11 +527,14 @@ export class APIService {
   }
   public static async KeysPut(
     id: string,
-    data: Partial<NewEncryptedPassword>
+    data: {
+      website: string;
+      user: string;
+      password: string;
+    }
   ): Promise<Response> {
-    const storedKeys = await StoringService.Keys.getKeysFromStorage();
-
     try {
+      const storedKeys = await StoringService.Keys.getKeysFromStorage();
       const decryptedCredentials =
         await CredentialCryptoService.decryptCredentials(
           storedKeys.Credentials,
@@ -369,9 +544,31 @@ export class APIService {
             algorithm: "AES-GCM",
             length: 256,
           }
-        ).catch((error) => {
-          throw new Error(`Credential decryption failed: ${error.message}`);
-        });
+        );
+
+      // Fetch public key from settings
+      const settingsResponse = await this.SettingGet();
+      if (!settingsResponse.ok) {
+        throw new Error("Failed to fetch encryption settings");
+      }
+
+      const settings = await settingsResponse.json();
+      if (!settings?.settings?.publicKey) {
+        throw new Error("No public key found in settings");
+      }
+
+      // Encrypt the data
+      const publicKey = await EncryptionService.Utils.importRSAPublicKey(
+        settings.settings.publicKey
+      );
+      const encryptedData = await EncryptionService.Utils.encryptWithRSA(
+        {
+          website: data.website.trim(),
+          user: data.user.trim(),
+          password: data.password,
+        },
+        publicKey
+      );
 
       const response = await fetch(
         `${decryptedCredentials.server}/api/keys/${id}`,
@@ -382,7 +579,7 @@ export class APIService {
             Authorization: `Bearer ${decryptedCredentials.authToken}`,
           },
           body: JSON.stringify({
-            ...data,
+            ...encryptedData,
             id,
           }),
         }
@@ -394,7 +591,7 @@ export class APIService {
 
       return response;
     } catch (error: any) {
-      return this.handleApiError(error, "PasswordPut");
+      return this.handleApiError(error, "KeysPut");
     }
   }
 }

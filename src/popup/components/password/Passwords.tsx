@@ -21,98 +21,26 @@ const Passwords: React.FC = () => {
         const response = await EncryptionService.API.SettingGet();
         console.log("Settings Response status:", response.status);
 
-        const responseText = await response.text();
-        console.log("Settings received");
-
         if (!response.ok) {
-          throw new Error(
-            `Failed to fetch settings: ${response.status} - ${responseText}`
-          );
+          throw new Error(`Failed to fetch settings: ${response.status}`);
         }
 
-        let fetchedSettings;
-        try {
-          fetchedSettings = JSON.parse(responseText);
-          console.log("Settings parsed successfully");
-          setSettings(fetchedSettings);
-        } catch (parseError) {
-          throw new Error(
-            `Invalid JSON response: ${parseError}\nReceived: ${responseText.substring(
-              0,
-              200
-            )}...`
-          );
-        }
+        const settings = await response.json();
+        setSettings(settings);
+
+        // Fetch and decrypt passwords
+        const passwords = await EncryptionService.API.PasswordsGet();
+        setPasswords(passwords);
       } catch (error) {
-        console.error("Settings fetch error:", error);
-        setError(`Settings Error: ${error}`);
-        return;
-      }
-
-      try {
-        const response = await EncryptionService.API.PasswordsGet();
-        console.log("Passwords Response status:", response.status);
-
-        const responseText = await response.text();
-        console.log("Passwords received:", responseText.substring(0, 100));
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch passwords: ${response.status}`);
-        }
-
-        const data = JSON.parse(responseText);
-        const storedKeys = await StoringService.Keys.getKeysFromStorage();
-
-        if (!storedKeys?.privateKey) {
-          throw new Error("No private key found in stored credentials");
-        }
-
-        const privateKey = await EncryptionService.Utils.importRSAPrivateKey(
-          storedKeys.privateKey
-        );
-
-        if (!privateKey) {
-          throw new Error("Failed to import private key");
-        }
-
-        try {
-          const decryptedData = await EncryptionService.Utils.decryptWithRSA(
-            data.passwords,
-            privateKey
-          );
-          console.log("Decrypted Data:", data);
-          if (!decryptedData) {
-            throw new Error("Decryption returned null or undefined");
-          }
-
-          if (Array.isArray(decryptedData)) {
-            console.log("Raw password data:", data.passwords);
-            console.log("Decrypted data:", decryptedData);
-            setPasswords(
-              decryptedData.map((item, index) => ({
-                id: data.passwords[index].id,
-                website: item.website,
-                user: item.user,
-                password: item.password,
-              }))
-            );
-          } else {
-            throw new Error("Decrypted data is not an array");
-          }
-        } catch (decryptError) {
-          console.error("Decryption error:", decryptError);
-          setError(`Failed to decrypt passwords: ${decryptError}`);
-          setPasswords([]);
-        }
-      } catch (error) {
-        console.error("Passwords fetch error:", error);
+        console.error("Error fetching data:", error);
         setError(
           error instanceof Error
-            ? `Passwords Error: ${error.message}`
-            : "Failed to fetch passwords"
+            ? error.message
+            : "An unexpected error occurred"
         );
       }
     };
+
     fetchPasswords();
   }, []);
 

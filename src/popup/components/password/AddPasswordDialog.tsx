@@ -61,34 +61,10 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
     setError(null);
 
     try {
-      const settingsResponse = await EncryptionService.API.SettingGet();
-      if (!settingsResponse.ok) {
-        throw new Error("Failed to fetch encryption settings");
-      }
-
-      const Settings = await settingsResponse.json();
-      if (!Settings?.settings?.publicKey) {
-        throw new Error("No public key found in settings");
-      }
-
-      const publicKey = await EncryptionService.Utils.importRSAPublicKey(
-        Settings.settings.publicKey
-      );
-
-      const encryptedData = await EncryptionService.Utils.encryptWithRSA(
-        {
-          website: website.trim(),
-          user: username.trim(),
-          password,
-        },
-        publicKey
-      );
-
       const response = await EncryptionService.API.PasswordPost({
-        id: uuidv4(),
-        website: encryptedData.website,
-        user: encryptedData.user,
-        password: encryptedData.password,
+        website: website.trim(),
+        user: username.trim(),
+        password,
       });
 
       const data = await response.json();

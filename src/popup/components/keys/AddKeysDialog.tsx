@@ -9,15 +9,18 @@ import {
 } from "../../../services/types";
 import EncryptionService from "../../../services/EncryptionService";
 import { v4 as uuidv4 } from "uuid";
+
+interface KeyData {
+  id: string;
+  website: string;
+  password: string;
+  user: string;
+}
+
 interface AddKeysDialogProps {
   open: boolean;
   onClose: () => void;
-  existingKeys?: {
-    website: string;
-    user: string;
-    password: string;
-    id: string;
-  }[];
+  existingKeys?: KeyData[];
 }
 
 const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
@@ -46,54 +49,36 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
 
   const saveKey = async () => {
     setIsSubmitting(true);
+    setError(null);
+
     try {
-      console.log("Save key - Update mode:", isUpdateMode);
-      console.log("Save key - Existing key ID:", existingKeyId);
+      const response = await EncryptionService.API.KeysPost({
+        website: website.trim(),
+        user: username.trim(),
+        password,
+      });
 
-      const settingsResponse = await EncryptionService.API.SettingGet();
-      if (!settingsResponse.ok) {
-        throw new Error("Failed to fetch encryption settings");
+      const data = await response.json();
+
+      if (response.status === 409) {
+        // Conflict - duplicate found
+        console.log("Duplicate password found:", data);
+        setConfirmationMessage(
+          "A password for this website and username already exists. Would you like to update it?"
+        );
+        setShowConfirmation(true);
+        setIsUpdateMode(true);
+        setExistingKeyId(data.existingId);
+        return;
       }
-
-      const Settings = await settingsResponse.json();
-      if (!Settings?.settings?.publicKey) {
-        throw new Error("No public key found in settings");
-      }
-
-      const publicKey = await EncryptionService.Utils.importRSAPublicKey(
-        Settings.settings.publicKey
-      );
-
-      const encryptedData = await EncryptionService.Utils.encryptWithRSA(
-        {
-          website: website.trim(),
-          user: username,
-          password,
-        },
-        publicKey
-      );
-
-      const response = isUpdateMode
-        ? await EncryptionService.API.KeysPut(existingKeyId, {
-            password: encryptedData.password,
-          })
-        : await EncryptionService.API.KeysPost({
-            id: uuidv4(),
-            website: encryptedData.website,
-            user: encryptedData.user,
-            password: encryptedData.password,
-          });
 
       if (!response.ok) {
-        throw new Error(
-          `Failed to ${isUpdateMode ? "update" : "save"} key: ${
-            response.statusText
-          }`
-        );
+        throw new Error(`Failed to save password: ${response.statusText}`);
       }
 
       handleClose();
     } catch (error) {
+      console.error("Error saving password:", error);
       setError(
         error instanceof Error
           ? error.message
