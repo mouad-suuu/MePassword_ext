@@ -12,12 +12,6 @@ import { v4 as uuidv4 } from "uuid";
 interface AddPasswordDialogProps {
   open: boolean;
   onClose: () => void;
-  existingPasswords?: {
-    website: string;
-    user: string;
-    password: string;
-    id: string;
-  }[];
   prefilledData?: {
     website: string;
     username: string;
@@ -28,7 +22,6 @@ interface AddPasswordDialogProps {
 const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
   open,
   onClose,
-  existingPasswords,
   prefilledData = {
     website: "",
     username: "",
@@ -98,42 +91,53 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
     }
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setIsSubmitting(true);
-
+  const checkForDuplicates = async () => {
     try {
-      const existingPassword = existingPasswords?.find(
-        (item) =>
-          item.website.toLowerCase().trim() === website.toLowerCase().trim() &&
-          item.user.toLowerCase().trim() === username.toLowerCase().trim()
-      );
+      const existingPasswords = await EncryptionService.API.PasswordsGet();
 
-      console.log("Found existing password:", existingPassword);
+      const existingPassword = existingPasswords?.find((item) => {
+        const websiteMatch =
+          item.website.toLowerCase().trim() === website.toLowerCase().trim();
+        const userMatch =
+          item.user.toLowerCase().trim() === username.toLowerCase().trim();
+        return websiteMatch && userMatch;
+      });
 
       if (existingPassword) {
-        setIsSubmitting(false);
-
         if (existingPassword.password === password) {
           setConfirmationMessage(
             "This exact password already exists. No changes needed."
           );
           setShowConfirmation(true);
-          return;
+          return true;
         }
 
-        console.log("Existing password ID:", existingPassword.id);
         setConfirmationMessage(
           "A password for this website and username already exists. Would you like to update it?"
         );
         setShowConfirmation(true);
         setIsUpdateMode(true);
         setExistingPasswordId(existingPassword.id);
-        return;
+        return true;
       }
 
-      await savePassword();
+      return false;
+    } catch (error) {
+      console.error("Error checking for duplicates:", error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+
+    try {
+      const hasDuplicate = await checkForDuplicates();
+      if (!hasDuplicate) {
+        await savePassword();
+      }
     } catch (error) {
       console.error("Error in handleSubmit:", error);
       setError(

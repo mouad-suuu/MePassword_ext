@@ -13,23 +13,14 @@ const Passwords: React.FC = () => {
   const [settings, setSettings] = useState<NewEncryptedPassword[]>([]);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   useEffect(() => {
     const fetchPasswords = async () => {
       try {
-        // Get stored keys and credentials
-        const response = await EncryptionService.API.SettingGet();
-        console.log("Settings Response status:", response.status);
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch settings: ${response.status}`);
-        }
-
-        const settings = await response.json();
-        setSettings(settings);
-
         // Fetch and decrypt passwords
         const passwords = await EncryptionService.API.PasswordsGet();
+        console.log("the passwords component: fetched passwords:", passwords);
         setPasswords(passwords);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -42,7 +33,7 @@ const Passwords: React.FC = () => {
     };
 
     fetchPasswords();
-  }, []);
+  }, [refreshTrigger]);
 
   return (
     <div className="space-y-4">
@@ -80,8 +71,10 @@ const Passwords: React.FC = () => {
 
       <AddPasswordDialog
         open={showAddDialog}
-        onClose={() => setShowAddDialog(false)}
-        existingPasswords={passwords}
+        onClose={() => {
+          setShowAddDialog(false);
+          setRefreshTrigger((prev) => prev + 1);
+        }}
       />
     </div>
   );

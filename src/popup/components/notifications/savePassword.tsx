@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import AddPasswordDialog from "../password/AddPasswordDialog";
+import EncryptionService from "../../../services/EncryptionService";
+import { NewEncryptedPassword } from "../../../services/types";
 
 interface SavePasswordProps {
   prefilledData?: {
@@ -10,39 +12,35 @@ interface SavePasswordProps {
   };
 }
 
-export const SavePasswordNotification: React.FC<SavePasswordProps> = () => {
+export const SavePasswordNotification: React.FC<SavePasswordProps> = ({
+  prefilledData,
+}) => {
   const [showDialog, setShowDialog] = useState(false);
-  const [data, setData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
+  // Handle message
   useEffect(() => {
-    const handleMessage = (message: any) => {
+    const handleMessage = async (message: any) => {
       console.log("SavePassword received message:", message);
-
       if (message.type === "OPEN_ADD_PASSWORD_DIALOG") {
-        console.log("Opening add password dialog with data:", message.data);
-        setData(message.data);
         setShowDialog(true);
       }
     };
 
-    // Add message listener
     chrome.runtime.onMessage.addListener(handleMessage);
-
-    // Cleanup
-    return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
-    };
+    return () => chrome.runtime.onMessage.removeListener(handleMessage);
   }, []);
 
   if (!showDialog) return null;
 
   return (
-    <>
-      <AddPasswordDialog
-        open={showDialog}
-        onClose={() => setShowDialog(false)}
-        prefilledData={data}
-      />
-    </>
+    <AddPasswordDialog
+      open={showDialog}
+      onClose={() => {
+        console.log("Closing dialog");
+        setShowDialog(false);
+      }}
+      prefilledData={prefilledData}
+    />
   );
 };

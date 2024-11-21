@@ -38127,7 +38127,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const AddPasswordDialog = ({ open, onClose, existingPasswords, prefilledData = {
+const AddPasswordDialog = ({ open, onClose, prefilledData = {
     website: "",
     username: "",
     password: "",
@@ -38183,29 +38183,42 @@ const AddPasswordDialog = ({ open, onClose, existingPasswords, prefilledData = {
             setIsSubmitting(false);
         }
     };
+    const checkForDuplicates = async () => {
+        try {
+            const existingPasswords = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.PasswordsGet();
+            const existingPassword = existingPasswords === null || existingPasswords === void 0 ? void 0 : existingPasswords.find((item) => {
+                const websiteMatch = item.website.toLowerCase().trim() === website.toLowerCase().trim();
+                const userMatch = item.user.toLowerCase().trim() === username.toLowerCase().trim();
+                return websiteMatch && userMatch;
+            });
+            if (existingPassword) {
+                if (existingPassword.password === password) {
+                    setConfirmationMessage("This exact password already exists. No changes needed.");
+                    setShowConfirmation(true);
+                    return true;
+                }
+                setConfirmationMessage("A password for this website and username already exists. Would you like to update it?");
+                setShowConfirmation(true);
+                setIsUpdateMode(true);
+                setExistingPasswordId(existingPassword.id);
+                return true;
+            }
+            return false;
+        }
+        catch (error) {
+            console.error("Error checking for duplicates:", error);
+            throw error;
+        }
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
         setIsSubmitting(true);
         try {
-            const existingPassword = existingPasswords === null || existingPasswords === void 0 ? void 0 : existingPasswords.find((item) => item.website.toLowerCase().trim() === website.toLowerCase().trim() &&
-                item.user.toLowerCase().trim() === username.toLowerCase().trim());
-            console.log("Found existing password:", existingPassword);
-            if (existingPassword) {
-                setIsSubmitting(false);
-                if (existingPassword.password === password) {
-                    setConfirmationMessage("This exact password already exists. No changes needed.");
-                    setShowConfirmation(true);
-                    return;
-                }
-                console.log("Existing password ID:", existingPassword.id);
-                setConfirmationMessage("A password for this website and username already exists. Would you like to update it?");
-                setShowConfirmation(true);
-                setIsUpdateMode(true);
-                setExistingPasswordId(existingPassword.id);
-                return;
+            const hasDuplicate = await checkForDuplicates();
+            if (!hasDuplicate) {
+                await savePassword();
             }
-            await savePassword();
         }
         catch (error) {
             console.error("Error in handleSubmit:", error);
@@ -38266,19 +38279,13 @@ const Passwords = () => {
     const [settings, setSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
     const [showAddDialog, setShowAddDialog] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [refreshTrigger, setRefreshTrigger] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0);
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         const fetchPasswords = async () => {
             try {
-                // Get stored keys and credentials
-                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.SettingGet();
-                console.log("Settings Response status:", response.status);
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch settings: ${response.status}`);
-                }
-                const settings = await response.json();
-                setSettings(settings);
                 // Fetch and decrypt passwords
                 const passwords = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.PasswordsGet();
+                console.log("the passwords component: fetched passwords:", passwords);
                 setPasswords(passwords);
             }
             catch (error) {
@@ -38289,8 +38296,11 @@ const Passwords = () => {
             }
         };
         fetchPasswords();
-    }, []);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_4__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false), existingPasswords: passwords })] }));
+    }, [refreshTrigger]);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_4__["default"], { open: showAddDialog, onClose: () => {
+                    setShowAddDialog(false);
+                    setRefreshTrigger((prev) => prev + 1);
+                } })] }));
 };
 const PasswordItem = ({ website, user, password, }) => {
     const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
