@@ -1,5 +1,4 @@
 import { LoginFormData, NewEncryptedPassword } from "../services/types";
-import NotificationManager from "../popup/notifications/NotificationManager";
 
 // Types
 interface FormMetadata {
@@ -149,49 +148,39 @@ class CredentialDetector {
   }
 
   // Notifies about detected credentials and sends a message to the background script
-  private async notifyCredentialDetection(
-    credentials: Partial<NewEncryptedPassword>
-  ): Promise<void> {
-    if (!credentials.password) return;
-
-    const credentialKey = `${credentials.website}-${credentials.user}-${credentials.password}`;
-    if (
-      this.lastDetectedCredentials &&
-      `${this.lastDetectedCredentials.website}-${this.lastDetectedCredentials.user}-${this.lastDetectedCredentials.password}` ===
-        credentialKey
-    ) {
-      return;
-    }
-
-    this.lastDetectedCredentials = credentials;
-
+  private async notifyCredentialDetection(credentials: {
+    website: string;
+    user: string;
+    password: string;
+  }): Promise<void> {
     try {
-      // Show notification
       console.log(
-        "================================================================",
-        credentials
+        "CONTENT: Sending credential detection message to background"
       );
-      await NotificationManager.show({
-        website: credentials.website || "",
-        user: credentials.user || "",
-        password: credentials.password || "",
-      });
-
-      // Send message to background script
-      const message: CredentialMessage = {
-        type: "DETECTED_CREDENTIALS",
-        payload: {
-          website: credentials.website || "",
-          user: credentials.user || "",
-          password: credentials.password || "",
-          formData: credentials.formData,
-        },
-      };
-
-      await chrome.runtime.sendMessage(message);
-      console.debug("Credential detection message sent successfully");
+      // Check if chrome.runtime is defined and available
+      if (chrome.runtime && chrome.runtime.id) {
+        await chrome.runtime.sendMessage({
+          type: "PASSWORD_DETECTED",
+          data: credentials,
+        });
+      } else {
+        console.warn(
+          "CONTENT: Chrome runtime not available, extension may need to be reloaded"
+        );
+      }
     } catch (error) {
-      console.error("Error in notifyCredentialDetection:", error);
+      // Handle specific error types
+      if (error === "Extension context invalidated.") {
+        console.warn(
+          "CONTENT: Extension context invalidated. Please refresh the page."
+        );
+      } else {
+        console.error(
+          "CONTENT: Error sending credential detection message:",
+          error
+        );
+      }
+      // Don't throw the error - we want to fail gracefully
     }
   }
 
@@ -331,30 +320,40 @@ class CredentialDetector {
   ): Promise<void> {
     console.log("CONTENT:  Handling form submission:", formElements);
     const credentials = this.extractCredentials(formElements);
-    if (credentials) {
+    if (credentials?.website && credentials?.user && credentials?.password) {
       console.log("CONTENT:  Extracted credentials:", credentials);
-      await this.notifyCredentialDetection(credentials);
+      await this.notifyCredentialDetection(credentials as NewEncryptedPassword);
     }
   }
 
   // Handles input changes in the password field and notifies credential detection
   private async handleInputChange(formElements: FormMetadata): Promise<void> {
-    console.log("CONTENT:  Handling input change:", formElements);
+    console.log("CONTENT: Handling input change:", formElements);
     const credentials = this.extractCredentials(formElements);
     if (credentials) {
       console.log(
-        "CONTENT:  Credentials extracted on input change:",
+        "CONTENT: Credentials extracted on input change:",
         credentials
       );
       if (this.detectionTimeout) {
         clearTimeout(this.detectionTimeout);
       }
-      this.detectionTimeout = setTimeout(() => {
-        console.log(
-          "Notifying credential detection after input change:",
-          credentials
-        );
-        this.notifyCredentialDetection(credentials);
+      this.detectionTimeout = setTimeout(async () => {
+        try {
+          console.log(
+            "Notifying credential detection after input change:",
+            credentials
+          );
+          await this.notifyCredentialDetection(
+            credentials as NewEncryptedPassword
+          );
+        } catch (error) {
+          console.warn(
+            "CONTENT: Failed to notify credential detection:",
+            error
+          );
+          // Continue execution - don't let this error break the form functionality
+        }
       }, 1000);
     }
   }
@@ -368,7 +367,7 @@ class CredentialDetector {
         "Notifying credential detection on password focus:",
         credentials
       );
-      await this.notifyCredentialDetection(credentials);
+      await this.notifyCredentialDetection(credentials as NewEncryptedPassword);
     }
   }
 

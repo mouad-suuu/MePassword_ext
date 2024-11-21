@@ -1,41 +1,49 @@
 import { Navigation as NavigationIcon, Settings } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Keys from "./keys/keys";
 import Passwords from "./password/Passwords";
 import Profile from "./profile/profile";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Navigation } from "./Navigation";
 import { SettingsComponent } from "./profile/Settings";
+import AddPasswordDialog from "./password/AddPasswordDialog";
 
 const Main = () => {
   const [activeTab, setActiveTab] = useState("passwords");
-  const [needsKeyRotation, setNeedsKeyRotation] = useState(false);
+  const [showAddPasswordDialog, setShowAddPasswordDialog] = useState(false);
+  const [passwordData, setPasswordData] = useState<
+    | {
+        website: string;
+        username: string;
+        password: string;
+      }
+    | undefined
+  >(undefined);
 
-  const handleLogout = async () => {
-    try {
-      // TODO: Implement logout functionality
-      console.log("Logging out...");
-      setActiveTab("passwords");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
+  useEffect(() => {
+    const handleMessage = (message: any) => {
+      if (message.type === "OPEN_ADD_PASSWORD_DIALOG") {
+        console.log(
+          "Main received OPEN_ADD_PASSWORD_DIALOG message:",
+          message.data
+        );
+        setPasswordData(message.data);
+        setShowAddPasswordDialog(true);
+      }
+    };
+
+    chrome.runtime.onMessage.addListener(handleMessage);
+    return () => chrome.runtime.onMessage.removeListener(handleMessage);
+  }, []);
 
   return (
     <div className="min-w-[400px] min-h-96 bg-gray-50">
-      {needsKeyRotation && (
-        <Alert variant="default" className="mb-4">
-          <AlertTitle>Security Notice</AlertTitle>
-          <AlertDescription>
-            Your encryption keys need to be rotated for security.
-            <button
-              onClick={() => setNeedsKeyRotation(false)}
-              className="ml-2 text-sm font-medium underline hover:text-amber-600"
-            >
-              Rotate Keys Now
-            </button>
-          </AlertDescription>
-        </Alert>
+      {showAddPasswordDialog && (
+        <AddPasswordDialog
+          open={showAddPasswordDialog}
+          onClose={() => setShowAddPasswordDialog(false)}
+          prefilledData={passwordData}
+        />
       )}
 
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />

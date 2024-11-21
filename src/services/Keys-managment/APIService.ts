@@ -249,6 +249,7 @@ export class APIService {
     }
   }
   public static async PasswordPut(
+    id: string,
     data: Partial<NewEncryptedPassword>
   ): Promise<Response> {
     const storedKeys = await StoringService.Keys.getKeysFromStorage();
@@ -268,14 +269,17 @@ export class APIService {
         });
 
       const response = await fetch(
-        `${decryptedCredentials.server}/api/passwords`,
+        `${decryptedCredentials.server}/api/passwords/${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${decryptedCredentials.authToken}`,
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify({
+            ...data,
+            id,
+          }),
         }
       );
 
@@ -350,10 +354,12 @@ export class APIService {
     }
   }
   public static async KeysPut(
+    id: string,
     data: Partial<NewEncryptedPassword>
   ): Promise<Response> {
+    const storedKeys = await StoringService.Keys.getKeysFromStorage();
+
     try {
-      const storedKeys = await StoringService.Keys.getKeysFromStorage();
       const decryptedCredentials =
         await CredentialCryptoService.decryptCredentials(
           storedKeys.Credentials,
@@ -363,17 +369,22 @@ export class APIService {
             algorithm: "AES-GCM",
             length: 256,
           }
-        );
+        ).catch((error) => {
+          throw new Error(`Credential decryption failed: ${error.message}`);
+        });
 
       const response = await fetch(
-        `${decryptedCredentials.server}/api/passwords`,
+        `${decryptedCredentials.server}/api/keys/${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${decryptedCredentials.authToken}`,
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify({
+            ...data,
+            id,
+          }),
         }
       );
 
@@ -383,7 +394,7 @@ export class APIService {
 
       return response;
     } catch (error: any) {
-      return this.handleApiError(error, "KeysPut");
+      return this.handleApiError(error, "PasswordPut");
     }
   }
 }

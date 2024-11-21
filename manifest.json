@@ -9,7 +9,8 @@
     "webAuthn",
     "activeTab",
     "scripting",
-    "notifications"
+    "notifications",
+    "windows"
   ],
   "content_scripts": [
     {

@@ -9,7 +9,7 @@ module.exports = {
   devtool: "source-map",
   entry: {
     popup: "./src/popup/index.tsx",
-    content: "./src/content/content.ts",
+    content: "./src/content/content.tsx",
     background: "./src/background/background.ts",
   },
   module: {

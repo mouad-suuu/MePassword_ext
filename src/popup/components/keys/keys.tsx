@@ -84,20 +84,28 @@ const Keys: React.FC = () => {
             data.keys,
             privateKey
           );
-          console.log("Decrypted Data:", data);
+          console.log("Raw keys data:", data.keys);
+          console.log("Decrypted Data:", decryptedData);
+
           if (!decryptedData) {
             throw new Error("Decryption returned null or undefined");
           }
 
           if (Array.isArray(decryptedData)) {
-            setKeys(
-              decryptedData.map((item) => ({
-                id: data.keys.id,
+            const mappedKeys = decryptedData.map((item, index) => {
+              console.log("Mapping key:", {
+                originalId: data.keys[index].id,
+                decryptedItem: item,
+              });
+              return {
+                id: data.keys[index].id,
                 website: item.website,
                 user: item.user,
                 password: item.password,
-              }))
-            );
+              };
+            });
+            console.log("Final mapped keys:", mappedKeys);
+            setKeys(mappedKeys);
           } else {
             throw new Error("Decrypted data is not an array");
           }
@@ -155,6 +163,7 @@ const Keys: React.FC = () => {
       <AddKeysDialog
         open={showAddDialog}
         onClose={() => setShowAddDialog(false)}
+        existingKeys={keys}
       />
     </div>
   );

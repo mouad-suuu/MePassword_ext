@@ -12,6 +12,12 @@ import { v4 as uuidv4 } from "uuid";
 interface AddPasswordDialogProps {
   open: boolean;
   onClose: () => void;
+  existingPasswords?: {
+    website: string;
+    user: string;
+    password: string;
+    id: string;
+  }[];
   prefilledData?: {
     website: string;
     username: string;
@@ -22,6 +28,7 @@ interface AddPasswordDialogProps {
 const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
   open,
   onClose,
+  existingPasswords,
   prefilledData = {
     website: "",
     username: "",
@@ -32,6 +39,14 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
   const [username, setUsername] = useState(prefilledData.username);
   const [password, setPassword] = useState(prefilledData.password);
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const [existingPasswordId, setExistingPasswordId] = useState<string | null>(
+    null
+  );
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+
   const handleClose = () => {
     console.log("Closing dialog and resetting state");
     setWebsite("");
@@ -41,90 +56,54 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
     onClose();
   };
 
-  // const validateInputs = (): string | null => {
-  //   if (!website.trim()) {
-  //     return "Website is required";
-  //   }
-
-  //   // try {
-  //   //   new URL(website); // Validate URL format
-  //   // } catch {
-  //   //   return "Please enter a valid URL (e.g., https://example.com)";
-  //   // }
-
-  //   // if (!username.trim()) {
-  //   //   return "Username/Email is required";
-  //   // }
-
-  //   // if (!password) {
-  //   //   return "Password is required";
-  //   // }
-
-  //   // if (password.length < 8) {
-  //   //   return "Password must be at least 8 characters long";
-  //   // }
-
-  //   return null;
-  // };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setError(null);
+  const savePassword = async () => {
     setIsSubmitting(true);
+    setError(null);
 
     try {
-      // Get settings
       const settingsResponse = await EncryptionService.API.SettingGet();
-      console.log("Settings Response to add password:", settingsResponse);
       if (!settingsResponse.ok) {
         throw new Error("Failed to fetch encryption settings");
       }
 
       const Settings = await settingsResponse.json();
-      console.log("Parsed settings:", Settings);
-
-      // Check if Settings has the required data
       if (!Settings?.settings?.publicKey) {
         throw new Error("No public key found in settings");
       }
 
-      // Import public key
-      let publicKey;
-      try {
-        publicKey = await EncryptionService.Utils.importRSAPublicKey(
-          Settings.settings.publicKey
-        );
-        console.log("Public key imported successfully:", publicKey);
-      } catch (error) {
-        console.error("Error importing public key:", error);
-        throw new Error("Invalid public key format");
-      }
+      const publicKey = await EncryptionService.Utils.importRSAPublicKey(
+        Settings.settings.publicKey
+      );
 
-      // Encrypt data
-      let encryptedData;
-      try {
-        encryptedData = await EncryptionService.Utils.encryptWithRSA(
-          {
-            website: website.trim(),
-            user: username,
-            password,
-          },
-          publicKey
-        );
-        console.log("Encrypted data:", encryptedData);
-      } catch (error) {
-        console.error("Error encrypting password data:", error);
-        throw new Error("Failed to encrypt password data");
-      }
+      const encryptedData = await EncryptionService.Utils.encryptWithRSA(
+        {
+          website: website.trim(),
+          user: username.trim(),
+          password,
+        },
+        publicKey
+      );
 
-      // Post encrypted data
       const response = await EncryptionService.API.PasswordPost({
         id: uuidv4(),
         website: encryptedData.website,
         user: encryptedData.user,
         password: encryptedData.password,
       });
-      console.log("Response from saving password:", response);
+
+      const data = await response.json();
+
+      if (response.status === 409) {
+        // Conflict - duplicate found
+        console.log("Duplicate password found:", data);
+        setConfirmationMessage(
+          "A password for this website and username already exists. Would you like to update it?"
+        );
+        setShowConfirmation(true);
+        setIsUpdateMode(true);
+        setExistingPasswordId(data.existingId);
+        return;
+      }
 
       if (!response.ok) {
         throw new Error(`Failed to save password: ${response.statusText}`);
@@ -143,16 +122,53 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
     }
   };
 
-  function handleAddPassword(): void {
-    console.log("encrypred data:", {
-      website,
-      username,
-      password,
-    });
-  }
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
 
-  // Add loading state for better UX
-  const [isSubmitting, setIsSubmitting] = useState(false);
+    try {
+      const existingPassword = existingPasswords?.find(
+        (item) =>
+          item.website.toLowerCase().trim() === website.toLowerCase().trim() &&
+          item.user.toLowerCase().trim() === username.toLowerCase().trim()
+      );
+
+      console.log("Found existing password:", existingPassword);
+
+      if (existingPassword) {
+        setIsSubmitting(false);
+
+        if (existingPassword.password === password) {
+          setConfirmationMessage(
+            "This exact password already exists. No changes needed."
+          );
+          setShowConfirmation(true);
+          return;
+        }
+
+        console.log("Existing password ID:", existingPassword.id);
+        setConfirmationMessage(
+          "A password for this website and username already exists. Would you like to update it?"
+        );
+        setShowConfirmation(true);
+        setIsUpdateMode(true);
+        setExistingPasswordId(existingPassword.id);
+        return;
+      }
+
+      await savePassword();
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+      setError(
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div
@@ -161,53 +177,95 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
       }`}
     >
       <div className="bg-white p-6 rounded-lg shadow-xl w-96">
-        <h2 className="text-xl font-semibold mb-4">Add New Password</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="website">Website/Where to use</Label>
-            <Input
-              id="website"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-              placeholder="https://example.com"
-              required
-            />
+        {showConfirmation ? (
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold mb-4">Confirmation</h2>
+            <p className="text-gray-700">{confirmationMessage}</p>
+            <div className="flex justify-end space-x-2 mt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setShowConfirmation(false);
+                  setIsUpdateMode(false);
+                }}
+              >
+                Cancel
+              </Button>
+              {!confirmationMessage.includes("No changes needed") && (
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setShowConfirmation(false);
+                    savePassword();
+                  }}
+                >
+                  Update Password
+                </Button>
+              )}
+            </div>
           </div>
-          <div>
-            <Label htmlFor="username">Username/Email</Label>
-            <Input
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="user@example.com"
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <div className="flex justify-end space-x-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              disabled={isSubmitting}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : "Save Password"}
-            </Button>
-          </div>
-        </form>
+        ) : (
+          <>
+            <h2 className="text-xl font-semibold mb-4">
+              {isUpdateMode ? "Update Password" : "Add New Password"}
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="website">Website/Where to use</Label>
+                <Input
+                  id="website"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  placeholder="https://example.com"
+                  required
+                  disabled={isUpdateMode}
+                />
+              </div>
+              <div>
+                <Label htmlFor="username">Username/Email</Label>
+                <Input
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="user@example.com"
+                  required
+                  disabled={isUpdateMode}
+                />
+              </div>
+              <div>
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              <div className="flex justify-end space-x-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleClose}
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting
+                    ? isUpdateMode
+                      ? "Updating..."
+                      : "Saving..."
+                    : isUpdateMode
+                    ? "Update Password"
+                    : "Save Password"}
+                </Button>
+              </div>
+            </form>
+          </>
+        )}
       </div>
     </div>
   );

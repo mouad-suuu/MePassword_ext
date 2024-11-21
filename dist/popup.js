@@ -610,6 +610,9 @@ video {
 .right-2 {
   right: 0.5rem;
 }
+.right-4 {
+  right: 1rem;
+}
 .top-0 {
   top: 0px;
 }
@@ -619,11 +622,17 @@ video {
 .top-2 {
   top: 0.5rem;
 }
+.top-4 {
+  top: 1rem;
+}
 .z-50 {
   z-index: 50;
 }
 .z-\\[100\\] {
   z-index: 100;
+}
+.z-\\[999999\\] {
+  z-index: 999999;
 }
 .-mx-1 {
   margin-left: -0.25rem;
@@ -753,6 +762,9 @@ video {
 }
 .w-5 {
   width: 1.25rem;
+}
+.w-80 {
+  width: 20rem;
 }
 .w-96 {
   width: 24rem;
@@ -918,6 +930,10 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(239 246 255 / var(--tw-bg-opacity));
 }
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
 .bg-blue-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
@@ -1071,6 +1087,9 @@ video {
   font-size: 0.75rem;
   line-height: 1rem;
 }
+.font-bold {
+  font-weight: 700;
+}
 .font-medium {
   font-weight: 500;
 }
@@ -1148,6 +1167,10 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;
@@ -1764,7 +1787,7 @@ video {
 .\\[\\&_p\\]\\:leading-relaxed p {
   line-height: 1.625;
 }
-`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -37860,11 +37883,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const AddKeysDialog = ({ open, onClose }) => {
+const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
     const [website, setWebsite] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [username, setUsername] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [isSubmitting, setIsSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [isUpdateMode, setIsUpdateMode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [existingKeyId, setExistingKeyId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
+    const [showConfirmation, setShowConfirmation] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [confirmationMessage, setConfirmationMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const handleClose = () => {
         console.log("Closing dialog and resetting state");
         setWebsite("");
@@ -37873,78 +37901,76 @@ const AddKeysDialog = ({ open, onClose }) => {
         setError(null);
         onClose();
     };
-    // const validateInputs = (): string | null => {
-    //   if (!website.trim()) {
-    //     return "Website is required";
-    //   }
-    //   // try {
-    //   //   new URL(website); // Validate URL format
-    //   // } catch {
-    //   //   return "Please enter a valid URL (e.g., https://example.com)";
-    //   // }
-    //   // if (!username.trim()) {
-    //   //   return "Username/Email is required";
-    //   // }
-    //   // if (!password) {
-    //   //   return "Password is required";
-    //   // }
-    //   // if (password.length < 8) {
-    //   //   return "Password must be at least 8 characters long";
-    //   // }
-    //   return null;
-    // };
-    const handleSubmit = async (e) => {
+    const saveKey = async () => {
         var _a;
-        e.preventDefault();
-        setError(null);
         setIsSubmitting(true);
         try {
-            // Get settings
+            console.log("Save key - Update mode:", isUpdateMode);
+            console.log("Save key - Existing key ID:", existingKeyId);
             const settingsResponse = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.SettingGet();
-            console.log("Settings Response to add password:", settingsResponse);
             if (!settingsResponse.ok) {
                 throw new Error("Failed to fetch encryption settings");
             }
             const Settings = await settingsResponse.json();
-            console.log("Parsed settings:", Settings);
-            // Check if Settings has the required data
             if (!((_a = Settings === null || Settings === void 0 ? void 0 : Settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
                 throw new Error("No public key found in settings");
             }
-            // Import public key
-            let publicKey;
-            try {
-                publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
-            }
-            catch (error) {
-                throw new Error("Invalid public key format");
-            }
-            // Encrypt data
-            let encryptedData;
-            try {
-                encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
-                    website: website.trim(),
-                    user: username.trim(),
-                    password,
-                }, publicKey);
-            }
-            catch (error) {
-                throw new Error("Failed to encrypt password data");
-            }
-            // Post encrypted data
-            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.KeysPost({
-                id: (0,uuid__WEBPACK_IMPORTED_MODULE_6__["default"])(),
-                website: encryptedData.website,
-                user: encryptedData.user,
-                password: encryptedData.password,
-            });
+            const publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
+            const encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
+                website: website.trim(),
+                user: username,
+                password,
+            }, publicKey);
+            const response = isUpdateMode
+                ? await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.KeysPut(existingKeyId, {
+                    password: encryptedData.password,
+                })
+                : await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.KeysPost({
+                    id: (0,uuid__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+                    website: encryptedData.website,
+                    user: encryptedData.user,
+                    password: encryptedData.password,
+                });
             if (!response.ok) {
-                throw new Error(`Failed to save password: ${response.statusText}`);
+                throw new Error(`Failed to ${isUpdateMode ? "update" : "save"} key: ${response.statusText}`);
             }
             handleClose();
         }
         catch (error) {
-            console.error("Error saving password:", error);
+            setError(error instanceof Error
+                ? error.message
+                : "An unexpected error occurred. Please try again.");
+        }
+        finally {
+            setIsSubmitting(false);
+        }
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        setIsSubmitting(true);
+        try {
+            const existingKey = existingKeys === null || existingKeys === void 0 ? void 0 : existingKeys.find((item) => item.website.toLowerCase().trim() === website.toLowerCase().trim() &&
+                item.user.toLowerCase().trim() === username.toLowerCase().trim());
+            console.log("Found existing key:", existingKey);
+            if (existingKey) {
+                setIsSubmitting(false);
+                if (existingKey.password === password) {
+                    setConfirmationMessage("This exact key already exists. No changes needed.");
+                    setShowConfirmation(true);
+                    return;
+                }
+                console.log("Setting existing key ID:", existingKey.id);
+                setExistingKeyId(existingKey.id);
+                setConfirmationMessage("A key for this website and username already exists. Would you like to update it?");
+                setShowConfirmation(true);
+                setIsUpdateMode(true);
+                return;
+            }
+            await saveKey();
+        }
+        catch (error) {
+            console.error("Error in handleSubmit:", error);
             setError(error instanceof Error
                 ? error.message
                 : "An unexpected error occurred. Please try again.");
@@ -37960,9 +37986,14 @@ const AddKeysDialog = ({ open, onClose }) => {
             password,
         });
     }
-    // Add loading state for better UX
-    const [isSubmitting, setIsSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white p-6 rounded-lg shadow-xl w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Add New Key" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "website", children: "Website" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Where to use", value: website, onChange: (e) => setWebsite(e.target.value), placeholder: "( a website like https://example.com )", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "username", children: "Username/Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Key name", value: username, onChange: (e) => setUsername(e.target.value), placeholder: "Token, API key, etc...", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "password", children: "The Key" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Key", type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", disabled: isSubmitting, children: isSubmitting ? "Saving..." : "Save Password" })] })] })] }) }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-white p-6 rounded-lg shadow-xl w-96", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-gray-700", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2 mt-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: () => {
+                                    setShowConfirmation(false);
+                                    setIsUpdateMode(false);
+                                }, children: "Cancel" }), !confirmationMessage.includes("No changes needed") && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", onClick: () => {
+                                    console.log("Update button clicked - ID:", existingKeyId);
+                                    setShowConfirmation(false);
+                                    saveKey();
+                                }, children: "Update Key" }))] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Add New Key" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "website", children: "Website" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Where to use", value: website, onChange: (e) => setWebsite(e.target.value), placeholder: "( a website like https://example.com )", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "username", children: "Username/Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Key name", value: username, onChange: (e) => setUsername(e.target.value), placeholder: "Token, API key, etc...", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "password", children: "The Key" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Key", type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", disabled: isSubmitting, children: isSubmitting ? "Saving..." : "Save Password" })] })] })] })) }) }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddKeysDialog);
 
@@ -38051,17 +38082,26 @@ const Keys = () => {
                 }
                 try {
                     const decryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].Utils.decryptWithRSA(data.keys, privateKey);
-                    console.log("Decrypted Data:", data);
+                    console.log("Raw keys data:", data.keys);
+                    console.log("Decrypted Data:", decryptedData);
                     if (!decryptedData) {
                         throw new Error("Decryption returned null or undefined");
                     }
                     if (Array.isArray(decryptedData)) {
-                        setKeys(decryptedData.map((item) => ({
-                            id: data.keys.id,
-                            website: item.website,
-                            user: item.user,
-                            password: item.password,
-                        })));
+                        const mappedKeys = decryptedData.map((item, index) => {
+                            console.log("Mapping key:", {
+                                originalId: data.keys[index].id,
+                                decryptedItem: item,
+                            });
+                            return {
+                                id: data.keys[index].id,
+                                website: item.website,
+                                user: item.user,
+                                password: item.password,
+                            };
+                        });
+                        console.log("Final mapped keys:", mappedKeys);
+                        setKeys(mappedKeys);
                     }
                     else {
                         throw new Error("Decrypted data is not an array");
@@ -38082,7 +38122,7 @@ const Keys = () => {
         };
         fetchKeys();
     }, []);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Keys" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(keys) && keys.length > 0 ? (keys.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(KeyItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No keys saved yet. Click \"Add New\" to add your first key." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddKeysDialog__WEBPACK_IMPORTED_MODULE_5__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false) })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Keys" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(keys) && keys.length > 0 ? (keys.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(KeyItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No keys saved yet. Click \"Add New\" to add your first key." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddKeysDialog__WEBPACK_IMPORTED_MODULE_5__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false), existingKeys: keys })] }));
 };
 const KeyItem = ({ website, user, password, }) => {
     const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
@@ -38112,9 +38152,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _keys_keys__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./keys/keys */ "./src/popup/components/keys/keys.tsx");
 /* harmony import */ var _password_Passwords__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./password/Passwords */ "./src/popup/components/password/Passwords.tsx");
 /* harmony import */ var _profile_profile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./profile/profile */ "./src/popup/components/profile/profile.tsx");
-/* harmony import */ var _ui_alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/alert */ "./src/popup/components/ui/alert.tsx");
-/* harmony import */ var _Navigation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Navigation */ "./src/popup/components/Navigation.tsx");
-/* harmony import */ var _profile_Settings__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile/Settings */ "./src/popup/components/profile/Settings.tsx");
+/* harmony import */ var _Navigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navigation */ "./src/popup/components/Navigation.tsx");
+/* harmony import */ var _profile_Settings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./profile/Settings */ "./src/popup/components/profile/Settings.tsx");
+/* harmony import */ var _password_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./password/AddPasswordDialog */ "./src/popup/components/password/AddPasswordDialog.tsx");
 
 
 
@@ -38125,18 +38165,20 @@ __webpack_require__.r(__webpack_exports__);
 
 const Main = () => {
     const [activeTab, setActiveTab] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("passwords");
-    const [needsKeyRotation, setNeedsKeyRotation] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const handleLogout = async () => {
-        try {
-            // TODO: Implement logout functionality
-            console.log("Logging out...");
-            setActiveTab("passwords");
-        }
-        catch (error) {
-            console.error("Error logging out:", error);
-        }
-    };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "min-w-[400px] min-h-96 bg-gray-50", children: [needsKeyRotation && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "default", className: "mb-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertTitle, { children: "Security Notice" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: ["Your encryption keys need to be rotated for security.", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: () => setNeedsKeyRotation(false), className: "ml-2 text-sm font-medium underline hover:text-amber-600", children: "Rotate Keys Now" })] })] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Navigation__WEBPACK_IMPORTED_MODULE_6__.Navigation, { activeTab: activeTab, setActiveTab: setActiveTab }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("main", { className: "p-4", children: [activeTab === "passwords" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_password_Passwords__WEBPACK_IMPORTED_MODULE_3__["default"], {}), activeTab === "keys" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_keys_keys__WEBPACK_IMPORTED_MODULE_2__["default"], {}), activeTab === "profile" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_profile_profile__WEBPACK_IMPORTED_MODULE_4__["default"], {}), activeTab === "settings" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_profile_Settings__WEBPACK_IMPORTED_MODULE_7__.SettingsComponent, {})] })] }));
+    const [showAddPasswordDialog, setShowAddPasswordDialog] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [passwordData, setPasswordData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(undefined);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const handleMessage = (message) => {
+            if (message.type === "OPEN_ADD_PASSWORD_DIALOG") {
+                console.log("Main received OPEN_ADD_PASSWORD_DIALOG message:", message.data);
+                setPasswordData(message.data);
+                setShowAddPasswordDialog(true);
+            }
+        };
+        chrome.runtime.onMessage.addListener(handleMessage);
+        return () => chrome.runtime.onMessage.removeListener(handleMessage);
+    }, []);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "min-w-[400px] min-h-96 bg-gray-50", children: [showAddPasswordDialog && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_password_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_7__["default"], { open: showAddPasswordDialog, onClose: () => setShowAddPasswordDialog(false), prefilledData: passwordData })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Navigation__WEBPACK_IMPORTED_MODULE_5__.Navigation, { activeTab: activeTab, setActiveTab: setActiveTab }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("main", { className: "p-4", children: [activeTab === "passwords" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_password_Passwords__WEBPACK_IMPORTED_MODULE_3__["default"], {}), activeTab === "keys" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_keys_keys__WEBPACK_IMPORTED_MODULE_2__["default"], {}), activeTab === "profile" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_profile_profile__WEBPACK_IMPORTED_MODULE_4__["default"], {}), activeTab === "settings" && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_profile_Settings__WEBPACK_IMPORTED_MODULE_6__.SettingsComponent, {})] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Main);
 
@@ -38168,7 +38210,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const AddPasswordDialog = ({ open, onClose, prefilledData = {
+const AddPasswordDialog = ({ open, onClose, existingPasswords, prefilledData = {
     website: "",
     username: "",
     password: "",
@@ -38177,6 +38219,11 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
     const [username, setUsername] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(prefilledData.username);
     const [password, setPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(prefilledData.password);
     const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [isSubmitting, setIsSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [isUpdateMode, setIsUpdateMode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [existingPasswordId, setExistingPasswordId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [showConfirmation, setShowConfirmation] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [confirmationMessage, setConfirmationMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const handleClose = () => {
         console.log("Closing dialog and resetting state");
         setWebsite("");
@@ -38185,76 +38232,41 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
         setError(null);
         onClose();
     };
-    // const validateInputs = (): string | null => {
-    //   if (!website.trim()) {
-    //     return "Website is required";
-    //   }
-    //   // try {
-    //   //   new URL(website); // Validate URL format
-    //   // } catch {
-    //   //   return "Please enter a valid URL (e.g., https://example.com)";
-    //   // }
-    //   // if (!username.trim()) {
-    //   //   return "Username/Email is required";
-    //   // }
-    //   // if (!password) {
-    //   //   return "Password is required";
-    //   // }
-    //   // if (password.length < 8) {
-    //   //   return "Password must be at least 8 characters long";
-    //   // }
-    //   return null;
-    // };
-    const handleSubmit = async (e) => {
+    const savePassword = async () => {
         var _a;
-        e.preventDefault();
-        setError(null);
         setIsSubmitting(true);
+        setError(null);
         try {
-            // Get settings
             const settingsResponse = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.SettingGet();
-            console.log("Settings Response to add password:", settingsResponse);
             if (!settingsResponse.ok) {
                 throw new Error("Failed to fetch encryption settings");
             }
             const Settings = await settingsResponse.json();
-            console.log("Parsed settings:", Settings);
-            // Check if Settings has the required data
             if (!((_a = Settings === null || Settings === void 0 ? void 0 : Settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
                 throw new Error("No public key found in settings");
             }
-            // Import public key
-            let publicKey;
-            try {
-                publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
-                console.log("Public key imported successfully:", publicKey);
-            }
-            catch (error) {
-                console.error("Error importing public key:", error);
-                throw new Error("Invalid public key format");
-            }
-            // Encrypt data
-            let encryptedData;
-            try {
-                encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
-                    website: website.trim(),
-                    user: username,
-                    password,
-                }, publicKey);
-                console.log("Encrypted data:", encryptedData);
-            }
-            catch (error) {
-                console.error("Error encrypting password data:", error);
-                throw new Error("Failed to encrypt password data");
-            }
-            // Post encrypted data
+            const publicKey = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.importRSAPublicKey(Settings.settings.publicKey);
+            const encryptedData = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].Utils.encryptWithRSA({
+                website: website.trim(),
+                user: username.trim(),
+                password,
+            }, publicKey);
             const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.PasswordPost({
                 id: (0,uuid__WEBPACK_IMPORTED_MODULE_6__["default"])(),
                 website: encryptedData.website,
                 user: encryptedData.user,
                 password: encryptedData.password,
             });
-            console.log("Response from saving password:", response);
+            const data = await response.json();
+            if (response.status === 409) {
+                // Conflict - duplicate found
+                console.log("Duplicate password found:", data);
+                setConfirmationMessage("A password for this website and username already exists. Would you like to update it?");
+                setShowConfirmation(true);
+                setIsUpdateMode(true);
+                setExistingPasswordId(data.existingId);
+                return;
+            }
             if (!response.ok) {
                 throw new Error(`Failed to save password: ${response.statusText}`);
             }
@@ -38270,16 +38282,53 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
             setIsSubmitting(false);
         }
     };
-    function handleAddPassword() {
-        console.log("encrypred data:", {
-            website,
-            username,
-            password,
-        });
-    }
-    // Add loading state for better UX
-    const [isSubmitting, setIsSubmitting] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white p-6 rounded-lg shadow-xl w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Add New Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "website", children: "Website/Where to use" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "website", value: website, onChange: (e) => setWebsite(e.target.value), placeholder: "https://example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "username", children: "Username/Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "username", value: username, onChange: (e) => setUsername(e.target.value), placeholder: "user@example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "password", children: "Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "password", type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", disabled: isSubmitting, children: isSubmitting ? "Saving..." : "Save Password" })] })] })] }) }));
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+        setIsSubmitting(true);
+        try {
+            const existingPassword = existingPasswords === null || existingPasswords === void 0 ? void 0 : existingPasswords.find((item) => item.website.toLowerCase().trim() === website.toLowerCase().trim() &&
+                item.user.toLowerCase().trim() === username.toLowerCase().trim());
+            console.log("Found existing password:", existingPassword);
+            if (existingPassword) {
+                setIsSubmitting(false);
+                if (existingPassword.password === password) {
+                    setConfirmationMessage("This exact password already exists. No changes needed.");
+                    setShowConfirmation(true);
+                    return;
+                }
+                console.log("Existing password ID:", existingPassword.id);
+                setConfirmationMessage("A password for this website and username already exists. Would you like to update it?");
+                setShowConfirmation(true);
+                setIsUpdateMode(true);
+                setExistingPasswordId(existingPassword.id);
+                return;
+            }
+            await savePassword();
+        }
+        catch (error) {
+            console.error("Error in handleSubmit:", error);
+            setError(error instanceof Error
+                ? error.message
+                : "An unexpected error occurred. Please try again.");
+        }
+        finally {
+            setIsSubmitting(false);
+        }
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-white p-6 rounded-lg shadow-xl w-96", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-gray-700", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2 mt-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: () => {
+                                    setShowConfirmation(false);
+                                    setIsUpdateMode(false);
+                                }, children: "Cancel" }), !confirmationMessage.includes("No changes needed") && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", onClick: () => {
+                                    setShowConfirmation(false);
+                                    savePassword();
+                                }, children: "Update Password" }))] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: isUpdateMode ? "Update Password" : "Add New Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "website", children: "Website/Where to use" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "website", value: website, onChange: (e) => setWebsite(e.target.value), placeholder: "https://example.com", required: true, disabled: isUpdateMode })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "username", children: "Username/Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "username", value: username, onChange: (e) => setUsername(e.target.value), placeholder: "user@example.com", required: true, disabled: isUpdateMode })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "password", children: "Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "password", type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", disabled: isSubmitting, children: isSubmitting
+                                            ? isUpdateMode
+                                                ? "Updating..."
+                                                : "Saving..."
+                                            : isUpdateMode
+                                                ? "Update Password"
+                                                : "Save Password" })] })] })] })) }) }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddPasswordDialog);
 
@@ -38368,8 +38417,10 @@ const Passwords = () => {
                         throw new Error("Decryption returned null or undefined");
                     }
                     if (Array.isArray(decryptedData)) {
-                        setPasswords(decryptedData.map((item) => ({
-                            id: data.passwords.id,
+                        console.log("Raw password data:", data.passwords);
+                        console.log("Decrypted data:", decryptedData);
+                        setPasswords(decryptedData.map((item, index) => ({
+                            id: data.passwords[index].id,
                             website: item.website,
                             user: item.user,
                             password: item.password,
@@ -38394,7 +38445,7 @@ const Passwords = () => {
         };
         fetchPasswords();
     }, []);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_5__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false) })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800", children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, { id: item.id, website: item.website, user: item.user, password: item.password }, index)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_5__["default"], { open: showAddDialog, onClose: () => setShowAddDialog(false), existingPasswords: passwords })] }));
 };
 const PasswordItem = ({ website, user, password, }) => {
     const [showPassword, setShowPassword] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
@@ -39442,7 +39493,7 @@ class APIService {
             return this.handleApiError(error, "PasswordPost");
         }
     }
-    static async PasswordPut(data) {
+    static async PasswordPut(id, data) {
         const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
         try {
             const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
@@ -39453,13 +39504,13 @@ class APIService {
             }).catch((error) => {
                 throw new Error(`Credential decryption failed: ${error.message}`);
             });
-            const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
+            const response = await fetch(`${decryptedCredentials.server}/api/passwords/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${decryptedCredentials.authToken}`,
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(Object.assign(Object.assign({}, data), { id })),
             });
             if (!response.ok) {
                 throw response;
@@ -39521,22 +39572,24 @@ class APIService {
             return this.handleApiError(error, "KeysPost");
         }
     }
-    static async KeysPut(data) {
+    static async KeysPut(id, data) {
+        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
         try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
             const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
                 key: storedKeys.AESKey,
                 iv: storedKeys.IV,
                 algorithm: "AES-GCM",
                 length: 256,
+            }).catch((error) => {
+                throw new Error(`Credential decryption failed: ${error.message}`);
             });
-            const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
+            const response = await fetch(`${decryptedCredentials.server}/api/keys/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${decryptedCredentials.authToken}`,
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(Object.assign(Object.assign({}, data), { id })),
             });
             if (!response.ok) {
                 throw response;
@@ -39544,7 +39597,7 @@ class APIService {
             return response;
         }
         catch (error) {
-            return this.handleApiError(error, "KeysPut");
+            return this.handleApiError(error, "PasswordPut");
         }
     }
 }

@@ -86,9 +86,11 @@ const Passwords: React.FC = () => {
           }
 
           if (Array.isArray(decryptedData)) {
+            console.log("Raw password data:", data.passwords);
+            console.log("Decrypted data:", decryptedData);
             setPasswords(
-              decryptedData.map((item) => ({
-                id: data.passwords.id,
+              decryptedData.map((item, index) => ({
+                id: data.passwords[index].id,
                 website: item.website,
                 user: item.user,
                 password: item.password,
@@ -151,6 +153,7 @@ const Passwords: React.FC = () => {
       <AddPasswordDialog
         open={showAddDialog}
         onClose={() => setShowAddDialog(false)}
+        existingPasswords={passwords}
       />
     </div>
   );
