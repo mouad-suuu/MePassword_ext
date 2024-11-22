@@ -106,6 +106,7 @@ const KeyItem: React.FC<KeyData> = ({ website, user, password }) => {
         </div>
         <div className="flex space-x-2">
           <Button
+            variant="ghost"
             onClick={() => setShowPassword(!showPassword)}
             className="p-2 hover:bg-gray-100 rounded-full"
           >
@@ -116,6 +117,7 @@ const KeyItem: React.FC<KeyData> = ({ website, user, password }) => {
             )}
           </Button>
           <Button
+            variant="ghost"
             onClick={() => copyToClipboard(password)}
             className="p-2 hover:bg-gray-100 rounded-full"
           >

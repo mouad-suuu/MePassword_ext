@@ -1,7 +1,14 @@
 import React from "react";
-import { Key, Lock, User, Settings as SettingsIcon } from "lucide-react";
+import {
+  Key,
+  Lock,
+  User,
+  Settings as SettingsIcon,
+  LockKeyhole,
+} from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Separator } from "../components/ui/separator";
+import { SessionManagementService } from "../../services/sessionManagment/SessionManager";
 
 interface NavButtonProps {
   icon: React.ReactNode;
@@ -32,39 +39,53 @@ const NavButton: React.FC<NavButtonProps> = ({
 interface NavigationProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  onLock?: () => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
   activeTab,
   setActiveTab,
+  onLock,
 }) => {
+  const handleLock = async () => {
+    const sessionManager = new SessionManagementService();
+    await sessionManager.endShortLock();
+
+    window.close();
+  };
+
   return (
     <div className="bg-background">
-      <div className="flex justify-around items-center p-2">
-        <NavButton
-          icon={<Lock className="w-4 h-4" />}
-          label="Passwords"
-          isActive={activeTab === "passwords"}
-          onClick={() => setActiveTab("passwords")}
-        />
-        <NavButton
-          icon={<Key className="w-4 h-4" />}
-          label="Keys"
-          isActive={activeTab === "keys"}
-          onClick={() => setActiveTab("keys")}
-        />
-        <NavButton
-          icon={<User className="w-4 h-4" />}
-          label="Profile"
-          isActive={activeTab === "profile"}
-          onClick={() => setActiveTab("profile")}
-        />
-        <NavButton
-          icon={<SettingsIcon className="w-4 h-4" />}
-          label="Settings"
-          isActive={activeTab === "settings"}
-          onClick={() => setActiveTab("settings")}
-        />
+      <div className="flex items-center p-2">
+        <div className="flex-1 flex justify-around">
+          <NavButton
+            icon={<Lock className="w-4 h-4" />}
+            label="Passwords"
+            isActive={activeTab === "passwords"}
+            onClick={() => setActiveTab("passwords")}
+          />
+          <NavButton
+            icon={<Key className="w-4 h-4" />}
+            label="Keys"
+            isActive={activeTab === "keys"}
+            onClick={() => setActiveTab("keys")}
+          />
+          <NavButton
+            icon={<SettingsIcon className="w-4 h-4" />}
+            label="Settings"
+            isActive={activeTab === "settings"}
+            onClick={() => setActiveTab("settings")}
+          />
+        </div>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={handleLock}
+          className="ml-2 rounded-full bg-blue-700"
+          title="Lock Extension"
+        >
+          <LockKeyhole className="w-4 h-4" />
+        </Button>
       </div>
       <Separator />
     </div>

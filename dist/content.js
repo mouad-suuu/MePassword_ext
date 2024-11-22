@@ -56,6 +56,9 @@ class CredentialDetector {
         this.observedForms = new Set();
         this.lastDetectedCredentials = null;
         this.detectionTimeout = null;
+        this.isAutoFilling = false;
+        this.lastDetectionTime = 0;
+        this.DETECTION_COOLDOWN = 10000; // 5 seconds cooldown
         // Initialize mutation observer to detect dynamically added forms
         this.mutationObserver = new MutationObserver(this.handleDOMChanges.bind(this));
         this.setupMutationObserver();
@@ -121,6 +124,10 @@ class CredentialDetector {
     }
     // Notifies about detected credentials and sends a message to the background script
     async notifyCredentialDetection(credentials) {
+        if (this.isDuplicateCredential(credentials)) {
+            return;
+        }
+        this.lastDetectedCredentials = Object.assign(Object.assign({}, credentials), { timestamp: Date.now() });
         try {
             console.log("CONTENT: Sending credential detection message to background");
             // Check if chrome.runtime is defined and available
@@ -252,24 +259,30 @@ class CredentialDetector {
     }
     // Handles input changes in the password field and notifies credential detection
     async handleInputChange(formElements) {
+        if (this.isAutoFilling || !this.isDetectionAllowed()) {
+            return;
+        }
         console.log("CONTENT: Handling input change:", formElements);
         const credentials = this.extractCredentials(formElements);
         if (credentials) {
+            this.lastDetectionTime = Date.now();
             console.log("CONTENT: Credentials extracted on input change:", credentials);
             if (this.detectionTimeout) {
                 clearTimeout(this.detectionTimeout);
             }
             this.detectionTimeout = setTimeout(async () => {
                 try {
-                    console.log("Notifying credential detection after input change:", credentials);
                     await this.notifyCredentialDetection(credentials);
                 }
                 catch (error) {
                     console.warn("CONTENT: Failed to notify credential detection:", error);
-                    // Continue execution - don't let this error break the form functionality
                 }
             }, 1000);
         }
+    }
+    isDetectionAllowed() {
+        const now = Date.now();
+        return now - this.lastDetectionTime >= this.DETECTION_COOLDOWN;
     }
     // Handles focus event on the password field and notifies credential detection
     async handlePasswordFocus(formElements) {
@@ -304,6 +317,21 @@ class CredentialDetector {
             }
         });
     }
+    setAutoFilling(value) {
+        this.isAutoFilling = value;
+    }
+    getAutoFilling() {
+        return this.isAutoFilling;
+    }
+    isDuplicateCredential(newCredentials) {
+        if (!this.lastDetectedCredentials)
+            return false;
+        const timeDiff = Date.now() - this.lastDetectedCredentials.timestamp;
+        return (timeDiff < this.DETECTION_COOLDOWN &&
+            this.lastDetectedCredentials.website === newCredentials.website &&
+            this.lastDetectedCredentials.user === newCredentials.user &&
+            this.lastDetectedCredentials.password === newCredentials.password);
+    }
 }
 // Initialize the detector
 console.log("CONTENT:  Initializing CredentialDetector instance...");
@@ -318,6 +346,34 @@ new MutationObserver(() => {
         detector.initialize();
     }
 }).observe(document, { subtree: true, childList: true });
+// Add this to your content script, before the detector initialization
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === "AUTO_FILL_CREDENTIALS") {
+        const { user, password } = message.data;
+        // Set the auto-filling flag
+        detector.setAutoFilling(true);
+        // Find password fields using existing selectors
+        const passwordFields = document.querySelectorAll(FORM_SELECTORS.PASSWORD_INPUTS.join(","));
+        // Find username fields using existing selectors
+        const usernameFields = document.querySelectorAll(FORM_SELECTORS.USERNAME_INPUTS.join(","));
+        // Auto-fill the first matching fields found
+        if (passwordFields.length > 0) {
+            passwordFields[0].value = password;
+            // Trigger input event to notify any listeners
+            passwordFields[0].dispatchEvent(new Event("input", { bubbles: true }));
+        }
+        if (usernameFields.length > 0 && user) {
+            usernameFields[0].value = user;
+            // Trigger input event to notify any listeners
+            usernameFields[0].dispatchEvent(new Event("input", { bubbles: true }));
+        }
+        // Reset the auto-filling flag after a short delay
+        setTimeout(() => {
+            detector.setAutoFilling(false);
+        }, 1000);
+        sendResponse({ success: true });
+    }
+});
 
 
 /******/ })()

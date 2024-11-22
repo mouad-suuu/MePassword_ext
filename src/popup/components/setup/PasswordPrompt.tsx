@@ -54,6 +54,14 @@ export const PasswordPrompt: React.FC = () => {
         console.log("Biometric verification failed");
         setErrorMessage("Biometric verification failed");
       }
+      const responce = await EncryptionService.API.SettingGet();
+      const settings = await responce.json();
+      //   await SessionManagementService.initialize(password);
+      await KeyStorage.updateSettings({
+        autoLockStart: Date.now(),
+        autoLockTime: settings.settings.sessionSettings.autoLockTime,
+      });
+      console.log("Settings updated:", settings);
     } catch (error) {
       console.error("Biometric authentication error:", error);
       setErrorMessage("Biometric authentication error. Please use password.");
@@ -68,10 +76,14 @@ export const PasswordPrompt: React.FC = () => {
   const handleValidatePassword = async (password: string) => {
     const valid = await EncryptionService.API.validatePassword(password);
     if (valid) {
+      const responce = await EncryptionService.API.SettingGet();
+      const settings = await responce.json();
       //   await SessionManagementService.initialize(password);
       await KeyStorage.updateSettings({
         autoLockStart: Date.now(),
+        autoLockTime: settings.settings.sessionSettings.autoLockTime,
       });
+      console.log("Settings updated:", settings);
       setIsValid(true);
     } else {
       setErrorMessage("Invalid password. Please try again.");

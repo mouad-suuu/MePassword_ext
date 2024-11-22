@@ -94,6 +94,17 @@ export const SettingsComponent: React.FC = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await SessionManagementService.clearSession();
+      // You might want to redirect to login page or refresh the extension
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to logout:", error);
+      // Handle error (maybe show a toast notification)
+    }
+  };
+
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Settings</h2>
@@ -181,6 +192,13 @@ export const SettingsComponent: React.FC = () => {
             </label>
           </div>
         </SettingItem>
+
+        <button
+          onClick={handleLogout}
+          className="w-full py-2 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors duration-200"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

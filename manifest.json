@@ -10,7 +10,8 @@
     "activeTab",
     "scripting",
     "notifications",
-    "windows"
+    "windows",
+    "tabs"
   ],
   "content_scripts": [
     {

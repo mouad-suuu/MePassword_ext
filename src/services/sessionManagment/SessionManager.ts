@@ -173,9 +173,8 @@ export class SessionManagementService {
    * Manually triggers short-lock to end early, requiring re-authentication.
    */
   public async endShortLock() {
-    const settings = await KeyStorage.getSettingsFromStorage();
     await KeyStorage.updateSettings({
-      autoLockStart: settings.autoLockStart + settings.autoLockTime,
+      autoLockTime: 0,
     });
   }
 

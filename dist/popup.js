@@ -549,6 +549,33 @@ video {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
   }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
   * {
   border-color: hsl(var(--border));
 }
@@ -601,6 +628,12 @@ video {
 .inset-0 {
   inset: 0px;
 }
+.bottom-0 {
+  bottom: 0px;
+}
+.left-0 {
+  left: 0px;
+}
 .left-2 {
   left: 0.5rem;
 }
@@ -609,9 +642,6 @@ video {
 }
 .right-2 {
   right: 0.5rem;
-}
-.right-4 {
-  right: 1rem;
 }
 .top-0 {
   top: 0px;
@@ -622,17 +652,14 @@ video {
 .top-2 {
   top: 0.5rem;
 }
-.top-4 {
-  top: 1rem;
+.z-10 {
+  z-index: 10;
 }
 .z-50 {
   z-index: 50;
 }
 .z-\\[100\\] {
   z-index: 100;
-}
-.z-\\[999999\\] {
-  z-index: 999999;
 }
 .-mx-1 {
   margin-left: -0.25rem;
@@ -676,6 +703,9 @@ video {
 .mt-6 {
   margin-top: 1.5rem;
 }
+.mt-8 {
+  margin-top: 2rem;
+}
 .block {
   display: block;
 }
@@ -696,6 +726,9 @@ video {
 }
 .h-12 {
   height: 3rem;
+}
+.h-14 {
+  height: 3.5rem;
 }
 .h-16 {
   height: 4rem;
@@ -720,6 +753,9 @@ video {
 }
 .h-\\[1px\\] {
   height: 1px;
+}
+.h-\\[2px\\] {
+  height: 2px;
 }
 .h-\\[var\\(--radix-select-trigger-height\\)\\] {
   height: var(--radix-select-trigger-height);
@@ -763,9 +799,6 @@ video {
 .w-5 {
   width: 1.25rem;
 }
-.w-80 {
-  width: 20rem;
-}
 .w-96 {
   width: 24rem;
 }
@@ -774,6 +807,9 @@ video {
 }
 .w-full {
   width: 100%;
+}
+.min-w-\\[200px\\] {
+  min-width: 200px;
 }
 .min-w-\\[400px\\] {
   min-width: 400px;
@@ -784,11 +820,18 @@ video {
 .min-w-\\[var\\(--radix-select-trigger-width\\)\\] {
   min-width: var(--radix-select-trigger-width);
 }
+.flex-1 {
+  flex: 1 1 0%;
+}
 .shrink-0 {
   flex-shrink: 0;
 }
 .-translate-y-1\\/2 {
   --tw-translate-y: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.rotate-90 {
+  --tw-rotate: 90deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .transform {
@@ -865,6 +908,16 @@ video {
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+.space-y-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(2rem * var(--tw-space-y-reverse));
+}
 .overflow-hidden {
   overflow: hidden;
 }
@@ -873,6 +926,9 @@ video {
 }
 .rounded {
   border-radius: 0.25rem;
+}
+.rounded-2xl {
+  border-radius: 1rem;
 }
 .rounded-full {
   border-radius: 9999px;
@@ -883,6 +939,9 @@ video {
 .rounded-md {
   border-radius: calc(var(--radius) - 2px);
 }
+.rounded-none {
+  border-radius: 0px;
+}
 .rounded-sm {
   border-radius: calc(var(--radius) - 4px);
 }
@@ -892,12 +951,19 @@ video {
 .border-2 {
   border-width: 2px;
 }
+.border-b-2 {
+  border-bottom-width: 2px;
+}
 .border-dashed {
   border-style: dashed;
 }
 .border-blue-500 {
   --tw-border-opacity: 1;
   border-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+.border-cyan-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(6 182 212 / var(--tw-border-opacity));
 }
 .border-destructive {
   border-color: hsl(var(--destructive));
@@ -912,9 +978,19 @@ video {
 .border-input {
   border-color: hsl(var(--input));
 }
+.border-primary\\/50 {
+  border-color: hsl(var(--primary) / 0.5);
+}
 .border-red-400 {
   --tw-border-opacity: 1;
   border-color: rgb(248 113 113 / var(--tw-border-opacity));
+}
+.border-slate-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(71 85 105 / var(--tw-border-opacity));
+}
+.border-slate-700\\/50 {
+  border-color: rgb(51 65 85 / 0.5);
 }
 .border-transparent {
   border-color: transparent;
@@ -922,21 +998,20 @@ video {
 .bg-background {
   background-color: hsl(var(--background));
 }
-.bg-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+.bg-black\\/30 {
+  background-color: rgb(0 0 0 / 0.3);
 }
 .bg-blue-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(239 246 255 / var(--tw-bg-opacity));
 }
-.bg-blue-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
-}
 .bg-blue-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+}
+.bg-blue-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 .bg-border {
   background-color: hsl(var(--border));
@@ -976,8 +1051,16 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(254 242 242 / var(--tw-bg-opacity));
 }
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
 .bg-secondary {
   background-color: hsl(var(--secondary));
+}
+.bg-slate-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 .bg-transparent {
   background-color: transparent;
@@ -986,8 +1069,36 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.bg-opacity-50 {
-  --tw-bg-opacity: 0.5;
+.bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+.from-cyan-400 {
+  --tw-gradient-from: #22d3ee var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(34 211 238 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-cyan-500 {
+  --tw-gradient-from: #06b6d4 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(6 182 212 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-slate-900 {
+  --tw-gradient-from: #0f172a var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.to-blue-500 {
+  --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position);
+}
+.to-slate-800 {
+  --tw-gradient-to: #1e293b var(--tw-gradient-to-position);
+}
+.bg-clip-text {
+  -webkit-background-clip: text;
+          background-clip: text;
 }
 .p-1 {
   padding: 0.25rem;
@@ -1009,6 +1120,10 @@ video {
 }
 .p-8 {
   padding: 2rem;
+}
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .px-3 {
   padding-left: 0.75rem;
@@ -1061,15 +1176,24 @@ video {
 .pt-0 {
   padding-top: 0px;
 }
+.pt-4 {
+  padding-top: 1rem;
+}
 .text-center {
   text-align: center;
 }
 .font-mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+.font-sans {
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+.text-\\[12px\\] {
+  font-size: 12px;
 }
 .text-base {
   font-size: 1rem;
@@ -1093,11 +1217,17 @@ video {
 .font-medium {
   font-weight: 500;
 }
+.font-normal {
+  font-weight: 400;
+}
 .font-semibold {
   font-weight: 600;
 }
 .leading-none {
   line-height: 1;
+}
+.leading-tight {
+  line-height: 1.25;
 }
 .tracking-tight {
   letter-spacing: -0.025em;
@@ -1108,6 +1238,10 @@ video {
 }
 .text-card-foreground {
   color: hsl(var(--card-foreground));
+}
+.text-cyan-400 {
+  --tw-text-opacity: 1;
+  color: rgb(34 211 238 / var(--tw-text-opacity));
 }
 .text-destructive {
   color: hsl(var(--destructive));
@@ -1153,6 +1287,10 @@ video {
 .text-primary-foreground {
   color: hsl(var(--primary-foreground));
 }
+.text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity));
+}
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
@@ -1164,16 +1302,16 @@ video {
 .text-secondary-foreground {
   color: hsl(var(--secondary-foreground));
 }
+.text-slate-300 {
+  --tw-text-opacity: 1;
+  color: rgb(203 213 225 / var(--tw-text-opacity));
+}
+.text-transparent {
+  color: transparent;
+}
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.text-gray-700 {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity));
-}
-.underline {
-  text-decoration-line: underline;
 }
 .underline-offset-4 {
   text-underline-offset: 4px;
@@ -1192,6 +1330,11 @@ video {
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
 .shadow-lg {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
@@ -1207,17 +1350,15 @@ video {
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.shadow-xl {
-  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
 .outline {
   outline-style: solid;
+}
+.outline-0 {
+  outline-width: 0px;
 }
 .ring-0 {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
@@ -1229,6 +1370,16 @@ video {
 }
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.backdrop-blur-sm {
+  --tw-backdrop-blur: blur(4px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+.backdrop-blur-xl {
+  --tw-backdrop-blur: blur(24px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 .transition-all {
   transition-property: all;
@@ -1255,6 +1406,12 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.duration-200 {
+  transition-duration: 200ms;
+}
+.duration-300 {
+  transition-duration: 300ms;
+}
 @keyframes enter {
 
   from {
@@ -1269,377 +1426,440 @@ video {
     transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0));
   }
 }
+.duration-200 {
+  animation-duration: 200ms;
+}
+.duration-300 {
+  animation-duration: 300ms;
+}
 .running {
   animation-play-state: running;
 }
-
-.file\\:border-0::file-selector-button {
-  border-width: 0px;
-}
-
-.file\\:bg-transparent::file-selector-button {
-  background-color: transparent;
-}
-
-.file\\:text-sm::file-selector-button {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.file\\:font-medium::file-selector-button {
-  font-weight: 500;
-}
-
 .placeholder\\:text-muted-foreground::-moz-placeholder {
   color: hsl(var(--muted-foreground));
 }
-
 .placeholder\\:text-muted-foreground::placeholder {
   color: hsl(var(--muted-foreground));
 }
-
+.placeholder\\:text-transparent::-moz-placeholder {
+  color: transparent;
+}
+.placeholder\\:text-transparent::placeholder {
+  color: transparent;
+}
+.before\\:pointer-events-none::before {
+  content: var(--tw-content);
+  pointer-events: none;
+}
+.before\\:mr-1::before {
+  content: var(--tw-content);
+  margin-right: 0.25rem;
+}
+.before\\:mt-\\[6\\.5px\\]::before {
+  content: var(--tw-content);
+  margin-top: 6.5px;
+}
+.before\\:box-border::before {
+  content: var(--tw-content);
+  box-sizing: border-box;
+}
+.before\\:block::before {
+  content: var(--tw-content);
+  display: block;
+}
+.before\\:h-1\\.5::before {
+  content: var(--tw-content);
+  height: 0.375rem;
+}
+.before\\:w-2\\.5::before {
+  content: var(--tw-content);
+  width: 0.625rem;
+}
+.before\\:rounded-tl-md::before {
+  content: var(--tw-content);
+  border-top-left-radius: calc(var(--radius) - 2px);
+}
+.after\\:pointer-events-none::after {
+  content: var(--tw-content);
+  pointer-events: none;
+}
 .after\\:absolute::after {
   content: var(--tw-content);
   position: absolute;
 }
-
 .after\\:left-\\[2px\\]::after {
   content: var(--tw-content);
   left: 2px;
 }
-
 .after\\:top-\\[2px\\]::after {
   content: var(--tw-content);
   top: 2px;
 }
-
+.after\\:ml-1::after {
+  content: var(--tw-content);
+  margin-left: 0.25rem;
+}
+.after\\:mt-\\[6\\.5px\\]::after {
+  content: var(--tw-content);
+  margin-top: 6.5px;
+}
+.after\\:box-border::after {
+  content: var(--tw-content);
+  box-sizing: border-box;
+}
+.after\\:block::after {
+  content: var(--tw-content);
+  display: block;
+}
+.after\\:h-1\\.5::after {
+  content: var(--tw-content);
+  height: 0.375rem;
+}
 .after\\:h-5::after {
   content: var(--tw-content);
   height: 1.25rem;
 }
-
+.after\\:w-2\\.5::after {
+  content: var(--tw-content);
+  width: 0.625rem;
+}
 .after\\:w-5::after {
   content: var(--tw-content);
   width: 1.25rem;
 }
-
+.after\\:flex-grow::after {
+  content: var(--tw-content);
+  flex-grow: 1;
+}
 .after\\:rounded-full::after {
   content: var(--tw-content);
   border-radius: 9999px;
 }
-
+.after\\:rounded-tr-md::after {
+  content: var(--tw-content);
+  border-top-right-radius: calc(var(--radius) - 2px);
+}
 .after\\:border::after {
   content: var(--tw-content);
   border-width: 1px;
 }
-
 .after\\:border-gray-300::after {
   content: var(--tw-content);
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
-
 .after\\:bg-white::after {
   content: var(--tw-content);
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-
 .after\\:transition-all::after {
   content: var(--tw-content);
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
-
 .after\\:content-\\[\\'\\'\\]::after {
   --tw-content: '';
   content: var(--tw-content);
 }
-
+.hover\\:border-cyan-300:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(103 232 249 / var(--tw-border-opacity));
+}
+.hover\\:border-cyan-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(34 211 238 / var(--tw-border-opacity));
+}
 .hover\\:bg-accent:hover {
   background-color: hsl(var(--accent));
 }
-
 .hover\\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
-
 .hover\\:bg-destructive\\/90:hover {
   background-color: hsl(var(--destructive) / 0.9);
 }
-
 .hover\\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
-
 .hover\\:bg-gray-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
-
 .hover\\:bg-primary\\/90:hover {
   background-color: hsl(var(--primary) / 0.9);
 }
-
+.hover\\:bg-red-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
 .hover\\:bg-secondary:hover {
   background-color: hsl(var(--secondary));
 }
-
 .hover\\:bg-secondary\\/80:hover {
   background-color: hsl(var(--secondary) / 0.8);
 }
-
+.hover\\:bg-slate-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+.hover\\:from-cyan-600:hover {
+  --tw-gradient-from: #0891b2 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(8 145 178 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.hover\\:to-blue-600:hover {
+  --tw-gradient-to: #2563eb var(--tw-gradient-to-position);
+}
 .hover\\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground));
 }
-
-.hover\\:text-amber-600:hover {
+.hover\\:text-cyan-300:hover {
   --tw-text-opacity: 1;
-  color: rgb(217 119 6 / var(--tw-text-opacity));
+  color: rgb(103 232 249 / var(--tw-text-opacity));
 }
-
+.hover\\:text-cyan-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(34 211 238 / var(--tw-text-opacity));
+}
 .hover\\:text-foreground:hover {
   color: hsl(var(--foreground));
 }
-
 .hover\\:underline:hover {
   text-decoration-line: underline;
 }
-
 .hover\\:shadow-md:hover {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-
 .focus\\:border-blue-500:focus {
   --tw-border-opacity: 1;
   border-color: rgb(59 130 246 / var(--tw-border-opacity));
 }
-
+.focus\\:border-primary:focus {
+  border-color: hsl(var(--primary));
+}
 .focus\\:bg-accent:focus {
   background-color: hsl(var(--accent));
 }
-
 .focus\\:text-accent-foreground:focus {
   color: hsl(var(--accent-foreground));
 }
-
 .focus\\:opacity-100:focus {
   opacity: 1;
 }
-
 .focus\\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-
+.focus\\:outline-0:focus {
+  outline-width: 0px;
+}
 .focus\\:ring-2:focus {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
-
 .focus\\:ring-blue-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
 }
-
 .focus\\:ring-ring:focus {
   --tw-ring-color: hsl(var(--ring));
 }
-
 .focus\\:ring-offset-2:focus {
   --tw-ring-offset-width: 2px;
 }
-
 .focus-visible\\:outline-none:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-
 .focus-visible\\:ring-2:focus-visible {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
-
 .focus-visible\\:ring-ring:focus-visible {
   --tw-ring-color: hsl(var(--ring));
 }
-
 .focus-visible\\:ring-offset-2:focus-visible {
   --tw-ring-offset-width: 2px;
 }
-
 .focus-visible\\:ring-offset-background:focus-visible {
   --tw-ring-offset-color: hsl(var(--background));
 }
-
 .disabled\\:pointer-events-none:disabled {
   pointer-events: none;
 }
-
 .disabled\\:cursor-not-allowed:disabled {
   cursor: not-allowed;
 }
-
+.disabled\\:border-0:disabled {
+  border-width: 0px;
+}
 .disabled\\:opacity-50:disabled {
   opacity: 0.5;
 }
-
 .group:hover .group-hover\\:opacity-100 {
   opacity: 1;
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:border-muted\\/40 {
   border-color: hsl(var(--muted) / 0.4);
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:text-red-300 {
   --tw-text-opacity: 1;
   color: rgb(252 165 165 / var(--tw-text-opacity));
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:hover\\:border-destructive\\/30:hover {
   border-color: hsl(var(--destructive) / 0.3);
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:hover\\:bg-destructive:hover {
   background-color: hsl(var(--destructive));
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:hover\\:text-destructive-foreground:hover {
   color: hsl(var(--destructive-foreground));
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:hover\\:text-red-50:hover {
   --tw-text-opacity: 1;
   color: rgb(254 242 242 / var(--tw-text-opacity));
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:focus\\:ring-destructive:focus {
   --tw-ring-color: hsl(var(--destructive));
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:focus\\:ring-red-400:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(248 113 113 / var(--tw-ring-opacity));
 }
-
 .group.destructive .group-\\[\\.destructive\\]\\:focus\\:ring-offset-red-600:focus {
   --tw-ring-offset-color: #dc2626;
 }
-
 .peer:checked ~ .peer-checked\\:bg-blue-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
 }
-
 .peer:checked ~ .peer-checked\\:after\\:translate-x-full::after {
   content: var(--tw-content);
   --tw-translate-x: 100%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .peer:checked ~ .peer-checked\\:after\\:border-white::after {
   content: var(--tw-content);
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
-
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\\:top-0 {
+  top: 0px;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\\:top-0 {
+  top: 0px;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\\:top-2\\.5 {
+  top: 0.625rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\\:top-2\\.5 {
+  top: 0.625rem;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\\:text-\\[16px\\] {
+  font-size: 16px;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\\:text-\\[16px\\] {
+  font-size: 16px;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\\:leading-\\[3\\.75\\] {
+  line-height: 3.75;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\\:leading-\\[3\\.75\\] {
+  line-height: 3.75;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\\:leading-\\[4\\.25\\] {
+  line-height: 4.25;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\\:leading-\\[4\\.25\\] {
+  line-height: 4.25;
+}
+.peer:focus ~ .peer-focus\\:text-\\[12px\\] {
+  font-size: 12px;
+}
+.peer:focus ~ .peer-focus\\:leading-tight {
+  line-height: 1.25;
+}
+.peer:focus ~ .peer-focus\\:text-primary {
+  color: hsl(var(--primary));
+}
 .peer:focus ~ .peer-focus\\:outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-
 .peer:focus ~ .peer-focus\\:ring-4 {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
-
 .peer:focus ~ .peer-focus\\:ring-blue-300 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(147 197 253 / var(--tw-ring-opacity));
 }
-
 .peer:disabled ~ .peer-disabled\\:cursor-not-allowed {
   cursor: not-allowed;
 }
-
 .peer:disabled ~ .peer-disabled\\:opacity-70 {
   opacity: 0.7;
 }
-
 .data-\\[disabled\\]\\:pointer-events-none[data-disabled] {
   pointer-events: none;
 }
-
 .data-\\[side\\=bottom\\]\\:translate-y-1[data-side="bottom"] {
   --tw-translate-y: 0.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[side\\=left\\]\\:-translate-x-1[data-side="left"] {
   --tw-translate-x: -0.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[side\\=right\\]\\:translate-x-1[data-side="right"] {
   --tw-translate-x: 0.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[side\\=top\\]\\:-translate-y-1[data-side="top"] {
   --tw-translate-y: -0.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[state\\=checked\\]\\:translate-x-5[data-state="checked"] {
   --tw-translate-x: 1.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[state\\=unchecked\\]\\:translate-x-0[data-state="unchecked"] {
   --tw-translate-x: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[swipe\\=cancel\\]\\:translate-x-0[data-swipe="cancel"] {
   --tw-translate-x: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[swipe\\=end\\]\\:translate-x-\\[var\\(--radix-toast-swipe-end-x\\)\\][data-swipe="end"] {
   --tw-translate-x: var(--radix-toast-swipe-end-x);
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[swipe\\=move\\]\\:translate-x-\\[var\\(--radix-toast-swipe-move-x\\)\\][data-swipe="move"] {
   --tw-translate-x: var(--radix-toast-swipe-move-x);
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .data-\\[state\\=checked\\]\\:bg-primary[data-state="checked"] {
   background-color: hsl(var(--primary));
 }
-
 .data-\\[state\\=unchecked\\]\\:bg-input[data-state="unchecked"] {
   background-color: hsl(var(--input));
 }
-
 .data-\\[disabled\\]\\:opacity-50[data-disabled] {
   opacity: 0.5;
 }
-
 .data-\\[swipe\\=move\\]\\:transition-none[data-swipe="move"] {
   transition-property: none;
 }
-
 .data-\\[state\\=open\\]\\:animate-in[data-state="open"] {
   animation-name: enter;
   animation-duration: 150ms;
@@ -1649,7 +1869,6 @@ video {
   --tw-enter-translate-x: initial;
   --tw-enter-translate-y: initial;
 }
-
 .data-\\[state\\=closed\\]\\:animate-out[data-state="closed"] {
   animation-name: exit;
   animation-duration: 150ms;
@@ -1659,7 +1878,6 @@ video {
   --tw-exit-translate-x: initial;
   --tw-exit-translate-y: initial;
 }
-
 .data-\\[swipe\\=end\\]\\:animate-out[data-swipe="end"] {
   animation-name: exit;
   animation-duration: 150ms;
@@ -1669,55 +1887,42 @@ video {
   --tw-exit-translate-x: initial;
   --tw-exit-translate-y: initial;
 }
-
 .data-\\[state\\=closed\\]\\:fade-out-0[data-state="closed"] {
   --tw-exit-opacity: 0;
 }
-
 .data-\\[state\\=closed\\]\\:fade-out-80[data-state="closed"] {
   --tw-exit-opacity: 0.8;
 }
-
 .data-\\[state\\=open\\]\\:fade-in-0[data-state="open"] {
   --tw-enter-opacity: 0;
 }
-
 .data-\\[state\\=closed\\]\\:zoom-out-95[data-state="closed"] {
   --tw-exit-scale: .95;
 }
-
 .data-\\[state\\=open\\]\\:zoom-in-95[data-state="open"] {
   --tw-enter-scale: .95;
 }
-
 .data-\\[side\\=bottom\\]\\:slide-in-from-top-2[data-side="bottom"] {
   --tw-enter-translate-y: -0.5rem;
 }
-
 .data-\\[side\\=left\\]\\:slide-in-from-right-2[data-side="left"] {
   --tw-enter-translate-x: 0.5rem;
 }
-
 .data-\\[side\\=right\\]\\:slide-in-from-left-2[data-side="right"] {
   --tw-enter-translate-x: -0.5rem;
 }
-
 .data-\\[side\\=top\\]\\:slide-in-from-bottom-2[data-side="top"] {
   --tw-enter-translate-y: 0.5rem;
 }
-
 .data-\\[state\\=closed\\]\\:slide-out-to-right-full[data-state="closed"] {
   --tw-exit-translate-x: 100%;
 }
-
 .data-\\[state\\=open\\]\\:slide-in-from-top-full[data-state="open"] {
   --tw-enter-translate-y: -100%;
 }
-
 .dark\\:border-destructive:is(.dark *) {
   border-color: hsl(var(--destructive));
 }
-
 @media (min-width: 640px) {
 
   .sm\\:bottom-0 {
@@ -1740,54 +1945,44 @@ video {
     --tw-enter-translate-y: 100%;
   }
 }
-
 @media (min-width: 768px) {
 
   .md\\:max-w-\\[420px\\] {
     max-width: 420px;
   }
 }
-
 .\\[\\&\\>span\\]\\:line-clamp-1>span {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 }
-
 .\\[\\&\\>svg\\+div\\]\\:translate-y-\\[-3px\\]>svg+div {
   --tw-translate-y: -3px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .\\[\\&\\>svg\\]\\:absolute>svg {
   position: absolute;
 }
-
 .\\[\\&\\>svg\\]\\:left-4>svg {
   left: 1rem;
 }
-
 .\\[\\&\\>svg\\]\\:top-4>svg {
   top: 1rem;
 }
-
 .\\[\\&\\>svg\\]\\:text-destructive>svg {
   color: hsl(var(--destructive));
 }
-
 .\\[\\&\\>svg\\]\\:text-foreground>svg {
   color: hsl(var(--foreground));
 }
-
 .\\[\\&\\>svg\\~\\*\\]\\:pl-7>svg~* {
   padding-left: 1.75rem;
 }
-
 .\\[\\&_p\\]\\:leading-relaxed p {
   line-height: 1.625;
 }
-`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2333,6 +2528,38 @@ const Key = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Ke
 
 /***/ }),
 
+/***/ "./node_modules/lucide-react/dist/esm/icons/lock-keyhole.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/lock-keyhole.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LockKeyhole)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const LockKeyhole = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("LockKeyhole", [
+  ["circle", { cx: "12", cy: "16", r: "1", key: "1au0dj" }],
+  ["rect", { x: "3", y: "10", width: "18", height: "12", rx: "2", key: "6s8ecr" }],
+  ["path", { d: "M7 10V7a5 5 0 0 1 10 0v3", key: "1pqi11" }]
+]);
+
+
+//# sourceMappingURL=lock-keyhole.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-react/dist/esm/icons/lock.js":
 /*!**********************************************************!*\
   !*** ./node_modules/lucide-react/dist/esm/icons/lock.js ***!
@@ -2360,6 +2587,38 @@ const Lock = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("L
 
 
 //# sourceMappingURL=lock.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-react/dist/esm/icons/log-in.js":
+/*!************************************************************!*\
+  !*** ./node_modules/lucide-react/dist/esm/icons/log-in.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LogIn)
+/* harmony export */ });
+/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
+/**
+ * @license lucide-react v0.454.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const LogIn = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("LogIn", [
+  ["path", { d: "M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4", key: "u53s6r" }],
+  ["polyline", { points: "10 17 15 12 10 7", key: "1ail0h" }],
+  ["line", { x1: "15", x2: "3", y1: "12", y2: "12", key: "v6grx8" }]
+]);
+
+
+//# sourceMappingURL=log-in.js.map
 
 
 /***/ }),
@@ -2527,37 +2786,6 @@ const Upload = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
 
 
 //# sourceMappingURL=upload.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/lucide-react/dist/esm/icons/user.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/lucide-react/dist/esm/icons/user.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ User)
-/* harmony export */ });
-/* harmony import */ var _createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createLucideIcon.js */ "./node_modules/lucide-react/dist/esm/createLucideIcon.js");
-/**
- * @license lucide-react v0.454.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-
-
-
-const User = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("User", [
-  ["path", { d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", key: "975kel" }],
-  ["circle", { cx: "12", cy: "7", r: "4", key: "17ys0d" }]
-]);
-
-
-//# sourceMappingURL=user.js.map
 
 
 /***/ }),
@@ -37838,12 +38066,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   Navigation: () => (/* binding */ Navigation)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/key.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/user.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/key.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/settings.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock-keyhole.js");
 /* harmony import */ var _components_ui_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _components_ui_separator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ui/separator */ "./src/popup/components/ui/separator.tsx");
+/* harmony import */ var _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/sessionManagment/SessionManager */ "./src/services/sessionManagment/SessionManager.ts");
+
 
 
 
@@ -37851,8 +38081,13 @@ __webpack_require__.r(__webpack_exports__);
 const NavButton = ({ icon, label, isActive, onClick, }) => {
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_ui_button__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: isActive ? "secondary" : "ghost", size: "sm", onClick: onClick, className: "flex flex-col items-center gap-1 h-16 w-16", children: [icon, (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "text-xs", children: label })] }));
 };
-const Navigation = ({ activeTab, setActiveTab, }) => {
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-background", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-around items-center p-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_3__["default"], { className: "w-4 h-4" }), label: "Passwords", isActive: activeTab === "passwords", onClick: () => setActiveTab("passwords") }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], { className: "w-4 h-4" }), label: "Keys", isActive: activeTab === "keys", onClick: () => setActiveTab("keys") }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4" }), label: "Profile", isActive: activeTab === "profile", onClick: () => setActiveTab("profile") }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" }), label: "Settings", isActive: activeTab === "settings", onClick: () => setActiveTab("settings") })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_separator__WEBPACK_IMPORTED_MODULE_2__.Separator, {})] }));
+const Navigation = ({ activeTab, setActiveTab, onLock, }) => {
+    const handleLock = async () => {
+        const sessionManager = new _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_3__.SessionManagementService();
+        await sessionManager.endShortLock();
+        window.close();
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-background", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex items-center p-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex-1 flex justify-around", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_4__["default"], { className: "w-4 h-4" }), label: "Passwords", isActive: activeTab === "passwords", onClick: () => setActiveTab("passwords") }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4" }), label: "Keys", isActive: activeTab === "keys", onClick: () => setActiveTab("keys") }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(NavButton, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" }), label: "Settings", isActive: activeTab === "settings", onClick: () => setActiveTab("settings") })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_button__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outline", size: "icon", onClick: handleLock, className: "ml-2 rounded-full bg-blue-700", title: "Lock Extension", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4" }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_ui_separator__WEBPACK_IMPORTED_MODULE_2__.Separator, {})] }));
 };
 
 
@@ -37873,9 +38108,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
-/* harmony import */ var _ui_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/label */ "./src/popup/components/ui/label.tsx");
-/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
-
+/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
 
 
 
@@ -37903,7 +38136,7 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
         setIsSubmitting(true);
         setError(null);
         try {
-            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.KeysPost({
+            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.KeysPost({
                 website: website.trim(),
                 user: username.trim(),
                 password,
@@ -37974,14 +38207,13 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
             password,
         });
     }
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-white p-6 rounded-lg shadow-xl w-96", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-gray-700", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2 mt-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: () => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-slate-300", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-600", onClick: () => {
                                     setShowConfirmation(false);
                                     setIsUpdateMode(false);
-                                }, children: "Cancel" }), !confirmationMessage.includes("No changes needed") && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", onClick: () => {
-                                    console.log("Update button clicked - ID:", existingKeyId);
+                                }, children: "Cancel" }), !confirmationMessage.includes("No changes needed") && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-200", onClick: () => {
                                     setShowConfirmation(false);
                                     saveKey();
-                                }, children: "Update Key" }))] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Add New Key" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "website", children: "Website" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Where to use", value: website, onChange: (e) => setWebsite(e.target.value), placeholder: "( a website like https://example.com )", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "username", children: "Username/Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Key name", value: username, onChange: (e) => setUsername(e.target.value), placeholder: "Token, API key, etc...", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "password", children: "The Key" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "Key", type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", disabled: isSubmitting, children: isSubmitting ? "Saving..." : "Save Password" })] })] })] })) }) }));
+                                }, children: "Update Key" }))] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent", children: "Add New Key" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-8", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "website", value: website, onChange: (e) => setWebsite(e.target.value), label: "Website/Where to use", variant: "standard", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "username", value: username, onChange: (e) => setUsername(e.target.value), label: "Username/Email", variant: "standard", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "password", type: "password", value: password, onChange: (e) => setPassword(e.target.value), label: "The Key", variant: "standard", required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-400 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-8", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "cyber-secondary", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", variant: "cyber", disabled: isSubmitting, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "relative z-10", children: isSubmitting ? "Saving..." : "Save Key" }) })] })] })] })) }) }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddKeysDialog);
 
@@ -38048,7 +38280,7 @@ const KeyItem = ({ website, user, password }) => {
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4 text-gray-600" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4 text-gray-600" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4 text-gray-600" }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { variant: "ghost", onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4 text-gray-600" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4 text-gray-600" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { variant: "ghost", onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4 text-gray-600" }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Keys);
 
@@ -38119,9 +38351,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
-/* harmony import */ var _ui_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/label */ "./src/popup/components/ui/label.tsx");
-/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
-
+/* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
 
 
 
@@ -38153,7 +38383,7 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
         setIsSubmitting(true);
         setError(null);
         try {
-            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.PasswordPost({
+            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.PasswordPost({
                 website: website.trim(),
                 user: username.trim(),
                 password,
@@ -38185,7 +38415,7 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
     };
     const checkForDuplicates = async () => {
         try {
-            const existingPasswords = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_5__["default"].API.PasswordsGet();
+            const existingPasswords = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.PasswordsGet();
             const existingPassword = existingPasswords === null || existingPasswords === void 0 ? void 0 : existingPasswords.find((item) => {
                 const websiteMatch = item.website.toLowerCase().trim() === website.toLowerCase().trim();
                 const userMatch = item.user.toLowerCase().trim() === username.toLowerCase().trim();
@@ -38230,19 +38460,19 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
             setIsSubmitting(false);
         }
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-white p-6 rounded-lg shadow-xl w-96", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-gray-700", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2 mt-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: () => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-slate-300", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-600", onClick: () => {
                                     setShowConfirmation(false);
                                     setIsUpdateMode(false);
-                                }, children: "Cancel" }), !confirmationMessage.includes("No changes needed") && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", onClick: () => {
+                                }, children: "Cancel" }), !confirmationMessage.includes("No changes needed") && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-200", onClick: () => {
                                     setShowConfirmation(false);
                                     savePassword();
-                                }, children: "Update Password" }))] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold mb-4", children: isUpdateMode ? "Update Password" : "Add New Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "website", children: "Website/Where to use" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "website", value: website, onChange: (e) => setWebsite(e.target.value), placeholder: "https://example.com", required: true, disabled: isUpdateMode })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "username", children: "Username/Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "username", value: username, onChange: (e) => setUsername(e.target.value), placeholder: "user@example.com", required: true, disabled: isUpdateMode })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_label__WEBPACK_IMPORTED_MODULE_4__.Label, { htmlFor: "password", children: "Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "password", type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "outline", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", disabled: isSubmitting, children: isSubmitting
-                                            ? isUpdateMode
-                                                ? "Updating..."
-                                                : "Saving..."
-                                            : isUpdateMode
-                                                ? "Update Password"
-                                                : "Save Password" })] })] })] })) }) }));
+                                }, children: "Update Password" }))] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent", children: isUpdateMode ? "Update Password" : "Add New Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-8", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "website", value: website, onChange: (e) => setWebsite(e.target.value), label: "Website/Where to use", variant: "standard", required: true, disabled: isUpdateMode }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "username", value: username, onChange: (e) => setUsername(e.target.value), label: "Username/Email", variant: "standard", required: true, disabled: isUpdateMode }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "password", type: "password", value: password, onChange: (e) => setPassword(e.target.value), label: "Password", variant: "standard", required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-400 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-8", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "cyber-secondary", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", variant: "cyber", disabled: isSubmitting, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "relative z-10", children: isSubmitting
+                                                ? isUpdateMode
+                                                    ? "Updating..."
+                                                    : "Saving..."
+                                                : isUpdateMode
+                                                    ? "Update Password"
+                                                    : "Save Password" }) })] })] })] })) }) }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddPasswordDialog);
 
@@ -38262,9 +38492,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/log-in.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye-off.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/eye.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/copy.js");
 /* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/EncryptionService */ "./src/services/EncryptionService.ts");
 /* harmony import */ var _AddPasswordDialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AddPasswordDialog */ "./src/popup/components/password/AddPasswordDialog.tsx");
@@ -38307,7 +38538,26 @@ const PasswordItem = ({ website, user, password, }) => {
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-gray-800", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-gray-500", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4 " }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded", children: password }))] }));
+    const handleAutoFill = async () => {
+        try {
+            const [tab] = await chrome.tabs.query({
+                active: true,
+                currentWindow: true,
+            });
+            if (tab.id) {
+                await chrome.tabs.sendMessage(tab.id, {
+                    type: "AUTO_FILL_CREDENTIALS",
+                    data: { user, password },
+                });
+                // Close the popup after sending the auto-fill message
+                window.close();
+            }
+        }
+        catch (error) {
+            console.error("Error auto-filling credentials:", error);
+        }
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "bg-cyber-bg-lighter rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow border border-cyber-border", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "font-medium text-cyber-text-primary", children: website }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-xs text-cyber-text-secondary", children: user })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex space-x-2", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: handleAutoFill, variant: "ghost", className: "p-2 hover:bg-gray-100 rounded-full transform rotate-90", title: "Auto-fill credentials", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-4 h-4" }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowPassword(!showPassword), variant: "ghost", className: "p-2 hover:bg-gray-100 rounded-full", children: showPassword ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-4 h-4" })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-4 h-4" })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => copyToClipboard(password), variant: "ghost", className: "p-2 hover:bg-gray-100 rounded-full", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_8__["default"], { className: "w-4 h-4 " }) })] })] }), showPassword && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-2 text-sm text-cyber-text-primary font-mono bg-gray-50 p-2 rounded", children: password }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Passwords);
 
@@ -38389,7 +38639,18 @@ const SettingsComponent = () => {
             // You can add a toast notification here
         }
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800 mb-4", children: "Settings" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-3", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingItem, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-5 h-5 text-gray-600" }), title: "Notifications", description: "Control your notification preferences", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { className: "relative inline-flex items-center cursor-pointer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", className: "sr-only peer", checked: settings.pushNotifications, onChange: (e) => handleSettingChange("pushNotifications", e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" })] }) }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingItem, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-5 h-5 text-gray-600" }), title: "Auto-Lock", description: "Automatically lock after inactivity", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", { className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5", value: String(settings.autoLockTime / 60000), onChange: (e) => handleSettingChange("autoLockTime", Number(e.target.value) * 60000), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "0.5", children: "30 seconds" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "5", children: "5 minutes" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "10", children: "10 minutes" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "30", children: "30 minutes" })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingItem, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-5 h-5 text-gray-600" }), title: "Session time", description: "Automatically Delete all the data from the browser (you'll need to enter the keys again)", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", { className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5", value: String(settings.sessionTime / 86400000), onChange: (e) => handleSettingChange("sessionTime", Number(e.target.value) * 86400000), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "5", children: "5 days" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "10", children: "10 days" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "30", children: "30 days" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "60", children: "60 days" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "90", children: "90 days" })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingItem, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-5 h-5 text-gray-600" }), title: "Biometric Authentication", description: "Use Windows Hello or Touch ID for quick access", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { className: "relative inline-flex items-center cursor-pointer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", className: "sr-only peer", checked: settings.biometricVerification, onChange: (e) => handleBiometricToggle(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" })] }) }) })] })] }));
+    const handleLogout = async () => {
+        try {
+            await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_2__.SessionManagementService.clearSession();
+            // You might want to redirect to login page or refresh the extension
+            window.location.reload();
+        }
+        catch (error) {
+            console.error("Failed to logout:", error);
+            // Handle error (maybe show a toast notification)
+        }
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-xl font-semibold text-gray-800 mb-4", children: "Settings" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-3", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingItem, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_5__["default"], { className: "w-5 h-5 text-gray-600" }), title: "Notifications", description: "Control your notification preferences", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { className: "relative inline-flex items-center cursor-pointer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", className: "sr-only peer", checked: settings.pushNotifications, onChange: (e) => handleSettingChange("pushNotifications", e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" })] }) }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingItem, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-5 h-5 text-gray-600" }), title: "Auto-Lock", description: "Automatically lock after inactivity", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", { className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5", value: String(settings.autoLockTime / 60000), onChange: (e) => handleSettingChange("autoLockTime", Number(e.target.value) * 60000), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "0.5", children: "30 seconds" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "5", children: "5 minutes" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "10", children: "10 minutes" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "30", children: "30 minutes" })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingItem, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_6__["default"], { className: "w-5 h-5 text-gray-600" }), title: "Session time", description: "Automatically Delete all the data from the browser (you'll need to enter the keys again)", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", { className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5", value: String(settings.sessionTime / 86400000), onChange: (e) => handleSettingChange("sessionTime", Number(e.target.value) * 86400000), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "5", children: "5 days" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "10", children: "10 days" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "30", children: "30 days" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "60", children: "60 days" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "90", children: "90 days" })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingItem, { icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_7__["default"], { className: "w-5 h-5 text-gray-600" }), title: "Biometric Authentication", description: "Use Windows Hello or Touch ID for quick access", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { className: "relative inline-flex items-center cursor-pointer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", className: "sr-only peer", checked: settings.biometricVerification, onChange: (e) => handleBiometricToggle(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" })] }) }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleLogout, className: "w-full py-2 px-4 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors duration-200", children: "Logout" })] })] }));
 };
 
 
@@ -38493,6 +38754,14 @@ const PasswordPrompt = () => {
                 console.log("Biometric verification failed");
                 setErrorMessage("Biometric verification failed");
             }
+            const responce = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.SettingGet();
+            const settings = await responce.json();
+            //   await SessionManagementService.initialize(password);
+            await _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_6__.KeyStorage.updateSettings({
+                autoLockStart: Date.now(),
+                autoLockTime: settings.settings.sessionSettings.autoLockTime,
+            });
+            console.log("Settings updated:", settings);
         }
         catch (error) {
             console.error("Biometric authentication error:", error);
@@ -38506,10 +38775,14 @@ const PasswordPrompt = () => {
     const handleValidatePassword = async (password) => {
         const valid = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.validatePassword(password);
         if (valid) {
+            const responce = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.SettingGet();
+            const settings = await responce.json();
             //   await SessionManagementService.initialize(password);
             await _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_6__.KeyStorage.updateSettings({
                 autoLockStart: Date.now(),
+                autoLockTime: settings.settings.sessionSettings.autoLockTime,
             });
+            console.log("Settings updated:", settings);
             setIsValid(true);
         }
         else {
@@ -38873,7 +39146,7 @@ var __rest = (undefined && undefined.__rest) || function (s, e) {
 
 
 
-const buttonVariants = (0,class_variance_authority__WEBPACK_IMPORTED_MODULE_2__.cva)("inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50", {
+const buttonVariants = (0,class_variance_authority__WEBPACK_IMPORTED_MODULE_2__.cva)("inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50", {
     variants: {
         variant: {
             default: "bg-primary text-primary-foreground hover:bg-primary/90",
@@ -38882,6 +39155,8 @@ const buttonVariants = (0,class_variance_authority__WEBPACK_IMPORTED_MODULE_2__.
             secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
             ghost: "hover:bg-accent hover:text-accent-foreground",
             link: "text-primary underline-offset-4 hover:underline",
+            cyber: "px-4 py-2 bg-transparent text-cyan-400 rounded-none border-b-2 border-cyan-500 hover:text-cyan-300 hover:border-cyan-300 transition-all duration-300 relative group",
+            "cyber-secondary": "px-4 py-2 bg-transparent text-slate-300 hover:text-cyan-400 rounded-none border-b-2 border-slate-600 hover:border-cyan-400 transition-all duration-300",
         },
         size: {
             default: "h-10 px-4 py-2",
@@ -38896,9 +39171,9 @@ const buttonVariants = (0,class_variance_authority__WEBPACK_IMPORTED_MODULE_2__.
     },
 });
 const Button = react__WEBPACK_IMPORTED_MODULE_1__.forwardRef((_a, ref) => {
-    var { className, variant, size, asChild = false } = _a, props = __rest(_a, ["className", "variant", "size", "asChild"]);
+    var { className, variant, size, asChild = false, children } = _a, props = __rest(_a, ["className", "variant", "size", "asChild", "children"]);
     const Comp = asChild ? _radix_ui_react_slot__WEBPACK_IMPORTED_MODULE_4__.Slot : "button";
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Comp, Object.assign({ className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_3__.cn)(buttonVariants({ variant, size, className })), ref: ref }, props)));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(Comp, Object.assign({ className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_3__.cn)(buttonVariants({ variant, size, className })), ref: ref }, props, { children: [children, variant === "cyber" && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-cyan-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" }))] })));
 });
 Button.displayName = "Button";
 
@@ -39003,53 +39278,29 @@ var __rest = (undefined && undefined.__rest) || function (s, e) {
 
 
 const Input = react__WEBPACK_IMPORTED_MODULE_1__.forwardRef((_a, ref) => {
-    var { className, type } = _a, props = __rest(_a, ["className", "type"]);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", Object.assign({ type: type, className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_2__.cn)("flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50", className), ref: ref }, props)));
+    var { className, type, variant = "standard", label } = _a, props = __rest(_a, ["className", "type", "variant", "label"]);
+    const inputStyles = {
+        static: "border-b-2 border-primary/50 focus:border-primary",
+        standard: `border-b-2 border-cyber-border focus:border-primary
+        placeholder:text-transparent
+        focus:placeholder:text-cyber-text-secondary`,
+        outlined: "border-2 border-cyber-border focus:border-primary",
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "relative w-full min-w-[200px] h-14", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", Object.assign({ type: type, className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_2__.cn)("peer w-full h-full bg-transparent text-cyber-text-primary font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-cyber-bg-lighter/50 disabled:border-0 transition-all", "placeholder-shown:border-cyber-border", "focus:border-primary", "px-0 pt-4 mb-1", inputStyles[variant], className), placeholder: " ", ref: ref }, props)), label && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_2__.cn)("flex w-full h-full select-none pointer-events-none absolute left-0 font-normal", "peer-placeholder-shown:text-cyber-text-secondary peer-focus:text-primary", "leading-tight peer-focus:leading-tight", "peer-placeholder-shown:text-[16px] text-[12px] peer-focus:text-[12px]", "before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 before:rounded-tl-md before:pointer-events-none", "after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 after:rounded-tr-md after:pointer-events-none", "transition-all", variant === "standard" && [
+                    "text-cyan-400",
+                    "peer-placeholder-shown:leading-[4.25] peer-focus:leading-tight",
+                    "peer-placeholder-shown:top-0 top-0",
+                ], variant === "static" && [
+                    "text-cyan-400",
+                    "peer-placeholder-shown:leading-[4.25] peer-focus:leading-tight",
+                    "peer-placeholder-shown:top-0 top-0",
+                ], variant === "outlined" && [
+                    "text-cyan-400",
+                    "peer-placeholder-shown:leading-[3.75] peer-focus:leading-tight",
+                    "peer-placeholder-shown:top-2.5 top-0",
+                ]), children: label }))] }));
 });
 Input.displayName = "Input";
-
-
-
-/***/ }),
-
-/***/ "./src/popup/components/ui/label.tsx":
-/*!*******************************************!*\
-  !*** ./src/popup/components/ui/label.tsx ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Label: () => (/* binding */ Label)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _radix_ui_react_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @radix-ui/react-label */ "./node_modules/@radix-ui/react-label/dist/index.mjs");
-/* harmony import */ var class_variance_authority__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! class-variance-authority */ "./node_modules/class-variance-authority/dist/index.mjs");
-/* harmony import */ var _lib_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../lib/utils */ "./src/popup/lib/utils.ts");
-var __rest = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-
-
-
-
-
-const labelVariants = (0,class_variance_authority__WEBPACK_IMPORTED_MODULE_2__.cva)("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70");
-const Label = react__WEBPACK_IMPORTED_MODULE_1__.forwardRef((_a, ref) => {
-    var { className } = _a, props = __rest(_a, ["className"]);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_radix_ui_react_label__WEBPACK_IMPORTED_MODULE_4__.Root, Object.assign({ ref: ref, className: (0,_lib_utils__WEBPACK_IMPORTED_MODULE_3__.cn)(labelVariants(), className) }, props)));
-});
-Label.displayName = _radix_ui_react_label__WEBPACK_IMPORTED_MODULE_4__.Root.displayName;
 
 
 
@@ -40447,9 +40698,8 @@ class SessionManagementService {
      * Manually triggers short-lock to end early, requiring re-authentication.
      */
     async endShortLock() {
-        const settings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.getSettingsFromStorage();
         await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.updateSettings({
-            autoLockStart: settings.autoLockStart + settings.autoLockTime,
+            autoLockTime: 0,
         });
     }
     /**
@@ -40917,50 +41167,6 @@ function composeRefs(...refs) {
 function useComposedRefs(...refs) {
   return react__WEBPACK_IMPORTED_MODULE_0__.useCallback(composeRefs(...refs), refs);
 }
-
-//# sourceMappingURL=index.mjs.map
-
-
-/***/ }),
-
-/***/ "./node_modules/@radix-ui/react-label/dist/index.mjs":
-/*!***********************************************************!*\
-  !*** ./node_modules/@radix-ui/react-label/dist/index.mjs ***!
-  \***********************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Label: () => (/* binding */ Label),
-/* harmony export */   Root: () => (/* binding */ Root)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @radix-ui/react-primitive */ "./node_modules/@radix-ui/react-primitive/dist/index.mjs");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-"use client";
-
-// packages/react/label/src/Label.tsx
-
-
-
-var NAME = "Label";
-var Label = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((props, forwardedRef) => {
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(
-    _radix_ui_react_primitive__WEBPACK_IMPORTED_MODULE_2__.Primitive.label,
-    {
-      ...props,
-      ref: forwardedRef,
-      onMouseDown: (event) => {
-        const target = event.target;
-        if (target.closest("button, input, select, textarea")) return;
-        props.onMouseDown?.(event);
-        if (!event.defaultPrevented && event.detail > 1) event.preventDefault();
-      }
-    }
-  );
-});
-Label.displayName = NAME;
-var Root = Label;
 
 //# sourceMappingURL=index.mjs.map
 

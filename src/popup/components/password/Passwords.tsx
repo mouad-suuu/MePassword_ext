@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Eye, EyeOff, Copy } from "lucide-react";
+import { Eye, EyeOff, Copy, LogIn } from "lucide-react";
 import { Button } from "../ui/button";
 import { NewEncryptedPassword } from "../../../services/types";
 import EncryptionService from "../../../services/EncryptionService";
@@ -91,16 +91,44 @@ const PasswordItem: React.FC<NewEncryptedPassword> = ({
     navigator.clipboard.writeText(text);
   };
 
+  const handleAutoFill = async () => {
+    try {
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true,
+      });
+      if (tab.id) {
+        await chrome.tabs.sendMessage(tab.id, {
+          type: "AUTO_FILL_CREDENTIALS",
+          data: { user, password },
+        });
+        // Close the popup after sending the auto-fill message
+        window.close();
+      }
+    } catch (error) {
+      console.error("Error auto-filling credentials:", error);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow">
+    <div className="bg-cyber-bg-lighter rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow border border-cyber-border">
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="font-medium text-gray-800">{website}</h3>
-          <p className="text-xs text-gray-500">{user}</p>
+          <h3 className="font-medium text-cyber-text-primary">{website}</h3>
+          <p className="text-xs text-cyber-text-secondary">{user}</p>
         </div>
         <div className="flex space-x-2">
           <Button
+            onClick={handleAutoFill}
+            variant="ghost"
+            className="p-2 hover:bg-gray-100 rounded-full transform rotate-90"
+            title="Auto-fill credentials"
+          >
+            <LogIn className="w-4 h-4" />
+          </Button>
+          <Button
             onClick={() => setShowPassword(!showPassword)}
+            variant="ghost"
             className="p-2 hover:bg-gray-100 rounded-full"
           >
             {showPassword ? (
@@ -111,6 +139,7 @@ const PasswordItem: React.FC<NewEncryptedPassword> = ({
           </Button>
           <Button
             onClick={() => copyToClipboard(password)}
+            variant="ghost"
             className="p-2 hover:bg-gray-100 rounded-full"
           >
             <Copy className="w-4 h-4 " />
@@ -118,7 +147,7 @@ const PasswordItem: React.FC<NewEncryptedPassword> = ({
         </div>
       </div>
       {showPassword && (
-        <div className="mt-2 text-sm text-gray-800 font-mono bg-gray-50 p-2 rounded">
+        <div className="mt-2 text-sm text-cyber-text-primary font-mono bg-gray-50 p-2 rounded">
           {password}
         </div>
       )}

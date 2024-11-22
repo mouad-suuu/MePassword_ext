@@ -6,17 +6,17 @@ export interface KeySet {
   Credentials: UserCredentials;
 }
 export interface SessionSettings {
-  pushNotifications: boolean; // Toggle notifications
-  autoLockTime: number; // Time in ms or mins before auto-lock
-  autoLockStart: number; // Timestamp of last auto-lock
-  sessionStart: number; // Timestamp when session started
-  sessionTime: number; // Total session time allowed before logout
-  sessionExpiry?: number; // Timestamp for scheduled session expiration
-  lastAccessTime?: number; // Timestamp of last session access (for inactivity checks)
-  biometricVerification: boolean; // Use biometrics for verification
-  biometricType: "face" | "fingerprint" | "none"; // Supported biometric types
-  biometricPassword?: string; // Fallback password if biometrics fail
-  lockOnLeave?: boolean; // Auto-lock on window blur/focus loss
+  pushNotifications: boolean;
+  autoLockTime: number;
+  autoLockStart: number;
+  sessionStart: number;
+  sessionTime: number;
+  sessionExpiry?: number;
+  lastAccessTime?: number;
+  biometricVerification: boolean;
+  biometricType: "face" | "fingerprint" | "none";
+  biometricPassword?: string;
+  lockOnLeave?: boolean;
 }
 // Keys to be genetated
 export interface EncryptionKeys {

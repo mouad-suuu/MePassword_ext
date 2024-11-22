@@ -152,19 +152,21 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
 
   return (
     <div
-      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${
+      className={`fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center ${
         open ? "" : "hidden"
       }`}
     >
-      <div className="bg-white p-6 rounded-lg shadow-xl w-96">
+      <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl">
         {showConfirmation ? (
           <div className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Confirmation</h2>
-            <p className="text-gray-700">{confirmationMessage}</p>
-            <div className="flex justify-end space-x-2 mt-4">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              Confirmation
+            </h2>
+            <p className="text-slate-300">{confirmationMessage}</p>
+            <div className="flex justify-end space-x-3 mt-6">
               <Button
                 type="button"
-                variant="outline"
+                className="px-4 py-2 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-600"
                 onClick={() => {
                   setShowConfirmation(false);
                   setIsUpdateMode(false);
@@ -175,6 +177,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
               {!confirmationMessage.includes("No changes needed") && (
                 <Button
                   type="button"
+                  className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-200"
                   onClick={() => {
                     setShowConfirmation(false);
                     savePassword();
@@ -187,60 +190,63 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
           </div>
         ) : (
           <>
-            <h2 className="text-xl font-semibold mb-4">
+            <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               {isUpdateMode ? "Update Password" : "Add New Password"}
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="website">Website/Where to use</Label>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="space-y-6">
                 <Input
                   id="website"
                   value={website}
                   onChange={(e) => setWebsite(e.target.value)}
-                  placeholder="https://example.com"
+                  label="Website/Where to use"
+                  variant="standard"
                   required
                   disabled={isUpdateMode}
                 />
-              </div>
-              <div>
-                <Label htmlFor="username">Username/Email</Label>
+
                 <Input
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="user@example.com"
+                  label="Username/Email"
+                  variant="standard"
                   required
                   disabled={isUpdateMode}
                 />
-              </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
+
                 <Input
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  label="Password"
+                  variant="standard"
                   required
                 />
               </div>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-              <div className="flex justify-end space-x-2">
+
+              {error && <p className="text-red-400 text-sm">{error}</p>}
+
+              <div className="flex justify-end space-x-3 mt-8">
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="cyber-secondary"
                   onClick={handleClose}
                   disabled={isSubmitting}
                 >
                   Cancel
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting
-                    ? isUpdateMode
-                      ? "Updating..."
-                      : "Saving..."
-                    : isUpdateMode
-                    ? "Update Password"
-                    : "Save Password"}
+                <Button type="submit" variant="cyber" disabled={isSubmitting}>
+                  <span className="relative z-10">
+                    {isSubmitting
+                      ? isUpdateMode
+                        ? "Updating..."
+                        : "Saving..."
+                      : isUpdateMode
+                      ? "Update Password"
+                      : "Save Password"}
+                  </span>
                 </Button>
               </div>
             </form>
