@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Eye, EyeOff, Copy, LogIn } from "lucide-react";
+import { Eye, EyeOff, Copy, LogIn, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { NewEncryptedPassword } from "../../../services/types";
 import EncryptionService from "../../../services/EncryptionService";
 import StoringService from "../../../services/StorageService";
 import AddPasswordDialog from "./AddPasswordDialog";
-
+import { theme } from "../../them";
 const Passwords: React.FC = () => {
   const [passwords, setPasswords] = useState<
     { id: string; website: string; password: string; user: string }[]
@@ -43,7 +43,7 @@ const Passwords: React.FC = () => {
         </div>
       )}
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-gray-800">Passwords</h2>
+        <h2 className={theme.text.heading}>Passwords</h2>
         <Button
           onClick={() => setShowAddDialog(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
@@ -55,11 +55,8 @@ const Passwords: React.FC = () => {
         {Array.isArray(passwords) && passwords.length > 0 ? (
           passwords.map((item, index) => (
             <PasswordItem
-              id={item.id}
-              key={index}
-              website={item.website}
-              user={item.user}
-              password={item.password}
+              {...item}
+              onDelete={() => setRefreshTrigger((prev) => prev + 1)}
             />
           ))
         ) : (
@@ -80,12 +77,13 @@ const Passwords: React.FC = () => {
   );
 };
 
-const PasswordItem: React.FC<NewEncryptedPassword> = ({
-  website,
-  user,
-  password,
-}) => {
+const PasswordItem: React.FC<
+  NewEncryptedPassword & {
+    onDelete: () => void;
+  }
+> = ({ id, website, user, password, onDelete }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -110,8 +108,41 @@ const PasswordItem: React.FC<NewEncryptedPassword> = ({
     }
   };
 
+  const handleDelete = async () => {
+    if (!id || isDeleting) return;
+
+    if (
+      window.confirm(
+        `Are you sure you want to delete the password for ${website}?`
+      )
+    ) {
+      setIsDeleting(true);
+      try {
+        // Log the ID to verify it's being sent
+        console.log("Deleting password with ID:", id);
+        const response = await EncryptionService.API.PasswordDelete(id);
+
+        // Add response logging
+        console.log("Delete response status:", response.status);
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.log("Delete error response:", errorData);
+          throw new Error(errorData.error || "Failed to delete password");
+        }
+        onDelete();
+      } catch (error) {
+        console.error("Error deleting password:", error);
+        alert(
+          error instanceof Error ? error.message : "Failed to delete password"
+        );
+      } finally {
+        setIsDeleting(false);
+      }
+    }
+  };
+
   return (
-    <div className="bg-cyber-bg-lighter rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow border border-cyber-border">
+    <div className="bg-cyber-bg rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow border border-cyber-border">
       <div className="flex justify-between items-center">
         <div>
           <h3 className="font-medium text-cyber-text-primary">{website}</h3>
@@ -142,7 +173,16 @@ const PasswordItem: React.FC<NewEncryptedPassword> = ({
             variant="ghost"
             className="p-2 hover:bg-gray-100 rounded-full"
           >
-            <Copy className="w-4 h-4 " />
+            <Copy className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={handleDelete}
+            variant="ghost"
+            className="p-2 hover:bg-gray-100 rounded-full text-red-600"
+            disabled={isDeleting}
+            title="Delete password"
+          >
+            <Trash2 className="w-4 h-4" />
           </Button>
         </div>
       </div>

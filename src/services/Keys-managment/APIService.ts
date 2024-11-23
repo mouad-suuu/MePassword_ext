@@ -392,6 +392,40 @@ export class APIService {
       return this.handleApiError(error, "PasswordPut");
     }
   }
+  public static async PasswordDelete(id: string): Promise<Response> {
+    try {
+      const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      const decryptedCredentials =
+        await CredentialCryptoService.decryptCredentials(
+          storedKeys.Credentials,
+          {
+            key: storedKeys.AESKey,
+            iv: storedKeys.IV,
+            algorithm: "AES-GCM",
+            length: 256,
+          }
+        );
+
+      const response = await fetch(
+        `${decryptedCredentials.server}/api/passwords/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${decryptedCredentials.authToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw response;
+      }
+
+      return response;
+    } catch (error: any) {
+      return this.handleApiError(error, "PasswordDelete");
+    }
+  }
   public static async KeysGet(): Promise<
     {
       id: string;
@@ -592,6 +626,40 @@ export class APIService {
       return response;
     } catch (error: any) {
       return this.handleApiError(error, "KeysPut");
+    }
+  }
+  public static async KeyDelete(id: string): Promise<Response> {
+    try {
+      const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      const decryptedCredentials =
+        await CredentialCryptoService.decryptCredentials(
+          storedKeys.Credentials,
+          {
+            key: storedKeys.AESKey,
+            iv: storedKeys.IV,
+            algorithm: "AES-GCM",
+            length: 256,
+          }
+        );
+
+      const response = await fetch(
+        `${decryptedCredentials.server}/api/keys/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${decryptedCredentials.authToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw response;
+      }
+
+      return response;
+    } catch (error: any) {
+      return this.handleApiError(error, "KeyDelete");
     }
   }
 }

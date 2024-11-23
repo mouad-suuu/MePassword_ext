@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
 import { KeyStorage } from "../../../services/storage/KeyStorage";
 import EncryptionService from "../../../services/EncryptionService";
+import { theme } from "../../them";
 
 interface SettingItemProps {
   icon: ReactNode;
@@ -107,7 +108,7 @@ export const SettingsComponent: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Settings</h2>
+      <h2 className={theme.text.heading}>Settings</h2>
 
       <div className="space-y-3">
         <SettingItem

@@ -9,6 +9,7 @@ import {
 import { Button } from "../components/ui/button";
 import { Separator } from "../components/ui/separator";
 import { SessionManagementService } from "../../services/sessionManagment/SessionManager";
+import { theme } from "../them";
 
 interface NavButtonProps {
   icon: React.ReactNode;
@@ -55,7 +56,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   };
 
   return (
-    <div className="bg-background">
+    <div className={`bg-${theme.colors.bg.secondary}`}>
       <div className="flex items-center p-2">
         <div className="flex-1 flex justify-around">
           <NavButton

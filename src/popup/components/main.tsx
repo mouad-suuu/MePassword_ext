@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Navigation } from "./Navigation";
 import { SettingsComponent } from "./profile/Settings";
 import AddPasswordDialog from "./password/AddPasswordDialog";
+import { theme } from "../them";
 
 const Main = () => {
   const [activeTab, setActiveTab] = useState("passwords");
@@ -37,7 +38,7 @@ const Main = () => {
   }, []);
 
   return (
-    <div className="min-w-[400px] min-h-96 bg-gray-50">
+    <div className="min-w-[400px] min-h-96  bg-background">
       {showAddPasswordDialog && (
         <AddPasswordDialog
           open={showAddPasswordDialog}
@@ -47,7 +48,7 @@ const Main = () => {
       )}
 
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
-      <main className="p-4">
+      <main className={`p-4 ${theme.colors.bg.secondary}`}>
         {activeTab === "passwords" && <Passwords />}
         {activeTab === "keys" && <Keys />}
         {activeTab === "profile" && <Profile />}
