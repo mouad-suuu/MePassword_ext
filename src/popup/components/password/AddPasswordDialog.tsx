@@ -1,14 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import {
-  APISettingsPayload,
-  KeySet,
-  NewEncryptedPassword,
-} from "../../../services/types";
 import EncryptionService from "../../../services/EncryptionService";
-import { v4 as uuidv4 } from "uuid";
 interface AddPasswordDialogProps {
   open: boolean;
   onClose: () => void;

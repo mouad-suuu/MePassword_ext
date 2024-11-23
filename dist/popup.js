@@ -39109,6 +39109,7 @@ const StartupScreen = ({ onKeysLoaded, onCreateAccount, }) => {
                 const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__["default"].API.SettingGet();
                 const settings = await response.json();
                 await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.updateSessionSettings(settings.sessionSettings);
+                await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
                 onKeysLoaded(fileContent);
             }
             else {
@@ -39207,7 +39208,6 @@ const CreateAccountForm = ({ onAccountCreated, }) => {
             keys.Credentials = encryptedCredentials.encryptedData;
             // Store keys and handle encryption
             await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.storeKeys(keys);
-            await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
             console.log("keys are stored", keys);
             // Download keys file with new format
             const keysString = `-------private Key---------
@@ -39231,10 +39231,12 @@ ${keys.Credentials.authToken}`;
             URL.revokeObjectURL(url);
             try {
                 await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__["default"].API.SettingsPost(rsaKeyPair.publicKey.key);
-                console.log("settings sent to API");
+                console.log("settings sent to API", rsaKeyPair.publicKey.key);
+                await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
             }
             catch (error) {
                 console.error("Error sending settings to API:", error);
+                throw new Error("Failed to send settings to server");
             }
             onAccountCreated(keys);
         }
@@ -39254,8 +39256,6 @@ const PasswordManager = () => {
     const [keys, setKeys] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const handleKeysLoaded = async (loadedKeys) => {
         setKeys(loadedKeys);
-        // Initialize session timing
-        await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
         setStage("main");
     };
     const handleCreateAccount = () => {
@@ -39263,8 +39263,6 @@ const PasswordManager = () => {
     };
     const handleAccountCreated = async (newKeys) => {
         setKeys(newKeys);
-        // Initialize session timing
-        await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
         setStage("main");
     };
     switch (stage) {
@@ -39832,6 +39830,7 @@ class APIService {
     }
     static async SettingsPut(settings) {
         const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+        console.log("Stored keys retrieved:", storedKeys);
         try {
             const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
                 key: storedKeys.AESKey,
@@ -39841,6 +39840,7 @@ class APIService {
             }).catch((error) => {
                 throw new Error(`Credential decryption failed: ${error.message}`);
             });
+            console.log("Decrypted credentials:", decryptedCredentials);
             const response = await fetch(`${decryptedCredentials.server}/api/settings`, {
                 method: "PUT",
                 headers: {
@@ -39849,12 +39849,15 @@ class APIService {
                 },
                 body: JSON.stringify(settings),
             });
+            console.log("Settings to be updated:", settings);
             if (!response.ok) {
                 throw response;
             }
+            console.log("Settings updated successfully.");
             return response;
         }
         catch (error) {
+            console.error("Error in SettingsPut:", error);
             return this.handleApiError(error, "SettingsPut");
         }
     }
@@ -39904,7 +39907,7 @@ class APIService {
         }
     }
     static async PasswordPost(data) {
-        var _a;
+        var _a, _b;
         const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
         try {
             // Get decrypted credentials
@@ -39916,15 +39919,21 @@ class APIService {
             });
             // Fetch public key from settings
             const settingsResponse = await this.SettingGet();
+            console.log("settings-gotten", settingsResponse);
             if (!settingsResponse.ok) {
                 throw new Error("Failed to fetch encryption settings");
             }
             const settings = await settingsResponse.json();
-            if (!((_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
-                throw new Error("No public key found in settings");
+            console.log("settings-gotten", settings);
+            console.log("Public Key:", (_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey);
+            const publicKeyValue = (settings === null || settings === void 0 ? void 0 : settings.publicKey) || ((_b = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _b === void 0 ? void 0 : _b.publicKey);
+            if (!publicKeyValue) {
+                throw new Error("No public key found in settings. Response: " +
+                    JSON.stringify(settings));
             }
+            // Use the found public key
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(publicKeyValue);
             // Encrypt the data
-            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
             const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
                 website: data.website.trim(),
                 user: data.user.trim(),
@@ -40975,7 +40984,13 @@ class SessionManagementService {
         console.log("Updating session settings.");
         await _StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].SecureStorage.storeSettings(this.sessionSettings);
         console.log("Session settings updated successfully.");
+        const responce = await _EncryptionService__WEBPACK_IMPORTED_MODULE_0__["default"].API.SettingGet();
+        const settings = await responce.json();
         const settingsType = {
+            publicKey: settings.publicKey,
+            deviceId: settings.deviceId,
+            timestamp: settings.timestamp,
+            password: settings.password,
             sessionSettings: this.sessionSettings,
         };
         await _EncryptionService__WEBPACK_IMPORTED_MODULE_0__["default"].API.SettingsPut(settingsType);

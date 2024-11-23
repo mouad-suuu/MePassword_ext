@@ -142,6 +142,7 @@ export class APIService {
     settings: Partial<APISettingsPayload>
   ): Promise<Response> {
     const storedKeys = await StoringService.Keys.getKeysFromStorage();
+    console.log("Stored keys retrieved:", storedKeys);
 
     try {
       const decryptedCredentials =
@@ -157,6 +158,8 @@ export class APIService {
           throw new Error(`Credential decryption failed: ${error.message}`);
         });
 
+      console.log("Decrypted credentials:", decryptedCredentials);
+
       const response = await fetch(
         `${decryptedCredentials.server}/api/settings`,
         {
@@ -169,12 +172,16 @@ export class APIService {
         }
       );
 
+      console.log("Settings to be updated:", settings);
+
       if (!response.ok) {
         throw response;
       }
 
+      console.log("Settings updated successfully.");
       return response;
     } catch (error: any) {
+      console.error("Error in SettingsPut:", error);
       return this.handleApiError(error, "SettingsPut");
     }
   }
@@ -273,19 +280,30 @@ export class APIService {
 
       // Fetch public key from settings
       const settingsResponse = await this.SettingGet();
+      console.log("settings-gotten", settingsResponse);
       if (!settingsResponse.ok) {
         throw new Error("Failed to fetch encryption settings");
       }
 
       const settings = await settingsResponse.json();
-      if (!settings?.settings?.publicKey) {
-        throw new Error("No public key found in settings");
+      console.log("settings-gotten", settings);
+      console.log("Public Key:", settings?.settings?.publicKey);
+
+      const publicKeyValue =
+        settings?.publicKey || settings?.settings?.publicKey;
+      if (!publicKeyValue) {
+        throw new Error(
+          "No public key found in settings. Response: " +
+            JSON.stringify(settings)
+        );
       }
 
-      // Encrypt the data
+      // Use the found public key
       const publicKey = await EncryptionService.Utils.importRSAPublicKey(
-        settings.settings.publicKey
+        publicKeyValue
       );
+
+      // Encrypt the data
       const encryptedData = await EncryptionService.Utils.encryptWithRSA(
         {
           website: data.website.trim(),

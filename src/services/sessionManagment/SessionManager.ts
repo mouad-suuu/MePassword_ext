@@ -78,7 +78,13 @@ export class SessionManagementService {
     console.log("Updating session settings.");
     await StorageService.SecureStorage.storeSettings(this.sessionSettings);
     console.log("Session settings updated successfully.");
-    const settingsType: Partial<APISettingsPayload> = {
+    const responce = await EncryptionService.API.SettingGet();
+    const settings = await responce.json();
+    const settingsType: APISettingsPayload = {
+      publicKey: settings.publicKey,
+      deviceId: settings.deviceId,
+      timestamp: settings.timestamp,
+      password: settings.password,
       sessionSettings: this.sessionSettings,
     };
     await EncryptionService.API.SettingsPut(settingsType);

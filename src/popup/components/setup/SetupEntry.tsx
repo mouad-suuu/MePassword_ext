@@ -74,6 +74,7 @@ const StartupScreen = ({
         await SessionManagementService.updateSessionSettings(
           settings.sessionSettings
         );
+        await SessionManagementService.initialize();
         onKeysLoaded(fileContent);
       } else {
         setError("Invalid password. Please try again.");
@@ -251,7 +252,6 @@ const CreateAccountForm = ({
       // Store keys and handle encryption
       await StoringService.Keys.storeKeys(keys);
 
-      await SessionManagementService.initialize();
       console.log("keys are stored", keys);
 
       // Download keys file with new format
@@ -278,9 +278,11 @@ ${keys.Credentials.authToken}`;
 
       try {
         await EncryptionService.API.SettingsPost(rsaKeyPair.publicKey.key);
-        console.log("settings sent to API");
+        console.log("settings sent to API", rsaKeyPair.publicKey.key);
+        await SessionManagementService.initialize();
       } catch (error) {
         console.error("Error sending settings to API:", error);
+        throw new Error("Failed to send settings to server");
       }
       onAccountCreated(keys);
     } catch (err) {
@@ -361,9 +363,6 @@ const PasswordManager = () => {
 
   const handleKeysLoaded = async (loadedKeys: KeySet) => {
     setKeys(loadedKeys);
-    // Initialize session timing
-    await SessionManagementService.initialize();
-
     setStage("main");
   };
 
@@ -373,9 +372,6 @@ const PasswordManager = () => {
 
   const handleAccountCreated = async (newKeys: KeySet) => {
     setKeys(newKeys);
-    // Initialize session timing
-    await SessionManagementService.initialize();
-
     setStage("main");
   };
 
