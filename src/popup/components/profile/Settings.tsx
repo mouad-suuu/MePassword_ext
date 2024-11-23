@@ -150,6 +150,7 @@ export const SettingsComponent: React.FC = () => {
             <option value="5">5 minutes</option>
             <option value="10">10 minutes</option>
             <option value="30">30 minutes</option>
+            <option value="60">1 hour</option>
           </select>
         </SettingItem>
 
@@ -173,6 +174,8 @@ export const SettingsComponent: React.FC = () => {
             <option value="30">30 days</option>
             <option value="60">60 days</option>
             <option value="90">90 days</option>
+            <option value="180">180 days</option>
+            <option value="360">360 days</option>
           </select>
         </SettingItem>
 
