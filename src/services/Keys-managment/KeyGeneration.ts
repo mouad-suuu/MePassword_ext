@@ -14,6 +14,7 @@ export class KeyGenerationService {
   private static readonly IV_LENGTH = 12;
   private static readonly KEY_LENGTH = 32;
   public static readonly PBKDF2_ITERATIONS = 100000;
+
   static DEBUG: any;
 
   public static async generateKeyComponents(): Promise<{

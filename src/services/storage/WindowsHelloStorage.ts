@@ -1,7 +1,8 @@
-import { WebAuthnService } from "../auth/WebAuthnService";
+import { WebAuthnService } from "../auth&security/WebAuthnService";
 import { KeySet, SessionSettings, UserCredentials } from "../types";
 import EncryptionService from "../EncryptionService";
-import { SecureMemory } from "../security/SecureMemory";
+import { SecureMemory } from "../auth&security/SecureMemory";
+import { WindowsHelloVerifier } from "../auth&security/WindowsHelloVerifier";
 
 export class SecureStorageService {
   private static readonly STORAGE_KEYS = {
@@ -17,6 +18,14 @@ export class SecureStorageService {
   public static async storeKeys(Keys: KeySet): Promise<void> {
     console.log("###########################Storing keys:", Keys);
     try {
+      // Verify identity before storing keys
+      const verified = await WindowsHelloVerifier.getInstance().verifyIdentity(
+        "store_keys"
+      );
+      if (!verified) {
+        throw new Error("Identity verification failed");
+      }
+
       // Store in secure memory first
       SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
 
@@ -40,6 +49,14 @@ export class SecureStorageService {
   public static async getKeysFromStorage(): Promise<KeySet | null> {
     console.log("###########################Retrieving keys from storage...");
     try {
+      // Verify identity before retrieving keys
+      const verified = await WindowsHelloVerifier.getInstance().verifyIdentity(
+        "get_keys"
+      );
+      if (!verified) {
+        throw new Error("Identity verification failed");
+      }
+
       // Try to get from secure memory first
       const memoryKeys =
         SecureMemory.getInstance().getSensitiveData<KeySet>("current_keys");

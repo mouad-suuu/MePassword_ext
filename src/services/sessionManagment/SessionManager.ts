@@ -2,7 +2,7 @@ import EncryptionService from "../EncryptionService";
 import { KeyStorage } from "../storage/KeyStorage";
 import { APISettingsPayload, KeySet, SessionSettings } from "../types";
 import AdditionalMethods from "../Keys-managment/additionals";
-import { WebAuthnService } from "../auth/WebAuthnService";
+import { WebAuthnService } from "../auth&security/WebAuthnService";
 import StorageService from "../StorageService";
 
 export class SessionManagementService {
@@ -155,8 +155,19 @@ export class SessionManagementService {
    * Starts a short-lock timer for quick reauthentication within a limited time.
    * Should be called upon successful password entry or biometric verification.
    */
-  startShortLockTimer() {
-    this.settings.autoLockStart = Date.now();
+  public async startShortLockTimer() {
+    try {
+      const settings = await KeyStorage.getSettingsFromStorage();
+      const updatedSettings = {
+        ...settings,
+        autoLockStart: Date.now(),
+        lastAccessTime: Date.now(),
+      };
+      await KeyStorage.updateSettings(updatedSettings);
+    } catch (error) {
+      console.error("Failed to start short lock timer:", error);
+      throw error;
+    }
   }
 
   /**
@@ -164,15 +175,24 @@ export class SessionManagementService {
    * Returns true if the user needs to re-authenticate, false otherwise.
    */
   public async checkShortLockExpiration(): Promise<boolean> {
-    const settings = await KeyStorage.getSettingsFromStorage();
-    const currentTime = Date.now();
-    const shortLockExpiry = settings.autoLockStart + settings.autoLockTime;
-    const remainingTime = shortLockExpiry - currentTime;
+    try {
+      const settings = await KeyStorage.getSettingsFromStorage();
+      if (!settings?.autoLockStart || !settings?.autoLockTime) {
+        return false;
+      }
 
-    AdditionalMethods.logTime("Time until short lock expiry", remainingTime);
-    AdditionalMethods.logTime("Short lock duration", settings.autoLockTime);
+      const currentTime = Date.now();
+      const shortLockExpiry = settings.autoLockStart + settings.autoLockTime;
+      const remainingTime = shortLockExpiry - currentTime;
 
-    return currentTime <= shortLockExpiry;
+      AdditionalMethods.logTime("Time until short lock expiry", remainingTime);
+      AdditionalMethods.logTime("Short lock duration", settings.autoLockTime);
+
+      return currentTime <= shortLockExpiry;
+    } catch (error) {
+      console.error("Error checking short lock expiration:", error);
+      return false;
+    }
   }
 
   /**

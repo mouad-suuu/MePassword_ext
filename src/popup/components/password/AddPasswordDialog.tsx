@@ -149,17 +149,15 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
         open ? "" : "hidden"
       }`}
     >
-      <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl">
+      <div className="bg-white p-8 rounded-2xl shadow-2xl w-96 border border-purple-400 backdrop-blur-xl">
         {showConfirmation ? (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Confirmation
-            </h2>
-            <p className="text-slate-300">{confirmationMessage}</p>
+            <h2 className="text-2xl font-bold text-purple-600">Confirmation</h2>
+            <p className="text-gray-700">{confirmationMessage}</p>
             <div className="flex justify-end space-x-3 mt-6">
               <Button
                 type="button"
-                className="px-4 py-2 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-600"
+                className="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300"
                 onClick={() => {
                   setShowConfirmation(false);
                   setIsUpdateMode(false);
@@ -170,7 +168,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
               {!confirmationMessage.includes("No changes needed") && (
                 <Button
                   type="button"
-                  className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-200"
+                  className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-200"
                   onClick={() => {
                     setShowConfirmation(false);
                     savePassword();
@@ -183,7 +181,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
           </div>
         ) : (
           <>
-            <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-bold mb-6 text-purple-600">
               {isUpdateMode ? "Update Password" : "Add New Password"}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-8">
@@ -219,18 +217,22 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
                 />
               </div>
 
-              {error && <p className="text-red-400 text-sm">{error}</p>}
+              {error && <p className="text-red-500 text-sm">{error}</p>}
 
               <div className="flex justify-end space-x-3 mt-8">
                 <Button
                   type="button"
-                  variant="cyber-secondary"
+                  className="px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300"
                   onClick={handleClose}
                   disabled={isSubmitting}
                 >
                   Cancel
                 </Button>
-                <Button type="submit" variant="cyber" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-200"
+                  disabled={isSubmitting}
+                >
                   <span className="relative z-10">
                     {isSubmitting
                       ? isUpdateMode

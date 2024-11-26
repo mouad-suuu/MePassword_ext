@@ -6,7 +6,7 @@ import EncryptionService from "../../../services/EncryptionService";
 import Main from "../main";
 import { Lock, Key, AlertCircle, Fingerprint } from "lucide-react";
 import { KeyStorage } from "../../../services/storage/KeyStorage";
-import { WebAuthnService } from "../../../services/auth/WebAuthnService";
+import { WebAuthnService } from "../../../services/auth&security/WebAuthnService";
 
 export const PasswordPrompt: React.FC = () => {
   const [password, setPassword] = useState<string>("");

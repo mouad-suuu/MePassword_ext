@@ -9,7 +9,7 @@ Your security model relies on several layers:
 
 ### Potential Attack Vectors
 
-1. **Memory Attacks**
+1. **Memory Attacks** (Processed)
 
 ```typescript
 // Current vulnerability in memory handling
@@ -34,7 +34,7 @@ class SecureMemory {
 }
 ```
 
-2. **Windows Hello Bypass**
+2. **Windows Hello Bypass**(Processed)
 
 ```typescript:src/services/storage/WindowsHelloStorage.ts
 // Current implementation might be vulnerable to:

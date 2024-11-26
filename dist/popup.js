@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/popup/index.css":
@@ -7,7 +8,6 @@
   \*************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -955,6 +955,13 @@ video {
 .border-transparent {
   border-color: transparent;
 }
+.border-indigo-500\\/30 {
+  border-color: rgb(99 102 241 / 0.3);
+}
+.border-purple-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(192 132 252 / var(--tw-border-opacity));
+}
 .bg-background {
   background-color: hsl(var(--background));
 }
@@ -1029,6 +1036,18 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+.bg-purple-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+}
+.bg-cyan-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(165 243 252 / var(--tw-bg-opacity));
+}
+.bg-cyan-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(207 250 254 / var(--tw-bg-opacity));
+}
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
 }
@@ -1060,6 +1079,21 @@ video {
   --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
+.from-indigo-400 {
+  --tw-gradient-from: #818cf8 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(129 140 248 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-indigo-500 {
+  --tw-gradient-from: #6366f1 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(99 102 241 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-slate-950 {
+  --tw-gradient-from: #020617 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(2 6 23 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
 .to-\\[\\\$\\{theme\\.colors\\.accent\\.blue\\}\\] {
   --tw-gradient-to: \${theme.colors.accent.blue} var(--tw-gradient-to-position);
 }
@@ -1068,6 +1102,18 @@ video {
 }
 .to-slate-800 {
   --tw-gradient-to: #1e293b var(--tw-gradient-to-position);
+}
+.to-slate-200 {
+  --tw-gradient-to: #e2e8f0 var(--tw-gradient-to-position);
+}
+.to-slate-900 {
+  --tw-gradient-to: #0f172a var(--tw-gradient-to-position);
+}
+.to-violet-400 {
+  --tw-gradient-to: #a78bfa var(--tw-gradient-to-position);
+}
+.to-violet-500 {
+  --tw-gradient-to: #8b5cf6 var(--tw-gradient-to-position);
 }
 .bg-clip-text {
   -webkit-background-clip: text;
@@ -1293,6 +1339,18 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.text-slate-200 {
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity));
+}
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+.text-purple-600 {
+  --tw-text-opacity: 1;
+  color: rgb(147 51 234 / var(--tw-text-opacity));
 }
 .underline-offset-4 {
   text-underline-offset: 4px;
@@ -1632,14 +1690,29 @@ video {
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
+.hover\\:bg-purple-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
+}
+
 .hover\\:from-cyan-600:hover {
   --tw-gradient-from: #0891b2 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(8 145 178 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.hover\\:from-indigo-600:hover {
+  --tw-gradient-from: #4f46e5 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(79 70 229 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .hover\\:to-blue-600:hover {
   --tw-gradient-to: #2563eb var(--tw-gradient-to-position);
+}
+
+.hover\\:to-violet-600:hover {
+  --tw-gradient-to: #7c3aed var(--tw-gradient-to-position);
 }
 
 .hover\\:text-accent-foreground:hover {
@@ -2106,7 +2179,7 @@ video {
 .\\[\\&_p\\]\\:leading-relaxed p {
   line-height: 1.625;
 }
-`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2119,7 +2192,6 @@ video {
   \*****************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 /*
@@ -2214,7 +2286,6 @@ module.exports = function (cssWithMappingToString) {
   \************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 module.exports = function (item) {
@@ -2240,7 +2311,6 @@ module.exports = function (item) {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Icon)
@@ -2303,7 +2373,6 @@ const Icon = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ createLucideIcon)
@@ -2348,7 +2417,6 @@ const createLucideIcon = (iconName, iconNode) => {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ defaultAttributes)
@@ -2384,7 +2452,6 @@ var defaultAttributes = {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Bell)
@@ -2416,7 +2483,6 @@ const Bell = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("B
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ CircleAlert)
@@ -2449,7 +2515,6 @@ const CircleAlert = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["defaul
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Copy)
@@ -2481,7 +2546,6 @@ const Copy = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("C
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ EyeOff)
@@ -2527,7 +2591,6 @@ const EyeOff = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Eye)
@@ -2565,7 +2628,6 @@ const Eye = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Ey
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ FileKey)
@@ -2599,7 +2661,6 @@ const FileKey = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Fingerprint)
@@ -2638,7 +2699,6 @@ const Fingerprint = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["defaul
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Key)
@@ -2671,7 +2731,6 @@ const Key = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Ke
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LockKeyhole)
@@ -2704,7 +2763,6 @@ const LockKeyhole = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["defaul
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Lock)
@@ -2736,7 +2794,6 @@ const Lock = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("L
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LogIn)
@@ -2769,7 +2826,6 @@ const LogIn = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Mail)
@@ -2801,7 +2857,6 @@ const Mail = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("M
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Plus)
@@ -2833,7 +2888,6 @@ const Plus = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("P
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Settings)
@@ -2871,7 +2925,6 @@ const Settings = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"]
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Shield)
@@ -2908,7 +2961,6 @@ const Shield = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Trash2)
@@ -2943,7 +2995,6 @@ const Trash2 = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Upload)
@@ -2976,7 +3027,6 @@ const Upload = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   mergeClasses: () => (/* binding */ mergeClasses),
@@ -3000,207 +3050,12 @@ const mergeClasses = (...classes) => classes.filter((className, index, array) =>
 
 /***/ }),
 
-/***/ "./node_modules/process/browser.js":
-/*!*****************************************!*\
-  !*** ./node_modules/process/browser.js ***!
-  \*****************************************/
-/***/ ((module) => {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-
 /***/ "./node_modules/react-dom/cjs/react-dom.development.js":
 /*!*************************************************************!*\
   !*** ./node_modules/react-dom/cjs/react-dom.development.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /**
  * @license React
  * react-dom.development.js
@@ -33129,7 +32984,6 @@ if (
   \******************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 var m = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -33162,7 +33016,6 @@ if (false) {} else {
   \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 function checkDCE() {
@@ -33206,7 +33059,6 @@ if (false) {} else {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /**
  * @license React
  * react-jsx-runtime.development.js
@@ -34550,7 +34402,6 @@ exports.jsxs = jsxs;
   \*****************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
-"use strict";
 /* module decorator */ module = __webpack_require__.nmd(module);
 /**
  * @license React
@@ -37302,7 +37153,6 @@ if (
   \*************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 if (false) {} else {
@@ -37318,7 +37168,6 @@ if (false) {} else {
   \*******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 if (false) {} else {
@@ -37334,7 +37183,6 @@ if (false) {} else {
   \*************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
-"use strict";
 /**
  * @license React
  * scheduler.development.js
@@ -37979,7 +37827,6 @@ if (
   \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 if (false) {} else {
@@ -37995,7 +37842,6 @@ if (false) {} else {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38048,7 +37894,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
   \****************************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 var stylesInDOM = [];
@@ -38142,7 +37987,6 @@ module.exports = function (list, options) {
   \********************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 var memo = {};
@@ -38186,7 +38030,6 @@ module.exports = insertBySelector;
   \**********************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -38206,7 +38049,6 @@ module.exports = insertStyleElement;
   \**********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -38226,7 +38068,6 @@ module.exports = setAttributesWithoutAttributes;
   \***************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -38297,7 +38138,6 @@ module.exports = domAPI;
   \*********************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -38321,7 +38161,6 @@ module.exports = styleTagTransform;
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SessionContext: () => (/* binding */ SessionContext),
@@ -38431,7 +38270,6 @@ const SessionProvider = ({ children, }) => {
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38470,7 +38308,6 @@ const App = () => {
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Navigation: () => (/* binding */ Navigation)
@@ -38511,7 +38348,6 @@ const Navigation = ({ activeTab, setActiveTab, onLock, }) => {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38639,7 +38475,6 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38729,7 +38564,6 @@ const KeyItem = ({ website, user, password, id, onDelete, }) => {
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38781,7 +38615,6 @@ const Main = () => {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38900,13 +38733,13 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
             setIsSubmitting(false);
         }
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-slate-300", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-600", onClick: () => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-white p-8 rounded-2xl shadow-2xl w-96 border border-purple-400 backdrop-blur-xl", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold text-purple-600", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-gray-700", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300", onClick: () => {
                                     setShowConfirmation(false);
                                     setIsUpdateMode(false);
-                                }, children: "Cancel" }), !confirmationMessage.includes("No changes needed") && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-200", onClick: () => {
+                                }, children: "Cancel" }), !confirmationMessage.includes("No changes needed") && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-200", onClick: () => {
                                     setShowConfirmation(false);
                                     savePassword();
-                                }, children: "Update Password" }))] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent", children: isUpdateMode ? "Update Password" : "Add New Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-8", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "website", value: website, onChange: (e) => setWebsite(e.target.value), label: "Website/Where to use", variant: "standard", required: true, disabled: isUpdateMode }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "username", value: username, onChange: (e) => setUsername(e.target.value), label: "Username/Email", variant: "standard", required: true, disabled: isUpdateMode }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "password", type: "password", value: password, onChange: (e) => setPassword(e.target.value), label: "Password", variant: "standard", required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-400 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-8", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", variant: "cyber-secondary", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", variant: "cyber", disabled: isSubmitting, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "relative z-10", children: isSubmitting
+                                }, children: "Update Password" }))] })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold mb-6 text-purple-600", children: isUpdateMode ? "Update Password" : "Add New Password" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-8", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "website", value: website, onChange: (e) => setWebsite(e.target.value), label: "Website/Where to use", variant: "standard", required: true, disabled: isUpdateMode }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "username", value: username, onChange: (e) => setUsername(e.target.value), label: "Username/Email", variant: "standard", required: true, disabled: isUpdateMode }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_3__.Input, { id: "password", type: "password", value: password, onChange: (e) => setPassword(e.target.value), label: "Password", variant: "standard", required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-red-500 text-sm", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-8", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300", onClick: handleClose, disabled: isSubmitting, children: "Cancel" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "submit", className: "px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-200", disabled: isSubmitting, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "relative z-10", children: isSubmitting
                                                 ? isUpdateMode
                                                     ? "Updating..."
                                                     : "Saving..."
@@ -38925,7 +38758,6 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -39042,7 +38874,6 @@ const PasswordItem = ({ id, website, user, password, onDelete }) => {
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SettingsComponent: () => (/* binding */ SettingsComponent)
@@ -39137,7 +38968,6 @@ const SettingsComponent = () => {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -39165,7 +38995,6 @@ const Profile = () => {
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PasswordPrompt: () => (/* binding */ PasswordPrompt),
@@ -39183,7 +39012,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/circle-alert.js");
 /* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/key.js");
 /* harmony import */ var _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/storage/KeyStorage */ "./src/services/storage/KeyStorage.ts");
-/* harmony import */ var _services_auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/auth/WebAuthnService */ "./src/services/auth/WebAuthnService.ts");
+/* harmony import */ var _services_auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/auth&security/WebAuthnService */ "./src/services/auth&security/WebAuthnService.ts");
 
 
 
@@ -39206,7 +39035,7 @@ const PasswordPrompt = () => {
             console.log("Checking biometric availability...");
             const settings = await _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_6__.KeyStorage.getSettingsFromStorage();
             console.log("Current settings:", settings);
-            const isSupported = await _services_auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_7__.WebAuthnService.isWebAuthnSupported();
+            const isSupported = await _services_auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_7__.WebAuthnService.isWebAuthnSupported();
             console.log("WebAuthn supported:", isSupported);
             setIsBiometricAvailable(isSupported && settings.biometricVerification);
             console.log("Biometric available:", isSupported && settings.biometricVerification);
@@ -39218,7 +39047,7 @@ const PasswordPrompt = () => {
     const handleBiometricAuth = async () => {
         try {
             console.log("Starting biometric authentication...");
-            const isValid = await _services_auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_7__.WebAuthnService.verifyBiometric();
+            const isValid = await _services_auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_7__.WebAuthnService.verifyBiometric();
             console.log("Biometric verification result:", isValid);
             if (isValid) {
                 console.log("Biometric authentication successful");
@@ -39280,7 +39109,6 @@ const PasswordPrompt = () => {
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -39288,11 +39116,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/upload.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/key.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/plus.js");
-/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/file-key.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/upload.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/key.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/lock.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/plus.js");
+/* harmony import */ var lucide_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-react */ "./node_modules/lucide-react/dist/esm/icons/file-key.js");
 /* harmony import */ var _ui_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/card */ "./src/popup/components/ui/card.tsx");
 /* harmony import */ var _ui_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ui/button */ "./src/popup/components/ui/button.tsx");
 /* harmony import */ var _ui_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ui/input */ "./src/popup/components/ui/input.tsx");
@@ -39302,6 +39130,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../main */ "./src/popup/components/main.tsx");
 /* harmony import */ var _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/sessionManagment/SessionManager */ "./src/services/sessionManagment/SessionManager.ts");
 /* harmony import */ var _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/storage/KeyStorage */ "./src/services/storage/KeyStorage.ts");
+/* harmony import */ var _services_auth_security_BackupSecurityService__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../services/auth&security/BackupSecurityService */ "./src/services/auth&security/BackupSecurityService.ts");
+
 
 
 
@@ -39348,22 +39178,20 @@ const StartupScreen = ({ onKeysLoaded, onCreateAccount, }) => {
         e.preventDefault();
         setError("");
         try {
-            const isValid = await handleValidatePassword(password);
-            if (isValid && fileContent) {
-                await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.storeKeys(fileContent);
-                const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__["default"].API.SettingGet();
-                const settings = await response.json();
-                await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.updateSessionSettings(settings.sessionSettings);
-                await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
-                onKeysLoaded(fileContent);
-            }
-            else {
-                setError("Invalid password. Please try again.");
-                setPassword("");
-            }
+            const backupService = _services_auth_security_BackupSecurityService__WEBPACK_IMPORTED_MODULE_11__.BackupSecurityService.getInstance();
+            const backupBlob = new Blob([JSON.stringify(fileContent)], {
+                type: "application/json",
+            });
+            await backupService.restoreFromBackup(backupBlob, password);
+            const keys = await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.getKeysFromStorage();
+            const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__["default"].API.SettingGet();
+            const settings = await response.json();
+            await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.updateSessionSettings(settings.sessionSettings);
+            await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
+            onKeysLoaded(keys);
         }
         catch (err) {
-            setError("Failed to validate password. Please try again.");
+            setError("Invalid password or corrupted backup file");
             setPassword("");
         }
     };
@@ -39372,47 +39200,21 @@ const StartupScreen = ({ onKeysLoaded, onCreateAccount, }) => {
         setIsDragging(false);
         setError("");
         const file = e.dataTransfer.files[0];
-        if (!file)
+        if (!file || !file.name.endsWith(".mpb")) {
+            setError("Please provide a valid MePassword backup file");
             return;
+        }
         try {
-            const text = await file.text();
-            const lines = text.split("\n");
-            const keys = {
-                privateKey: "",
-                AESKey: "",
-                IV: "",
-                Credentials: {
-                    server: "",
-                    authToken: "",
-                },
-            };
-            // Parse the file content
-            for (let i = 0; i < lines.length; i++) {
-                if (lines[i].includes("private Key")) {
-                    keys.privateKey = lines[i + 1].trim();
-                }
-                else if (lines[i].includes("AES key")) {
-                    keys.AESKey = lines[i + 1].trim();
-                }
-                else if (lines[i].includes("-------iv")) {
-                    keys.IV = lines[i + 1].trim();
-                }
-                else if (lines[i].includes("server")) {
-                    keys.Credentials.server = lines[i + 1].trim();
-                }
-                else if (lines[i].includes("auth key")) {
-                    keys.Credentials.authToken = lines[i + 1].trim();
-                }
-            }
-            setFileContent(keys);
-            await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.storeKeys(keys);
+            const fileText = await file.text();
+            const keySet = JSON.parse(fileText);
+            setFileContent(keySet);
             setShowPasswordPrompt(true);
         }
         catch (err) {
-            setError("Invalid key file. Please try again.");
+            setError("Invalid backup file format");
         }
     }, []);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Password Manager" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Drop your key file or create a new account" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: [!showPasswordPrompt ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { onDragOver: handleDragOver, onDragLeave: handleDragLeave, onDrop: handleDrop, className: `border-2 border-dashed rounded-lg p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_11__["default"], { className: "mx-auto h-12 w-12 text-gray-400" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "mt-2 text-sm text-gray-600", children: "Drag and drop your key file here" })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handlePasswordSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "relative", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_12__["default"], { className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400", size: 18 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true, className: "pl-10 py-5", placeholder: "Enter your password" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full py-5 text-base font-medium", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_13__["default"], { className: "mr-2 h-4 w-4" }), "Unlock"] })] })), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", className: "mt-4", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) }))] }), !showPasswordPrompt && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardFooter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { onClick: onCreateAccount, className: "w-full", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_14__["default"], { className: "mr-2 h-4 w-4" }), "Create New Account"] }) }))] }) }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Password Manager" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Drop your key file or create a new account" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: [!showPasswordPrompt ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { onDragOver: handleDragOver, onDragLeave: handleDragLeave, onDrop: handleDrop, className: `border-2 border-dashed rounded-lg p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_12__["default"], { className: "mx-auto h-12 w-12 text-gray-400" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "mt-2 text-sm text-gray-600", children: "Drag and drop your key file here" })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handlePasswordSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "relative", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_13__["default"], { className: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400", size: 18 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", value: password, onChange: (e) => setPassword(e.target.value), required: true, className: "pl-10 py-5", placeholder: "Enter your password" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full py-5 text-base font-medium", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_14__["default"], { className: "mr-2 h-4 w-4" }), "Unlock"] })] })), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", className: "mt-4", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) }))] }), !showPasswordPrompt && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardFooter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { onClick: onCreateAccount, className: "w-full", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_15__["default"], { className: "mr-2 h-4 w-4" }), "Create New Account"] }) }))] }) }));
 };
 const CreateAccountForm = ({ onAccountCreated, }) => {
     /**
@@ -39454,22 +39256,17 @@ const CreateAccountForm = ({ onAccountCreated, }) => {
             // Store keys and handle encryption
             await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.storeKeys(keys);
             console.log("keys are stored", keys);
-            // Download keys file with new format
-            const keysString = `-------private Key---------
-${keys.privateKey}
--------AES key-------------
-${keys.AESKey}
--------iv-------------
-${keys.IV}
---------server----------
-${keys.Credentials.server}
--------auth key-------
-${keys.Credentials.authToken}`;
-            const blob = new Blob([keysString], { type: "text/plain" });
-            const url = URL.createObjectURL(blob);
+            // Create backup using the user's password
+            if (!formData.password) {
+                throw new Error("Password is required");
+            }
+            const backupService = _services_auth_security_BackupSecurityService__WEBPACK_IMPORTED_MODULE_11__.BackupSecurityService.getInstance();
+            const backupBlob = await backupService.createSecureBackup(formData.password);
+            // Download the backup file
+            const url = URL.createObjectURL(backupBlob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "mepassword-keys.txt";
+            a.download = "mepassword-backup.mpb"; // Custom extension
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -39496,7 +39293,7 @@ ${keys.Credentials.authToken}`;
     };
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Create Account" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Enter your credentials to get started" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Website", value: formData.server, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { server: e.target.value.endsWith("/")
                                             ? e.target.value.slice(0, -1)
-                                            : e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Auth Token", value: formData.authToken, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { authToken: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", placeholder: "Password", value: formData.password, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { password: e.target.value }))), required: true }) }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full", disabled: loading, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_15__["default"], { className: "mr-2 h-4 w-4" }), loading ? "Creating Account..." : "Create Account"] })] }) })] }) }));
+                                            : e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Auth Token", value: formData.authToken, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { authToken: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", placeholder: "Password", value: formData.password, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { password: e.target.value }))), required: true }) }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full", disabled: loading, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_16__["default"], { className: "mr-2 h-4 w-4" }), loading ? "Creating Account..." : "Create Account"] })] }) })] }) }));
 };
 const PasswordManager = () => {
     const [stage, setStage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("startup");
@@ -39534,7 +39331,6 @@ const PasswordManager = () => {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Alert: () => (/* binding */ Alert),
@@ -39598,7 +39394,6 @@ AlertDescription.displayName = "AlertDescription";
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Button: () => (/* binding */ Button),
@@ -39667,7 +39462,6 @@ Button.displayName = "Button";
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Card: () => (/* binding */ Card),
@@ -39736,7 +39530,6 @@ CardFooter.displayName = "CardFooter";
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Input: () => (/* binding */ Input)
@@ -39794,7 +39587,6 @@ Input.displayName = "Input";
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Separator: () => (/* binding */ Separator)
@@ -39835,7 +39627,6 @@ Separator.displayName = _radix_ui_react_separator__WEBPACK_IMPORTED_MODULE_3__.R
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   cn: () => (/* binding */ cn),
@@ -39871,7 +39662,6 @@ const gradients = {
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   theme: () => (/* binding */ theme)
@@ -39935,7 +39725,6 @@ const theme = {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -39971,15 +39760,16 @@ EncryptionService.Utils = _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_5
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   APIService: () => (/* binding */ APIService)
 /* harmony export */ });
 /* harmony import */ var _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CredentialCrypto */ "./src/services/Keys-managment/CredentialCrypto.ts");
 /* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
 /* harmony import */ var _EncryptionService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../EncryptionService */ "./src/services/EncryptionService.ts");
+/* harmony import */ var _auth_security_NetworkSecurityService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth&security/NetworkSecurityService */ "./src/services/auth&security/NetworkSecurityService.ts");
+
 
 
 
@@ -40006,23 +39796,15 @@ class APIService {
                 algorithm: "AES-GCM",
                 length: 256,
             });
-            const response = await fetch(`${decryptedCredentials.server}/api/settings`, {
+            return await this.networkSecurity.secureRequest("/api/settings", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                },
                 body: JSON.stringify({
-                    publicKey: publicKey,
+                    publicKey,
                     password: decryptedCredentials.password,
-                    deviceId: (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])(),
+                    deviceId: (0,uuid__WEBPACK_IMPORTED_MODULE_4__["default"])(),
                     timestamp: Date.now(),
                 }),
             });
-            if (!response.ok) {
-                throw response;
-            }
-            return response;
         }
         catch (error) {
             return this.handleApiError(error, "SettingsPost");
@@ -40031,26 +39813,10 @@ class APIService {
     static async validatePassword(password) {
         try {
             console.log("Validating the password:", password);
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
-            const response = await fetch(`${decryptedCredentials.server}/api/settings/validate`, {
+            const response = await this.networkSecurity.secureRequest("/api/settings/validate", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                },
-                body: JSON.stringify({
-                    password: password,
-                }),
+                body: JSON.stringify({ password }),
             });
-            if (!response.ok) {
-                throw response;
-            }
             const jsonResponse = await response.json();
             console.log("Password is valid:", jsonResponse.isValid);
             return jsonResponse.isValid;
@@ -40061,54 +39827,21 @@ class APIService {
     }
     static async SettingGet() {
         try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
-            const response = await fetch(`${decryptedCredentials.server}/api/settings`, {
+            return await this.networkSecurity.secureRequest("/api/settings", {
                 method: "GET",
-                headers: {
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                    "Content-Type": "application/json",
-                },
             });
-            if (!response.ok) {
-                throw response;
-            }
-            return response;
         }
         catch (error) {
             return this.handleApiError(error, "SettingGet");
         }
     }
     static async SettingsPut(settings) {
-        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-        console.log("Stored keys retrieved:", storedKeys);
         try {
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            }).catch((error) => {
-                throw new Error(`Credential decryption failed: ${error.message}`);
-            });
-            console.log("Decrypted credentials:", decryptedCredentials);
-            const response = await fetch(`${decryptedCredentials.server}/api/settings`, {
+            console.log("Settings to be updated:", settings);
+            const response = await this.networkSecurity.secureRequest("/api/settings", {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                },
                 body: JSON.stringify(settings),
             });
-            console.log("Settings to be updated:", settings);
-            if (!response.ok) {
-                throw response;
-            }
             console.log("Settings updated successfully.");
             return response;
         }
@@ -40117,194 +39850,12 @@ class APIService {
             return this.handleApiError(error, "SettingsPut");
         }
     }
-    static async PasswordsGet() {
-        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-        try {
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
-            const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw response;
-            }
-            const data = await response.json();
-            if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
-                throw new Error("No private key found in stored credentials");
-            }
-            const privateKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
-            if (!privateKey) {
-                throw new Error("Failed to import private key");
-            }
-            const decryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.decryptWithRSA(data.passwords, privateKey);
-            if (!decryptedData) {
-                throw new Error("Decryption returned null or undefined");
-            }
-            if (!Array.isArray(decryptedData)) {
-                throw new Error("Decrypted data is not an array");
-            }
-            return decryptedData.map((item, index) => ({
-                id: data.passwords[index].id,
-                website: item.website,
-                user: item.user,
-                password: item.password,
-            }));
-        }
-        catch (error) {
-            return this.handleApiError(error, "PasswordsGet");
-        }
-    }
-    static async PasswordPost(data) {
-        var _a, _b;
-        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-        try {
-            // Get decrypted credentials
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
-            // Fetch public key from settings
-            const settingsResponse = await this.SettingGet();
-            console.log("settings-gotten", settingsResponse);
-            if (!settingsResponse.ok) {
-                throw new Error("Failed to fetch encryption settings");
-            }
-            const settings = await settingsResponse.json();
-            console.log("settings-gotten", settings);
-            console.log("Public Key:", (_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey);
-            const publicKeyValue = (settings === null || settings === void 0 ? void 0 : settings.publicKey) || ((_b = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _b === void 0 ? void 0 : _b.publicKey);
-            if (!publicKeyValue) {
-                throw new Error("No public key found in settings. Response: " +
-                    JSON.stringify(settings));
-            }
-            // Use the found public key
-            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(publicKeyValue);
-            // Encrypt the data
-            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
-                website: data.website.trim(),
-                user: data.user.trim(),
-                password: data.password,
-            }, publicKey);
-            // Send encrypted data
-            const response = await fetch(`${decryptedCredentials.server}/api/passwords`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                },
-                body: JSON.stringify({
-                    id: (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])(),
-                    website: encryptedData.website,
-                    user: encryptedData.user,
-                    password: encryptedData.password,
-                }),
-            });
-            if (!response.ok) {
-                throw response;
-            }
-            return response;
-        }
-        catch (error) {
-            return this.handleApiError(error, "PasswordPost");
-        }
-    }
-    static async PasswordPut(id, data) {
-        var _a;
-        const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-        try {
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
-            // Fetch public key from settings
-            const settingsResponse = await this.SettingGet();
-            if (!settingsResponse.ok) {
-                throw new Error("Failed to fetch encryption settings");
-            }
-            const settings = await settingsResponse.json();
-            if (!((_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
-                throw new Error("No public key found in settings");
-            }
-            // Encrypt the data
-            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
-            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
-                website: data.website.trim(),
-                user: data.user.trim(),
-                password: data.password,
-            }, publicKey);
-            const response = await fetch(`${decryptedCredentials.server}/api/passwords/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                },
-                body: JSON.stringify(Object.assign(Object.assign({}, encryptedData), { id })),
-            });
-            if (!response.ok) {
-                throw response;
-            }
-            return response;
-        }
-        catch (error) {
-            return this.handleApiError(error, "PasswordPut");
-        }
-    }
-    static async PasswordDelete(id) {
-        try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
-            const response = await fetch(`${decryptedCredentials.server}/api/passwords/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw response;
-            }
-            return response;
-        }
-        catch (error) {
-            return this.handleApiError(error, "PasswordDelete");
-        }
-    }
     static async KeysGet() {
         try {
             const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
-            const response = await fetch(`${decryptedCredentials.server}/api/keys`, {
+            const response = await this.networkSecurity.secureRequest("/api/keys", {
                 method: "GET",
-                headers: {
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                    "Content-Type": "application/json",
-                },
             });
-            if (!response.ok) {
-                throw response;
-            }
             const data = await response.json();
             if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
                 throw new Error("No private key found in stored credentials");
@@ -40334,13 +39885,6 @@ class APIService {
     static async KeysPost(data) {
         var _a;
         try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
             // Fetch public key from settings
             const settingsResponse = await this.SettingGet();
             if (!settingsResponse.ok) {
@@ -40357,18 +39901,10 @@ class APIService {
                 user: data.user.trim(),
                 password: data.password,
             }, publicKey);
-            const response = await fetch(`${decryptedCredentials.server}/api/keys`, {
+            return await this.networkSecurity.secureRequest("/api/keys", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                },
-                body: JSON.stringify(Object.assign({ id: (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])() }, encryptedData)),
+                body: JSON.stringify(Object.assign({ id: (0,uuid__WEBPACK_IMPORTED_MODULE_4__["default"])() }, encryptedData)),
             });
-            if (!response.ok) {
-                throw response;
-            }
-            return response;
         }
         catch (error) {
             return this.handleApiError(error, "KeysPost");
@@ -40377,13 +39913,6 @@ class APIService {
     static async KeysPut(id, data) {
         var _a;
         try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
             // Fetch public key from settings
             const settingsResponse = await this.SettingGet();
             if (!settingsResponse.ok) {
@@ -40400,18 +39929,10 @@ class APIService {
                 user: data.user.trim(),
                 password: data.password,
             }, publicKey);
-            const response = await fetch(`${decryptedCredentials.server}/api/keys/${id}`, {
+            return await this.networkSecurity.secureRequest(`/api/keys/${id}`, {
                 method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                },
                 body: JSON.stringify(Object.assign(Object.assign({}, encryptedData), { id })),
             });
-            if (!response.ok) {
-                throw response;
-            }
-            return response;
         }
         catch (error) {
             return this.handleApiError(error, "KeysPut");
@@ -40419,30 +39940,86 @@ class APIService {
     }
     static async KeyDelete(id) {
         try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
-            const response = await fetch(`${decryptedCredentials.server}/api/keys/${id}`, {
+            return await this.networkSecurity.secureRequest(`/api/keys/${id}`, {
                 method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${decryptedCredentials.authToken}`,
-                    "Content-Type": "application/json",
-                },
             });
-            if (!response.ok) {
-                throw response;
+        }
+        catch (error) {
+            return this.handleApiError(error, "KeyDelete");
+        }
+    }
+    static async PasswordsGet() {
+        try {
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const response = await this.networkSecurity.secureRequest("/api/passwords", {
+                method: "GET",
+            });
+            const data = await response.json();
+            if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
+                throw new Error("No private key found in stored credentials");
             }
-            return response;
+            const privateKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
+            if (!privateKey) {
+                throw new Error("Failed to import private key");
+            }
+            const decryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.decryptWithRSA(data.passwords, privateKey);
+            if (!decryptedData) {
+                throw new Error("Decryption returned null or undefined");
+            }
+            if (!Array.isArray(decryptedData)) {
+                throw new Error("Decrypted data is not an array");
+            }
+            return decryptedData.map((item, index) => ({
+                id: data.passwords[index].id,
+                website: item.website,
+                user: item.user,
+                password: item.password,
+            }));
+        }
+        catch (error) {
+            return this.handleApiError(error, "PasswordsGet");
+        }
+    }
+    static async PasswordPost(data) {
+        var _a;
+        try {
+            // Fetch public key from settings
+            const settingsResponse = await this.SettingGet();
+            if (!settingsResponse.ok) {
+                throw new Error("Failed to fetch encryption settings");
+            }
+            const settings = await settingsResponse.json();
+            if (!((_a = settings === null || settings === void 0 ? void 0 : settings.settings) === null || _a === void 0 ? void 0 : _a.publicKey)) {
+                throw new Error("No public key found in settings");
+            }
+            // Encrypt the data
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
+            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
+                website: data.website.trim(),
+                user: data.user.trim(),
+                password: data.password,
+            }, publicKey);
+            return await this.networkSecurity.secureRequest("/api/passwords", {
+                method: "POST",
+                body: JSON.stringify(Object.assign({ id: (0,uuid__WEBPACK_IMPORTED_MODULE_4__["default"])() }, encryptedData)),
+            });
+        }
+        catch (error) {
+            return this.handleApiError(error, "PasswordsPost");
+        }
+    }
+    static async PasswordDelete(id) {
+        try {
+            return await this.networkSecurity.secureRequest(`/api/passwords/${id}`, {
+                method: "DELETE",
+            });
         }
         catch (error) {
             return this.handleApiError(error, "KeyDelete");
         }
     }
 }
+APIService.networkSecurity = _auth_security_NetworkSecurityService__WEBPACK_IMPORTED_MODULE_3__.NetworkSecurityService.getInstance();
 
 
 /***/ }),
@@ -40453,7 +40030,6 @@ class APIService {
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CredentialCryptoService: () => (/* binding */ CredentialCryptoService)
@@ -40571,7 +40147,6 @@ class CredentialCryptoService {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CryptoUtils: () => (/* binding */ CryptoUtils)
@@ -40747,7 +40322,6 @@ class CryptoUtils {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   KeyGenerationService: () => (/* binding */ KeyGenerationService)
@@ -40875,7 +40449,6 @@ KeyGenerationService.PBKDF2_ITERATIONS = 100000;
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ZeroKnowledgeProofService: () => (/* binding */ ZeroKnowledgeProofService)
@@ -40923,7 +40496,6 @@ class ZeroKnowledgeProofService {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -41020,7 +40592,6 @@ AdditionalMethods.sessionData = new Map();
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -41041,156 +40612,323 @@ StorageService.SecureStorage = _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MO
 
 /***/ }),
 
-/***/ "./src/services/auth/WebAuthnService.ts":
-/*!**********************************************!*\
-  !*** ./src/services/auth/WebAuthnService.ts ***!
-  \**********************************************/
+/***/ "./src/services/auth&security/BackupSecurityService.ts":
+/*!*************************************************************!*\
+  !*** ./src/services/auth&security/BackupSecurityService.ts ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   WebAuthnService: () => (/* binding */ WebAuthnService)
+/* harmony export */   BackupSecurityService: () => (/* binding */ BackupSecurityService)
 /* harmony export */ });
-/* harmony import */ var _sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sessionManagment/SessionManager */ "./src/services/sessionManagment/SessionManager.ts");
-/* harmony import */ var _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Keys-managment/additionals */ "./src/services/Keys-managment/additionals.ts");
+/* harmony import */ var _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Keys-managment/CryptoUtils */ "./src/services/Keys-managment/CryptoUtils.ts");
+/* harmony import */ var _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storage/WindowsHelloStorage */ "./src/services/storage/WindowsHelloStorage.ts");
 
 
-class WebAuthnService {
-    static async isWebAuthnSupported() {
-        const isSupported = window.PublicKeyCredential !== undefined;
-        console.log("WebAuthn support check:", {
-            isSupported,
-            PublicKeyCredential: !!window.PublicKeyCredential,
-            platform: navigator.platform,
-            userAgent: navigator.userAgent,
-        });
-        return isSupported;
+class BackupSecurityService {
+    constructor() {
+        this.BACKUP_VERSION = "1.0";
+        this.ENCRYPTION_ALGORITHM = "AES-GCM";
+        this.KEY_LENGTH = 256;
     }
-    static async registerBiometric(username) {
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new BackupSecurityService();
+        }
+        return this.instance;
+    }
+    async encryptBackupData(data, password) {
         try {
-            console.log("Starting biometric registration for user:", username);
-            if (!(await this.isWebAuthnSupported())) {
-                console.error("WebAuthn not supported in this browser");
-                throw new Error("WebAuthn is not supported in this browser");
-            }
-            const challenge = crypto.getRandomValues(new Uint8Array(32));
-            console.log("Generated challenge:", challenge);
-            const createCredentialOptions = {
-                challenge,
-                rp: {
-                    name: "MePassword Extension",
-                    id: window.location.hostname,
-                },
-                user: {
-                    id: Uint8Array.from(username, (c) => c.charCodeAt(0)),
-                    name: username,
-                    displayName: username,
-                },
-                pubKeyCredParams: [
-                    { type: "public-key", alg: -7 }, // ES256
-                    { type: "public-key", alg: -257 }, // RS256
-                ],
-                timeout: this.AUTH_TIMEOUT,
-                authenticatorSelection: {
-                    authenticatorAttachment: "platform", // Use platform authenticator (Windows Hello, Touch ID, etc.)
-                    userVerification: "required",
-                    residentKey: "preferred",
-                },
+            // Generate salt and IV
+            const salt = window.crypto.getRandomValues(new Uint8Array(16));
+            const iv = window.crypto.getRandomValues(new Uint8Array(12));
+            // Derive key from password
+            const encoder = new TextEncoder();
+            const keyMaterial = await window.crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits", "deriveKey"]);
+            const key = await window.crypto.subtle.deriveKey({
+                name: "PBKDF2",
+                salt: salt,
+                iterations: 100000,
+                hash: "SHA-256",
+            }, keyMaterial, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
+            // Encrypt the data
+            const encryptedContent = await window.crypto.subtle.encrypt({
+                name: "AES-GCM",
+                iv: iv,
+            }, key, encoder.encode(data));
+            return {
+                encrypted: _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(encryptedContent),
+                salt: _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(salt.buffer),
+                iv: _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(iv.buffer),
             };
-            console.log("Credential options:", createCredentialOptions);
-            console.log("Requesting credential creation...");
-            const credential = await navigator.credentials.create({
-                publicKey: createCredentialOptions,
-            });
-            console.log("Credential created:", credential);
-            if (credential) {
-                console.log("Updating session settings with biometric verification");
-                const biometricType = this.detectBiometricType();
-                console.log("Detected biometric type:", biometricType);
-                await _sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_0__.SessionManagementService.updateSessionSettings({
-                    biometricVerification: true,
-                    biometricType: biometricType,
-                });
-                return true;
-            }
-            console.log("Credential creation failed");
-            return false;
         }
         catch (error) {
-            console.error("Error in registerBiometric:", error);
-            _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_1__["default"].logError("registerBiometric", error);
+            console.error("Encryption failed:", error);
+            throw new Error("Failed to encrypt backup data");
+        }
+    }
+    async decryptBackupData(encryptedData, password, salt, iv) {
+        try {
+            // Convert base64 strings back to buffers
+            const encryptedBuffer = _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.base64ToBuffer(encryptedData);
+            const saltBuffer = _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.base64ToBuffer(salt);
+            const ivBuffer = _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.base64ToBuffer(iv);
+            // Derive the same key from password
+            const encoder = new TextEncoder();
+            const keyMaterial = await window.crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits", "deriveKey"]);
+            const key = await window.crypto.subtle.deriveKey({
+                name: "PBKDF2",
+                salt: saltBuffer,
+                iterations: 100000,
+                hash: "SHA-256",
+            }, keyMaterial, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+            // Decrypt the data
+            const decryptedContent = await window.crypto.subtle.decrypt({
+                name: "AES-GCM",
+                iv: ivBuffer,
+            }, key, encryptedBuffer);
+            return new TextDecoder().decode(decryptedContent);
+        }
+        catch (error) {
+            console.error("Decryption failed:", error);
+            throw new Error("Failed to decrypt backup data - incorrect password or corrupted backup");
+        }
+    }
+    async createSecureBackup(password) {
+        try {
+            // Get stored keys and settings
+            const keys = await _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_1__.SecureStorageService.getKeysFromStorage();
+            const settings = await _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_1__.SecureStorageService.getSettingsFromStorage();
+            if (!keys) {
+                throw new Error("No keys found to backup");
+            }
+            // Create backup data structure
+            const backupData = {
+                keys,
+                settings,
+                timestamp: Date.now(),
+            };
+            // Encrypt the backup data
+            const encrypted = await this.encryptBackupData(JSON.stringify(backupData), password);
+            // Create final backup structure
+            const finalBackup = {
+                metadata: {
+                    version: this.BACKUP_VERSION,
+                    timestamp: Date.now(),
+                    salt: encrypted.salt,
+                    iv: encrypted.iv,
+                },
+                data: encrypted.encrypted,
+            };
+            // Convert to Blob
+            return new Blob([JSON.stringify(finalBackup)], {
+                type: "application/mepassword-backup",
+            });
+        }
+        catch (error) {
+            console.error("Backup creation failed:", error);
+            throw new Error("Failed to create secure backup");
+        }
+    }
+    async restoreFromBackup(backupFile, password) {
+        try {
+            // Read and parse backup file
+            const backupContent = await backupFile.text();
+            const backup = JSON.parse(backupContent);
+            // Validate backup format and version
+            if (!backup.metadata ||
+                !backup.data ||
+                !backup.metadata.salt ||
+                !backup.metadata.iv) {
+                throw new Error("Invalid backup format");
+            }
+            if (backup.metadata.version !== this.BACKUP_VERSION) {
+                throw new Error("Unsupported backup version");
+            }
+            // Decrypt the backup data
+            const decryptedContent = await this.decryptBackupData(backup.data, password, backup.metadata.salt, backup.metadata.iv);
+            // Parse the decrypted content
+            const backupData = JSON.parse(decryptedContent);
+            // Validate decrypted data structure
+            if (!backupData.keys || !backupData.timestamp) {
+                throw new Error("Invalid backup data structure");
+            }
+            // Store the restored data
+            await _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_1__.SecureStorageService.storeKeys(backupData.keys);
+            if (backupData.settings) {
+                await _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_1__.SecureStorageService.storeSettings(backupData.settings);
+            }
+        }
+        catch (error) {
+            console.error("Backup restoration failed:", error);
             throw error;
         }
     }
-    static async verifyBiometric() {
+    validateBackup(backup) {
+        if (!backup.metadata || !backup.data) {
+            throw new Error("Invalid backup format");
+        }
+        if (backup.metadata.version !== this.BACKUP_VERSION) {
+            throw new Error("Unsupported backup version");
+        }
+        if (!backup.metadata.iv) {
+            throw new Error("Missing encryption IV in backup");
+        }
+    }
+    async verifyKeyDerivation(key) {
         try {
-            console.log("Starting biometric verification");
-            if (!(await this.isWebAuthnSupported())) {
-                console.log("WebAuthn not supported, aborting verification");
-                return false;
-            }
-            const challenge = crypto.getRandomValues(new Uint8Array(32));
-            console.log("Generated verification challenge:", challenge);
-            const assertionOptions = {
-                challenge,
-                timeout: this.AUTH_TIMEOUT,
-                userVerification: "required",
-            };
-            console.log("Assertion options:", assertionOptions);
-            console.log("Requesting credential verification...");
-            const assertion = await navigator.credentials.get({
-                publicKey: assertionOptions,
+            const keyData = await window.crypto.subtle.exportKey("raw", key);
+            console.log("Key verification:", {
+                keyLength: keyData.byteLength * 8, // Should be 256 bits
+                algorithm: key.algorithm,
+                usages: key.usages,
+                extractable: key.extractable,
             });
-            console.log("Verification result:", assertion);
-            return assertion !== null;
         }
         catch (error) {
-            console.error("Error in verifyBiometric:", error);
-            _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_1__["default"].logError("verifyBiometric", error);
-            return false;
+            console.error("Key verification failed:", error);
+            throw error;
         }
-    }
-    static detectBiometricType() {
-        const ua = navigator.userAgent.toLowerCase();
-        console.log("Detecting biometric type for user agent:", ua);
-        // Check for Windows Hello (Windows 10 and above)
-        if (ua.includes("windows nt") &&
-            parseFloat(ua.split("windows nt ")[1]) >= 10.0) {
-            console.log("Detected Windows Hello (face recognition)");
-            return "face";
-        }
-        // Check for MacOS Touch ID
-        if (ua.includes("macintosh") || ua.includes("mac os x")) {
-            console.log("Detected Touch ID");
-            return "fingerprint";
-        }
-        // Check for Android fingerprint
-        if (ua.includes("android")) {
-            console.log("Detected Android fingerprint");
-            return "fingerprint";
-        }
-        console.log("Defaulting to face recognition for Windows");
-        return "face"; // Default to face for Windows
     }
 }
-WebAuthnService.AUTH_TIMEOUT = 60000; // 1 minute
+BackupSecurityService.instance = null;
 
 
 /***/ }),
 
-/***/ "./src/services/security/SecureMemory.ts":
-/*!***********************************************!*\
-  !*** ./src/services/security/SecureMemory.ts ***!
-  \***********************************************/
+/***/ "./src/services/auth&security/NetworkSecurityService.ts":
+/*!**************************************************************!*\
+  !*** ./src/services/auth&security/NetworkSecurityService.ts ***!
+  \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NetworkSecurityService: () => (/* binding */ NetworkSecurityService)
+/* harmony export */ });
+/* harmony import */ var _Keys_managment_CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Keys-managment/CredentialCrypto */ "./src/services/Keys-managment/CredentialCrypto.ts");
+/* harmony import */ var _WindowsHelloVerifier__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WindowsHelloVerifier */ "./src/services/auth&security/WindowsHelloVerifier.ts");
+/* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
+
+
+
+class NetworkSecurityService {
+    constructor() {
+        this.REQUEST_TIMEOUT = 30000; // 30 seconds
+        this.MAX_RETRIES = 3;
+        this.retryCount = 0;
+        // Initialize any necessary properties
+    }
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new NetworkSecurityService();
+        }
+        return this.instance;
+    }
+    async secureRequest(endpoint, options = {}) {
+        try {
+            // Verify environment before making request
+            const verifier = _WindowsHelloVerifier__WEBPACK_IMPORTED_MODULE_1__.WindowsHelloVerifier.getInstance();
+            const isEnvironmentSafe = await verifier.verifyIdentity("network_request");
+            if (!isEnvironmentSafe) {
+                throw new Error("Unsafe environment detected");
+            }
+            // Get stored keys and decrypt credentials
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_2__["default"].Keys.getKeysFromStorage();
+            const decryptedCredentials = await _Keys_managment_CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
+                key: storedKeys.AESKey,
+                iv: storedKeys.IV,
+                algorithm: "AES-GCM",
+                length: 256,
+            });
+            // Add security headers and request signature
+            const secureOptions = await this.enhanceRequestOptions(options, decryptedCredentials.authToken);
+            // Add timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), this.REQUEST_TIMEOUT);
+            try {
+                const url = `${decryptedCredentials.server}${endpoint}`;
+                const response = await fetch(url, Object.assign(Object.assign({}, secureOptions), { signal: controller.signal }));
+                // Reset retry count on successful request
+                this.retryCount = 0;
+                // Validate response
+                await this.validateResponse(response.clone());
+                return response;
+            }
+            catch (error) {
+                // Handle retries for specific errors
+                if (this.shouldRetry(error)) {
+                    return this.handleRetry(endpoint, options);
+                }
+                throw error;
+            }
+            finally {
+                clearTimeout(timeoutId);
+            }
+        }
+        catch (error) {
+            console.error("Secure request failed:", error);
+            throw new Error("Network request failed");
+        }
+    }
+    async enhanceRequestOptions(options, authToken) {
+        const timestamp = Date.now().toString();
+        const nonce = crypto.randomUUID();
+        const enhancedHeaders = Object.assign(Object.assign({}, options.headers), { Authorization: `Bearer ${authToken}`, "Content-Type": "application/json", "X-Request-Timestamp": timestamp, "X-Request-Nonce": nonce, "X-Request-Signature": await this.generateRequestSignature(options.body, timestamp, nonce, authToken) });
+        return Object.assign(Object.assign({}, options), { headers: enhancedHeaders, credentials: "omit", mode: "cors", cache: "no-store", referrerPolicy: "no-referrer" });
+    }
+    async generateRequestSignature(body, timestamp, nonce, authToken) {
+        const data = JSON.stringify({
+            body,
+            timestamp,
+            nonce,
+            authToken: authToken.slice(-10), // Only use part of the token for signature
+        });
+        const encoder = new TextEncoder();
+        const signature = await crypto.subtle.digest("SHA-256", encoder.encode(data));
+        return Array.from(new Uint8Array(signature))
+            .map((b) => b.toString(16).padStart(2, "0"))
+            .join("");
+    }
+    async validateResponse(response) {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const contentType = response.headers.get("content-type");
+        if (!(contentType === null || contentType === void 0 ? void 0 : contentType.includes("application/json"))) {
+            throw new Error("Invalid content type");
+        }
+    }
+    shouldRetry(error) {
+        // Retry on network errors or specific HTTP status codes
+        return (this.retryCount < this.MAX_RETRIES &&
+            (error instanceof TypeError || // Network errors
+                (error instanceof Response &&
+                    [408, 429, 500, 502, 503, 504].includes(error.status))));
+    }
+    async handleRetry(endpoint, options) {
+        this.retryCount++;
+        const delay = Math.pow(2, this.retryCount) * 1000; // Exponential backoff
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        return this.secureRequest(endpoint, options);
+    }
+}
+NetworkSecurityService.instance = null;
+
+
+/***/ }),
+
+/***/ "./src/services/auth&security/SecureMemory.ts":
+/*!****************************************************!*\
+  !*** ./src/services/auth&security/SecureMemory.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SecureMemory: () => (/* binding */ SecureMemory)
 /* harmony export */ });
-/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
 /**
  * Manages secure storage and handling of sensitive data in memory.
  * Implements singleton pattern with protection against memory inspection and automatic cleanup.
@@ -41226,7 +40964,7 @@ class SecureMemory {
         window.addEventListener("beforeunload", () => this.disposeAll());
         chrome.runtime.onSuspend.addListener(() => this.disposeAll());
         // Prevent memory inspection
-        this.preventMemoryInspection();
+        // this.preventMemoryInspection();
         // Set up periodic cleanup
         setInterval(() => this.performPeriodicCleanup(), 60000);
     }
@@ -41368,31 +41106,31 @@ class SecureMemory {
      * Implements anti-debugging measures to prevent memory inspection.
      * Includes debugger detection and memory usage masking.
      */
-    preventMemoryInspection() {
-        // Disable debugger
-        setInterval(() => {
-            const startTime = performance.now();
-            debugger;
-            const endTime = performance.now();
-            if (endTime - startTime > 100) {
-                this.disposeAll();
-                throw new Error("Debugger detected");
-            }
-        }, 1000);
-        // Prevent memory dumps
-        if (typeof (process === null || process === void 0 ? void 0 : process.memoryUsage) === "function") {
-            Object.defineProperty(process, "memoryUsage", {
-                value: () => ({
-                    heapUsed: 0,
-                    heapTotal: 0,
-                    external: 0,
-                    arrayBuffers: 0,
-                }),
-                configurable: false,
-                writable: false,
-            });
-        }
-    }
+    // private preventMemoryInspection(): void {
+    //   // Disable debugger
+    //   setInterval(() => {
+    //     const startTime = performance.now();
+    //     debugger;
+    //     const endTime = performance.now();
+    //     if (endTime - startTime > 100) {
+    //       this.disposeAll();
+    //       throw new Error("Debugger detected");
+    //     }
+    //   }, 1000);
+    //   // Prevent memory dumps
+    //   if (typeof process?.memoryUsage === "function") {
+    //     Object.defineProperty(process, "memoryUsage", {
+    //       value: () => ({
+    //         heapUsed: 0,
+    //         heapTotal: 0,
+    //         external: 0,
+    //         arrayBuffers: 0,
+    //       }),
+    //       configurable: false,
+    //       writable: false,
+    //     });
+    //   }
+    // }
     /**
      * Performs periodic cleanup of weak references that have been garbage collected.
      * Removes entries for any data that is no longer accessible.
@@ -41421,8 +41159,301 @@ class SecureMemory {
         console.error(`[SecureMemory] ${context}`);
         throw new Error("Security operation failed");
     }
+    clearAll() {
+        this.disposeAll();
+    }
 }
 SecureMemory.instance = null;
+
+
+/***/ }),
+
+/***/ "./src/services/auth&security/WebAuthnService.ts":
+/*!*******************************************************!*\
+  !*** ./src/services/auth&security/WebAuthnService.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   WebAuthnService: () => (/* binding */ WebAuthnService)
+/* harmony export */ });
+/* harmony import */ var _sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sessionManagment/SessionManager */ "./src/services/sessionManagment/SessionManager.ts");
+/* harmony import */ var _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Keys-managment/additionals */ "./src/services/Keys-managment/additionals.ts");
+
+
+class WebAuthnService {
+    static async isWebAuthnSupported() {
+        const isSupported = window.PublicKeyCredential !== undefined;
+        console.log("WebAuthn support check:", {
+            isSupported,
+            PublicKeyCredential: !!window.PublicKeyCredential,
+            platform: navigator.platform,
+            userAgent: navigator.userAgent,
+        });
+        return isSupported;
+    }
+    static async registerBiometric(username) {
+        try {
+            console.log("Starting biometric registration for user:", username);
+            if (!(await this.isWebAuthnSupported())) {
+                console.error("WebAuthn not supported in this browser");
+                throw new Error("WebAuthn is not supported in this browser");
+            }
+            const challenge = crypto.getRandomValues(new Uint8Array(32));
+            console.log("Generated challenge:", challenge);
+            const createCredentialOptions = {
+                challenge,
+                rp: {
+                    name: "MePassword Extension",
+                    id: window.location.hostname,
+                },
+                user: {
+                    id: Uint8Array.from(username, (c) => c.charCodeAt(0)),
+                    name: username,
+                    displayName: username,
+                },
+                pubKeyCredParams: [
+                    { type: "public-key", alg: -7 }, // ES256
+                    { type: "public-key", alg: -257 }, // RS256
+                ],
+                timeout: this.AUTH_TIMEOUT,
+                authenticatorSelection: {
+                    authenticatorAttachment: "platform", // Use platform authenticator (Windows Hello, Touch ID, etc.)
+                    userVerification: "required",
+                    residentKey: "preferred",
+                },
+            };
+            console.log("Credential options:", createCredentialOptions);
+            console.log("Requesting credential creation...");
+            const credential = await navigator.credentials.create({
+                publicKey: createCredentialOptions,
+            });
+            console.log("Credential created:", credential);
+            if (credential) {
+                console.log("Updating session settings with biometric verification");
+                const biometricType = this.detectBiometricType();
+                console.log("Detected biometric type:", biometricType);
+                await _sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_0__.SessionManagementService.updateSessionSettings({
+                    biometricVerification: true,
+                    biometricType: biometricType,
+                });
+                return true;
+            }
+            console.log("Credential creation failed");
+            return false;
+        }
+        catch (error) {
+            console.error("Error in registerBiometric:", error);
+            _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_1__["default"].logError("registerBiometric", error);
+            throw error;
+        }
+    }
+    static async verifyBiometric() {
+        try {
+            console.log("Starting biometric verification");
+            if (!(await this.isWebAuthnSupported())) {
+                console.log("WebAuthn not supported, aborting verification");
+                return false;
+            }
+            const challenge = crypto.getRandomValues(new Uint8Array(32));
+            console.log("Generated verification challenge:", challenge);
+            const assertionOptions = {
+                challenge,
+                timeout: this.AUTH_TIMEOUT,
+                userVerification: "required",
+            };
+            console.log("Assertion options:", assertionOptions);
+            console.log("Requesting credential verification...");
+            const assertion = await navigator.credentials.get({
+                publicKey: assertionOptions,
+            });
+            console.log("Verification result:", assertion);
+            return assertion !== null;
+        }
+        catch (error) {
+            console.error("Error in verifyBiometric:", error);
+            _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_1__["default"].logError("verifyBiometric", error);
+            return false;
+        }
+    }
+    static detectBiometricType() {
+        const ua = navigator.userAgent.toLowerCase();
+        console.log("Detecting biometric type for user agent:", ua);
+        // Check for Windows Hello (Windows 10 and above)
+        if (ua.includes("windows nt") &&
+            parseFloat(ua.split("windows nt ")[1]) >= 10.0) {
+            console.log("Detected Windows Hello (face recognition)");
+            return "face";
+        }
+        // Check for MacOS Touch ID
+        if (ua.includes("macintosh") || ua.includes("mac os x")) {
+            console.log("Detected Touch ID");
+            return "fingerprint";
+        }
+        // Check for Android fingerprint
+        if (ua.includes("android")) {
+            console.log("Detected Android fingerprint");
+            return "fingerprint";
+        }
+        console.log("Defaulting to face recognition for Windows");
+        return "face"; // Default to face for Windows
+    }
+}
+WebAuthnService.AUTH_TIMEOUT = 60000; // 1 minute
+
+
+/***/ }),
+
+/***/ "./src/services/auth&security/WindowsHelloVerifier.ts":
+/*!************************************************************!*\
+  !*** ./src/services/auth&security/WindowsHelloVerifier.ts ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   WindowsHelloVerifier: () => (/* binding */ WindowsHelloVerifier)
+/* harmony export */ });
+/* harmony import */ var _SecureMemory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SecureMemory */ "./src/services/auth&security/SecureMemory.ts");
+
+class WindowsHelloVerifier {
+    constructor() {
+        this.failedAttempts = 0;
+        this.isHandlingViolation = false;
+        this.initializeProtections();
+    }
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new WindowsHelloVerifier();
+        }
+        return this.instance;
+    }
+    initializeProtections() {
+        this.setupTamperDetection();
+        this.monitorEnvironment();
+    }
+    async verifyIdentity(operation) {
+        try {
+            // Perform environment checks
+            const environmentSafe = await this.verifyEnvironment();
+            if (!environmentSafe) {
+                this.handleSecurityViolation("Unsafe environment detected");
+                return false;
+            }
+            // Reset counters on success
+            this.resetSecurityCounters();
+            return true;
+        }
+        catch (error) {
+            this.handleSecurityViolation("Verification error occurred");
+            return false;
+        }
+    }
+    async verifyEnvironment() {
+        try {
+            const checks = await Promise.all([
+                this.checkVirtualization(),
+                this.checkDebugger(),
+                this.checkTPMAvailability(),
+                this.checkSecureContext(),
+            ]);
+            return checks.every((check) => check === true);
+        }
+        catch (_a) {
+            return false;
+        }
+    }
+    async checkVirtualization() {
+        const indicators = [
+            navigator.hardwareConcurrency < 2,
+            !navigator.platform.toLowerCase().includes("win"),
+            /virtual|vmware|parallels/i.test(navigator.userAgent),
+        ];
+        return !indicators.some((indicator) => indicator === true);
+    }
+    async checkTPMAvailability() {
+        try {
+            const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+            return available === true;
+        }
+        catch (_a) {
+            return false;
+        }
+    }
+    checkSecureContext() {
+        return window.isSecureContext === true;
+    }
+    checkDebugger() {
+        const startTime = performance.now();
+        // debugger;
+        return performance.now() - startTime < 100;
+    }
+    setupTamperDetection() {
+        const devToolsCheck = () => {
+            const threshold = 160;
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            if (widthThreshold || heightThreshold) {
+                this.handleSecurityViolation("DevTools detected");
+            }
+        };
+        window.addEventListener("resize", devToolsCheck);
+        setInterval(devToolsCheck, 1000);
+        // Modified console protection to prevent infinite loops
+        const originalConsole = Object.assign({}, console);
+        Object.defineProperty(window, "console", {
+            get: () => {
+                if (!this.isHandlingViolation) {
+                    this.handleSecurityViolation("Console access attempted");
+                }
+                return originalConsole;
+            },
+        });
+    }
+    monitorEnvironment() {
+        var _a, _b, _c, _d;
+        if ((_c = (_b = (_a = chrome === null || chrome === void 0 ? void 0 : chrome.runtime) === null || _a === void 0 ? void 0 : _a.getManifest()) === null || _b === void 0 ? void 0 : _b.permissions) === null || _c === void 0 ? void 0 : _c.includes("debugger")) {
+            this.handleSecurityViolation("Debugging permission detected");
+        }
+        (_d = navigator.mediaDevices) === null || _d === void 0 ? void 0 : _d.enumerateDevices().then((devices) => {
+            const hasScreenCapture = devices.some((device) => device.kind === "videoinput" &&
+                device.label.toLowerCase().includes("screen"));
+            if (hasScreenCapture) {
+                this.handleSecurityViolation("Screen capture detected");
+            }
+        });
+    }
+    handleFailedAttempt() {
+        this.failedAttempts++;
+        if (this.failedAttempts >= WindowsHelloVerifier.MAX_RETRIES) {
+            this.handleSecurityViolation("Max verification attempts exceeded");
+        }
+    }
+    handleSecurityViolation(reason) {
+        if (this.isHandlingViolation)
+            return;
+        try {
+            this.isHandlingViolation = true;
+            // Log the violation securely
+            console.error(`Security violation: ${reason}`);
+            // Clear sensitive data
+            _SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().clearAll();
+            // Reset the state
+            this.resetSecurityCounters();
+            // Force logout/cleanup
+            chrome.runtime.sendMessage({ type: "SECURITY_VIOLATION", reason });
+        }
+        finally {
+            this.isHandlingViolation = false;
+        }
+    }
+    resetSecurityCounters() {
+        this.failedAttempts = 0;
+    }
+}
+WindowsHelloVerifier.instance = null;
+WindowsHelloVerifier.MAX_RETRIES = 3;
 
 
 /***/ }),
@@ -41433,7 +41464,6 @@ SecureMemory.instance = null;
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SessionManagementService: () => (/* binding */ SessionManagementService)
@@ -41441,7 +41471,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EncryptionService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../EncryptionService */ "./src/services/EncryptionService.ts");
 /* harmony import */ var _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storage/KeyStorage */ "./src/services/storage/KeyStorage.ts");
 /* harmony import */ var _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Keys-managment/additionals */ "./src/services/Keys-managment/additionals.ts");
-/* harmony import */ var _auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth/WebAuthnService */ "./src/services/auth/WebAuthnService.ts");
+/* harmony import */ var _auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth&security/WebAuthnService */ "./src/services/auth&security/WebAuthnService.ts");
 /* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
 
 
@@ -41565,21 +41595,38 @@ class SessionManagementService {
      * Starts a short-lock timer for quick reauthentication within a limited time.
      * Should be called upon successful password entry or biometric verification.
      */
-    startShortLockTimer() {
-        this.settings.autoLockStart = Date.now();
+    async startShortLockTimer() {
+        try {
+            const settings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.getSettingsFromStorage();
+            const updatedSettings = Object.assign(Object.assign({}, settings), { autoLockStart: Date.now(), lastAccessTime: Date.now() });
+            await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.updateSettings(updatedSettings);
+        }
+        catch (error) {
+            console.error("Failed to start short lock timer:", error);
+            throw error;
+        }
     }
     /**
      * Checks if the short-lock timer has expired based on auto-lock settings.
      * Returns true if the user needs to re-authenticate, false otherwise.
      */
     async checkShortLockExpiration() {
-        const settings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.getSettingsFromStorage();
-        const currentTime = Date.now();
-        const shortLockExpiry = settings.autoLockStart + settings.autoLockTime;
-        const remainingTime = shortLockExpiry - currentTime;
-        _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logTime("Time until short lock expiry", remainingTime);
-        _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logTime("Short lock duration", settings.autoLockTime);
-        return currentTime <= shortLockExpiry;
+        try {
+            const settings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.getSettingsFromStorage();
+            if (!(settings === null || settings === void 0 ? void 0 : settings.autoLockStart) || !(settings === null || settings === void 0 ? void 0 : settings.autoLockTime)) {
+                return false;
+            }
+            const currentTime = Date.now();
+            const shortLockExpiry = settings.autoLockStart + settings.autoLockTime;
+            const remainingTime = shortLockExpiry - currentTime;
+            _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logTime("Time until short lock expiry", remainingTime);
+            _Keys_managment_additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logTime("Short lock duration", settings.autoLockTime);
+            return currentTime <= shortLockExpiry;
+        }
+        catch (error) {
+            console.error("Error checking short lock expiration:", error);
+            return false;
+        }
     }
     /**
      * Manually triggers short-lock to end early, requiring re-authentication.
@@ -41597,14 +41644,14 @@ class SessionManagementService {
         try {
             console.log("Configuring biometric:", enable);
             if (enable) {
-                const isSupported = await _auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.isWebAuthnSupported();
+                const isSupported = await _auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.isWebAuthnSupported();
                 if (!isSupported) {
                     throw new Error("Biometric authentication is not supported on this device");
                 }
                 const username = "user"; // Get this from your user management system
-                const registered = await _auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.registerBiometric(username);
+                const registered = await _auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.registerBiometric(username);
                 if (registered) {
-                    const biometricType = _auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.detectBiometricType();
+                    const biometricType = _auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.detectBiometricType();
                     const settings = await SessionManagementService.getSessionSettings();
                     const updatedSettings = Object.assign(Object.assign({}, settings), { biometricVerification: true, biometricType: biometricType });
                     await SessionManagementService.updateSessionSettings(updatedSettings);
@@ -41627,7 +41674,7 @@ class SessionManagementService {
         }
     }
     async checkBiometricType() {
-        return _auth_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.detectBiometricType();
+        return _auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.detectBiometricType();
     }
 }
 // Simplify static methods to focus on core functionality
@@ -41643,7 +41690,6 @@ SessionManagementService.keys = null;
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CredentialStorage: () => (/* binding */ CredentialStorage)
@@ -41695,7 +41741,6 @@ class CredentialStorage {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   KeyStorage: () => (/* binding */ KeyStorage)
@@ -41803,12 +41848,13 @@ class KeyStorage {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SecureStorageService: () => (/* binding */ SecureStorageService)
 /* harmony export */ });
-/* harmony import */ var _security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../security/SecureMemory */ "./src/services/security/SecureMemory.ts");
+/* harmony import */ var _auth_security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../auth&security/SecureMemory */ "./src/services/auth&security/SecureMemory.ts");
+/* harmony import */ var _auth_security_WindowsHelloVerifier__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../auth&security/WindowsHelloVerifier */ "./src/services/auth&security/WindowsHelloVerifier.ts");
+
 
 class SecureStorageService {
     /**
@@ -41817,8 +41863,13 @@ class SecureStorageService {
     static async storeKeys(Keys) {
         console.log("###########################Storing keys:", Keys);
         try {
+            // Verify identity before storing keys
+            const verified = await _auth_security_WindowsHelloVerifier__WEBPACK_IMPORTED_MODULE_1__.WindowsHelloVerifier.getInstance().verifyIdentity("store_keys");
+            if (!verified) {
+                throw new Error("Identity verification failed");
+            }
             // Store in secure memory first
-            _security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
+            _auth_security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
             // Then store encrypted version in chrome storage
             await chrome.storage.local.set({
                 [this.STORAGE_KEYS.PROTECTED_DATA]: Object.assign(Object.assign({}, Keys), { lastUpdated: Date.now() }),
@@ -41836,8 +41887,13 @@ class SecureStorageService {
     static async getKeysFromStorage() {
         console.log("###########################Retrieving keys from storage...");
         try {
+            // Verify identity before retrieving keys
+            const verified = await _auth_security_WindowsHelloVerifier__WEBPACK_IMPORTED_MODULE_1__.WindowsHelloVerifier.getInstance().verifyIdentity("get_keys");
+            if (!verified) {
+                throw new Error("Identity verification failed");
+            }
             // Try to get from secure memory first
-            const memoryKeys = _security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().getSensitiveData("current_keys");
+            const memoryKeys = _auth_security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().getSensitiveData("current_keys");
             if (memoryKeys) {
                 return memoryKeys;
             }
@@ -41851,7 +41907,7 @@ class SecureStorageService {
                 return null;
             }
             // Store in secure memory for future use
-            _security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
+            _auth_security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
             console.log("###########################Keys retrieved:", Keys);
             return Keys;
         }
@@ -41962,7 +42018,6 @@ SecureStorageService.STORAGE_KEYS = {
   \******************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   composeRefs: () => (/* binding */ composeRefs),
@@ -41996,7 +42051,6 @@ function useComposedRefs(...refs) {
   \***************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Primitive: () => (/* binding */ Primitive),
@@ -42058,7 +42112,6 @@ var Root = Primitive;
   \***************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Root: () => (/* binding */ Root),
@@ -42106,7 +42159,6 @@ var Root = Separator;
   \**********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Root: () => (/* binding */ Root),
@@ -42207,7 +42259,6 @@ var Root = Slot;
   \**************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   cva: () => (/* binding */ cva),
@@ -42269,7 +42320,6 @@ const cva = (base, config)=>{
   \*******************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   clsx: () => (/* binding */ clsx),
@@ -42285,7 +42335,6 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \*****************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   clsx: () => (/* binding */ clsx),
@@ -42301,7 +42350,6 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \*********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createTailwindMerge: () => (/* binding */ createTailwindMerge),
@@ -44882,7 +44930,6 @@ const twMerge = /*#__PURE__*/createTailwindMerge(getDefaultConfig);
   \******************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -44899,7 +44946,6 @@ const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.
   \*****************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -44915,7 +44961,6 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ rng)
@@ -44941,7 +44986,6 @@ function rng() {
   \*********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
@@ -44993,7 +45037,6 @@ function stringify(arr, offset = 0) {
   \**************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -45032,7 +45075,6 @@ function v4(options, buf, offset) {
   \********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -45133,9 +45175,8 @@ function validate(uuid) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!*****************************!*\
   !*** ./src/popup/index.tsx ***!
   \*****************************/

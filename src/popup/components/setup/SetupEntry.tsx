@@ -17,6 +17,7 @@ import { KeySet, UserCredentials } from "../../../services/types";
 import Main from "../main";
 import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
 import { KeyStorage } from "../../../services/storage/KeyStorage";
+import { BackupSecurityService } from "../../../services/auth&security/BackupSecurityService";
 
 const StartupScreen = ({
   onKeysLoaded,
@@ -62,22 +63,22 @@ const StartupScreen = ({
     setError("");
 
     try {
-      const isValid = await handleValidatePassword(password);
-      if (isValid && fileContent) {
-        await StoringService.Keys.storeKeys(fileContent);
-        const response = await EncryptionService.API.SettingGet();
-        const settings = await response.json();
-        await SessionManagementService.updateSessionSettings(
-          settings.sessionSettings
-        );
-        await SessionManagementService.initialize();
-        onKeysLoaded(fileContent);
-      } else {
-        setError("Invalid password. Please try again.");
-        setPassword("");
-      }
+      const backupService = BackupSecurityService.getInstance();
+      const backupBlob = new Blob([JSON.stringify(fileContent)], {
+        type: "application/json",
+      });
+      await backupService.restoreFromBackup(backupBlob, password);
+
+      const keys = await StoringService.Keys.getKeysFromStorage();
+      const response = await EncryptionService.API.SettingGet();
+      const settings = await response.json();
+      await SessionManagementService.updateSessionSettings(
+        settings.sessionSettings
+      );
+      await SessionManagementService.initialize();
+      onKeysLoaded(keys);
     } catch (err) {
-      setError("Failed to validate password. Please try again.");
+      setError("Invalid password or corrupted backup file");
       setPassword("");
     }
   };
@@ -88,41 +89,18 @@ const StartupScreen = ({
     setError("");
 
     const file = e.dataTransfer.files[0];
-    if (!file) return;
+    if (!file || !file.name.endsWith(".mpb")) {
+      setError("Please provide a valid MePassword backup file");
+      return;
+    }
 
     try {
-      const text = await file.text();
-      const lines = text.split("\n");
-      const keys: KeySet = {
-        privateKey: "",
-        AESKey: "",
-        IV: "",
-        Credentials: {
-          server: "",
-          authToken: "",
-        },
-      };
-
-      // Parse the file content
-      for (let i = 0; i < lines.length; i++) {
-        if (lines[i].includes("private Key")) {
-          keys.privateKey = lines[i + 1].trim();
-        } else if (lines[i].includes("AES key")) {
-          keys.AESKey = lines[i + 1].trim();
-        } else if (lines[i].includes("-------iv")) {
-          keys.IV = lines[i + 1].trim();
-        } else if (lines[i].includes("server")) {
-          keys.Credentials.server = lines[i + 1].trim();
-        } else if (lines[i].includes("auth key")) {
-          keys.Credentials.authToken = lines[i + 1].trim();
-        }
-      }
-
-      setFileContent(keys);
-      await StoringService.Keys.storeKeys(keys);
+      const fileText = await file.text();
+      const keySet = JSON.parse(fileText) as KeySet;
+      setFileContent(keySet);
       setShowPasswordPrompt(true);
     } catch (err) {
-      setError("Invalid key file. Please try again.");
+      setError("Invalid backup file format");
     }
   }, []);
 
@@ -250,23 +228,20 @@ const CreateAccountForm = ({
 
       console.log("keys are stored", keys);
 
-      // Download keys file with new format
-      const keysString = `-------private Key---------
-${keys.privateKey}
--------AES key-------------
-${keys.AESKey}
--------iv-------------
-${keys.IV}
---------server----------
-${keys.Credentials.server}
--------auth key-------
-${keys.Credentials.authToken}`;
+      // Create backup using the user's password
+      if (!formData.password) {
+        throw new Error("Password is required");
+      }
+      const backupService = BackupSecurityService.getInstance();
+      const backupBlob = await backupService.createSecureBackup(
+        formData.password
+      );
 
-      const blob = new Blob([keysString], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
+      // Download the backup file
+      const url = URL.createObjectURL(backupBlob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "mepassword-keys.txt";
+      a.download = "mepassword-backup.mpb"; // Custom extension
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

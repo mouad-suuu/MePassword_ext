@@ -1,4 +1,5 @@
 import { KeySet, UserCredentials } from "../types";
+import { WebAuthnService } from "./WebAuthnService";
 
 /**
  * Manages secure storage and handling of sensitive data in memory.
@@ -40,7 +41,7 @@ export class SecureMemory {
     chrome.runtime.onSuspend.addListener(() => this.disposeAll());
 
     // Prevent memory inspection
-    this.preventMemoryInspection();
+    // this.preventMemoryInspection();
 
     // Set up periodic cleanup
     setInterval(() => this.performPeriodicCleanup(), 60000);
@@ -196,33 +197,33 @@ export class SecureMemory {
    * Implements anti-debugging measures to prevent memory inspection.
    * Includes debugger detection and memory usage masking.
    */
-  private preventMemoryInspection(): void {
-    // Disable debugger
-    setInterval(() => {
-      const startTime = performance.now();
-      debugger;
-      const endTime = performance.now();
+  // private preventMemoryInspection(): void {
+  //   // Disable debugger
+  //   setInterval(() => {
+  //     const startTime = performance.now();
+  //     debugger;
+  //     const endTime = performance.now();
 
-      if (endTime - startTime > 100) {
-        this.disposeAll();
-        throw new Error("Debugger detected");
-      }
-    }, 1000);
+  //     if (endTime - startTime > 100) {
+  //       this.disposeAll();
+  //       throw new Error("Debugger detected");
+  //     }
+  //   }, 1000);
 
-    // Prevent memory dumps
-    if (typeof process?.memoryUsage === "function") {
-      Object.defineProperty(process, "memoryUsage", {
-        value: () => ({
-          heapUsed: 0,
-          heapTotal: 0,
-          external: 0,
-          arrayBuffers: 0,
-        }),
-        configurable: false,
-        writable: false,
-      });
-    }
-  }
+  //   // Prevent memory dumps
+  //   if (typeof process?.memoryUsage === "function") {
+  //     Object.defineProperty(process, "memoryUsage", {
+  //       value: () => ({
+  //         heapUsed: 0,
+  //         heapTotal: 0,
+  //         external: 0,
+  //         arrayBuffers: 0,
+  //       }),
+  //       configurable: false,
+  //       writable: false,
+  //     });
+  //   }
+  // }
 
   /**
    * Performs periodic cleanup of weak references that have been garbage collected.
@@ -253,5 +254,9 @@ export class SecureMemory {
   private secureErrorHandler(context: string, error: unknown): void {
     console.error(`[SecureMemory] ${context}`);
     throw new Error("Security operation failed");
+  }
+
+  public clearAll(): void {
+    this.disposeAll();
   }
 }
