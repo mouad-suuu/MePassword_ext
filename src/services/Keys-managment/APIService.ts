@@ -9,6 +9,7 @@ import StoringService from "../StorageService";
 import { v4 as uuidv4 } from "uuid";
 import EncryptionService from "../EncryptionService";
 import { NetworkSecurityService } from "../auth&security/NetworkSecurityService";
+import { CryptoUtils } from "./CryptoUtils";
 
 export class APIService {
   private static networkSecurity = NetworkSecurityService.getInstance();
@@ -34,22 +35,13 @@ export class APIService {
   public static async SettingsPost(publicKey: string): Promise<Response> {
     try {
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
-      const decryptedCredentials =
-        await CredentialCryptoService.decryptCredentials(
-          storedKeys.Credentials,
-          {
-            key: storedKeys.AESKey,
-            iv: storedKeys.IV,
-            algorithm: "AES-GCM",
-            length: 256,
-          }
-        );
+      console.log("*******************************************8", storedKeys);
 
       return await this.networkSecurity.secureRequest("/api/settings", {
         method: "POST",
         body: JSON.stringify({
           publicKey,
-          password: decryptedCredentials.password,
+          password: storedKeys.Credentials.password,
           deviceId: uuidv4(),
           timestamp: Date.now(),
         }),
@@ -62,11 +54,17 @@ export class APIService {
   public static async validatePassword(password: string): Promise<boolean> {
     try {
       console.log("Validating the password:", password);
+      const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      const key = await CryptoUtils.importAESKey(storedKeys.AESKey);
+      const iv = CryptoUtils.base64ToBuffer(storedKeys.IV);
+
+      const NewEncryptedPassword = CryptoUtils.encryptString(password, key, iv);
+
       const response = await this.networkSecurity.secureRequest(
         "/api/settings/validate",
         {
           method: "POST",
-          body: JSON.stringify({ password }),
+          body: JSON.stringify({ NewEncryptedPassword }),
         }
       );
 

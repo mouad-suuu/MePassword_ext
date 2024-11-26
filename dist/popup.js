@@ -39764,11 +39764,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   APIService: () => (/* binding */ APIService)
 /* harmony export */ });
-/* harmony import */ var _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CredentialCrypto */ "./src/services/Keys-managment/CredentialCrypto.ts");
-/* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
+/* harmony import */ var _StorageService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../StorageService */ "./src/services/StorageService.ts");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
-/* harmony import */ var _EncryptionService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../EncryptionService */ "./src/services/EncryptionService.ts");
-/* harmony import */ var _auth_security_NetworkSecurityService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth&security/NetworkSecurityService */ "./src/services/auth&security/NetworkSecurityService.ts");
+/* harmony import */ var _EncryptionService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../EncryptionService */ "./src/services/EncryptionService.ts");
+/* harmony import */ var _auth_security_NetworkSecurityService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../auth&security/NetworkSecurityService */ "./src/services/auth&security/NetworkSecurityService.ts");
+/* harmony import */ var _CryptoUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CryptoUtils */ "./src/services/Keys-managment/CryptoUtils.ts");
 
 
 
@@ -39789,18 +39789,13 @@ class APIService {
     }
     static async SettingsPost(publicKey) {
         try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
-            const decryptedCredentials = await _CredentialCrypto__WEBPACK_IMPORTED_MODULE_0__.CredentialCryptoService.decryptCredentials(storedKeys.Credentials, {
-                key: storedKeys.AESKey,
-                iv: storedKeys.IV,
-                algorithm: "AES-GCM",
-                length: 256,
-            });
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].Keys.getKeysFromStorage();
+            console.log("*******************************************8", storedKeys);
             return await this.networkSecurity.secureRequest("/api/settings", {
                 method: "POST",
                 body: JSON.stringify({
                     publicKey,
-                    password: decryptedCredentials.password,
+                    password: storedKeys.Credentials.password,
                     deviceId: (0,uuid__WEBPACK_IMPORTED_MODULE_4__["default"])(),
                     timestamp: Date.now(),
                 }),
@@ -39813,9 +39808,13 @@ class APIService {
     static async validatePassword(password) {
         try {
             console.log("Validating the password:", password);
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].Keys.getKeysFromStorage();
+            const key = await _CryptoUtils__WEBPACK_IMPORTED_MODULE_3__.CryptoUtils.importAESKey(storedKeys.AESKey);
+            const iv = _CryptoUtils__WEBPACK_IMPORTED_MODULE_3__.CryptoUtils.base64ToBuffer(storedKeys.IV);
+            const NewEncryptedPassword = _CryptoUtils__WEBPACK_IMPORTED_MODULE_3__.CryptoUtils.encryptString(password, key, iv);
             const response = await this.networkSecurity.secureRequest("/api/settings/validate", {
                 method: "POST",
-                body: JSON.stringify({ password }),
+                body: JSON.stringify({ NewEncryptedPassword }),
             });
             const jsonResponse = await response.json();
             console.log("Password is valid:", jsonResponse.isValid);
@@ -39852,7 +39851,7 @@ class APIService {
     }
     static async KeysGet() {
         try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].Keys.getKeysFromStorage();
             const response = await this.networkSecurity.secureRequest("/api/keys", {
                 method: "GET",
             });
@@ -39860,11 +39859,11 @@ class APIService {
             if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
                 throw new Error("No private key found in stored credentials");
             }
-            const privateKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
+            const privateKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
             if (!privateKey) {
                 throw new Error("Failed to import private key");
             }
-            const decryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.decryptWithRSA(data.keys, privateKey);
+            const decryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.decryptWithRSA(data.keys, privateKey);
             if (!decryptedData) {
                 throw new Error("Decryption returned null or undefined");
             }
@@ -39895,8 +39894,8 @@ class APIService {
                 throw new Error("No public key found in settings");
             }
             // Encrypt the data
-            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
-            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
+            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.encryptWithRSA({
                 website: data.website.trim(),
                 user: data.user.trim(),
                 password: data.password,
@@ -39923,8 +39922,8 @@ class APIService {
                 throw new Error("No public key found in settings");
             }
             // Encrypt the data
-            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
-            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
+            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.encryptWithRSA({
                 website: data.website.trim(),
                 user: data.user.trim(),
                 password: data.password,
@@ -39950,7 +39949,7 @@ class APIService {
     }
     static async PasswordsGet() {
         try {
-            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_1__["default"].Keys.getKeysFromStorage();
+            const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].Keys.getKeysFromStorage();
             const response = await this.networkSecurity.secureRequest("/api/passwords", {
                 method: "GET",
             });
@@ -39958,11 +39957,11 @@ class APIService {
             if (!(storedKeys === null || storedKeys === void 0 ? void 0 : storedKeys.privateKey)) {
                 throw new Error("No private key found in stored credentials");
             }
-            const privateKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
+            const privateKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.importRSAPrivateKey(storedKeys.privateKey);
             if (!privateKey) {
                 throw new Error("Failed to import private key");
             }
-            const decryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.decryptWithRSA(data.passwords, privateKey);
+            const decryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.decryptWithRSA(data.passwords, privateKey);
             if (!decryptedData) {
                 throw new Error("Decryption returned null or undefined");
             }
@@ -39993,8 +39992,8 @@ class APIService {
                 throw new Error("No public key found in settings");
             }
             // Encrypt the data
-            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
-            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_2__["default"].Utils.encryptWithRSA({
+            const publicKey = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.importRSAPublicKey(settings.settings.publicKey);
+            const encryptedData = await _EncryptionService__WEBPACK_IMPORTED_MODULE_1__["default"].Utils.encryptWithRSA({
                 website: data.website.trim(),
                 user: data.user.trim(),
                 password: data.password,
@@ -40019,7 +40018,7 @@ class APIService {
         }
     }
 }
-APIService.networkSecurity = _auth_security_NetworkSecurityService__WEBPACK_IMPORTED_MODULE_3__.NetworkSecurityService.getInstance();
+APIService.networkSecurity = _auth_security_NetworkSecurityService__WEBPACK_IMPORTED_MODULE_2__.NetworkSecurityService.getInstance();
 
 
 /***/ }),
