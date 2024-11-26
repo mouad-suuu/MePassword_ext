@@ -55,6 +55,7 @@ const Passwords: React.FC = () => {
         {Array.isArray(passwords) && passwords.length > 0 ? (
           passwords.map((item, index) => (
             <PasswordItem
+              key={item.id}
               {...item}
               onDelete={() => setRefreshTrigger((prev) => prev + 1)}
             />

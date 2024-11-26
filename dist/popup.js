@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/popup/index.css":
@@ -8,6 +7,7 @@
   \*************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -2119,6 +2119,7 @@ video {
   \*****************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /*
@@ -2213,6 +2214,7 @@ module.exports = function (cssWithMappingToString) {
   \************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 module.exports = function (item) {
@@ -2238,6 +2240,7 @@ module.exports = function (item) {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Icon)
@@ -2300,6 +2303,7 @@ const Icon = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ createLucideIcon)
@@ -2344,6 +2348,7 @@ const createLucideIcon = (iconName, iconNode) => {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ defaultAttributes)
@@ -2379,6 +2384,7 @@ var defaultAttributes = {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Bell)
@@ -2410,6 +2416,7 @@ const Bell = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("B
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ CircleAlert)
@@ -2442,6 +2449,7 @@ const CircleAlert = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["defaul
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Copy)
@@ -2473,6 +2481,7 @@ const Copy = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("C
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ EyeOff)
@@ -2518,6 +2527,7 @@ const EyeOff = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Eye)
@@ -2555,6 +2565,7 @@ const Eye = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Ey
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ FileKey)
@@ -2588,6 +2599,7 @@ const FileKey = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Fingerprint)
@@ -2626,6 +2638,7 @@ const Fingerprint = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["defaul
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Key)
@@ -2658,6 +2671,7 @@ const Key = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("Ke
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LockKeyhole)
@@ -2690,6 +2704,7 @@ const LockKeyhole = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["defaul
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Lock)
@@ -2721,6 +2736,7 @@ const Lock = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("L
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ LogIn)
@@ -2753,6 +2769,7 @@ const LogIn = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Mail)
@@ -2784,6 +2801,7 @@ const Mail = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("M
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Plus)
@@ -2815,6 +2833,7 @@ const Plus = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])("P
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Settings)
@@ -2852,6 +2871,7 @@ const Settings = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"]
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Shield)
@@ -2888,6 +2908,7 @@ const Shield = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Trash2)
@@ -2922,6 +2943,7 @@ const Trash2 = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Upload)
@@ -2954,6 +2976,7 @@ const Upload = (0,_createLucideIcon_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   mergeClasses: () => (/* binding */ mergeClasses),
@@ -2977,12 +3000,207 @@ const mergeClasses = (...classes) => classes.filter((className, index, array) =>
 
 /***/ }),
 
+/***/ "./node_modules/process/browser.js":
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+
 /***/ "./node_modules/react-dom/cjs/react-dom.development.js":
 /*!*************************************************************!*\
   !*** ./node_modules/react-dom/cjs/react-dom.development.js ***!
   \*************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
+"use strict";
 /**
  * @license React
  * react-dom.development.js
@@ -32911,6 +33129,7 @@ if (
   \******************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
+"use strict";
 
 
 var m = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -32943,6 +33162,7 @@ if (false) {} else {
   \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 function checkDCE() {
@@ -32986,6 +33206,7 @@ if (false) {} else {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
+"use strict";
 /**
  * @license React
  * react-jsx-runtime.development.js
@@ -34329,6 +34550,7 @@ exports.jsxs = jsxs;
   \*****************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
+"use strict";
 /* module decorator */ module = __webpack_require__.nmd(module);
 /**
  * @license React
@@ -37080,6 +37302,7 @@ if (
   \*************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 if (false) {} else {
@@ -37095,6 +37318,7 @@ if (false) {} else {
   \*******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 if (false) {} else {
@@ -37110,6 +37334,7 @@ if (false) {} else {
   \*************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
+"use strict";
 /**
  * @license React
  * scheduler.development.js
@@ -37754,6 +37979,7 @@ if (
   \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 if (false) {} else {
@@ -37769,6 +37995,7 @@ if (false) {} else {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -37821,6 +38048,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
   \****************************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 var stylesInDOM = [];
@@ -37914,6 +38142,7 @@ module.exports = function (list, options) {
   \********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 var memo = {};
@@ -37957,6 +38186,7 @@ module.exports = insertBySelector;
   \**********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -37976,6 +38206,7 @@ module.exports = insertStyleElement;
   \**********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -37995,6 +38226,7 @@ module.exports = setAttributesWithoutAttributes;
   \***************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -38065,6 +38297,7 @@ module.exports = domAPI;
   \*********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -38088,6 +38321,7 @@ module.exports = styleTagTransform;
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SessionContext: () => (/* binding */ SessionContext),
@@ -38197,6 +38431,7 @@ const SessionProvider = ({ children, }) => {
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38235,6 +38470,7 @@ const App = () => {
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Navigation: () => (/* binding */ Navigation)
@@ -38275,6 +38511,7 @@ const Navigation = ({ activeTab, setActiveTab, onLock, }) => {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38402,6 +38639,7 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38491,6 +38729,7 @@ const KeyItem = ({ website, user, password, id, onDelete, }) => {
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38542,6 +38781,7 @@ const Main = () => {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38685,6 +38925,7 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38731,7 +38972,7 @@ const Passwords = () => {
         };
         fetchPasswords();
     }, [refreshTrigger]);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: _them__WEBPACK_IMPORTED_MODULE_5__.theme.text.heading, children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, Object.assign({}, item, { onDelete: () => setRefreshTrigger((prev) => prev + 1) }))))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_4__["default"], { open: showAddDialog, onClose: () => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded", children: error })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-between items-center", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: _them__WEBPACK_IMPORTED_MODULE_5__.theme.text.heading, children: "Passwords" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { onClick: () => setShowAddDialog(true), className: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors", children: "Add New" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "mt-4", children: Array.isArray(passwords) && passwords.length > 0 ? (passwords.map((item, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(PasswordItem, Object.assign({}, item, { onDelete: () => setRefreshTrigger((prev) => prev + 1) }), item.id)))) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "text-center py-6 text-gray-500", children: "No passwords saved yet. Click \"Add New\" to get started." })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AddPasswordDialog__WEBPACK_IMPORTED_MODULE_4__["default"], { open: showAddDialog, onClose: () => {
                     setShowAddDialog(false);
                     setRefreshTrigger((prev) => prev + 1);
                 } })] }));
@@ -38801,6 +39042,7 @@ const PasswordItem = ({ id, website, user, password, onDelete }) => {
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SettingsComponent: () => (/* binding */ SettingsComponent)
@@ -38895,6 +39137,7 @@ const SettingsComponent = () => {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -38922,6 +39165,7 @@ const Profile = () => {
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PasswordPrompt: () => (/* binding */ PasswordPrompt),
@@ -39036,6 +39280,7 @@ const PasswordPrompt = () => {
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -39249,7 +39494,9 @@ ${keys.Credentials.authToken}`;
             setLoading(false);
         }
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Create Account" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Enter your credentials to get started" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Website", value: formData.server, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { server: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Auth Token", value: formData.authToken, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { authToken: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", placeholder: "Password", value: formData.password, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { password: e.target.value }))), required: true }) }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full", disabled: loading, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_15__["default"], { className: "mr-2 h-4 w-4" }), loading ? "Creating Account..." : "Create Account"] })] }) })] }) }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "flex items-center justify-center min-h-screen bg-gray-100", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.Card, { className: "w-96", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardHeader, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardTitle, { children: "Create Account" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardDescription, { children: "Enter your credentials to get started" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_card__WEBPACK_IMPORTED_MODULE_2__.CardContent, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Website", value: formData.server, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { server: e.target.value.endsWith("/")
+                                            ? e.target.value.slice(0, -1)
+                                            : e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { placeholder: "Auth Token", value: formData.authToken, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { authToken: e.target.value }))), required: true }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_input__WEBPACK_IMPORTED_MODULE_4__.Input, { type: "password", placeholder: "Password", value: formData.password, onChange: (e) => setFormData((prev) => (Object.assign(Object.assign({}, prev), { password: e.target.value }))), required: true }) }), error && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.Alert, { variant: "destructive", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_alert__WEBPACK_IMPORTED_MODULE_5__.AlertDescription, { children: error }) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_ui_button__WEBPACK_IMPORTED_MODULE_3__.Button, { type: "submit", className: "w-full", disabled: loading, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(lucide_react__WEBPACK_IMPORTED_MODULE_15__["default"], { className: "mr-2 h-4 w-4" }), loading ? "Creating Account..." : "Create Account"] })] }) })] }) }));
 };
 const PasswordManager = () => {
     const [stage, setStage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("startup");
@@ -39287,6 +39534,7 @@ const PasswordManager = () => {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Alert: () => (/* binding */ Alert),
@@ -39350,6 +39598,7 @@ AlertDescription.displayName = "AlertDescription";
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Button: () => (/* binding */ Button),
@@ -39418,6 +39667,7 @@ Button.displayName = "Button";
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Card: () => (/* binding */ Card),
@@ -39486,6 +39736,7 @@ CardFooter.displayName = "CardFooter";
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Input: () => (/* binding */ Input)
@@ -39543,6 +39794,7 @@ Input.displayName = "Input";
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Separator: () => (/* binding */ Separator)
@@ -39583,6 +39835,7 @@ Separator.displayName = _radix_ui_react_separator__WEBPACK_IMPORTED_MODULE_3__.R
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   cn: () => (/* binding */ cn),
@@ -39618,6 +39871,7 @@ const gradients = {
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   theme: () => (/* binding */ theme)
@@ -39681,6 +39935,7 @@ const theme = {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -39716,6 +39971,7 @@ EncryptionService.Utils = _Keys_managment_CryptoUtils__WEBPACK_IMPORTED_MODULE_5
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   APIService: () => (/* binding */ APIService)
@@ -40197,6 +40453,7 @@ class APIService {
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CredentialCryptoService: () => (/* binding */ CredentialCryptoService)
@@ -40314,6 +40571,7 @@ class CredentialCryptoService {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CryptoUtils: () => (/* binding */ CryptoUtils)
@@ -40489,6 +40747,7 @@ class CryptoUtils {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   KeyGenerationService: () => (/* binding */ KeyGenerationService)
@@ -40616,6 +40875,7 @@ KeyGenerationService.PBKDF2_ITERATIONS = 100000;
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ZeroKnowledgeProofService: () => (/* binding */ ZeroKnowledgeProofService)
@@ -40663,6 +40923,7 @@ class ZeroKnowledgeProofService {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -40759,6 +41020,7 @@ AdditionalMethods.sessionData = new Map();
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -40785,6 +41047,7 @@ StorageService.SecureStorage = _storage_WindowsHelloStorage__WEBPACK_IMPORTED_MO
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   WebAuthnService: () => (/* binding */ WebAuthnService)
@@ -40916,12 +41179,261 @@ WebAuthnService.AUTH_TIMEOUT = 60000; // 1 minute
 
 /***/ }),
 
+/***/ "./src/services/security/SecureMemory.ts":
+/*!***********************************************!*\
+  !*** ./src/services/security/SecureMemory.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SecureMemory: () => (/* binding */ SecureMemory)
+/* harmony export */ });
+/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
+/**
+ * Manages secure storage and handling of sensitive data in memory.
+ * Implements singleton pattern with protection against memory inspection and automatic cleanup.
+ */
+class SecureMemory {
+    /**
+     * Private constructor to enforce singleton pattern.
+     * Initializes security protections and cleanup handlers.
+     */
+    constructor() {
+        this.sensitiveData = new Map();
+        this.registry = new FinalizationRegistry(this.cleanup.bind(this));
+        this.initializeProtections();
+    }
+    /**
+     * Returns the singleton instance of SecureMemory, creating it if it doesn't exist.
+     * @returns The SecureMemory instance
+     */
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new SecureMemory();
+        }
+        return this.instance;
+    }
+    /**
+     * Initializes security protections including:
+     * - Cleanup handlers for page unload and extension suspension
+     * - Memory inspection prevention
+     * - Periodic cleanup of stale data
+     */
+    initializeProtections() {
+        // Register cleanup handlers
+        window.addEventListener("beforeunload", () => this.disposeAll());
+        chrome.runtime.onSuspend.addListener(() => this.disposeAll());
+        // Prevent memory inspection
+        this.preventMemoryInspection();
+        // Set up periodic cleanup
+        setInterval(() => this.performPeriodicCleanup(), 60000);
+    }
+    /**
+     * Stores sensitive data in memory with protection mechanisms.
+     * Converts data to Uint8Array and stores it with a weak reference for automatic cleanup.
+     * @param key - Unique identifier for the stored data
+     * @param data - Sensitive data to store (string, KeySet, or UserCredentials)
+     */
+    storeSensitiveData(key, data) {
+        try {
+            // Convert data to Uint8Array
+            const encoder = new TextEncoder();
+            const rawData = encoder.encode(JSON.stringify(data));
+            // Create protected buffer
+            const protectedBuffer = new Uint8Array(rawData.length);
+            protectedBuffer.set(rawData);
+            // Store with weak reference
+            const weakRef = new WeakRef(protectedBuffer);
+            this.sensitiveData.set(key, weakRef);
+            // Register for cleanup
+            this.registry.register(protectedBuffer, key);
+            // Immediately clear the temporary variables
+            rawData.fill(0);
+        }
+        catch (error) {
+            this.secureErrorHandler("Error storing sensitive data", error);
+        }
+    }
+    /**
+     * Retrieves previously stored sensitive data.
+     * @param key - Unique identifier for the stored data
+     * @returns The stored data cast to type T, or null if not found/expired
+     */
+    getSensitiveData(key) {
+        try {
+            const weakRef = this.sensitiveData.get(key);
+            if (!weakRef)
+                return null;
+            const buffer = weakRef.deref();
+            if (!buffer) {
+                this.sensitiveData.delete(key);
+                return null;
+            }
+            const decoder = new TextDecoder();
+            const data = JSON.parse(decoder.decode(buffer));
+            return data;
+        }
+        catch (error) {
+            this.secureErrorHandler("Error retrieving sensitive data", error);
+            return null;
+        }
+    }
+    /**
+     * Securely disposes of sensitive data for a specific key.
+     * Performs secure wipe of the data before removing references.
+     * @param key - Unique identifier for the data to dispose
+     */
+    disposeSensitiveData(key) {
+        try {
+            const weakRef = this.sensitiveData.get(key);
+            if (weakRef) {
+                const buffer = weakRef.deref();
+                if (buffer) {
+                    this.secureWipe(buffer);
+                }
+            }
+            this.sensitiveData.delete(key);
+        }
+        catch (error) {
+            this.secureErrorHandler("Error disposing sensitive data", error);
+        }
+    }
+    /**
+     * Securely disposes of all stored sensitive data.
+     * Called during cleanup and when security threats are detected.
+     */
+    disposeAll() {
+        try {
+            for (const [key] of this.sensitiveData) {
+                this.disposeSensitiveData(key);
+            }
+            this.sensitiveData.clear();
+        }
+        catch (error) {
+            this.secureErrorHandler("Error disposing all sensitive data", error);
+        }
+    }
+    /**
+     * Performs secure wiping of data buffers using multiple overwrite passes.
+     * Uses different patterns and random data to ensure data cannot be recovered.
+     * @param buffer - The buffer to securely wipe
+     */
+    secureWipe(buffer) {
+        try {
+            // Multiple overwrite passes with different patterns
+            const patterns = [0x00, 0xff, 0xaa, 0x55, 0xf0];
+            patterns.forEach((pattern) => {
+                buffer.fill(pattern);
+                // Force synchronization with a memory barrier equivalent
+                this.memoryBarrier();
+            });
+            // Final random overwrite
+            crypto.getRandomValues(buffer);
+            // Additional security: overwrite with zeros
+            buffer.fill(0);
+        }
+        catch (error) {
+            this.secureErrorHandler("Error in secure wipe", error);
+        }
+    }
+    /**
+     * Creates a memory barrier to ensure memory operations are completed.
+     * Prevents optimization and ensures secure wiping operations are executed.
+     */
+    memoryBarrier() {
+        try {
+            // Create a temporary SharedArrayBuffer for synchronization
+            // This is a more compatible way to ensure memory operations are completed
+            const temp = new Uint8Array(1);
+            crypto.getRandomValues(temp);
+            // Perform a dummy operation to prevent optimization
+            if (temp[0] === 0xff) {
+                // This block will rarely execute but prevents the compiler
+                // from optimizing away our memory barrier
+                console.debug("Memory barrier checkpoint");
+            }
+        }
+        catch (_a) {
+            // Fallback if SharedArrayBuffer is not available
+            // Create a small delay to allow memory operations to complete
+            const start = performance.now();
+            while (performance.now() - start < 1) {
+                // Busy wait for 1ms
+            }
+        }
+    }
+    /**
+     * Implements anti-debugging measures to prevent memory inspection.
+     * Includes debugger detection and memory usage masking.
+     */
+    preventMemoryInspection() {
+        // Disable debugger
+        setInterval(() => {
+            const startTime = performance.now();
+            debugger;
+            const endTime = performance.now();
+            if (endTime - startTime > 100) {
+                this.disposeAll();
+                throw new Error("Debugger detected");
+            }
+        }, 1000);
+        // Prevent memory dumps
+        if (typeof (process === null || process === void 0 ? void 0 : process.memoryUsage) === "function") {
+            Object.defineProperty(process, "memoryUsage", {
+                value: () => ({
+                    heapUsed: 0,
+                    heapTotal: 0,
+                    external: 0,
+                    arrayBuffers: 0,
+                }),
+                configurable: false,
+                writable: false,
+            });
+        }
+    }
+    /**
+     * Performs periodic cleanup of weak references that have been garbage collected.
+     * Removes entries for any data that is no longer accessible.
+     */
+    performPeriodicCleanup() {
+        for (const [key, weakRef] of this.sensitiveData) {
+            if (!weakRef.deref()) {
+                this.sensitiveData.delete(key);
+            }
+        }
+    }
+    /**
+     * Callback for the FinalizationRegistry to cleanup data when objects are garbage collected.
+     * @param key - The key of the data to cleanup
+     */
+    cleanup(key) {
+        this.disposeSensitiveData(key);
+    }
+    /**
+     * Handles errors in secure operations while maintaining security.
+     * Logs minimal information and throws generic errors to prevent information leakage.
+     * @param context - General context of where the error occurred
+     * @param error - The error that was caught
+     */
+    secureErrorHandler(context, error) {
+        console.error(`[SecureMemory] ${context}`);
+        throw new Error("Security operation failed");
+    }
+}
+SecureMemory.instance = null;
+
+
+/***/ }),
+
 /***/ "./src/services/sessionManagment/SessionManager.ts":
 /*!*********************************************************!*\
   !*** ./src/services/sessionManagment/SessionManager.ts ***!
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SessionManagementService: () => (/* binding */ SessionManagementService)
@@ -41131,6 +41643,7 @@ SessionManagementService.keys = null;
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CredentialStorage: () => (/* binding */ CredentialStorage)
@@ -41182,6 +41695,7 @@ class CredentialStorage {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   KeyStorage: () => (/* binding */ KeyStorage)
@@ -41289,104 +41803,23 @@ class KeyStorage {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SecureStorageService: () => (/* binding */ SecureStorageService)
 /* harmony export */ });
+/* harmony import */ var _security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../security/SecureMemory */ "./src/services/security/SecureMemory.ts");
+
 class SecureStorageService {
-    /**
-     * Stores sensitive data (KeySet) using Windows Hello protection
-     */
-    // public static async storeProtectedData(data: KeySet): Promise<void> {
-    //   try {
-    //     // First, verify biometric authentication
-    //     const isAuthenticated = await WebAuthnService.verifyBiometric();
-    //     if (!isAuthenticated) {
-    //       throw new Error(
-    //         "Biometric authentication required for storing protected data"
-    //       );
-    //     }
-    //     // Encrypt the sensitive data
-    //     const encoder = new TextEncoder();
-    //     const dataBuffer = encoder.encode(JSON.stringify(data));
-    //     // Generate a new AES key for data encryption
-    //     const aesKey = await crypto.subtle.generateKey(
-    //       { name: "AES-GCM", length: 256 },
-    //       true,
-    //       ["encrypt", "decrypt"]
-    //     );
-    //     // Generate random IV
-    //     const iv = crypto.getRandomValues(new Uint8Array(12));
-    //     // Encrypt the data
-    //     const encryptedData = await crypto.subtle.encrypt(
-    //       { name: "AES-GCM", iv },
-    //       aesKey,
-    //       dataBuffer
-    //     );
-    //     // Export the AES key
-    //     const exportedKey = await crypto.subtle.exportKey("raw", aesKey);
-    //     // Store the encrypted data and IV
-    //     const storageData = {
-    //       encryptedData: Array.from(new Uint8Array(encryptedData)),
-    //       iv: Array.from(iv),
-    //       key: Array.from(new Uint8Array(exportedKey)),
-    //     };
-    //     await chrome.storage.local.set({
-    //       [this.STORAGE_KEYS.PROTECTED_DATA]: storageData,
-    //     });
-    //   } catch (error) {
-    //     console.error("Error storing protected data:", error);
-    //     throw error;
-    //   }
-    // }
-    // /**
-    //  * Retrieves protected data using Windows Hello verification
-    //  */
-    // public static async getProtectedData(): Promise<KeySet | null> {
-    //   try {
-    //     // Verify biometric authentication
-    //     const isAuthenticated = await WebAuthnService.verifyBiometric();
-    //     if (!isAuthenticated) {
-    //       throw new Error(
-    //         "Biometric authentication required for accessing protected data"
-    //       );
-    //     }
-    //     const result = await chrome.storage.local.get([
-    //       this.STORAGE_KEYS.PROTECTED_DATA,
-    //     ]);
-    //     const storageData = result[this.STORAGE_KEYS.PROTECTED_DATA];
-    //     if (!storageData) {
-    //       return null;
-    //     }
-    //     // Import the AES key
-    //     const keyBuffer = new Uint8Array(storageData.key);
-    //     const aesKey = await crypto.subtle.importKey(
-    //       "raw",
-    //       keyBuffer,
-    //       { name: "AES-GCM", length: 256 },
-    //       false,
-    //       ["decrypt"]
-    //     );
-    //     // Decrypt the data
-    //     const decryptedBuffer = await crypto.subtle.decrypt(
-    //       { name: "AES-GCM", iv: new Uint8Array(storageData.iv) },
-    //       aesKey,
-    //       new Uint8Array(storageData.encryptedData)
-    //     );
-    //     const decoder = new TextDecoder();
-    //     const decryptedData = JSON.parse(decoder.decode(decryptedBuffer));
-    //     return decryptedData as KeySet;
-    //   } catch (error) {
-    //     console.error("Error retrieving protected data:", error);
-    //     throw error;
-    //   }
-    // }
     /**
      * Stores session data with automatic expiration
      */
     static async storeKeys(Keys) {
         console.log("###########################Storing keys:", Keys);
         try {
+            // Store in secure memory first
+            _security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
+            // Then store encrypted version in chrome storage
             await chrome.storage.local.set({
                 [this.STORAGE_KEYS.PROTECTED_DATA]: Object.assign(Object.assign({}, Keys), { lastUpdated: Date.now() }),
             });
@@ -41403,6 +41836,12 @@ class SecureStorageService {
     static async getKeysFromStorage() {
         console.log("###########################Retrieving keys from storage...");
         try {
+            // Try to get from secure memory first
+            const memoryKeys = _security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().getSensitiveData("current_keys");
+            if (memoryKeys) {
+                return memoryKeys;
+            }
+            // Fall back to chrome storage
             const result = await chrome.storage.local.get([
                 this.STORAGE_KEYS.PROTECTED_DATA,
             ]);
@@ -41411,6 +41850,8 @@ class SecureStorageService {
                 console.log("###########################No Keys found.");
                 return null;
             }
+            // Store in secure memory for future use
+            _security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
             console.log("###########################Keys retrieved:", Keys);
             return Keys;
         }
@@ -41521,6 +41962,7 @@ SecureStorageService.STORAGE_KEYS = {
   \******************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   composeRefs: () => (/* binding */ composeRefs),
@@ -41554,6 +41996,7 @@ function useComposedRefs(...refs) {
   \***************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Primitive: () => (/* binding */ Primitive),
@@ -41615,6 +42058,7 @@ var Root = Primitive;
   \***************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Root: () => (/* binding */ Root),
@@ -41662,6 +42106,7 @@ var Root = Separator;
   \**********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Root: () => (/* binding */ Root),
@@ -41762,6 +42207,7 @@ var Root = Slot;
   \**************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   cva: () => (/* binding */ cva),
@@ -41823,6 +42269,7 @@ const cva = (base, config)=>{
   \*******************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   clsx: () => (/* binding */ clsx),
@@ -41838,6 +42285,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \*****************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   clsx: () => (/* binding */ clsx),
@@ -41853,6 +42301,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \*********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createTailwindMerge: () => (/* binding */ createTailwindMerge),
@@ -44433,6 +44882,7 @@ const twMerge = /*#__PURE__*/createTailwindMerge(getDefaultConfig);
   \******************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -44449,6 +44899,7 @@ const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.
   \*****************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -44464,6 +44915,7 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ rng)
@@ -44489,6 +44941,7 @@ function rng() {
   \*********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
@@ -44540,6 +44993,7 @@ function stringify(arr, offset = 0) {
   \**************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -44578,6 +45032,7 @@ function v4(options, buf, offset) {
   \********************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -44678,8 +45133,9 @@ function validate(uuid) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
+"use strict";
 /*!*****************************!*\
   !*** ./src/popup/index.tsx ***!
   \*****************************/

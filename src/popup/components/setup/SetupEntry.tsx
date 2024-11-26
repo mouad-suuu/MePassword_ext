@@ -13,11 +13,7 @@ import { Input } from "../ui/input";
 import { Alert, AlertDescription } from "../ui/alert";
 import EncryptionService from "../../../services/EncryptionService";
 import StoringService from "../../../services/StorageService";
-import {
-  KeySet,
-  SessionSettings,
-  UserCredentials,
-} from "../../../services/types";
+import { KeySet, UserCredentials } from "../../../services/types";
 import Main from "../main";
 import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
 import { KeyStorage } from "../../../services/storage/KeyStorage";
@@ -312,7 +308,12 @@ ${keys.Credentials.authToken}`;
                 placeholder="Website"
                 value={formData.server}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, server: e.target.value }))
+                  setFormData((prev) => ({
+                    ...prev,
+                    server: e.target.value.endsWith("/")
+                      ? e.target.value.slice(0, -1)
+                      : e.target.value,
+                  }))
                 }
                 required
               />
