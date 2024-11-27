@@ -224,7 +224,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
               <div className="flex justify-end space-x-3 mt-8">
                 <Button
                   type="button"
-                  className="px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-all duration-200 border border-gray-300"
+                  variant="cyber-secondary"
                   onClick={handleClose}
                   disabled={isSubmitting}
                 >
@@ -232,7 +232,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
                 </Button>
                 <Button
                   type="submit"
-                  className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-200"
+                  variant="cyber-secondary"
                   disabled={isSubmitting}
                 >
                   <span className="relative z-10">

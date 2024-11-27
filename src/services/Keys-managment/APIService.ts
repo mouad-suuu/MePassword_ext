@@ -403,7 +403,7 @@ export class APIService {
         method: "DELETE",
       });
     } catch (error: any) {
-      return this.handleApiError(error, "KeyDelete");
+      return this.handleApiError(error, "passwordsDelete");
     }
   }
 }

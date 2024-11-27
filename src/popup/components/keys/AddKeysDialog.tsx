@@ -182,7 +182,7 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
       <div className="bg-gradient-to-br from-cyan-50 to-white p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl">
         {showConfirmation ? (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-800 bg-clip-text text-transparent">
               Confirmation
             </h2>
             <p className="text-slate-300">{confirmationMessage}</p>
@@ -258,9 +258,19 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
                 >
                   Cancel
                 </Button>
-                <Button type="submit" variant="cyber" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  variant="cyber-secondary"
+                  disabled={isSubmitting}
+                >
                   <span className="relative z-10">
-                    {isSubmitting ? "Saving..." : "Save Key"}
+                    {isSubmitting
+                      ? isUpdateMode
+                        ? "Updating..."
+                        : "Saving..."
+                      : isUpdateMode
+                      ? "Update Password"
+                      : "Save Password"}
                   </span>
                 </Button>
               </div>
