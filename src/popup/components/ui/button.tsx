@@ -21,7 +21,7 @@ const buttonVariants = cva(
         cyber:
           "px-4 py-2 bg-transparent text-cyan-400 rounded-none border-b-2 border-cyan-500 hover:text-cyan-300 hover:border-cyan-300 transition-all duration-300 relative group",
         "cyber-secondary":
-          "px-4 py-2 bg-transparent text-slate-300 hover:text-cyan-400 rounded-none border-b-2 border-slate-600 hover:border-cyan-400 transition-all duration-300",
+          "px-4 py-2 bg-transparent text-slate-500 hover:text-cyan-700 rounded-none border-b-2 border-slate-600 hover:border-cyan-400 transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

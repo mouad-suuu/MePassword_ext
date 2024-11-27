@@ -14,7 +14,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       static: "border-b-2 border-primary/50 focus:border-primary",
       standard: `border-b-2 border-cyber-border focus:border-primary
         placeholder:text-transparent
-        focus:placeholder:text-cyber-text-secondary`,
+        `,
       outlined: "border-2 border-cyber-border focus:border-primary",
     };
 

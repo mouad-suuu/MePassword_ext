@@ -352,6 +352,51 @@ export class APIService {
       return this.handleApiError(error, "PasswordsPost");
     }
   }
+  public static async PasswordsPut(
+    id: string,
+    data: {
+      website: string;
+      user: string;
+      password: string;
+    }
+  ): Promise<Response> {
+    try {
+      // Fetch public key from settings
+      const settingsResponse = await this.SettingGet();
+      if (!settingsResponse.ok) {
+        throw new Error("Failed to fetch encryption settings");
+      }
+
+      const settings = await settingsResponse.json();
+      if (!settings?.settings?.publicKey) {
+        throw new Error("No public key found in settings");
+      }
+
+      // Encrypt the data
+      const publicKey = await EncryptionService.Utils.importRSAPublicKey(
+        settings.settings.publicKey
+      );
+      const encryptedData = await EncryptionService.Utils.encryptWithRSA(
+        {
+          website: data.website.trim(),
+          user: data.user.trim(),
+          password: data.password,
+        },
+        publicKey
+      );
+
+      return await this.networkSecurity.secureRequest(`/api/passwords/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          ...encryptedData,
+          id,
+        }),
+      });
+    } catch (error: any) {
+      return this.handleApiError(error, "KeysPut");
+    }
+  }
+
   public static async PasswordDelete(id: string): Promise<Response> {
     try {
       return await this.networkSecurity.secureRequest(`/api/passwords/${id}`, {

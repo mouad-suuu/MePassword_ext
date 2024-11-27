@@ -62,9 +62,9 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
 
       if (response.status === 409) {
         // Conflict - duplicate found
-        console.log("Duplicate password found:", data);
+        console.log("Duplicate key found:", data);
         setConfirmationMessage(
-          "A password for this website and username already exists. Would you like to update it?"
+          "A key for this website and username already exists. Would you like to update it?"
         );
         setShowConfirmation(true);
         setIsUpdateMode(true);
@@ -73,12 +73,40 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
       }
 
       if (!response.ok) {
-        throw new Error(`Failed to save password: ${response.statusText}`);
+        throw new Error(`Failed to save key: ${response.statusText}`);
       }
 
       handleClose();
     } catch (error) {
-      console.error("Error saving password:", error);
+      console.error("Error saving key:", error);
+      setError(
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const updateKey = async () => {
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const response = await EncryptionService.API.KeysPut(existingKeyId, {
+        website: website.trim(),
+        user: username.trim(),
+        password,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update key: ${response.statusText}`);
+      }
+
+      handleClose();
+    } catch (error) {
+      console.error("Error updating key:", error);
       setError(
         error instanceof Error
           ? error.message
@@ -151,7 +179,7 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
         open ? "" : "hidden"
       }`}
     >
-      <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl">
+      <div className="bg-gradient-to-br from-cyan-50 to-white p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl">
         {showConfirmation ? (
           <div className="space-y-4">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
@@ -161,7 +189,7 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
             <div className="flex justify-end space-x-3 mt-6">
               <Button
                 type="button"
-                className="px-4 py-2 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-600"
+                className="px-4 py-2 bg-slate-800 text-slate-800 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-600"
                 onClick={() => {
                   setShowConfirmation(false);
                   setIsUpdateMode(false);
@@ -175,7 +203,11 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
                   className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-200"
                   onClick={() => {
                     setShowConfirmation(false);
-                    saveKey();
+                    if (isUpdateMode) {
+                      updateKey();
+                    } else {
+                      saveKey();
+                    }
                   }}
                 >
                   Update Key

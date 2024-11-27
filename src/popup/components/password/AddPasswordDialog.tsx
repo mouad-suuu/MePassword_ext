@@ -47,28 +47,29 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
     setError(null);
 
     try {
-      const response = await EncryptionService.API.PasswordPost({
-        website: website.trim(),
-        user: username.trim(),
-        password,
-      });
-
-      const data = await response.json();
-
-      if (response.status === 409) {
-        // Conflict - duplicate found
-        console.log("Duplicate password found:", data);
-        setConfirmationMessage(
-          "A password for this website and username already exists. Would you like to update it?"
+      if (isUpdateMode && existingPasswordId) {
+        // Update existing password
+        const response = await EncryptionService.API.PasswordsPut(
+          existingPasswordId,
+          {
+            website: website.trim(),
+            user: username.trim(),
+            password,
+          }
         );
-        setShowConfirmation(true);
-        setIsUpdateMode(true);
-        setExistingPasswordId(data.existingId);
-        return;
-      }
-
-      if (!response.ok) {
-        throw new Error(`Failed to save password: ${response.statusText}`);
+        if (!response.ok) {
+          throw new Error(`Failed to update password: ${response.statusText}`);
+        }
+      } else {
+        // Add new password
+        const response = await EncryptionService.API.PasswordPost({
+          website: website.trim(),
+          user: username.trim(),
+          password,
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to save password: ${response.statusText}`);
+        }
       }
 
       handleClose();
@@ -105,6 +106,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
           return true;
         }
 
+        // Set update mode if the password is different
         setConfirmationMessage(
           "A password for this website and username already exists. Would you like to update it?"
         );
