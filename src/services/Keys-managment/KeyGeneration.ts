@@ -112,7 +112,6 @@ export class KeyGenerationService {
   }
   public async generateRSAKeys(): Promise<AsymmetricKeys> {
     const method = "generateRSAKeys";
-    AdditionalMethods.logDebug(method, "Starting RSA key generation...");
 
     try {
       // Validate WebCrypto API availability
@@ -130,7 +129,6 @@ export class KeyGenerationService {
         true,
         ["encrypt", "decrypt"]
       );
-      console.log("RSA key pair generated successfully");
 
       const publicKeyBuffer = await window.crypto.subtle.exportKey(
         "spki",
@@ -140,11 +138,6 @@ export class KeyGenerationService {
         "pkcs8",
         keyPair.privateKey
       );
-
-      AdditionalMethods.logDebug(method, "RSA keys generated successfully", {
-        publicKeyLength: publicKeyBuffer.byteLength,
-        privateKeyLength: privateKeyBuffer.byteLength,
-      });
 
       return {
         publicKey: {

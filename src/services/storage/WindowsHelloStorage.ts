@@ -16,7 +16,6 @@ export class SecureStorageService {
    */
 
   public static async storeKeys(Keys: KeySet): Promise<void> {
-    console.log("###########################Storing keys:", Keys);
     try {
       // Verify identity before storing keys
       const verified = await WindowsHelloVerifier.getInstance().verifyIdentity(
@@ -36,7 +35,6 @@ export class SecureStorageService {
           lastUpdated: Date.now(),
         },
       });
-      console.log("###########################Keys stored successfully.");
     } catch (error) {
       console.error("Error storing session data:", error);
       throw error;
@@ -47,7 +45,6 @@ export class SecureStorageService {
    * Retrieves session data if not expired
    */
   public static async getKeysFromStorage(): Promise<KeySet | null> {
-    console.log("###########################Retrieving keys from storage...");
     try {
       // Verify identity before retrieving keys
       const verified = await WindowsHelloVerifier.getInstance().verifyIdentity(
@@ -71,13 +68,11 @@ export class SecureStorageService {
       const Keys = result[this.STORAGE_KEYS.PROTECTED_DATA];
 
       if (!Keys) {
-        console.log("###########################No Keys found.");
         return null;
       }
 
       // Store in secure memory for future use
       SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
-      console.log("###########################Keys retrieved:", Keys);
       return Keys;
     } catch (error) {
       console.error("Error retrieving session data:", error);
@@ -85,7 +80,6 @@ export class SecureStorageService {
     }
   }
   public static async storeSettings(settings: SessionSettings): Promise<void> {
-    console.log("###########################Storing settings:", settings);
     try {
       await chrome.storage.local.set({
         [this.STORAGE_KEYS.SESSION_DATA]: {
@@ -93,7 +87,6 @@ export class SecureStorageService {
           lastUpdated: Date.now(),
         },
       });
-      console.log("###########################Settings stored successfully.");
     } catch (error) {
       console.error("Error storing session data:", error);
       throw error;
@@ -104,9 +97,6 @@ export class SecureStorageService {
    * Retrieves session data if not expired
    */
   public static async getSettingsFromStorage(): Promise<SessionSettings | null> {
-    console.log(
-      "###########################Retrieving settings from storage..."
-    );
     try {
       const result = await chrome.storage.local.get([
         this.STORAGE_KEYS.SESSION_DATA,
@@ -114,24 +104,16 @@ export class SecureStorageService {
       const sessionData = result[this.STORAGE_KEYS.SESSION_DATA];
 
       if (!sessionData) {
-        console.log("###########################No session settings found.");
         return null;
       }
 
       // Check if session has expired
       const currentTime = Date.now();
       if (currentTime > sessionData.sessionExpiry) {
-        console.log(
-          "###########################Session has expired, clearing session data."
-        );
         await this.clearSessionData();
         return null;
       }
 
-      console.log(
-        "###########################Session settings retrieved:",
-        sessionData
-      );
       return sessionData;
     } catch (error) {
       console.error("Error retrieving session data:", error);
@@ -143,10 +125,8 @@ export class SecureStorageService {
    * Clears all stored data
    */
   public static async clearAllData(): Promise<void> {
-    console.log("###########################Clearing all stored data...");
     try {
       await chrome.storage.local.clear();
-      console.log("###########################All data cleared successfully.");
     } catch (error) {
       console.error("Error clearing storage:", error);
       throw error;
@@ -157,12 +137,8 @@ export class SecureStorageService {
    * Clears only session data
    */
   public static async clearSessionData(): Promise<void> {
-    console.log("###########################Clearing session data...");
     try {
       await chrome.storage.local.remove([this.STORAGE_KEYS.SESSION_DATA]);
-      console.log(
-        "###########################Session data cleared successfully."
-      );
     } catch (error) {
       console.error("Error clearing session data:", error);
       throw error;
@@ -175,10 +151,6 @@ export class SecureStorageService {
   public static async updateSettings(
     newSettings: SessionSettings
   ): Promise<void> {
-    console.log(
-      "###########################Updating settings with:",
-      newSettings
-    );
     try {
       const currentSettings = await this.getSettingsFromStorage();
       const updatedSettings = {
@@ -187,7 +159,6 @@ export class SecureStorageService {
         lastUpdated: Date.now(),
       };
       await this.storeSettings(updatedSettings);
-      console.log("###########################Settings updated successfully.");
     } catch (error) {
       console.error("Error updating session settings:", error);
       throw error;

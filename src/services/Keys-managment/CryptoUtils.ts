@@ -159,10 +159,6 @@ export class CryptoUtils {
     keyBase64: string
   ): Promise<CryptoKey> {
     try {
-      console.log("Importing RSA private key", {
-        keyBase64Preview: keyBase64.substring(0, 50),
-      });
-
       if (!keyBase64 || !keyBase64.match(/^[A-Za-z0-9+/]*={0,2}$/)) {
         throw new Error("Invalid base64-encoded RSA private key");
       }
@@ -176,7 +172,6 @@ export class CryptoUtils {
         ["decrypt"]
       );
 
-      console.log("RSA private key imported successfully");
       return privateKey;
     } catch (error) {
       console.error("RSA private key import failed:", error);
@@ -189,19 +184,12 @@ export class CryptoUtils {
     privateKey: CryptoKey
   ): Promise<{ website: string; user: string; password: string }[]> {
     try {
-      console.log("Starting RSA decryption process", {
-        keyAlgorithm: privateKey.algorithm,
-        keyUsages: privateKey.usages,
-        dataLength: encryptedData?.length,
-      });
-
       // Return empty array if no data is provided
       if (
         !encryptedData ||
         !Array.isArray(encryptedData) ||
         encryptedData.length === 0
       ) {
-        console.log("No encrypted data to decrypt, returning empty array");
         return [];
       }
 
@@ -209,15 +197,6 @@ export class CryptoUtils {
       const decryptedData = await Promise.all(
         encryptedData.map(async (item, index) => {
           try {
-            console.log(`Decrypting item ${index}`, {
-              websiteLength: item.website?.length,
-              userLength: item.user?.length,
-              passwordLength: item.password?.length,
-              websitePreview: item.website?.substring(0, 50),
-              userPreview: item.user?.substring(0, 50),
-              passwordPreview: item.password?.substring(0, 50),
-            });
-
             const websiteBuffer = await window.crypto.subtle.decrypt(
               { name: "RSA-OAEP" },
               privateKey,
@@ -234,13 +213,6 @@ export class CryptoUtils {
               this.base64ToBuffer(item.password)
             );
 
-            console.log(`Successfully decrypted item ${index}`);
-            console.log(
-              "RSA decryption process completed successfully",
-              decoder.decode(websiteBuffer),
-              decoder.decode(userBuffer),
-              decoder.decode(passwordBuffer)
-            );
             return {
               website: decoder.decode(websiteBuffer),
               user: decoder.decode(userBuffer),

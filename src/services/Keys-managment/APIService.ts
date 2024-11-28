@@ -35,7 +35,6 @@ export class APIService {
   public static async SettingsPost(publicKey: string): Promise<Response> {
     try {
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
-      console.log("*******************************************8", storedKeys);
 
       return await this.networkSecurity.secureRequest("/api/settings", {
         method: "POST",
@@ -53,7 +52,6 @@ export class APIService {
 
   public static async validatePassword(password: string): Promise<boolean> {
     try {
-      console.log("Validating the password:", password);
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
       const key = await CryptoUtils.importAESKey(storedKeys.AESKey);
       const iv = CryptoUtils.base64ToBuffer(storedKeys.IV);
@@ -69,7 +67,6 @@ export class APIService {
       );
 
       const jsonResponse = await response.json();
-      console.log("Password is valid:", jsonResponse.isValid);
       return jsonResponse.isValid;
     } catch (error: any) {
       return this.handleApiError(error, "SettingsPost");
@@ -90,7 +87,6 @@ export class APIService {
     settings: Partial<APISettingsPayload>
   ): Promise<Response> {
     try {
-      console.log("Settings to be updated:", settings);
       const response = await this.networkSecurity.secureRequest(
         "/api/settings",
         {
@@ -99,7 +95,6 @@ export class APIService {
         }
       );
 
-      console.log("Settings updated successfully.");
       return response;
     } catch (error: any) {
       console.error("Error in SettingsPut:", error);

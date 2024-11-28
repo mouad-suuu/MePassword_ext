@@ -82,7 +82,7 @@ export class WindowsHelloVerifier {
 
   private checkDebugger(): boolean {
     const startTime = performance.now();
-    // debugger;
+    debugger;
     return performance.now() - startTime < 100;
   }
 

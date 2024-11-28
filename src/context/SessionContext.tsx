@@ -37,11 +37,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
   useEffect(() => {
     const checkSession = async () => {
       try {
-        console.log("Checking session status...");
         const settings = await KeyStorage.getSettingsFromStorage();
 
         if (!settings || Object.keys(settings).length === 0) {
-          console.log("No settings found - new setup required");
           setShowSetup(true);
           return;
         }
@@ -49,7 +47,6 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
         const isSessionExpired =
           await sessionManagementService.checkSessionExpiration();
         if (isSessionExpired) {
-          console.log("Session expired, clearing storage");
           StorageService.SecureStorage.clearAllData();
           setShowSetup(true);
           return;
@@ -59,11 +56,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
         const isShortLockActive =
           await sessionManagementService.checkShortLockExpiration();
         if (isShortLockActive) {
-          console.log("Short lock is active");
           setIsLockTimeOn(true);
           setShowPasswordPrompt(false);
         } else {
-          console.log("Short lock expired, showing password prompt");
           setShowPasswordPrompt(true);
         }
       } catch (error) {

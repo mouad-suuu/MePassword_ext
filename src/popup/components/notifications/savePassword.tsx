@@ -21,7 +21,6 @@ export const SavePasswordNotification: React.FC<SavePasswordProps> = ({
   // Handle message
   useEffect(() => {
     const handleMessage = async (message: any) => {
-      console.log("SavePassword received message:", message);
       if (message.type === "OPEN_ADD_PASSWORD_DIALOG") {
         setShowDialog(true);
       }
@@ -37,7 +36,6 @@ export const SavePasswordNotification: React.FC<SavePasswordProps> = ({
     <AddPasswordDialog
       open={showDialog}
       onClose={() => {
-        console.log("Closing dialog");
         setShowDialog(false);
       }}
       prefilledData={prefilledData}

@@ -20,7 +20,6 @@ const Passwords: React.FC = () => {
       try {
         // Fetch and decrypt passwords
         const passwords = await EncryptionService.API.PasswordsGet();
-        console.log("the passwords component: fetched passwords:", passwords);
         setPasswords(passwords);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -120,14 +119,11 @@ const PasswordItem: React.FC<
       setIsDeleting(true);
       try {
         // Log the ID to verify it's being sent
-        console.log("Deleting password with ID:", id);
         const response = await EncryptionService.API.PasswordDelete(id);
 
         // Add response logging
-        console.log("Delete response status:", response.status);
         if (!response.ok) {
           const errorData = await response.json();
-          console.log("Delete error response:", errorData);
           throw new Error(errorData.error || "Failed to delete password");
         }
         onDelete();

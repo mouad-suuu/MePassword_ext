@@ -39,7 +39,6 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
   const handleClose = () => {
-    console.log("Closing dialog and resetting state");
     setWebsite("");
     setUsername("");
     setPassword("");
@@ -62,7 +61,7 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
 
       if (response.status === 409) {
         // Conflict - duplicate found
-        console.log("Duplicate key found:", data);
+
         setConfirmationMessage(
           "A key for this website and username already exists. Would you like to update it?"
         );
@@ -129,8 +128,6 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
           item.user.toLowerCase().trim() === username.toLowerCase().trim()
       );
 
-      console.log("Found existing key:", existingKey);
-
       if (existingKey) {
         setIsSubmitting(false);
 
@@ -142,7 +139,6 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
           return;
         }
 
-        console.log("Setting existing key ID:", existingKey.id);
         setExistingKeyId(existingKey.id);
         setConfirmationMessage(
           "A key for this website and username already exists. Would you like to update it?"
@@ -164,14 +160,6 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
       setIsSubmitting(false);
     }
   };
-
-  function handleAddPassword(): void {
-    console.log("encrypred data:", {
-      website,
-      username,
-      password,
-    });
-  }
 
   return (
     <div

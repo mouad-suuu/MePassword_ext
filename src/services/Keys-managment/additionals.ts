@@ -36,11 +36,6 @@ class AdditionalMethods {
   private static readonly KEY_LENGTH = 32;
   private static readonly PBKDF2_ITERATIONS = 100000;
   private static readonly DEBUG = true;
-  public static logDebug(method: string, message: string, data?: any) {
-    if (this.DEBUG) {
-      console.log(`[EncryptionService:${method}] ${message}`, data || "");
-    }
-  }
 
   // Add session storage property
   public static sessionData = new Map<string, any>();
@@ -68,7 +63,6 @@ class AdditionalMethods {
   public static logTime(message: string, timeInMs: number) {
     if (this.DEBUG) {
       const formattedTime = this.formatTime(timeInMs);
-      console.log(` ${message} (took ${formattedTime})`);
     }
   }
 

@@ -90,12 +90,6 @@ export class CredentialCryptoService {
   ): Promise<NewEncryptedPassword> {
     const method = "encryptPassword";
 
-    console.log("[DEBUG] Input password structure:", {
-      website: password?.website ? "[PRESENT]" : "[MISSING]",
-      user: password?.user ? "[PRESENT]" : "[MISSING]",
-      password: password?.password ? "[PRESENT]" : "[MISSING]",
-    });
-
     try {
       if (!password?.website || !password?.user || !password?.password) {
         throw new Error("Missing required password credentials");
@@ -120,12 +114,6 @@ export class CredentialCryptoService {
         title: "test",
         timestamp: "test",
       };
-
-      console.log("[DEBUG] Encrypted data structure:", {
-        metadata,
-        encryptedDataKeys: Object.keys(encryptedData),
-        ivLength: keySet.IV.length,
-      });
 
       return {
         ...encryptedData,

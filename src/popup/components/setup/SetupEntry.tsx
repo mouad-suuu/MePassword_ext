@@ -226,8 +226,6 @@ const CreateAccountForm = ({
       // Store keys and handle encryption
       await StoringService.Keys.storeKeys(keys);
 
-      console.log("keys are stored", keys);
-
       // Create backup using the user's password
       if (!formData.password) {
         throw new Error("Password is required");
@@ -249,7 +247,6 @@ const CreateAccountForm = ({
 
       try {
         await EncryptionService.API.SettingsPost(rsaKeyPair.publicKey.key);
-        console.log("settings sent to API", rsaKeyPair.publicKey.key);
         await SessionManagementService.initialize();
       } catch (error) {
         console.error("Error sending settings to API:", error);

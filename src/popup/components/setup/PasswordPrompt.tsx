@@ -21,18 +21,11 @@ export const PasswordPrompt: React.FC = () => {
 
   const checkBiometricAvailability = async () => {
     try {
-      console.log("Checking biometric availability...");
       const settings = await KeyStorage.getSettingsFromStorage();
-      console.log("Current settings:", settings);
 
       const isSupported = await WebAuthnService.isWebAuthnSupported();
-      console.log("WebAuthn supported:", isSupported);
 
       setIsBiometricAvailable(isSupported && settings.biometricVerification);
-      console.log(
-        "Biometric available:",
-        isSupported && settings.biometricVerification
-      );
     } catch (error) {
       console.error("Error checking biometric availability:", error);
     }
@@ -40,18 +33,14 @@ export const PasswordPrompt: React.FC = () => {
 
   const handleBiometricAuth = async () => {
     try {
-      console.log("Starting biometric authentication...");
       const isValid = await WebAuthnService.verifyBiometric();
-      console.log("Biometric verification result:", isValid);
 
       if (isValid) {
-        console.log("Biometric authentication successful");
         await KeyStorage.updateSettings({
           autoLockStart: Date.now(),
         });
         setIsValid(true);
       } else {
-        console.log("Biometric verification failed");
         setErrorMessage("Biometric verification failed");
       }
       const responce = await EncryptionService.API.SettingGet();
@@ -61,7 +50,6 @@ export const PasswordPrompt: React.FC = () => {
         autoLockStart: Date.now(),
         autoLockTime: settings.settings.sessionSettings.autoLockTime,
       });
-      console.log("Settings updated:", settings);
     } catch (error) {
       console.error("Biometric authentication error:", error);
       setErrorMessage("Biometric authentication error. Please use password.");
@@ -83,7 +71,6 @@ export const PasswordPrompt: React.FC = () => {
         autoLockStart: Date.now(),
         autoLockTime: settings.settings.sessionSettings.autoLockTime,
       });
-      console.log("Settings updated:", settings);
       setIsValid(true);
     } else {
       setErrorMessage("Invalid password. Please try again.");

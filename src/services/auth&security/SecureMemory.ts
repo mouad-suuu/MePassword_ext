@@ -194,38 +194,6 @@ export class SecureMemory {
   }
 
   /**
-   * Implements anti-debugging measures to prevent memory inspection.
-   * Includes debugger detection and memory usage masking.
-   */
-  // private preventMemoryInspection(): void {
-  //   // Disable debugger
-  //   setInterval(() => {
-  //     const startTime = performance.now();
-  //     debugger;
-  //     const endTime = performance.now();
-
-  //     if (endTime - startTime > 100) {
-  //       this.disposeAll();
-  //       throw new Error("Debugger detected");
-  //     }
-  //   }, 1000);
-
-  //   // Prevent memory dumps
-  //   if (typeof process?.memoryUsage === "function") {
-  //     Object.defineProperty(process, "memoryUsage", {
-  //       value: () => ({
-  //         heapUsed: 0,
-  //         heapTotal: 0,
-  //         external: 0,
-  //         arrayBuffers: 0,
-  //       }),
-  //       configurable: false,
-  //       writable: false,
-  //     });
-  //   }
-  // }
-
-  /**
    * Performs periodic cleanup of weak references that have been garbage collected.
    * Removes entries for any data that is no longer accessible.
    */

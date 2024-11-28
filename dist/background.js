@@ -4,9 +4,7 @@
   !*** ./src/background/background.ts ***!
   \**************************************/
 
-chrome.action.onClicked.addListener((tab) => {
-    console.log("Extension icon clicked!");
-});
+chrome.action.onClicked.addListener((tab) => { });
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (message.type === "PASSWORD_DETECTED") {
         const { website, user: username, password } = message.data;

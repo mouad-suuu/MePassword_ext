@@ -29,7 +29,6 @@ export class SessionManagementService {
 
   public static async initialize(): Promise<void> {
     try {
-      console.log("Static initialize called");
       const defaultSettings: SessionSettings = {
         autoLockTime: 1000 * 60 * 5,
         sessionTime: 86400000 * 30,
@@ -43,27 +42,20 @@ export class SessionManagementService {
       };
       await StorageService.SecureStorage.storeSettings(defaultSettings);
       await SessionManagementService.updateSessionSettings(defaultSettings);
-      console.log(
-        "Session initialized with default settings:",
-        defaultSettings
-      );
     } catch (error) {
       console.error("Failed to initialize session:", error);
     }
   }
 
   public static async getSessionSettings(): Promise<SessionSettings> {
-    console.log("Getting session settings");
     if (!this.sessionSettings) {
       try {
         this.sessionSettings = await KeyStorage.getSettingsFromStorage();
-        console.log("Retrieved settings from storage:", this.sessionSettings);
       } catch (error) {
         console.error("Failed to get settings:", error);
         throw error;
       }
     } else {
-      console.log("Using cached session settings:", this.sessionSettings);
     }
     return this.sessionSettings;
   }
@@ -75,9 +67,7 @@ export class SessionManagementService {
       ...this.sessionSettings,
       ...newSettings,
     } as SessionSettings;
-    console.log("Updating session settings.");
     await StorageService.SecureStorage.storeSettings(this.sessionSettings);
-    console.log("Session settings updated successfully.");
     const responce = await EncryptionService.API.SettingGet();
     const settings = await responce.json();
     const settingsType: APISettingsPayload = {
@@ -88,34 +78,26 @@ export class SessionManagementService {
       sessionSettings: this.sessionSettings,
     };
     await EncryptionService.API.SettingsPut(settingsType);
-    console.log("Session settings updated in storage.");
   }
 
   public static async getKeys(): Promise<KeySet> {
     if (!this.keys) {
-      console.log("Keys not found in memory, retrieving from storage.");
       this.keys = await KeyStorage.getKeysFromStorage();
-      console.log("Keys retrieved from storage:", this.keys);
     } else {
-      console.log("Using cached keys:", this.keys);
     }
     return this.keys;
   }
 
   public static async updateKeys(newKeys: KeySet): Promise<void> {
     this.keys = newKeys;
-    console.log("Updating keys.");
     await KeyStorage.storeKeys(newKeys);
-    console.log("Keys updated successfully.");
   }
 
   public static async clearSession(): Promise<void> {
-    console.log("Clearing session data.");
     await StorageService.SecureStorage.storeSettings({} as SessionSettings);
     await KeyStorage.storeKeys({} as KeySet);
     this.sessionSettings = null;
     this.keys = null;
-    console.log("Session data cleared.");
   }
 
   /**
@@ -128,12 +110,10 @@ export class SessionManagementService {
 
       // If no settings exist, we consider the session expired
       if (!settings) {
-        console.log("No settings found, considering session expired");
         return true;
       }
 
       if (!settings.sessionStart || !settings.sessionTime) {
-        console.log("Invalid session settings: missing required fields");
         return true;
       }
 
@@ -146,7 +126,6 @@ export class SessionManagementService {
 
       return currentTime >= sessionExpiry;
     } catch (error) {
-      console.log("Failed to check session expiration:", error);
       return true;
     }
   }
@@ -210,8 +189,6 @@ export class SessionManagementService {
    */
   async configureBiometric(enable: boolean = true) {
     try {
-      console.log("Configuring biometric:", enable);
-
       if (enable) {
         const isSupported = await WebAuthnService.isWebAuthnSupported();
         if (!isSupported) {
@@ -234,7 +211,6 @@ export class SessionManagementService {
           };
 
           await SessionManagementService.updateSessionSettings(updatedSettings);
-          console.log("Biometric settings updated:", updatedSettings);
         } else {
           throw new Error("Failed to register biometric");
         }
@@ -247,7 +223,6 @@ export class SessionManagementService {
         };
 
         await SessionManagementService.updateSessionSettings(updatedSettings);
-        console.log("Biometric disabled:", updatedSettings);
       }
     } catch (error) {
       console.error("Error in configureBiometric:", error);

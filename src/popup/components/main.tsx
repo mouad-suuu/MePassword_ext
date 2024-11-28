@@ -24,10 +24,6 @@ const Main = () => {
   useEffect(() => {
     const handleMessage = (message: any) => {
       if (message.type === "OPEN_ADD_PASSWORD_DIALOG") {
-        console.log(
-          "Main received OPEN_ADD_PASSWORD_DIALOG message:",
-          message.data
-        );
         setPasswordData(message.data);
         setShowAddPasswordDialog(true);
       }

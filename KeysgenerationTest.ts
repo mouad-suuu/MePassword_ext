@@ -15,16 +15,11 @@ async function generateAndStoreRSAKeys() {
   const publicKey = await crypto.subtle.exportKey("spki", keyPair.publicKey);
   const privateKey = await crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
 
-  console.log("Public Key:", arrayBufferToBase64(publicKey));
-  console.log("Private Key:", arrayBufferToBase64(privateKey));
-
   // Optionally, encrypt the private key for secure storage
   const encryptedPrivateKey = await aesEncrypt(
     privateKey,
     "your-secure-passphrase"
   );
-
-  console.log("Encrypted Private Key:", encryptedPrivateKey);
 }
 
 // Helper function to convert ArrayBuffer to Base64 string for easier handling

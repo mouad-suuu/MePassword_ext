@@ -1058,29 +1058,14 @@ video {
   --tw-gradient-to: rgb(34 211 238 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
-.from-cyan-500 {
-  --tw-gradient-from: #06b6d4 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(6 182 212 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-.from-slate-900 {
-  --tw-gradient-from: #0f172a var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-.from-slate-300 {
-  --tw-gradient-from: #cbd5e1 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(203 213 225 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-.from-cyan-300 {
-  --tw-gradient-from: #67e8f9 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(103 232 249 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
 .from-cyan-50 {
   --tw-gradient-from: #ecfeff var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(236 254 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-cyan-500 {
+  --tw-gradient-from: #06b6d4 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(6 182 212 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 .to-\\[\\\$\\{theme\\.colors\\.accent\\.blue\\}\\] {
@@ -1089,20 +1074,11 @@ video {
 .to-blue-500 {
   --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position);
 }
-.to-slate-800 {
-  --tw-gradient-to: #1e293b var(--tw-gradient-to-position);
-}
-.to-slate-200 {
-  --tw-gradient-to: #e2e8f0 var(--tw-gradient-to-position);
-}
-.to-cyan-200 {
-  --tw-gradient-to: #a5f3fc var(--tw-gradient-to-position);
+.to-blue-800 {
+  --tw-gradient-to: #1e40af var(--tw-gradient-to-position);
 }
 .to-white {
   --tw-gradient-to: #fff var(--tw-gradient-to-position);
-}
-.to-blue-800 {
-  --tw-gradient-to: #1e40af var(--tw-gradient-to-position);
 }
 .bg-clip-text {
   -webkit-background-clip: text;
@@ -1168,10 +1144,6 @@ video {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-}
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 }
 .pl-10 {
   padding-left: 2.5rem;
@@ -1334,36 +1306,20 @@ video {
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity));
 }
+.text-slate-500 {
+  --tw-text-opacity: 1;
+  color: rgb(100 116 139 / var(--tw-text-opacity));
+}
+.text-slate-800 {
+  --tw-text-opacity: 1;
+  color: rgb(30 41 59 / var(--tw-text-opacity));
+}
 .text-transparent {
   color: transparent;
 }
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.text-slate-600 {
-  --tw-text-opacity: 1;
-  color: rgb(71 85 105 / var(--tw-text-opacity));
-}
-.text-slate-800 {
-  --tw-text-opacity: 1;
-  color: rgb(30 41 59 / var(--tw-text-opacity));
-}
-.text-slate-500 {
-  --tw-text-opacity: 1;
-  color: rgb(100 116 139 / var(--tw-text-opacity));
-}
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity));
-}
-.text-green-500 {
-  --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
-}
-.text-green-600 {
-  --tw-text-opacity: 1;
-  color: rgb(22 163 74 / var(--tw-text-opacity));
 }
 .underline-offset-4 {
   text-underline-offset: 4px;
@@ -1727,18 +1683,13 @@ video {
   color: rgb(103 232 249 / var(--tw-text-opacity));
 }
 
-.hover\\:text-cyan-400:hover {
+.hover\\:text-cyan-700:hover {
   --tw-text-opacity: 1;
-  color: rgb(34 211 238 / var(--tw-text-opacity));
+  color: rgb(14 116 144 / var(--tw-text-opacity));
 }
 
 .hover\\:text-foreground:hover {
   color: hsl(var(--foreground));
-}
-
-.hover\\:text-cyan-700:hover {
-  --tw-text-opacity: 1;
-  color: rgb(14 116 144 / var(--tw-text-opacity));
 }
 
 .hover\\:underline:hover {
@@ -2187,7 +2138,7 @@ video {
 .\\[\\&_p\\]\\:leading-relaxed p {
   line-height: 1.625;
 }
-`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/popup/index.css"],"names":[],"mappings":"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","sourcesContent":["@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer base {\n  :root {\n    --background: 0 0% 100%;\n    --foreground: 222.2 84% 4.9%;\n    --card: 0 0% 100%;\n    --card-foreground: 222.2 84% 4.9%;\n    --popover: 0 0% 100%;\n    --popover-foreground: 222.2 84% 4.9%;\n    --primary: 222.2 47.4% 11.2%;\n    --primary-foreground: 210 40% 98%;\n    --secondary: 210 40% 96.1%;\n    --secondary-foreground: 222.2 47.4% 11.2%;\n    --muted: 210 40% 96.1%;\n    --muted-foreground: 215.4 16.3% 46.9%;\n    --accent: 210 40% 96.1%;\n    --accent-foreground: 222.2 47.4% 11.2%;\n    --destructive: 0 84.2% 60.2%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 214.3 31.8% 91.4%;\n    --input: 214.3 31.8% 91.4%;\n    --ring: 222.2 84% 4.9%;\n    --radius: 0.5rem;\n    --chart-1: 12 76% 61%;\n    --chart-2: 173 58% 39%;\n    --chart-3: 197 37% 24%;\n    --chart-4: 43 74% 66%;\n    --chart-5: 27 87% 67%;\n  }\n\n  .dark {\n    --background: 222.2 84% 4.9%;\n    --foreground: 210 40% 98%;\n    --card: 222.2 84% 4.9%;\n    --card-foreground: 210 40% 98%;\n    --popover: 222.2 84% 4.9%;\n    --popover-foreground: 210 40% 98%;\n    --primary: 210 40% 98%;\n    --primary-foreground: 222.2 47.4% 11.2%;\n    --secondary: 217.2 32.6% 17.5%;\n    --secondary-foreground: 210 40% 98%;\n    --muted: 217.2 32.6% 17.5%;\n    --muted-foreground: 215 20.2% 65.1%;\n    --accent: 217.2 32.6% 17.5%;\n    --accent-foreground: 210 40% 98%;\n    --destructive: 0 62.8% 30.6%;\n    --destructive-foreground: 210 40% 98%;\n    --border: 217.2 32.6% 17.5%;\n    --input: 217.2 32.6% 17.5%;\n    --ring: 212.7 26.8% 83.9%;\n    --chart-1: 220 70% 50%;\n    --chart-2: 160 60% 45%;\n    --chart-3: 30 80% 55%;\n    --chart-4: 280 65% 60%;\n    --chart-5: 340 75% 55%;\n  }\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground;\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -38207,16 +38158,13 @@ const SessionProvider = ({ children, }) => {
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         const checkSession = async () => {
             try {
-                console.log("Checking session status...");
                 const settings = await _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_5__.KeyStorage.getSettingsFromStorage();
                 if (!settings || Object.keys(settings).length === 0) {
-                    console.log("No settings found - new setup required");
                     setShowSetup(true);
                     return;
                 }
                 const isSessionExpired = await sessionManagementService.checkSessionExpiration();
                 if (isSessionExpired) {
-                    console.log("Session expired, clearing storage");
                     _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].SecureStorage.clearAllData();
                     setShowSetup(true);
                     return;
@@ -38224,12 +38172,10 @@ const SessionProvider = ({ children, }) => {
                 setSessionSettings(settings);
                 const isShortLockActive = await sessionManagementService.checkShortLockExpiration();
                 if (isShortLockActive) {
-                    console.log("Short lock is active");
                     setIsLockTimeOn(true);
                     setShowPasswordPrompt(false);
                 }
                 else {
-                    console.log("Short lock expired, showing password prompt");
                     setShowPasswordPrompt(true);
                 }
             }
@@ -38382,7 +38328,6 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
     const [showConfirmation, setShowConfirmation] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [confirmationMessage, setConfirmationMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const handleClose = () => {
-        console.log("Closing dialog and resetting state");
         setWebsite("");
         setUsername("");
         setPassword("");
@@ -38401,7 +38346,6 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
             const data = await response.json();
             if (response.status === 409) {
                 // Conflict - duplicate found
-                console.log("Duplicate key found:", data);
                 setConfirmationMessage("A key for this website and username already exists. Would you like to update it?");
                 setShowConfirmation(true);
                 setIsUpdateMode(true);
@@ -38454,7 +38398,6 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
         try {
             const existingKey = existingKeys === null || existingKeys === void 0 ? void 0 : existingKeys.find((item) => item.website.toLowerCase().trim() === website.toLowerCase().trim() &&
                 item.user.toLowerCase().trim() === username.toLowerCase().trim());
-            console.log("Found existing key:", existingKey);
             if (existingKey) {
                 setIsSubmitting(false);
                 if (existingKey.password === password) {
@@ -38462,7 +38405,6 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
                     setShowConfirmation(true);
                     return;
                 }
-                console.log("Setting existing key ID:", existingKey.id);
                 setExistingKeyId(existingKey.id);
                 setConfirmationMessage("A key for this website and username already exists. Would you like to update it?");
                 setShowConfirmation(true);
@@ -38481,13 +38423,6 @@ const AddKeysDialog = ({ open, onClose, existingKeys, }) => {
             setIsSubmitting(false);
         }
     };
-    function handleAddPassword() {
-        console.log("encrypred data:", {
-            website,
-            username,
-            password,
-        });
-    }
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center ${open ? "" : "hidden"}`, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "bg-gradient-to-br from-cyan-50 to-white p-8 rounded-2xl shadow-2xl w-96 border border-slate-700/50 backdrop-blur-xl", children: showConfirmation ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "space-y-4", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { className: "text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-800 bg-clip-text text-transparent", children: "Confirmation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "text-slate-300", children: confirmationMessage }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "flex justify-end space-x-3 mt-6", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ui_button__WEBPACK_IMPORTED_MODULE_2__.Button, { type: "button", className: "px-4 py-2 bg-slate-800 text-slate-800 hover:bg-slate-700 rounded-lg transition-all duration-200 border border-slate-600", onClick: () => {
                                     setShowConfirmation(false);
                                     setIsUpdateMode(false);
@@ -38637,7 +38572,6 @@ const Main = () => {
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         const handleMessage = (message) => {
             if (message.type === "OPEN_ADD_PASSWORD_DIALOG") {
-                console.log("Main received OPEN_ADD_PASSWORD_DIALOG message:", message.data);
                 setPasswordData(message.data);
                 setShowAddPasswordDialog(true);
             }
@@ -38688,7 +38622,6 @@ const AddPasswordDialog = ({ open, onClose, prefilledData = {
     const [showConfirmation, setShowConfirmation] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [confirmationMessage, setConfirmationMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const handleClose = () => {
-        console.log("Closing dialog and resetting state");
         setWebsite("");
         setUsername("");
         setPassword("");
@@ -38840,7 +38773,6 @@ const Passwords = () => {
             try {
                 // Fetch and decrypt passwords
                 const passwords = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.PasswordsGet();
-                console.log("the passwords component: fetched passwords:", passwords);
                 setPasswords(passwords);
             }
             catch (error) {
@@ -38889,13 +38821,10 @@ const PasswordItem = ({ id, website, user, password, onDelete }) => {
             setIsDeleting(true);
             try {
                 // Log the ID to verify it's being sent
-                console.log("Deleting password with ID:", id);
                 const response = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_3__["default"].API.PasswordDelete(id);
                 // Add response logging
-                console.log("Delete response status:", response.status);
                 if (!response.ok) {
                     const errorData = await response.json();
-                    console.log("Delete error response:", errorData);
                     throw new Error(errorData.error || "Failed to delete password");
                 }
                 onDelete();
@@ -38957,8 +38886,6 @@ const SettingsComponent = () => {
             const respose = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.SettingGet();
             const settings = await respose.json();
             const sessionSettings = settings.settings.sessionSettings;
-            console.log("Parsed settings:", settings);
-            console.log("Session settings:", sessionSettings);
             setSettings({
                 pushNotifications: sessionSettings.pushNotifications,
                 autoLockTime: sessionSettings.autoLockTime,
@@ -38976,14 +38903,12 @@ const SettingsComponent = () => {
     };
     const handleBiometricToggle = async (checked) => {
         try {
-            console.log("Toggling biometric:", checked);
             const sessionManager = new _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_2__.SessionManagementService();
             await sessionManager.configureBiometric(checked);
             // Update local state immediately after successful configuration
             setSettings((prev) => (Object.assign(Object.assign({}, prev), { biometricVerification: checked })));
             // Refresh settings from storage
             const updatedSettings = await _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_3__.KeyStorage.getSettingsFromStorage();
-            console.log("Updated settings after toggle:", updatedSettings);
         }
         catch (error) {
             console.error("Failed to configure biometric:", error);
@@ -39080,13 +39005,9 @@ const PasswordPrompt = () => {
     }, []);
     const checkBiometricAvailability = async () => {
         try {
-            console.log("Checking biometric availability...");
             const settings = await _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_6__.KeyStorage.getSettingsFromStorage();
-            console.log("Current settings:", settings);
             const isSupported = await _services_auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_7__.WebAuthnService.isWebAuthnSupported();
-            console.log("WebAuthn supported:", isSupported);
             setIsBiometricAvailable(isSupported && settings.biometricVerification);
-            console.log("Biometric available:", isSupported && settings.biometricVerification);
         }
         catch (error) {
             console.error("Error checking biometric availability:", error);
@@ -39094,18 +39015,14 @@ const PasswordPrompt = () => {
     };
     const handleBiometricAuth = async () => {
         try {
-            console.log("Starting biometric authentication...");
             const isValid = await _services_auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_7__.WebAuthnService.verifyBiometric();
-            console.log("Biometric verification result:", isValid);
             if (isValid) {
-                console.log("Biometric authentication successful");
                 await _services_storage_KeyStorage__WEBPACK_IMPORTED_MODULE_6__.KeyStorage.updateSettings({
                     autoLockStart: Date.now(),
                 });
                 setIsValid(true);
             }
             else {
-                console.log("Biometric verification failed");
                 setErrorMessage("Biometric verification failed");
             }
             const responce = await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_4__["default"].API.SettingGet();
@@ -39115,7 +39032,6 @@ const PasswordPrompt = () => {
                 autoLockStart: Date.now(),
                 autoLockTime: settings.settings.sessionSettings.autoLockTime,
             });
-            console.log("Settings updated:", settings);
         }
         catch (error) {
             console.error("Biometric authentication error:", error);
@@ -39136,7 +39052,6 @@ const PasswordPrompt = () => {
                 autoLockStart: Date.now(),
                 autoLockTime: settings.settings.sessionSettings.autoLockTime,
             });
-            console.log("Settings updated:", settings);
             setIsValid(true);
         }
         else {
@@ -39303,7 +39218,6 @@ const CreateAccountForm = ({ onAccountCreated, }) => {
             keys.Credentials = encryptedCredentials.encryptedData;
             // Store keys and handle encryption
             await _services_StorageService__WEBPACK_IMPORTED_MODULE_7__["default"].Keys.storeKeys(keys);
-            console.log("keys are stored", keys);
             // Create backup using the user's password
             if (!formData.password) {
                 throw new Error("Password is required");
@@ -39321,7 +39235,6 @@ const CreateAccountForm = ({ onAccountCreated, }) => {
             URL.revokeObjectURL(url);
             try {
                 await _services_EncryptionService__WEBPACK_IMPORTED_MODULE_6__["default"].API.SettingsPost(rsaKeyPair.publicKey.key);
-                console.log("settings sent to API", rsaKeyPair.publicKey.key);
                 await _services_sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_9__.SessionManagementService.initialize();
             }
             catch (error) {
@@ -39838,7 +39751,6 @@ class APIService {
     static async SettingsPost(publicKey) {
         try {
             const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].Keys.getKeysFromStorage();
-            console.log("*******************************************8", storedKeys);
             return await this.networkSecurity.secureRequest("/api/settings", {
                 method: "POST",
                 body: JSON.stringify({
@@ -39855,7 +39767,6 @@ class APIService {
     }
     static async validatePassword(password) {
         try {
-            console.log("Validating the password:", password);
             const storedKeys = await _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].Keys.getKeysFromStorage();
             const key = await _CryptoUtils__WEBPACK_IMPORTED_MODULE_3__.CryptoUtils.importAESKey(storedKeys.AESKey);
             const iv = _CryptoUtils__WEBPACK_IMPORTED_MODULE_3__.CryptoUtils.base64ToBuffer(storedKeys.IV);
@@ -39865,7 +39776,6 @@ class APIService {
                 body: JSON.stringify({ NewEncryptedPassword }),
             });
             const jsonResponse = await response.json();
-            console.log("Password is valid:", jsonResponse.isValid);
             return jsonResponse.isValid;
         }
         catch (error) {
@@ -39884,12 +39794,10 @@ class APIService {
     }
     static async SettingsPut(settings) {
         try {
-            console.log("Settings to be updated:", settings);
             const response = await this.networkSecurity.secureRequest("/api/settings", {
                 method: "PUT",
                 body: JSON.stringify(settings),
             });
-            console.log("Settings updated successfully.");
             return response;
         }
         catch (error) {
@@ -40157,11 +40065,6 @@ class CredentialCryptoService {
     }
     static async encryptPassword(password, keySet) {
         const method = "encryptPassword";
-        console.log("[DEBUG] Input password structure:", {
-            website: (password === null || password === void 0 ? void 0 : password.website) ? "[PRESENT]" : "[MISSING]",
-            user: (password === null || password === void 0 ? void 0 : password.user) ? "[PRESENT]" : "[MISSING]",
-            password: (password === null || password === void 0 ? void 0 : password.password) ? "[PRESENT]" : "[MISSING]",
-        });
         try {
             if (!(password === null || password === void 0 ? void 0 : password.website) || !(password === null || password === void 0 ? void 0 : password.user) || !(password === null || password === void 0 ? void 0 : password.password)) {
                 throw new Error("Missing required password credentials");
@@ -40179,11 +40082,6 @@ class CredentialCryptoService {
                 title: "test",
                 timestamp: "test",
             };
-            console.log("[DEBUG] Encrypted data structure:", {
-                metadata,
-                encryptedDataKeys: Object.keys(encryptedData),
-                ivLength: keySet.IV.length,
-            });
             return Object.assign(Object.assign({}, encryptedData), { formData: metadata });
         }
         catch (error) {
@@ -40313,15 +40211,11 @@ class CryptoUtils {
     }
     static async importRSAPrivateKey(keyBase64) {
         try {
-            console.log("Importing RSA private key", {
-                keyBase64Preview: keyBase64.substring(0, 50),
-            });
             if (!keyBase64 || !keyBase64.match(/^[A-Za-z0-9+/]*={0,2}$/)) {
                 throw new Error("Invalid base64-encoded RSA private key");
             }
             const keyData = this.base64ToBuffer(keyBase64);
             const privateKey = await window.crypto.subtle.importKey("pkcs8", keyData, { name: "RSA-OAEP", hash: "SHA-256" }, false, ["decrypt"]);
-            console.log("RSA private key imported successfully");
             return privateKey;
         }
         catch (error) {
@@ -40331,35 +40225,18 @@ class CryptoUtils {
     }
     static async decryptWithRSA(encryptedData, privateKey) {
         try {
-            console.log("Starting RSA decryption process", {
-                keyAlgorithm: privateKey.algorithm,
-                keyUsages: privateKey.usages,
-                dataLength: encryptedData === null || encryptedData === void 0 ? void 0 : encryptedData.length,
-            });
             // Return empty array if no data is provided
             if (!encryptedData ||
                 !Array.isArray(encryptedData) ||
                 encryptedData.length === 0) {
-                console.log("No encrypted data to decrypt, returning empty array");
                 return [];
             }
             const decoder = new TextDecoder("utf-8");
             const decryptedData = await Promise.all(encryptedData.map(async (item, index) => {
-                var _a, _b, _c, _d, _e, _f;
                 try {
-                    console.log(`Decrypting item ${index}`, {
-                        websiteLength: (_a = item.website) === null || _a === void 0 ? void 0 : _a.length,
-                        userLength: (_b = item.user) === null || _b === void 0 ? void 0 : _b.length,
-                        passwordLength: (_c = item.password) === null || _c === void 0 ? void 0 : _c.length,
-                        websitePreview: (_d = item.website) === null || _d === void 0 ? void 0 : _d.substring(0, 50),
-                        userPreview: (_e = item.user) === null || _e === void 0 ? void 0 : _e.substring(0, 50),
-                        passwordPreview: (_f = item.password) === null || _f === void 0 ? void 0 : _f.substring(0, 50),
-                    });
                     const websiteBuffer = await window.crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, this.base64ToBuffer(item.website));
                     const userBuffer = await window.crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, this.base64ToBuffer(item.user));
                     const passwordBuffer = await window.crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, this.base64ToBuffer(item.password));
-                    console.log(`Successfully decrypted item ${index}`);
-                    console.log("RSA decryption process completed successfully", decoder.decode(websiteBuffer), decoder.decode(userBuffer), decoder.decode(passwordBuffer));
                     return {
                         website: decoder.decode(websiteBuffer),
                         user: decoder.decode(userBuffer),
@@ -40469,7 +40346,6 @@ class KeyGenerationService {
     }
     async generateRSAKeys() {
         const method = "generateRSAKeys";
-        _additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logDebug(method, "Starting RSA key generation...");
         try {
             // Validate WebCrypto API availability
             if (!window.crypto || !window.crypto.subtle) {
@@ -40481,13 +40357,8 @@ class KeyGenerationService {
                 publicExponent: new Uint8Array([1, 0, 1]),
                 hash: "SHA-256",
             }, true, ["encrypt", "decrypt"]);
-            console.log("RSA key pair generated successfully");
             const publicKeyBuffer = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
             const privateKeyBuffer = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
-            _additionals__WEBPACK_IMPORTED_MODULE_2__["default"].logDebug(method, "RSA keys generated successfully", {
-                publicKeyLength: publicKeyBuffer.byteLength,
-                privateKeyLength: privateKeyBuffer.byteLength,
-            });
             return {
                 publicKey: {
                     key: _CryptoUtils__WEBPACK_IMPORTED_MODULE_0__.CryptoUtils.bufferToBase64(publicKeyBuffer),
@@ -40607,11 +40478,6 @@ __webpack_require__.r(__webpack_exports__);
  *    - Protect against timing attacks
  */
 class AdditionalMethods {
-    static logDebug(method, message, data) {
-        if (this.DEBUG) {
-            console.log(`[EncryptionService:${method}] ${message}`, data || "");
-        }
-    }
     static formatTime(milliseconds) {
         const days = Math.floor(milliseconds / (1000 * 60 * 60 * 24));
         const hours = Math.floor(milliseconds / (1000 * 60 * 60));
@@ -40637,7 +40503,6 @@ class AdditionalMethods {
     static logTime(message, timeInMs) {
         if (this.DEBUG) {
             const formattedTime = this.formatTime(timeInMs);
-            console.log(` ${message} (took ${formattedTime})`);
         }
     }
     // Add session storage property
@@ -40854,12 +40719,6 @@ class BackupSecurityService {
     async verifyKeyDerivation(key) {
         try {
             const keyData = await window.crypto.subtle.exportKey("raw", key);
-            console.log("Key verification:", {
-                keyLength: keyData.byteLength * 8, // Should be 256 bits
-                algorithm: key.algorithm,
-                usages: key.usages,
-                extractable: key.extractable,
-            });
         }
         catch (error) {
             console.error("Key verification failed:", error);
@@ -41178,35 +41037,6 @@ class SecureMemory {
         }
     }
     /**
-     * Implements anti-debugging measures to prevent memory inspection.
-     * Includes debugger detection and memory usage masking.
-     */
-    // private preventMemoryInspection(): void {
-    //   // Disable debugger
-    //   setInterval(() => {
-    //     const startTime = performance.now();
-    //     debugger;
-    //     const endTime = performance.now();
-    //     if (endTime - startTime > 100) {
-    //       this.disposeAll();
-    //       throw new Error("Debugger detected");
-    //     }
-    //   }, 1000);
-    //   // Prevent memory dumps
-    //   if (typeof process?.memoryUsage === "function") {
-    //     Object.defineProperty(process, "memoryUsage", {
-    //       value: () => ({
-    //         heapUsed: 0,
-    //         heapTotal: 0,
-    //         external: 0,
-    //         arrayBuffers: 0,
-    //       }),
-    //       configurable: false,
-    //       writable: false,
-    //     });
-    //   }
-    // }
-    /**
      * Performs periodic cleanup of weak references that have been garbage collected.
      * Removes entries for any data that is no longer accessible.
      */
@@ -41260,23 +41090,15 @@ __webpack_require__.r(__webpack_exports__);
 class WebAuthnService {
     static async isWebAuthnSupported() {
         const isSupported = window.PublicKeyCredential !== undefined;
-        console.log("WebAuthn support check:", {
-            isSupported,
-            PublicKeyCredential: !!window.PublicKeyCredential,
-            platform: navigator.platform,
-            userAgent: navigator.userAgent,
-        });
         return isSupported;
     }
     static async registerBiometric(username) {
         try {
-            console.log("Starting biometric registration for user:", username);
             if (!(await this.isWebAuthnSupported())) {
                 console.error("WebAuthn not supported in this browser");
                 throw new Error("WebAuthn is not supported in this browser");
             }
             const challenge = crypto.getRandomValues(new Uint8Array(32));
-            console.log("Generated challenge:", challenge);
             const createCredentialOptions = {
                 challenge,
                 rp: {
@@ -41299,23 +41121,17 @@ class WebAuthnService {
                     residentKey: "preferred",
                 },
             };
-            console.log("Credential options:", createCredentialOptions);
-            console.log("Requesting credential creation...");
             const credential = await navigator.credentials.create({
                 publicKey: createCredentialOptions,
             });
-            console.log("Credential created:", credential);
             if (credential) {
-                console.log("Updating session settings with biometric verification");
                 const biometricType = this.detectBiometricType();
-                console.log("Detected biometric type:", biometricType);
                 await _sessionManagment_SessionManager__WEBPACK_IMPORTED_MODULE_0__.SessionManagementService.updateSessionSettings({
                     biometricVerification: true,
                     biometricType: biometricType,
                 });
                 return true;
             }
-            console.log("Credential creation failed");
             return false;
         }
         catch (error) {
@@ -41326,24 +41142,18 @@ class WebAuthnService {
     }
     static async verifyBiometric() {
         try {
-            console.log("Starting biometric verification");
             if (!(await this.isWebAuthnSupported())) {
-                console.log("WebAuthn not supported, aborting verification");
                 return false;
             }
             const challenge = crypto.getRandomValues(new Uint8Array(32));
-            console.log("Generated verification challenge:", challenge);
             const assertionOptions = {
                 challenge,
                 timeout: this.AUTH_TIMEOUT,
                 userVerification: "required",
             };
-            console.log("Assertion options:", assertionOptions);
-            console.log("Requesting credential verification...");
             const assertion = await navigator.credentials.get({
                 publicKey: assertionOptions,
             });
-            console.log("Verification result:", assertion);
             return assertion !== null;
         }
         catch (error) {
@@ -41354,24 +41164,19 @@ class WebAuthnService {
     }
     static detectBiometricType() {
         const ua = navigator.userAgent.toLowerCase();
-        console.log("Detecting biometric type for user agent:", ua);
         // Check for Windows Hello (Windows 10 and above)
         if (ua.includes("windows nt") &&
             parseFloat(ua.split("windows nt ")[1]) >= 10.0) {
-            console.log("Detected Windows Hello (face recognition)");
             return "face";
         }
         // Check for MacOS Touch ID
         if (ua.includes("macintosh") || ua.includes("mac os x")) {
-            console.log("Detected Touch ID");
             return "fingerprint";
         }
         // Check for Android fingerprint
         if (ua.includes("android")) {
-            console.log("Detected Android fingerprint");
             return "fingerprint";
         }
-        console.log("Defaulting to face recognition for Windows");
         return "face"; // Default to face for Windows
     }
 }
@@ -41461,7 +41266,7 @@ class WindowsHelloVerifier {
     }
     checkDebugger() {
         const startTime = performance.now();
-        // debugger;
+        debugger;
         return performance.now() - startTime < 100;
     }
     setupTamperDetection() {
@@ -41559,7 +41364,6 @@ class SessionManagementService {
     }
     static async initialize() {
         try {
-            console.log("Static initialize called");
             const defaultSettings = {
                 autoLockTime: 1000 * 60 * 5,
                 sessionTime: 86400000 * 30,
@@ -41573,18 +41377,15 @@ class SessionManagementService {
             };
             await _StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].SecureStorage.storeSettings(defaultSettings);
             await SessionManagementService.updateSessionSettings(defaultSettings);
-            console.log("Session initialized with default settings:", defaultSettings);
         }
         catch (error) {
             console.error("Failed to initialize session:", error);
         }
     }
     static async getSessionSettings() {
-        console.log("Getting session settings");
         if (!this.sessionSettings) {
             try {
                 this.sessionSettings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.getSettingsFromStorage();
-                console.log("Retrieved settings from storage:", this.sessionSettings);
             }
             catch (error) {
                 console.error("Failed to get settings:", error);
@@ -41592,15 +41393,12 @@ class SessionManagementService {
             }
         }
         else {
-            console.log("Using cached session settings:", this.sessionSettings);
         }
         return this.sessionSettings;
     }
     static async updateSessionSettings(newSettings) {
         this.sessionSettings = Object.assign(Object.assign({}, this.sessionSettings), newSettings);
-        console.log("Updating session settings.");
         await _StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].SecureStorage.storeSettings(this.sessionSettings);
-        console.log("Session settings updated successfully.");
         const responce = await _EncryptionService__WEBPACK_IMPORTED_MODULE_0__["default"].API.SettingGet();
         const settings = await responce.json();
         const settingsType = {
@@ -41611,32 +41409,24 @@ class SessionManagementService {
             sessionSettings: this.sessionSettings,
         };
         await _EncryptionService__WEBPACK_IMPORTED_MODULE_0__["default"].API.SettingsPut(settingsType);
-        console.log("Session settings updated in storage.");
     }
     static async getKeys() {
         if (!this.keys) {
-            console.log("Keys not found in memory, retrieving from storage.");
             this.keys = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.getKeysFromStorage();
-            console.log("Keys retrieved from storage:", this.keys);
         }
         else {
-            console.log("Using cached keys:", this.keys);
         }
         return this.keys;
     }
     static async updateKeys(newKeys) {
         this.keys = newKeys;
-        console.log("Updating keys.");
         await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.storeKeys(newKeys);
-        console.log("Keys updated successfully.");
     }
     static async clearSession() {
-        console.log("Clearing session data.");
         await _StorageService__WEBPACK_IMPORTED_MODULE_4__["default"].SecureStorage.storeSettings({});
         await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.storeKeys({});
         this.sessionSettings = null;
         this.keys = null;
-        console.log("Session data cleared.");
     }
     /**
      * Checks if the session has expired based on session time settings.
@@ -41647,11 +41437,9 @@ class SessionManagementService {
             const settings = await _storage_KeyStorage__WEBPACK_IMPORTED_MODULE_1__.KeyStorage.getSettingsFromStorage();
             // If no settings exist, we consider the session expired
             if (!settings) {
-                console.log("No settings found, considering session expired");
                 return true;
             }
             if (!settings.sessionStart || !settings.sessionTime) {
-                console.log("Invalid session settings: missing required fields");
                 return true;
             }
             const currentTime = Date.now();
@@ -41662,7 +41450,6 @@ class SessionManagementService {
             return currentTime >= sessionExpiry;
         }
         catch (error) {
-            console.log("Failed to check session expiration:", error);
             return true;
         }
     }
@@ -41717,7 +41504,6 @@ class SessionManagementService {
      */
     async configureBiometric(enable = true) {
         try {
-            console.log("Configuring biometric:", enable);
             if (enable) {
                 const isSupported = await _auth_security_WebAuthnService__WEBPACK_IMPORTED_MODULE_3__.WebAuthnService.isWebAuthnSupported();
                 if (!isSupported) {
@@ -41730,7 +41516,6 @@ class SessionManagementService {
                     const settings = await SessionManagementService.getSessionSettings();
                     const updatedSettings = Object.assign(Object.assign({}, settings), { biometricVerification: true, biometricType: biometricType });
                     await SessionManagementService.updateSessionSettings(updatedSettings);
-                    console.log("Biometric settings updated:", updatedSettings);
                 }
                 else {
                     throw new Error("Failed to register biometric");
@@ -41740,7 +41525,6 @@ class SessionManagementService {
                 const settings = await SessionManagementService.getSessionSettings();
                 const updatedSettings = Object.assign(Object.assign({}, settings), { biometricVerification: false, biometricType: "none" });
                 await SessionManagementService.updateSessionSettings(updatedSettings);
-                console.log("Biometric disabled:", updatedSettings);
             }
         }
         catch (error) {
@@ -41782,8 +41566,6 @@ class CredentialStorage {
     }
     static async deleteEncryptedPassword(id) {
         try {
-            console.log(`Deleting encrypted password for ID: ${id}`);
-            console.log(`Password deleted successfully for ID: ${id}`);
         }
         catch (error) {
             console.error(`Error deleting password for ID: ${id}`, error);
@@ -41791,11 +41573,9 @@ class CredentialStorage {
     }
     static async getEncryptedCridentials_Keys() {
         try {
-            console.log("Retrieving encrypted credentials");
             const credentialsJSON = await _StorageService__WEBPACK_IMPORTED_MODULE_0__["default"].SecureStorage.getKeysFromStorage();
             if (credentialsJSON) {
                 const credentials = credentialsJSON;
-                console.log("Retrieved credentials successfully");
                 return credentials;
             }
             return null;
@@ -41840,7 +41620,6 @@ class KeyStorage {
     static async getKeysFromStorage() {
         try {
             try {
-                console.log("===========getting keysin windows storage=================");
                 await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.getKeysFromStorage();
             }
             catch (error) {
@@ -41861,15 +41640,12 @@ class KeyStorage {
     static async storeKeys(keys) {
         try {
             try {
-                console.log("===========Storing keysin windows storage=================");
                 await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.storeKeys(keys);
             }
             catch (error) {
                 console.error("===============Error storing keys=====================");
             }
-            console.log("Storing keys in storage.");
             await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.storeKeys(keys);
-            console.log("Keys stored successfully.");
         }
         catch (error) {
             console.error("Error storing keys:", error);
@@ -41891,9 +41667,7 @@ class KeyStorage {
      */
     static async storeSettings(settings) {
         try {
-            console.log("Storing settings in storage.");
             await _WindowsHelloStorage__WEBPACK_IMPORTED_MODULE_0__.SecureStorageService.storeSettings(settings);
-            console.log("Settings stored successfully.");
         }
         catch (error) {
             console.error("Error storing settings:", error);
@@ -41936,7 +41710,6 @@ class SecureStorageService {
      * Stores session data with automatic expiration
      */
     static async storeKeys(Keys) {
-        console.log("###########################Storing keys:", Keys);
         try {
             // Verify identity before storing keys
             const verified = await _auth_security_WindowsHelloVerifier__WEBPACK_IMPORTED_MODULE_1__.WindowsHelloVerifier.getInstance().verifyIdentity("store_keys");
@@ -41949,7 +41722,6 @@ class SecureStorageService {
             await chrome.storage.local.set({
                 [this.STORAGE_KEYS.PROTECTED_DATA]: Object.assign(Object.assign({}, Keys), { lastUpdated: Date.now() }),
             });
-            console.log("###########################Keys stored successfully.");
         }
         catch (error) {
             console.error("Error storing session data:", error);
@@ -41960,7 +41732,6 @@ class SecureStorageService {
      * Retrieves session data if not expired
      */
     static async getKeysFromStorage() {
-        console.log("###########################Retrieving keys from storage...");
         try {
             // Verify identity before retrieving keys
             const verified = await _auth_security_WindowsHelloVerifier__WEBPACK_IMPORTED_MODULE_1__.WindowsHelloVerifier.getInstance().verifyIdentity("get_keys");
@@ -41978,12 +41749,10 @@ class SecureStorageService {
             ]);
             const Keys = result[this.STORAGE_KEYS.PROTECTED_DATA];
             if (!Keys) {
-                console.log("###########################No Keys found.");
                 return null;
             }
             // Store in secure memory for future use
             _auth_security_SecureMemory__WEBPACK_IMPORTED_MODULE_0__.SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
-            console.log("###########################Keys retrieved:", Keys);
             return Keys;
         }
         catch (error) {
@@ -41992,12 +41761,10 @@ class SecureStorageService {
         }
     }
     static async storeSettings(settings) {
-        console.log("###########################Storing settings:", settings);
         try {
             await chrome.storage.local.set({
                 [this.STORAGE_KEYS.SESSION_DATA]: Object.assign(Object.assign({}, settings), { lastUpdated: Date.now() }),
             });
-            console.log("###########################Settings stored successfully.");
         }
         catch (error) {
             console.error("Error storing session data:", error);
@@ -42008,24 +41775,20 @@ class SecureStorageService {
      * Retrieves session data if not expired
      */
     static async getSettingsFromStorage() {
-        console.log("###########################Retrieving settings from storage...");
         try {
             const result = await chrome.storage.local.get([
                 this.STORAGE_KEYS.SESSION_DATA,
             ]);
             const sessionData = result[this.STORAGE_KEYS.SESSION_DATA];
             if (!sessionData) {
-                console.log("###########################No session settings found.");
                 return null;
             }
             // Check if session has expired
             const currentTime = Date.now();
             if (currentTime > sessionData.sessionExpiry) {
-                console.log("###########################Session has expired, clearing session data.");
                 await this.clearSessionData();
                 return null;
             }
-            console.log("###########################Session settings retrieved:", sessionData);
             return sessionData;
         }
         catch (error) {
@@ -42037,10 +41800,8 @@ class SecureStorageService {
      * Clears all stored data
      */
     static async clearAllData() {
-        console.log("###########################Clearing all stored data...");
         try {
             await chrome.storage.local.clear();
-            console.log("###########################All data cleared successfully.");
         }
         catch (error) {
             console.error("Error clearing storage:", error);
@@ -42051,10 +41812,8 @@ class SecureStorageService {
      * Clears only session data
      */
     static async clearSessionData() {
-        console.log("###########################Clearing session data...");
         try {
             await chrome.storage.local.remove([this.STORAGE_KEYS.SESSION_DATA]);
-            console.log("###########################Session data cleared successfully.");
         }
         catch (error) {
             console.error("Error clearing session data:", error);
@@ -42065,12 +41824,10 @@ class SecureStorageService {
      * Updates the session settings
      */
     static async updateSettings(newSettings) {
-        console.log("###########################Updating settings with:", newSettings);
         try {
             const currentSettings = await this.getSettingsFromStorage();
             const updatedSettings = Object.assign(Object.assign(Object.assign({}, currentSettings), newSettings), { lastUpdated: Date.now() });
             await this.storeSettings(updatedSettings);
-            console.log("###########################Settings updated successfully.");
         }
         catch (error) {
             console.error("Error updating session settings:", error);
@@ -45269,13 +45026,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log("Index.tsx is running");
 const rootElement = document.getElementById("root");
 if (!rootElement) {
     console.error("Root element not found");
 }
 else {
-    console.log("Root element found");
     const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_2__.createRoot)(rootElement);
     root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)((react__WEBPACK_IMPORTED_MODULE_1___default().StrictMode), { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_context_SessionContext__WEBPACK_IMPORTED_MODULE_5__.SessionProvider, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_App__WEBPACK_IMPORTED_MODULE_3__["default"], {}) }) }));
 }

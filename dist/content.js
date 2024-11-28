@@ -119,7 +119,6 @@ class CredentialDetector {
                 timestamp: new Date().toISOString(),
             },
         };
-        console.log("CONTENT:  Extracted credentials:", Object.assign(Object.assign({}, credentials), { password: "***" }));
         return credentials;
     }
     // Notifies about detected credentials and sends a message to the background script
@@ -129,16 +128,12 @@ class CredentialDetector {
         }
         this.lastDetectedCredentials = Object.assign(Object.assign({}, credentials), { timestamp: Date.now() });
         try {
-            console.log("CONTENT: Sending credential detection message to background");
             // Check if chrome.runtime is defined and available
             if (chrome.runtime && chrome.runtime.id) {
                 await chrome.runtime.sendMessage({
                     type: "PASSWORD_DETECTED",
                     data: credentials,
                 });
-            }
-            else {
-                console.warn("CONTENT: Chrome runtime not available, extension may need to be reloaded");
             }
         }
         catch (error) {
@@ -154,15 +149,11 @@ class CredentialDetector {
     }
     // Handles changes in the DOM and processes new elements
     async handleDOMChanges(mutations) {
-        console.log("CONTENT:  DOM changes detected:", mutations);
         for (const mutation of mutations) {
-            console.log("CONTENT:  Processing mutation:", mutation);
             if (mutation.type === "childList") {
                 const addedNodes = Array.from(mutation.addedNodes);
-                console.log("CONTENT:  Added nodes:", addedNodes);
                 for (const node of addedNodes) {
                     if (node instanceof HTMLElement) {
-                        console.log("CONTENT:  Processing new element:", node);
                         await this.processNewElement(node);
                     }
                 }
@@ -171,19 +162,14 @@ class CredentialDetector {
     }
     // Processes a new element added to the DOM
     async processNewElement(element) {
-        console.log("CONTENT:  Processing new element:", element);
         const forms = element.querySelectorAll("form");
-        console.log("CONTENT:  Found forms:", forms);
         forms.forEach((form) => {
-            console.log("CONTENT:  Attaching listeners to form:", form);
             this.attachFormListeners(form);
         });
         const passwordFields = element.querySelectorAll(FORM_SELECTORS.PASSWORD_INPUTS.join(","));
-        console.log("CONTENT:  Found password fields:", passwordFields);
         passwordFields.forEach((field) => {
             const parentForm = field.closest("form");
             if (!parentForm) {
-                console.log("CONTENT:  Creating virtual form for password field:", field);
                 this.createVirtualForm(field);
             }
         });
@@ -191,7 +177,6 @@ class CredentialDetector {
     // Creates a virtual form for a password field if it doesn't belong to a form
     createVirtualForm(passwordField) {
         var _a;
-        console.log("CONTENT:  Creating virtual form for password field:", passwordField);
         const virtualForm = document.createElement("form");
         virtualForm.setAttribute("data-virtual-form", "true");
         (_a = passwordField.parentElement) === null || _a === void 0 ? void 0 : _a.insertBefore(virtualForm, passwordField);
@@ -222,25 +207,19 @@ class CredentialDetector {
     }
     // Attaches event listeners to the form for submission and input changes
     attachFormListeners(form) {
-        console.log("CONTENT:  Attaching form listeners for form:", form);
         if (this.observedForms.has(form)) {
-            console.log("CONTENT:  Form already observed:", form);
             return;
         }
         try {
             const formElements = this.findFormElements(form);
-            console.log("CONTENT:  Form elements found:", formElements);
             this.observedForms.add(form);
             form.addEventListener("submit", (e) => {
-                console.log("CONTENT:  Form submitted:", formElements);
                 this.handleFormSubmission(e, formElements);
             });
             formElements.passwordField.addEventListener("input", this.debounce(() => {
-                console.log("CONTENT:  Input changed in password field:", formElements);
                 this.handleInputChange(formElements);
             }, 500));
             formElements.passwordField.addEventListener("focus", () => {
-                console.log("CONTENT:  Password field focused:", formElements);
                 this.handlePasswordFocus(formElements);
             });
         }
@@ -250,10 +229,8 @@ class CredentialDetector {
     }
     // Handles form submission and extracts credentials
     async handleFormSubmission(event, formElements) {
-        console.log("CONTENT:  Handling form submission:", formElements);
         const credentials = this.extractCredentials(formElements);
         if ((credentials === null || credentials === void 0 ? void 0 : credentials.website) && (credentials === null || credentials === void 0 ? void 0 : credentials.user) && (credentials === null || credentials === void 0 ? void 0 : credentials.password)) {
-            console.log("CONTENT:  Extracted credentials:", credentials);
             await this.notifyCredentialDetection(credentials);
         }
     }
@@ -262,11 +239,9 @@ class CredentialDetector {
         if (this.isAutoFilling || !this.isDetectionAllowed()) {
             return;
         }
-        console.log("CONTENT: Handling input change:", formElements);
         const credentials = this.extractCredentials(formElements);
         if (credentials) {
             this.lastDetectionTime = Date.now();
-            console.log("CONTENT: Credentials extracted on input change:", credentials);
             if (this.detectionTimeout) {
                 clearTimeout(this.detectionTimeout);
             }
@@ -286,10 +261,8 @@ class CredentialDetector {
     }
     // Handles focus event on the password field and notifies credential detection
     async handlePasswordFocus(formElements) {
-        console.log("CONTENT:  Handling password focus:", formElements);
         const credentials = this.extractCredentials(formElements);
         if (credentials) {
-            console.log("Notifying credential detection on password focus:", credentials);
             await this.notifyCredentialDetection(credentials);
         }
     }
@@ -303,16 +276,13 @@ class CredentialDetector {
         };
     }
     initialize() {
-        console.log("CONTENT:  Initializing CredentialDetector...");
         document.querySelectorAll("form").forEach((form) => {
-            console.log("CONTENT:  Attaching listeners to existing form:", form);
             this.attachFormListeners(form);
         });
         document
             .querySelectorAll(FORM_SELECTORS.PASSWORD_INPUTS.join(","))
             .forEach((field) => {
             if (!field.closest("form")) {
-                console.log("Creating virtual form for existing password field:", field);
                 this.createVirtualForm(field);
             }
         });
@@ -333,8 +303,6 @@ class CredentialDetector {
             this.lastDetectedCredentials.password === newCredentials.password);
     }
 }
-// Initialize the detector
-console.log("CONTENT:  Initializing CredentialDetector instance...");
 // Initialize the detector
 const detector = new CredentialDetector();
 detector.initialize();
