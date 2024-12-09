@@ -13,74 +13,172 @@ import { v4 as uuidv4 } from "uuid"; // Importing UUID library
 export class CredentialCryptoService {
   public static async encryptCredentials(
     credentials: {
-      server: string;
       authToken: string;
-      password?: string;
+      username: string;
+      email: string;
+      userId: string;
+      password: string;
     },
     aesKey: SymmetricKeys
   ): Promise<{
     encryptedData: {
-      server: string;
       authToken: string;
-      password?: string;
+      username: string;
+      email: string;
+      userId: string;
+      password: string;
     };
     formattedOutput: string;
   }> {
+    console.log("[encryptCredentials] Starting encryption:", {
+      hasAuthToken: !!credentials?.authToken,
+      hasEmail: !!credentials?.email,
+      hasUsername: !!credentials?.username,
+      hasUserId: !!credentials?.userId,
+      hasPassword: !!credentials?.password
+    });
+
     const key = await CryptoUtils.importAESKey(aesKey.key);
     const iv = CryptoUtils.base64ToBuffer(aesKey.iv);
 
+    const encryptField = async (field: string, value: string, isToken: boolean = false) => {
+      if (isToken) {
+        console.log(`[encryptCredentials] Skipping encryption for ${field} as it's a token`);
+        return value;
+      }
+
+      console.log(`[encryptCredentials] Encrypting ${field}:`, {
+        inputLength: value?.length,
+        inputPreview: value?.substring(0, 50)
+      });
+      const result = await CryptoUtils.encryptString(value, key, iv);
+      console.log(`[encryptCredentials] Successfully encrypted ${field}:`, {
+        outputLength: result?.length,
+        outputPreview: result?.substring(0, 50)
+      });
+      return result;
+    };
+
     const encryptedData = {
-      server: await CryptoUtils.encryptString(credentials.server, key, iv),
-      authToken: await CryptoUtils.encryptString(
-        credentials.authToken,
-        key,
-        iv
-      ),
-      password: credentials.password
-        ? await CryptoUtils.encryptString(credentials.password, key, iv)
-        : undefined,
+      // Pass true for authToken to skip encryption since it's already a JWT
+      authToken: await encryptField('authToken', credentials.authToken, true),
+      email: await encryptField('email', credentials.email),
+      username: await encryptField('username', credentials.username),
+      userId: await encryptField('userId', credentials.userId),
+      password: await encryptField('password', credentials.password),
     };
 
     const formattedOutput = [
-      "----------encrypted website----------------",
-      encryptedData.server,
-      "----------encrypted authkey----------------",
+      "----------encrypted username----------------",
+      encryptedData.username,
+      "----------encrypted userId----------------",
+      encryptedData.userId,
+      "----------encrypted password----------------",
+      encryptedData.password,
+      "----------encrypted email----------------",
+      encryptedData.email,
+      "----------encrypted authToken----------------",
       encryptedData.authToken,
-      credentials.password
-        ? "----------encrypted password----------------\n" +
-          encryptedData.password
-        : "",
     ].join("\n");
 
+    console.log("[encryptCredentials] Successfully encrypted all credentials");
     return { encryptedData, formattedOutput };
   }
 
   public static async decryptCredentials(
     encryptedData: {
-      server: string;
       authToken: string;
-      password?: string;
+      email: string;
+      username: string;
+      userId: string;
+      password: string;
     },
     aesKey: SymmetricKeys
   ): Promise<{
-    server: string;
     authToken: string;
-    password?: string;
+    email: string;
+    username: string;
+    userId: string;
+    password: string;
   }> {
     try {
-      const key = await CryptoUtils.importAESKey(aesKey.key);
-      const iv = CryptoUtils.base64ToBuffer(aesKey.iv);
+      console.log("[decryptCredentials] Starting credential decryption:", {
+        hasAuthToken: !!encryptedData?.authToken,
+        hasEmail: !!encryptedData?.email,
+        hasUsername: !!encryptedData?.username,
+        hasUserId: !!encryptedData?.userId,
+        hasPassword: !!encryptedData?.password,
+        hasAESKey: !!aesKey?.key,
+        hasIV: !!aesKey?.iv
+      });
 
-      return {
-        server: await this.decryptString(encryptedData.server, key, iv),
-        authToken: await this.decryptString(encryptedData.authToken, key, iv),
-        password: encryptedData.password
-          ? await this.decryptString(encryptedData.password, key, iv)
-          : undefined,
+      const key = await CryptoUtils.importAESKey(aesKey.key);
+      console.log("[decryptCredentials] AES key imported:", {
+        keyType: key?.type,
+        keyAlgorithm: key?.algorithm,
+        keyUsages: key?.usages
+      });
+
+      const iv = CryptoUtils.base64ToBuffer(aesKey.iv);
+      console.log("[decryptCredentials] IV converted to buffer:", {
+        ivLength: iv?.length,
+        firstFewBytes: Array.from(iv?.slice(0, 4) || [])
+      });
+
+      console.log("[decryptCredentials] Starting individual field decryption");
+      
+      const decryptField = async (field: string, value: string) => {
+        try {
+          // Check if the value needs decryption
+          const isEncrypted = CryptoUtils.isBase64Encrypted(value);
+          console.log(`[decryptCredentials] Checking ${field}:`, {
+            inputLength: value?.length,
+            inputPreview: value?.substring(0, 50),
+            isEncrypted
+          });
+
+          if (!isEncrypted) {
+            console.log(`[decryptCredentials] ${field} is not encrypted, using as-is`);
+            return value;
+          }
+
+          console.log(`[decryptCredentials] Decrypting ${field}`);
+          const result = await this.decryptString(value, key, iv);
+          console.log(`[decryptCredentials] Successfully decrypted ${field}:`, {
+            outputLength: result?.length,
+            outputPreview: result?.substring(0, 50)
+          });
+          return result;
+        } catch (error) {
+          console.error(`[decryptCredentials] Failed to process ${field}:`, {
+            error,
+            errorName: error,
+            errorMessage: error
+          });
+          // If decryption fails, return the original value
+          console.log(`[decryptCredentials] Returning original value for ${field}`);
+          return value;
+        }
       };
+
+      const decryptedData = {
+        authToken: encryptedData.authToken, // Always use raw token
+        email: await decryptField('email', encryptedData.email),
+        username: await decryptField('username', encryptedData.username),
+        userId: await decryptField('userId', encryptedData.userId),
+        password: await decryptField('password', encryptedData.password),
+      };
+
+      console.log("[decryptCredentials] Successfully processed all credentials");
+      return decryptedData;
     } catch (error) {
-      console.error("Decryption failed:", error);
-      throw new Error("Failed to decrypt credentials.");
+      console.error("[decryptCredentials] Processing failed:", {
+        error,
+        errorName: error,
+        errorMessage: error,
+        stack: error
+      });
+      throw error;
     }
   }
 

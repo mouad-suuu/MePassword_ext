@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
-import EncryptionService from "../../../services/EncryptionService";
-import Main from "../main";
-import { Lock, Key, AlertCircle, Fingerprint } from "lucide-react";
-import { KeyStorage } from "../../../services/storage/KeyStorage";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+import { Lock } from "lucide-react";
 import { WebAuthnService } from "../../../services/auth&security/WebAuthnService";
+import { KeyStorage } from "../../../services/storage/KeyStorage";
+import { UserButton } from "@clerk/chrome-extension";
+import EncryptionService from "../../../services/EncryptionService";
+import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
+import StoringService from "../../../services/StorageService";
+import { CryptoUtils } from "../../../services/Keys-managment/CryptoUtils";
+import { useNavigate } from "react-router-dom";
+import { SessionSettings } from "../../../services/types";
 
-export const PasswordPrompt: React.FC = () => {
+const PasswordPromptContent: React.FC = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState<string>("");
-  const [isValid, setIsValid] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [isBiometricAvailable, setIsBiometricAvailable] =
-    useState<boolean>(false);
+  const [isBiometricAvailable, setIsBiometricAvailable] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     checkBiometricAvailability();
@@ -21,130 +26,192 @@ export const PasswordPrompt: React.FC = () => {
 
   const checkBiometricAvailability = async () => {
     try {
-      console.log("Checking biometric availability...");
       const settings = await KeyStorage.getSettingsFromStorage();
-      console.log("Current settings:", settings);
-
       const isSupported = await WebAuthnService.isWebAuthnSupported();
-      console.log("WebAuthn supported:", isSupported);
-
       setIsBiometricAvailable(isSupported && settings.biometricVerification);
-      console.log(
-        "Biometric available:",
-        isSupported && settings.biometricVerification
-      );
     } catch (error) {
       console.error("Error checking biometric availability:", error);
     }
   };
 
+  const onPasswordVerified = async () => {
+    try {
+      const timestamp = Date.now();
+      
+      // Get the stored keys
+      const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      const settings = await StoringService.Keys.getSettingsFromStorage();
+      if (!storedKeys) {
+        throw new Error("No stored keys found");
+      }
+
+      // Decrypt credentials to get the latest auth token
+      const decryptedCredentials = await EncryptionService.CredentialCrypto.decryptCredentials(
+        storedKeys.Credentials,
+        {
+          key: storedKeys.AESKey,
+          iv: storedKeys.IV,
+          algorithm: "AES-GCM",
+          length: 256
+        }
+      );
+
+      // Update session settings with all required fields
+      await SessionManagementService.updateSessionSettings({
+        autoLockStart: timestamp,
+        lastAccessTime: timestamp,
+        sessionStart: timestamp,
+        sessionTime: settings.sessionTime,
+        autoLockTime: settings.autoLockTime,
+        sessionExpiry: settings.sessionExpiry,
+        pushNotifications: settings.pushNotifications,
+        biometricVerification: settings.biometricVerification,
+        biometricType: settings.biometricType,
+        biometricPassword: settings.biometricPassword,
+        lockOnLeave: settings.lockOnLeave
+      } as SessionSettings);
+
+      // Re-encrypt the credentials with proper base64 encoding
+      const key = await CryptoUtils.importAESKey(storedKeys.AESKey);
+      const iv = CryptoUtils.base64ToBuffer(storedKeys.IV);
+
+      const encryptedCredentials = {
+        authToken: await CryptoUtils.encryptString(decryptedCredentials.authToken, key, iv),
+        email: await CryptoUtils.encryptString(decryptedCredentials.email, key, iv),
+        username: await CryptoUtils.encryptString(decryptedCredentials.username, key, iv),
+        userId: await CryptoUtils.encryptString(decryptedCredentials.userId, key, iv),
+        password: await CryptoUtils.encryptString(decryptedCredentials.password, key, iv)
+      };
+
+      // Store the updated credentials
+      await StoringService.Keys.storeKeys({
+        ...storedKeys,
+        Credentials: encryptedCredentials
+      });
+
+      // Clear any error messages
+      setErrorMessage("");
+
+      // Navigate to the main vault page
+      navigate("/vault");
+    } catch (error) {
+      console.error("Error updating session:", error);
+      setErrorMessage("Error updating session");
+    }
+  };
+
   const handleBiometricAuth = async () => {
     try {
-      console.log("Starting biometric authentication...");
+      setIsLoading(true);
       const isValid = await WebAuthnService.verifyBiometric();
-      console.log("Biometric verification result:", isValid);
-
       if (isValid) {
-        console.log("Biometric authentication successful");
-        await KeyStorage.updateSettings({
-          autoLockStart: Date.now(),
-        });
-        setIsValid(true);
+        await onPasswordVerified();
       } else {
-        console.log("Biometric verification failed");
         setErrorMessage("Biometric verification failed");
       }
-      const responce = await EncryptionService.API.SettingGet();
-      const settings = await responce.json();
-      //   await SessionManagementService.initialize(password);
-      await KeyStorage.updateSettings({
-        autoLockStart: Date.now(),
-        autoLockTime: settings.settings.sessionSettings.autoLockTime,
-      });
-      console.log("Settings updated:", settings);
     } catch (error) {
       console.error("Biometric authentication error:", error);
-      setErrorMessage("Biometric authentication error. Please use password.");
+      setErrorMessage("Biometric authentication failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await handleValidatePassword(password);
-  };
+    setIsLoading(true);
+    setErrorMessage("");
 
-  const handleValidatePassword = async (password: string) => {
-    const valid = await EncryptionService.API.validatePassword(password);
-    if (valid) {
-      const responce = await EncryptionService.API.SettingGet();
-      const settings = await responce.json();
-      //   await SessionManagementService.initialize(password);
-      await KeyStorage.updateSettings({
-        autoLockStart: Date.now(),
-        autoLockTime: settings.settings.sessionSettings.autoLockTime,
-      });
-      console.log("Settings updated:", settings);
-      setIsValid(true);
-    } else {
-      setErrorMessage("Invalid password. Please try again.");
-      setPassword("");
+    try {
+      console.log("Getting stored keys...");
+      const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      if (!storedKeys) {
+        throw new Error("No stored keys found");
+      }
+
+      // Import the AES key and get IV
+      console.log("Importing AES key...");
+      const key = await CryptoUtils.importAESKey(storedKeys.AESKey);
+      const iv = CryptoUtils.base64ToBuffer(storedKeys.IV);
+
+      // Encrypt the password
+      console.log("Encrypting password...");
+      const encryptedPassword = await CryptoUtils.encryptString(password, key, iv);
+
+      console.log("Validating password...");
+      const isValid = await EncryptionService.API.validatePassword(password);
+
+      if (isValid) {
+        console.log("Password validated successfully");
+        await onPasswordVerified();
+      } else {
+        console.log("Invalid password");
+        setErrorMessage("Invalid password");
+      }
+    } catch (error) {
+      console.error("Password validation error:", error);
+      setErrorMessage("Error validating password");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <>
-      {!isValid ? (
-        <div className="min-w-[400px] min-h-96 bg-gray-50 flex flex-col items-center justify-center p-8">
-          {isBiometricAvailable && (
-            <Button
-              onClick={handleBiometricAuth}
-              className="mb-4 flex items-center gap-2"
-            >
-              <Fingerprint className="w-5 h-5" />
-              Use Biometric Login
-            </Button>
-          )}
-
-          <div className="mb-6 text-primary">
-            <Lock size={48} className="mx-auto mb-2" />
-          </div>
-
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-            Welcome Back
-          </h2>
-
-          {errorMessage && (
-            <div className="flex items-center gap-2 text-red-500 mb-6 bg-red-50 p-3 rounded-lg w-full">
-              <AlertCircle size={18} />
-              <span>{errorMessage}</span>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="w-full space-y-4">
-            <div className="relative">
-              <Key
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={18}
-              />
+    <div className="relative flex min-w-[350px] h-[450px] items-center justify-center bg-background p-4">
+      <div className="absolute top-4 right-4">
+        <UserButton afterSignOutUrl="/" />
+      </div>
+      <Card className="w-[350px]">
+        <CardHeader className="pb-2 pt-4">
+          <CardTitle>Enter Master Password</CardTitle>
+          <CardDescription>Unlock your password vault</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
               <Input
                 type="password"
+                placeholder="Enter your master password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="pl-10 py-5"
-                placeholder="Enter your password"
+                disabled={isLoading}
+                className="w-full"
               />
+              {errorMessage && (
+                <p className="text-sm text-red-500">{errorMessage}</p>
+              )}
             </div>
-
-            <Button type="submit" className="w-full py-5 text-base font-medium">
-              Unlock
-            </Button>
+            <div className="space-y-2">
+              <Button 
+                type="submit" 
+                className="w-full"
+                disabled={isLoading}
+              >
+                <Lock className="mr-2 h-4 w-4" />
+                {isLoading ? "Verifying..." : "Unlock"}
+              </Button>
+              {isBiometricAvailable && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleBiometricAuth}
+                  disabled={isLoading}
+                  className="w-full"
+                >
+                  {isLoading ? "Verifying..." : "Use Biometric"}
+                </Button>
+              )}
+            </div>
           </form>
-        </div>
-      ) : (
-        <Main />
-      )}
-    </>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
+
+const PasswordPrompt: React.FC = () => {
+  return <PasswordPromptContent />;
+};
+
 export default PasswordPrompt;

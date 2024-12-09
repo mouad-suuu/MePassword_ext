@@ -18,7 +18,8 @@
   },
   "paths": {
     "@/*": ["./src/popup/*"],
-    "@/components/*": ["./src/popup/components/*"]
+    "@/components/*": ["./src/popup/components/*"],
+    "~features/*": ["./src/features/*"]
   },
   "include": ["src"]
 }

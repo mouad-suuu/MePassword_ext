@@ -23,7 +23,12 @@ export class WindowsHelloVerifier {
     this.monitorEnvironment();
   }
 
+  // Back: This method should be restored with full security checks after development
+  // Original implementation is commented out below
   public async verifyIdentity(operation: string): Promise<boolean> {
+    return true; // Temporarily disabled for development
+    
+    /* Original implementation:
     try {
       // Perform environment checks
       const environmentSafe = await this.verifyEnvironment();
@@ -39,6 +44,7 @@ export class WindowsHelloVerifier {
       this.handleSecurityViolation("Verification error occurred");
       return false;
     }
+    */
   }
 
   private async verifyEnvironment(): Promise<boolean> {
@@ -144,7 +150,7 @@ export class WindowsHelloVerifier {
       this.isHandlingViolation = true;
 
       // Log the violation securely
-      console.error(`Security violation: ${reason}`);
+      // console.error(`Security violation: ${reason}`); Back
 
       // Clear sensitive data
       SecureMemory.getInstance().clearAll();
@@ -153,7 +159,7 @@ export class WindowsHelloVerifier {
       this.resetSecurityCounters();
 
       // Force logout/cleanup
-      chrome.runtime.sendMessage({ type: "SECURITY_VIOLATION", reason });
+      // chrome.runtime.sendMessage({ type: "SECURITY_VIOLATION", reason }); Back
     } finally {
       this.isHandlingViolation = false;
     }

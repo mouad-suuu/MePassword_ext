@@ -11,7 +11,8 @@
     "scripting",
     "notifications",
     "windows",
-    "tabs"
+    "tabs",
+    "identity"
   ],
   "content_scripts": [
     {
@@ -30,6 +31,31 @@
   "background": {
     "service_worker": "background.js"
   },
+  "oauth2": {
+    "client_id": "${CLERK_PUBLISHABLE_KEY}",
+    "scopes": [
+      "openid",
+      "profile",
+      "email"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; frame-ancestors 'none';"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.clerk.com/*"
+    ]
+  },
+  "host_permissions": [
+    "https://*.clerk.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "icons": {
     "16": "./assets/MePasswod.png",
     "48": "./assets/MePasswod.png",

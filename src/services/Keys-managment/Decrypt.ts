@@ -31,27 +31,42 @@ class DecryptService {
 
       const aesKey = await CryptoUtils.importAESKey(keySet.AESKey);
       const iv = CryptoUtils.base64ToBuffer(keySet.IV);
-      if (!encryptedPassword.Credentials.server) {
+      if (!encryptedPassword.Credentials.authToken) {
         throw new Error("Encrypted website data is missing or invalid");
       }
 
       const decryptedData: UserCredentials = {
-        server: await this.decryptString(
-          encryptedPassword.Credentials.server,
-          aesKey,
-          iv
-        ),
         authToken: await this.decryptString(
           encryptedPassword.Credentials.authToken,
           aesKey,
           iv
         ),
-        password: await this.decryptString(
-          encryptedPassword.Credentials.password || "",
+        username: await this.decryptString(
+          encryptedPassword.Credentials.username,
           aesKey,
           iv
         ),
+        password: await this.decryptString(
+          encryptedPassword.Credentials.password,
+          aesKey,
+          iv
+        ),
+        email: encryptedPassword.Credentials.email
+          ? await this.decryptString(
+              encryptedPassword.Credentials.email,
+              aesKey,
+              iv
+            )
+          : "",
+        userId: encryptedPassword.Credentials.userId
+          ? await this.decryptString(
+              encryptedPassword.Credentials.userId,
+              aesKey,
+              iv
+            )
+          : "",
       };
+      
 
       console.log("[DEBUG] Decrypted data structure:", {
         decryptedDataKeys: Object.keys(decryptedData),

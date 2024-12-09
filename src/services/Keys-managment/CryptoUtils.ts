@@ -33,9 +33,77 @@ export class CryptoUtils {
     );
   }
 
+  public static isBase64Encrypted(value: string): boolean {
+    if (!value) return false;
+    return this.isCredentialEncrypted(value) || this.isPasswordEncrypted(value);
+  }
+
+  public static isCredentialEncrypted(value: string): boolean {
+    if (!value) return false;
+    
+    try {
+      // Credentials are typically shorter and use standard base64
+      const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
+      if (!base64Regex.test(value)) {
+        return false;
+      }
+
+      // Try to decode it
+      const decoded = atob(value);
+      
+      // Credentials typically have a higher ratio of non-printable characters
+      const printableChars = decoded.replace(/[^\x20-\x7E]/g, '').length;
+      const ratio = printableChars / decoded.length;
+      
+      // For credentials, we expect a lower ratio of printable characters
+      return ratio < 0.3;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  public static isPasswordEncrypted(value: string): boolean {
+    if (!value) return false;
+    
+    try {
+      // First decode URI component if it's URL encoded
+      const decodedValue = decodeURIComponent(value);
+      
+      // Passwords use URL-safe base64 characters
+      const base64Regex = /^[A-Za-z0-9\-_/]*={0,2}$/;
+      if (!base64Regex.test(decodedValue)) {
+        return false;
+      }
+
+      // Convert URL-safe characters back to standard base64
+      const standardBase64 = decodedValue.replace(/-/g, '+').replace(/_/g, '/');
+
+      // Try to decode it
+      const decoded = atob(standardBase64);
+      
+      // Password encryption typically has a different character distribution
+      const printableChars = decoded.replace(/[^\x20-\x7E]/g, '').length;
+      const ratio = printableChars / decoded.length;
+      
+      // For passwords, we can be more lenient with the ratio
+      return ratio < 0.4;
+    } catch (error) {
+      // If URL decoding fails, try with raw value
+      try {
+        const decoded = atob(value);
+        const printableChars = decoded.replace(/[^\x20-\x7E]/g, '').length;
+        const ratio = printableChars / decoded.length;
+        return ratio < 0.4;
+      } catch {
+        return false;
+      }
+    }
+  }
+
   public static validatePin(pin: string): boolean {
     return /^\d{6}$/.test(pin);
   }
+
   public static async encryptString(
     data: string,
     key: CryptoKey,
@@ -52,6 +120,7 @@ export class CryptoUtils {
     );
     return this.bufferToBase64(encryptedData);
   }
+
   public static async importRSAPublicKey(
     keyBase64: string
   ): Promise<CryptoKey> {
@@ -81,6 +150,7 @@ export class CryptoUtils {
       ["encrypt", "decrypt"]
     );
   }
+
   public static async encryptWithRSA(
     data: {
       website: string;

@@ -27,17 +27,11 @@ export interface EncryptionKeys {
 // types to be sent to the server as settings (well be updated but later we dont need much now)
 export interface APISettingsPayload {
   publicKey: string;
+  userId: string;
   password: string | undefined;
   deviceId: string;
   timestamp: number;
-  sessionSettings?: {
-    pushNotifications: boolean;
-    autoLockTime: number;
-    sessionTime: number;
-    lastAccessTime?: number;
-    biometricVerification: boolean;
-    biometricType: BiometricType;
-  };
+  sessionSettings?: SessionSettings;
 }
 export type BiometricType = "face" | "fingerprint" | "none";
 // types to be sent to the server as passwords and keys
@@ -76,9 +70,11 @@ export interface SymmetricKeys {
 }
 
 export interface UserCredentials {
-  server: string;
   authToken: string;
-  password?: string;
+  email: string;
+  username: string;
+  password: string;
+  userId:string;
 }
 
 // types to be used in the future ignore them
