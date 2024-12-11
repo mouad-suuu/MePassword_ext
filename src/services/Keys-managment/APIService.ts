@@ -477,6 +477,9 @@ export class APIService {
   ): Promise<Response> {
     try {
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      if (!storedKeys?.Credentials?.userId) {
+        throw new Error("No user credentials found");
+      }
       // Fetch public key from settings
       const settingsResponse = await this.SettingGet();
       if (!settingsResponse.ok) {
@@ -501,16 +504,26 @@ export class APIService {
         publicKey
       );
 
-      return await this.networkSecurity.secureRequest(`/api/passwords/${id}`, {
+      const decryptedCredentials = await CredentialCryptoService.decryptCredentials(
+        storedKeys.Credentials,
+        {
+          key: storedKeys.AESKey,
+          iv: storedKeys.IV,
+          algorithm: "AES-GCM",
+          length: 256
+        }
+      );
+      const userId = decryptedCredentials.userId;
+
+      return await this.networkSecurity.secureRequest(`/api/passwords?userId=${encodeURIComponent(userId)}`, {
         method: "PUT",
         body: JSON.stringify({
           ...encryptedData,
           id,
-          userId: storedKeys.Credentials.userId,
         }),
       });
     } catch (error: any) {
-      return this.handleApiError(error, "KeysPut");
+      return this.handleApiError(error, "PasswordPut");
     }
   }
 
