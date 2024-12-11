@@ -35,6 +35,7 @@ const Keys: React.FC = () => {
 
         // Get decrypted keys - this now returns the array directly
         const decryptedKeys = await EncryptionService.API.KeysGet();
+        console.log("Fetched keys:", decryptedKeys);
         setKeys(decryptedKeys);
       } catch (error) {
         console.error("Error fetching data:", error);

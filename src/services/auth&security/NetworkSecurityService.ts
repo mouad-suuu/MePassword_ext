@@ -25,6 +25,30 @@ export class NetworkSecurityService {
     return this.instance;
   }
 
+  private async getDeviceInfo() {
+    const userAgent = navigator.userAgent;
+    const browser = this.getBrowserInfo(userAgent);
+    const os = this.getOSInfo(userAgent);
+    return { browser, os };
+  }
+
+  private getBrowserInfo(userAgent: string): string {
+    if (userAgent.includes('Chrome')) return 'Chrome';
+    if (userAgent.includes('Firefox')) return 'Firefox';
+    if (userAgent.includes('Safari')) return 'Safari';
+    if (userAgent.includes('Edge')) return 'Edge';
+    return 'Unknown Browser';
+  }
+
+  private getOSInfo(userAgent: string): string {
+    if (userAgent.includes('Windows')) return 'Windows';
+    if (userAgent.includes('Mac')) return 'MacOS';
+    if (userAgent.includes('Linux')) return 'Linux';
+    if (userAgent.includes('Android')) return 'Android';
+    if (userAgent.includes('iOS')) return 'iOS';
+    return 'Unknown OS';
+  }
+
   public async secureRequest(
     endpoint: string,
     options: RequestInit = {}
@@ -39,9 +63,22 @@ export class NetworkSecurityService {
       if (!isEnvironmentSafe) {
         throw new Error("Unsafe environment detected");
       }
+
+      // Get device information
+      const deviceInfo = await this.getDeviceInfo();
+      
+      // Get stored credentials
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      console.log("[secureRequest] Retrieved stored keys:", {
+        hasCredentials: !!storedKeys?.Credentials,
+        hasAESKey: !!storedKeys?.AESKey,
+        hasIV: !!storedKeys?.IV
+      });
+      console.log(
+        "#################### Start Decrypting credentials:", storedKeys.Credentials.authToken,storedKeys.Credentials.userId,storedKeys.Credentials.password
+      )
       const decryptedCredentials = await CredentialCryptoService.decryptCredentials(
-          storedKeys.Credentials,
+          {authToken: storedKeys.Credentials.authToken, userId: storedKeys.Credentials.userId, password: storedKeys.Credentials.password, email: storedKeys.Credentials.email},
           {
               key: storedKeys.AESKey,
               iv: storedKeys.IV,
@@ -49,6 +86,10 @@ export class NetworkSecurityService {
               length: 256
           }
       );
+      console.log(
+        "#################### Decrypted credentials:", decryptedCredentials
+      )
+ 
 
       // Store the auth token in the database if this is not the token storage endpoint
       if (!endpoint.includes('/api/auth/token')) {
@@ -56,13 +97,23 @@ export class NetworkSecurityService {
           await this.storeAuthToken(
             decryptedCredentials.userId, 
             decryptedCredentials.authToken,
-            decryptedCredentials.email
+            storedKeys.Credentials.email
           );
         } catch (error) {
           console.error("[secureRequest] Failed to store auth token:", error);
           // Continue with the request even if token storage fails
         }
       }
+
+      // Prepare headers with device information
+      const headers = new Headers(options.headers);
+      headers.set('Authorization', `Bearer ${decryptedCredentials.authToken}`);
+      headers.set('X-Device-Browser', deviceInfo.browser);
+      headers.set('X-Device-OS', deviceInfo.os);
+      headers.set('X-User-ID', decryptedCredentials.userId);
+
+      // Update options with new headers
+      options.headers = headers;
 
       // Add security headers and request signature
       const secureOptions = await this.enhanceRequestOptions(
@@ -112,39 +163,34 @@ export class NetworkSecurityService {
     authToken: string,
     userId: string
   ): Promise<RequestInit> {
-    // Create headers if they don't exist
-    const headers = new Headers(options.headers || {});
+    const timestamp = new Date().toISOString();
+    const nonce = crypto.randomUUID();
     
-    // Set required headers without overwriting existing ones unless necessary
-    if (!headers.has("Authorization")) {
-      headers.set("Authorization", `Bearer ${authToken}`);
-    }
-    if (!headers.has("X-User-ID")) {
-      headers.set("X-User-ID", userId);
-    }
-    
-    // Add required security headers
-    headers.set("X-Timestamp", new Date().toISOString());
-    headers.set("X-Nonce", crypto.randomUUID());
-    
-    // Generate signature
-    const signatureData = await this.generateRequestSignature(
-      options.body ? JSON.stringify(options.body) : "",
-      new Date().toISOString(),
-      headers.get("X-Nonce") || "",
+    // Generate signature for all requests
+    const signature = await this.generateRequestSignature(
+      options.body || '', // Pass empty string if no body
+      timestamp,
+      nonce,
       authToken
     );
-    headers.set("X-Signature", signatureData);
+
+    // Create new Headers object from existing headers
+    const headers = new Headers(options.headers);
     
-    // Set Content-Type only if not already set and we have a body
-    if (!headers.has("Content-Type") && options.body) {
-      headers.set("Content-Type", "application/json");
+    // Set security headers while preserving existing ones
+    headers.set('x-timestamp', timestamp);
+    headers.set('x-nonce', nonce);
+    headers.set('x-signature', signature);
+    headers.set('Content-Type', 'application/json');
+    
+    // Ensure Authorization header is set
+    if (!headers.has('Authorization')) {
+      headers.set('Authorization', `Bearer ${authToken}`);
     }
 
     return {
       ...options,
       headers,
-      credentials: "include", // Add this to ensure cookies are sent
     };
   }
 
@@ -154,24 +200,12 @@ export class NetworkSecurityService {
     nonce: string,
     authToken: string
   ): Promise<string> {
-    const result = await StoringService.Keys.getKeysFromStorage();
-    const storedKeys = await BaseEncryptionService.CredentialCrypto.decryptCredentials(
-      result.Credentials,
-      {
-        key: result.AESKey,
-        iv: result.IV,
-        algorithm: "AES-GCM",
-        length: 256,
-      }
-    )
-    console.log("Stored keys:", storedKeys);
     // Include userId and server URL in the signature data for additional security
     const signatureData = {
       body,
       timestamp,
       nonce,
-      authToken: storedKeys.authToken,
-      userId: storedKeys.userId,
+      authToken,
       serverUrl: this.SERVER_URL
     };
 
@@ -201,12 +235,18 @@ export class NetworkSecurityService {
 
   private async storeAuthToken(userId: string, token: string, email: string): Promise<void> {
     try {
+      console.log("[storeAuthToken] Starting token storage:", {
+        userId,
+        token: token,
+        email
+      });
+
       const timestamp = new Date().toISOString();
       const nonce = crypto.randomUUID();
       
       // Generate request signature
       const signature = await this.generateRequestSignature(
-        { userId, token: `Bearer ${token}`, email },
+        { userId, token, email },
         timestamp,
         nonce,
         token
@@ -224,13 +264,19 @@ export class NetworkSecurityService {
         },
         body: JSON.stringify({ 
           userId, 
-          token: `Bearer ${token}`,
+          token, 
           email 
         })
       });
 
+      console.log("[storeAuthToken] Token storage response:", {
+        status: response.status,
+        ok: response.ok
+      });
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        console.error("[storeAuthToken] Error response:", errorData);
         throw new Error(`Failed to store token: ${response.status} - ${errorData.error || 'Unknown error'}`);
       }
 

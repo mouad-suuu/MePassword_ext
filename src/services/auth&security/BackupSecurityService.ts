@@ -173,7 +173,7 @@ export class BackupSecurityService {
   public async restoreFromBackup(
     backupFile: Blob,
     password: string
-  ): Promise<void> {
+  ): Promise<KeySet> {
     try {
       // Read and parse backup file
       const backupContent = await backupFile.text();
@@ -214,6 +214,8 @@ export class BackupSecurityService {
       if (backupData.settings) {
         await SecureStorageService.storeSettings(backupData.settings);
       }
+
+      return backupData.keys;
     } catch (error) {
       console.error("Backup restoration failed:", error);
       throw error;

@@ -44,18 +44,29 @@ export class SessionManagementService {
         lastAccessTime: timestamp,
       };
 
-      // Add a small delay to ensure keys are stored
-      await new Promise(resolve => setTimeout(resolve, 500));
-
       // Get stored keys to access userId with retry logic
       let storedKeys = null;
       let retryCount = 0;
       const maxRetries = 3;
 
-      while (!storedKeys?.Credentials && retryCount < maxRetries) {
-        console.log(`Attempt ${retryCount + 1} to get stored keys`);
-        storedKeys = await StorageService.Keys.getKeysFromStorage();
-        if (!storedKeys?.Credentials) {
+      while (!storedKeys && retryCount < maxRetries) {
+        try {
+          console.log(`Attempt ${retryCount + 1} to get stored keys`);
+          storedKeys = await StorageService.Keys.getKeysFromStorage();
+          
+          // Validate the required fields
+          if (!storedKeys?.Credentials?.userId || !storedKeys?.AESKey || !storedKeys?.IV) {
+            console.error("Invalid keys format:", {
+              hasCredentials: !!storedKeys?.Credentials,
+              hasUserId: !!storedKeys?.Credentials?.userId,
+              hasAESKey: !!storedKeys?.AESKey,
+              hasIV: !!storedKeys?.IV
+            });
+            throw new Error("Invalid keys format");
+          }
+          break;
+        } catch (error) {
+          console.error(`Failed attempt ${retryCount + 1}:`, error);
           retryCount++;
           if (retryCount < maxRetries) {
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -63,13 +74,24 @@ export class SessionManagementService {
         }
       }
 
-      if (!storedKeys?.Credentials) {
-        throw new Error("No stored credentials found after retries");
+      if (!storedKeys) {
+        throw new Error("No valid stored credentials found after retries");
       }
 
-      console.log("Successfully retrieved stored keys");
+      console.log("Successfully retrieved stored keys:", {
+        hasCredentials: !!storedKeys.Credentials,
+        hasUserId: !!storedKeys.Credentials.userId,
+        hasAESKey: !!storedKeys.AESKey,
+        hasIV: !!storedKeys.IV
+      });
 
-      // Decrypt credentials to get userId
+      // Store settings locally first
+      console.log("Storing default settings locally");
+      await StorageService.SecureStorage.storeSettings(defaultSettings);
+      await SessionManagementService.updateSessionSettings(defaultSettings);
+
+      // Construct and send settings to server
+      console.log("Decrypting stored credentials to get userId");
       const decryptedCredentials = await EncryptionService.CredentialCrypto.decryptCredentials(
         storedKeys.Credentials,
         {
@@ -80,37 +102,19 @@ export class SessionManagementService {
         }
       );
 
-      if (!decryptedCredentials.userId) {
-        throw new Error("No userId found in decrypted credentials");
-      }
-
-      console.log("Successfully decrypted credentials, userId:", decryptedCredentials.userId);
-
-      // Construct the settings payload
       const settingsPayload: Partial<APISettingsPayload> = {
         userId: decryptedCredentials.userId,
-        sessionSettings: { ...defaultSettings }, // Create a new object to avoid reference issues
+        sessionSettings: { ...defaultSettings },
         timestamp: timestamp,
-        deviceId: crypto.randomUUID(), // Add a unique device ID
+        deviceId: crypto.randomUUID(),
       };
 
-      // Validate the payload before sending
-      if (!settingsPayload.userId || !settingsPayload.sessionSettings) {
-        throw new Error("Invalid settings payload");
-      }
-
-      console.log("Sending settings to the API with payload:", {
-        userId: settingsPayload.userId,
-        hasSessionSettings: !!settingsPayload.sessionSettings,
-        timestamp: settingsPayload.timestamp,
-        deviceId: settingsPayload.deviceId
-      });
-
+      console.log("Sending settings to the API");
       await EncryptionService.API.SettingsPut(settingsPayload as Partial<APISettingsPayload>);
-
-      console.log("Sending settings to the storage");
-      await StorageService.SecureStorage.storeSettings(defaultSettings);
-      await SessionManagementService.updateSessionSettings(defaultSettings);
+      
+      // Register the device
+     
+      
       console.log("Session initialized with default settings");
     } catch (error) {
       console.error("Failed to initialize session:", error);

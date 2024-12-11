@@ -77,8 +77,8 @@ const PasswordPromptContent: React.FC = () => {
 
       const encryptedCredentials = {
         authToken: await CryptoUtils.encryptString(decryptedCredentials.authToken, key, iv),
-        email: await CryptoUtils.encryptString(decryptedCredentials.email, key, iv),
-        username: await CryptoUtils.encryptString(decryptedCredentials.username, key, iv),
+        email: storedKeys.Credentials.email,
+        username: storedKeys.Credentials.username,
         userId: await CryptoUtils.encryptString(decryptedCredentials.userId, key, iv),
         password: await CryptoUtils.encryptString(decryptedCredentials.password, key, iv)
       };

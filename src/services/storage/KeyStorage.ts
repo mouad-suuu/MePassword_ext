@@ -18,21 +18,17 @@ export class KeyStorage {
    */
   public static async getKeysFromStorage(): Promise<KeySet> {
     try {
-      try {
-        console.log(
-          "===========getting keysin windows storage================="
-        );
-        await SecureStorageService.getKeysFromStorage();
-      } catch (error) {
-        console.error("===============Error getting keys=====================");
-      }
+      console.log("===========getting keys from windows storage=================");
       const keysJSON = await SecureStorageService.getKeysFromStorage();
+      
+      if (!keysJSON) {
+        throw new Error("No keys found in storage");
+      }
 
-      const keys = keysJSON as KeySet;
-      return keys;
+      return keysJSON as KeySet;
     } catch (error) {
       console.error("Error retrieving keys from storage:", error);
-      return {} as KeySet;
+      throw error; // Propagate the error instead of returning empty object
     }
   }
   /**

@@ -71,6 +71,12 @@ export const Navigation: React.FC<NavigationProps> = ({
             isActive={activeTab === "keys"}
             onClick={() => setActiveTab("keys")}
           />
+           <NavButton
+            icon={<User className="w-4 h-4" />}
+            label="profile"
+            isActive={activeTab === "profile"}
+            onClick={() => setActiveTab("profile")}
+          />
           <NavButton
             icon={<SettingsIcon className="w-4 h-4" />}
             label="Settings"

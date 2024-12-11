@@ -5,6 +5,7 @@ import { SessionManagementService } from "../../../services/sessionManagment/Ses
 import { KeyStorage } from "../../../services/storage/KeyStorage";
 import EncryptionService from "../../../services/EncryptionService";
 import { theme } from "../../them";
+import DeviceAudit from "./DeviceAudit";
 
 interface SettingItemProps {
   icon: ReactNode;
@@ -111,26 +112,6 @@ export const SettingsComponent: React.FC = () => {
       <h2 className={theme.text.heading}>Settings</h2>
 
       <div className="space-y-3">
-        <SettingItem
-          icon={<Bell className="w-5 h-5 text-gray-600" />}
-          title="Notifications"
-          description="Control your notification preferences"
-        >
-          <div className="flex items-center">
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={settings.pushNotifications}
-                onChange={(e) =>
-                  handleSettingChange("pushNotifications", e.target.checked)
-                }
-              />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
-          </div>
-        </SettingItem>
-
         <SettingItem
           icon={<Lock className="w-5 h-5 text-gray-600" />}
           title="Auto-Lock"

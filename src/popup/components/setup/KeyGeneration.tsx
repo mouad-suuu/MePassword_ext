@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "../../components/ui/card"
 import { useAuth, UserButton, useUser } from "@clerk/chrome-extension";
 import { Alert, AlertDescription } from "../../components/ui/alert";
 import EncryptionService from "../../../services/EncryptionService";
@@ -9,9 +9,10 @@ import StoringService from "../../../services/StorageService";
 import { KeySet, UserCredentials } from "../../../services/types";
 import { SessionManagementService } from "../../../services/sessionManagment/SessionManager";
 import { BackupSecurityService } from "../../../services/auth&security/BackupSecurityService";
-import { FileKey } from "lucide-react";
+import { FileKey, Upload, Plus, Lock, Key, RefreshCw } from "lucide-react";
 import { SecureStorageService } from '../../../services/storage/WindowsHelloStorage';
 import { useNavigate } from 'react-router-dom';
+import { AppRoutes } from '../../routes';
 
 const KeyGeneration: React.FC = () => {
   const { user } = useUser();
@@ -20,82 +21,177 @@ const KeyGeneration: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
+  const [backupFile, setBackupFile] = useState<File | null>(null);
+  const [hasExistingSettings, setHasExistingSettings] = useState<boolean | null>(null);
+  const [formData, setFormData] = useState<UserCredentials>({
+    userId: "",
+    authToken: "",
+    password: "",
+    username: "",
+    email: "",
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    const checkExistingSettings = async () => {
+      try {
+        if (!user) return;
+        
+        const authKey = await getToken();
+        if (!authKey) {
+          setHasExistingSettings(false);
+          return;
+        }
+
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/settings?userId=${user.id}`, {
+          method: 'HEAD',
+          headers: {
+            'x-user-id': user.id
+          }
+        });
+
+        // 200 means settings exist, 404 means they don't
+        setHasExistingSettings(response.status === 200);
+      } catch (error) {
+        console.error('Error checking settings:', error);
+        setHasExistingSettings(false);
+      }
+    };
+
+    checkExistingSettings();
+  }, [user, getToken]);
+
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
+
+  const handleDrop = useCallback(async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    setError("");
+
+    const file = e.dataTransfer.files[0];
+    if (!file || !file.name.endsWith(".mpb")) {
+      setError("Please provide a valid MePassword backup file");
+      return;
+    }
+
+    setBackupFile(file);
+  }, []);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (!file.name.endsWith(".mpb")) {
+        setError("Please provide a valid MePassword backup file");
+        return;
+      }
+      setBackupFile(file);
+    }
+  };
+
+  const handleRestoreBackup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    console.log("KeyGeneration: Starting key generation process");
+    setError("");
 
-    if (!user) {
-      console.error("KeyGeneration: User not found");
-      setError('User not found. Please sign in again.');
+    try {
+      console.log("Starting backup restoration process...");
+      if (!backupFile || !password || !user) {
+        throw new Error("Please select a backup file, enter your password, and ensure you're signed in");
+      }
+
+      const authKey = await getToken();
+      if (!authKey) {
+        throw new Error("Auth key not found. Please sign in again.");
+      }
+
+      const backupService = BackupSecurityService.getInstance();
+      const restoredKeys = await backupService.restoreFromBackup(backupFile, password);
+
+      const normalizedKeys = {
+        AESKey: restoredKeys.AESKey || restoredKeys.AESKey,
+        IV: restoredKeys.IV,
+        Credentials: restoredKeys.Credentials || restoredKeys.Credentials,
+        privateKey: restoredKeys.privateKey || restoredKeys.privateKey,
+      };
+      
+      await StoringService.Keys.storeKeys(normalizedKeys);
+      await SessionManagementService.initialize();
+
+      const response = await EncryptionService.API.SettingGet();
+      const settings = await response.json();
+      
+      if (settings?.sessionSettings) {
+        await SessionManagementService.updateSessionSettings(settings.sessionSettings);
+      }
+
+      navigate(AppRoutes.MAIN);
+    } catch (err) {
+      console.error("Restore failed:", err);
+      setError(err instanceof Error ? err.message : "Failed to restore backup");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateNewKeys = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    if (!user || !password) {
+      setError("Please enter a password and ensure you're signed in.");
       setLoading(false);
       return;
     }
-   
+
     try {
-      console.log("KeyGeneration: Getting auth key from windows storage");
-      const result = await SecureStorageService.getKeysFromStorage();
-      console.log("KeyGeneration: Windows storage result:", result ? "Keys found" : "No keys found");
-
-      console.log("KeyGeneration: Getting auth token");
-      const authKey = await getToken(); 
-      
+      const authKey = await getToken();
       if (!authKey) {
-        console.error("KeyGeneration: Auth key not found");
-        throw new Error('Auth key not found. Please sign in again.');
+        throw new Error("Auth key not found. Please sign in again.");
       }
-      console.log("KeyGeneration: Auth token retrieved successfully");
 
-      // Create user credentials with Clerk data
-      const userCredentials: UserCredentials = {
-        username: user.username || user.firstName || '',
-        email: user.emailAddresses[0].emailAddress,
-        password: password,
-        userId: user.id,
-        authToken: authKey,
-      };
-      console.log("KeyGeneration: User credentials created");
-
-      // Generate key components
       const keys: KeySet = {
         privateKey: "",
         AESKey: "",
         IV: "",
-        Credentials: { ...userCredentials },
-
+        Credentials: {
+          userId: user.id,
+          authToken: authKey,
+          password: password,
+          username: user.fullName || "",
+          email: user.primaryEmailAddress?.emailAddress || "",
+        },
       };
 
-      console.log("KeyGeneration: Starting key component generation");
       const { rsaKeyPair, aesKey } = await EncryptionService.KeyGeneration.generateKeyComponents();
-      console.log("KeyGeneration: Key components generated successfully");
-
-      // Update keys with generated values
       keys.privateKey = rsaKeyPair.privateKey.key;
       keys.AESKey = aesKey.key;
       keys.IV = aesKey.iv;
-      
-      console.log("KeyGeneration: Starting credential encryption");
+
       const encryptedCredentials = await EncryptionService.CredentialCrypto.encryptCredentials(
-        userCredentials,
+        keys.Credentials,
         aesKey
       );
-      keys.Credentials = encryptedCredentials.encryptedData;
-      console.log("KeyGeneration: Credentials encrypted successfully");
+      keys.Credentials = {
+        authToken: encryptedCredentials.encryptedData.authToken,
+        email: user.primaryEmailAddress?.emailAddress || "",
+        username: user.fullName || "",
+        userId: encryptedCredentials.encryptedData.userId,
+        password: encryptedCredentials.encryptedData.password
+      };
 
-      console.log("KeyGeneration: Storing keys");
-      await StoringService.Keys.storeKeys(keys);
-      console.log("KeyGeneration: Keys stored successfully");
+      await SecureStorageService.storeKeys(keys);
 
-      // Create backup
       const backupService = BackupSecurityService.getInstance();
-      console.log("KeyGeneration: Creating secure backup");
       const backupBlob = await backupService.createSecureBackup(password);
-      console.log("KeyGeneration: Backup created successfully");
-
-      // Download backup file
-      console.log("KeyGeneration: Downloading backup file");
       const url = URL.createObjectURL(backupBlob);
       const a = document.createElement("a");
       a.href = url;
@@ -104,67 +200,124 @@ const KeyGeneration: React.FC = () => {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      console.log("KeyGeneration: Backup file downloaded successfully");
 
-      // Send public key to server and initialize session
-      try {
-        console.log("KeyGeneration: Sending public key to server");
-        await EncryptionService.API.SettingsPost(rsaKeyPair.publicKey.key);
-        console.log("KeyGeneration: Public key sent to server successfully");
-        console.log("KeyGeneration: Initializing session");
-        await SessionManagementService.initialize();
-        console.log("KeyGeneration: Session initialized successfully");
-        
-        // Navigate to vault after successful setup
-        navigate('/vault');
-      } catch (error) {
-        console.error("KeyGeneration: Error sending public key to server:", error);
-        throw new Error("Failed to send public key to server");
-      }
-
+      await EncryptionService.API.SettingsPost(rsaKeyPair.publicKey.key);
+      await SessionManagementService.initialize();
+      navigate(AppRoutes.MAIN);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate keys. Please try again.');
+      setError(err instanceof Error ? err.message : "Failed to create keys");
     } finally {
       setLoading(false);
     }
   };
 
+  if (hasExistingSettings === null) {
+    return (
+      <Card className="w-[380px] mx-auto">
+        <CardContent className="pt-6">
+          <div className="flex justify-center items-center h-32">
+            <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
-    <div className="relative flex min-w-[350px] h-[450px] items-center justify-center bg-background p-4">
-      <div className="absolute top-4 right-4">
-        <UserButton afterSignOutUrl="/" />
-      </div>
-      <Card className="w-[350px]">
-        <CardHeader className="pb-2 pt-4">
-          <CardTitle>Generate Your Keys</CardTitle>
-          <CardDescription>Create a master password to secure your vault</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+    <Card className="w-[380px] mx-auto">
+      <CardHeader>
+        <CardTitle>
+          {hasExistingSettings ? 'Restore Your Account' : 'Create New Keys'}
+        </CardTitle>
+        <CardDescription>
+          {hasExistingSettings 
+            ? 'Upload your backup file and enter your password to restore your account'
+            : 'Set up a new password to secure your account'
+          }
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={hasExistingSettings ? handleRestoreBackup : handleCreateNewKeys}>
+          <div className="space-y-4">
+            {hasExistingSettings && (
+              <div
+                className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors
+                  ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}
+                  ${backupFile ? 'bg-green-50 border-green-500' : ''}`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                <input
+                  type="file"
+                  accept=".mpb"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  id="backup-file"
+                />
+                <label htmlFor="backup-file" className="cursor-pointer">
+                  <div className="flex flex-col items-center gap-2">
+                    {backupFile ? (
+                      <>
+                        <FileKey className="w-8 h-8 text-green-500" />
+                        <span className="text-sm text-green-600">{backupFile.name}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-8 h-8 text-gray-400" />
+                        <span className="text-sm text-gray-500">
+                          Drop your backup file here or click to browse
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </label>
+              </div>
+            )}
+            
             <div className="space-y-2">
               <Input
                 type="password"
-                placeholder="Enter your master password"
+                placeholder={hasExistingSettings ? "Enter your backup password" : "Create a strong password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
                 className="w-full"
-                disabled={loading}
               />
+              {!hasExistingSettings && (
+                <p className="text-xs text-gray-500">
+                  This password will be used to encrypt your data and restore your account if needed
+                </p>
+              )}
             </div>
+
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
-              <FileKey className="mr-2 h-4 w-4" />
-              {loading ? "Generating Keys..." : "Generate Keys"}
+
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading || (hasExistingSettings && !backupFile) || !password}
+            >
+              {loading ? (
+                <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+              ) : hasExistingSettings ? (
+                <Lock className="w-4 h-4 mr-2" />
+              ) : (
+                <Key className="w-4 h-4 mr-2" />
+              )}
+              {loading
+                ? "Processing..."
+                : hasExistingSettings
+                ? "Restore Account"
+                : "Generate Keys"}
             </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

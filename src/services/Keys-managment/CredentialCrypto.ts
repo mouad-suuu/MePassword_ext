@@ -7,6 +7,7 @@ import {
   LoginFormData,
 } from "../types";
 import { CryptoUtils } from "./CryptoUtils";
+import DecryptService from "./Decrypt";
 import AdditionalMethods from "./additionals";
 import { v4 as uuidv4 } from "uuid"; // Importing UUID library
 
@@ -41,12 +42,7 @@ export class CredentialCryptoService {
     const key = await CryptoUtils.importAESKey(aesKey.key);
     const iv = CryptoUtils.base64ToBuffer(aesKey.iv);
 
-    const encryptField = async (field: string, value: string, isToken: boolean = false) => {
-      if (isToken) {
-        console.log(`[encryptCredentials] Skipping encryption for ${field} as it's a token`);
-        return value;
-      }
-
+    const encryptField = async (field: string, value: string) => {
       console.log(`[encryptCredentials] Encrypting ${field}:`, {
         inputLength: value?.length,
         inputPreview: value?.substring(0, 50)
@@ -60,11 +56,10 @@ export class CredentialCryptoService {
     };
 
     const encryptedData = {
-      // Pass true for authToken to skip encryption since it's already a JWT
-      authToken: await encryptField('authToken', credentials.authToken, true),
-      email: await encryptField('email', credentials.email),
-      username: await encryptField('username', credentials.username),
+      authToken: await encryptField('authToken', credentials.authToken),
       userId: await encryptField('userId', credentials.userId),
+      email:credentials.email,
+      username:credentials.username,
       password: await encryptField('password', credentials.password),
     };
 
@@ -88,16 +83,16 @@ export class CredentialCryptoService {
   public static async decryptCredentials(
     encryptedData: {
       authToken: string;
-      email: string;
-      username: string;
+      email?: string;
+      username?: string;
       userId: string;
       password: string;
     },
     aesKey: SymmetricKeys
   ): Promise<{
     authToken: string;
-    email: string;
-    username: string;
+    email?: string;
+    username?: string;
     userId: string;
     password: string;
   }> {
@@ -129,42 +124,29 @@ export class CredentialCryptoService {
       
       const decryptField = async (field: string, value: string) => {
         try {
-          // Check if the value needs decryption
-          const isEncrypted = CryptoUtils.isBase64Encrypted(value);
-          console.log(`[decryptCredentials] Checking ${field}:`, {
+          if (!value) return '';
+          
+          console.log(`[decryptCredentials] Decrypting ${field}:`, {
             inputLength: value?.length,
-            inputPreview: value?.substring(0, 50),
-            isEncrypted
+            inputPreview: value?.substring(0, 50)
           });
-
-          if (!isEncrypted) {
-            console.log(`[decryptCredentials] ${field} is not encrypted, using as-is`);
-            return value;
-          }
-
-          console.log(`[decryptCredentials] Decrypting ${field}`);
-          const result = await this.decryptString(value, key, iv);
+          
+          const result = await DecryptService.decryptString(value, key, iv);
           console.log(`[decryptCredentials] Successfully decrypted ${field}:`, {
             outputLength: result?.length,
             outputPreview: result?.substring(0, 50)
           });
           return result;
         } catch (error) {
-          console.error(`[decryptCredentials] Failed to process ${field}:`, {
-            error,
-            errorName: error,
-            errorMessage: error
-          });
-          // If decryption fails, return the original value
-          console.log(`[decryptCredentials] Returning original value for ${field}`);
-          return value;
+          console.error(`[decryptCredentials] Failed to decrypt ${field}:`, error);
+          throw error;
         }
       };
 
       const decryptedData = {
-        authToken: encryptedData.authToken, // Always use raw token
-        email: await decryptField('email', encryptedData.email),
-        username: await decryptField('username', encryptedData.username),
+        authToken: await decryptField('authToken', encryptedData.authToken),
+        email: encryptedData.email,
+        username: encryptedData.username,
         userId: await decryptField('userId', encryptedData.userId),
         password: await decryptField('password', encryptedData.password),
       };

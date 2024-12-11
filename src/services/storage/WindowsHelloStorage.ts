@@ -32,7 +32,10 @@ export class SecureStorageService {
       // Then store encrypted version in chrome storage
       await chrome.storage.local.set({
         [this.STORAGE_KEYS.PROTECTED_DATA]: {
-          ...Keys,
+          privateKey: Keys.privateKey,
+          AESKey: Keys.AESKey,
+          IV: Keys.IV,
+          Credentials: Keys.Credentials,
           lastUpdated: Date.now(),
         },
       });
@@ -68,28 +71,53 @@ export class SecureStorageService {
       const result = await chrome.storage.local.get([
         this.STORAGE_KEYS.PROTECTED_DATA,
       ]);
-      const Keys = result[this.STORAGE_KEYS.PROTECTED_DATA];
+      const storedKeys = result[this.STORAGE_KEYS.PROTECTED_DATA];
 
-      if (!Keys) {
+      if (!storedKeys) {
         console.log("###########################No Keys found.");
         return null;
       }
 
-      // Store in secure memory for future use
-      SecureMemory.getInstance().storeSensitiveData("current_keys", Keys);
-      console.log("###########################Keys retrieved:", Keys);
-      return Keys;
+      // Normalize key names to match KeySet interface
+      const normalizedKeys: KeySet = {
+        privateKey: storedKeys.privateKey || storedKeys.privatekey,
+        AESKey: storedKeys.AESKey || storedKeys.AESkey,
+        IV: storedKeys.IV,
+        Credentials: storedKeys.Credentials || storedKeys.credentials,
+      };
+
+      // Validate the keys
+      if (!normalizedKeys.privateKey || !normalizedKeys.AESKey || !normalizedKeys.IV || !normalizedKeys.Credentials) {
+        console.error("###########################Invalid keys format:", normalizedKeys);
+        throw new Error("Invalid keys format in storage");
+      }
+
+      // Store normalized keys in secure memory for future use
+      SecureMemory.getInstance().storeSensitiveData("current_keys", normalizedKeys);
+      console.log("###########################Keys retrieved and normalized:", normalizedKeys);
+      return normalizedKeys;
     } catch (error) {
       console.error("Error retrieving session data:", error);
       throw error;
     }
   }
+
   public static async storeSettings(settings: SessionSettings): Promise<void> {
     console.log("###########################Storing settings:", settings);
     try {
       await chrome.storage.local.set({
         [this.STORAGE_KEYS.SESSION_DATA]: {
-          ...settings,
+          pushNotifications: settings.pushNotifications,
+          autoLockTime: settings.autoLockTime,
+          autoLockStart: settings.autoLockStart,
+          sessionStart: settings.sessionStart,
+          sessionTime: settings.sessionTime,
+          sessionExpiry: settings.sessionExpiry,
+          lastAccessTime: settings.lastAccessTime,
+          biometricVerification: settings.biometricVerification,
+          biometricType: settings.biometricType,
+          biometricPassword: settings.biometricPassword,
+          lockOnLeave: settings.lockOnLeave,
           lastUpdated: Date.now(),
         },
       });
@@ -181,9 +209,16 @@ export class SecureStorageService {
     );
     try {
       const currentSettings = await this.getSettingsFromStorage();
-      const updatedSettings = {
-        ...currentSettings,
-        ...newSettings,
+      const updatedSettings: SessionSettings = {
+        autoLockTime: newSettings.autoLockTime ?? currentSettings?.autoLockTime,
+        sessionTime: newSettings.sessionTime ?? currentSettings?.sessionTime,
+        sessionStart: newSettings.sessionStart ?? currentSettings?.sessionStart,
+        pushNotifications: newSettings.pushNotifications ?? currentSettings?.pushNotifications,
+        biometricVerification: newSettings.biometricVerification ?? currentSettings?.biometricVerification,
+        biometricType: newSettings.biometricType ?? currentSettings?.biometricType,
+        autoLockStart: newSettings.autoLockStart ?? currentSettings?.autoLockStart,
+        sessionExpiry: newSettings.sessionExpiry ?? currentSettings?.sessionExpiry,
+        lastAccessTime: newSettings.lastAccessTime ?? currentSettings?.lastAccessTime,
         lastUpdated: Date.now(),
       };
       await this.storeSettings(updatedSettings);

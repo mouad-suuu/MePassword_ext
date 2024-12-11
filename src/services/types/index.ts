@@ -17,6 +17,7 @@ export interface SessionSettings {
   biometricType: "face" | "fingerprint" | "none";
   biometricPassword?: string;
   lockOnLeave?: boolean;
+  lastUpdated?: number;
 }
 // Keys to be genetated
 export interface EncryptionKeys {
@@ -78,33 +79,17 @@ export interface UserCredentials {
 }
 
 // types to be used in the future ignore them
-interface AuditLog {
+export interface Device {
   id: string;
-  timestamp: number;
-  action: "create" | "read" | "update" | "delete" | "login" | "logout";
   userId: string;
-  resourceType: "password" | "key";
-  resourceId: string;
-  metadata: {
-    ip: string;
-    userAgent: string;
-    success: boolean;
-    failureReason?: string;
-  };
+  browser: string;
+  os: string;
+  lastActive: Date;
+  sessionActive: boolean;
 }
+
 export interface LoginFormData {
   url: string;
   title: string;
   timestamp: string;
-}
-export type SetupStage =
-  | "initial"
-  | "github-setup"
-  | "app-setup"
-  | "key-generation"
-  | "complete";
-interface APICredentials {
-  website: string;
-  authToken: string;
-  password: string;
 }

@@ -214,7 +214,7 @@ export class APIService {
       }
 
       const decryptedData = await BaseEncryptionService.Utils.decryptWithRSA(
-        data.keys,
+        data.passwords,
         privateKey
       );
 
@@ -227,13 +227,13 @@ export class APIService {
       }
 
       return decryptedData.map((item, index) => ({
-        id: data.keys[index].id,
+        id: data.passwords[index].id,
         website: item.website,
         user: item.user,
         password: item.password,
       }));
     } catch (error: any) {
-      return this.handleApiError(error, "KeysGet");
+      return this.handleApiError(error, "PasswordsGet");
     }
   }
 
@@ -277,7 +277,7 @@ export class APIService {
         }),
       });
     } catch (error: any) {
-      return this.handleApiError(error, "KeysPost");
+      return this.handleApiError(error, "PasswordsPost");
     }
   }
 
@@ -330,15 +330,30 @@ export class APIService {
 
   public static async KeyDelete(id: string): Promise<Response> {
     try {
+      console.log("PasswordDelete: Starting deletion for id:", id);
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
-      return await this.networkSecurity.secureRequest(
-        `/api/keys/${id}?userId=${storedKeys.Credentials.userId}`,
+      
+      if (!storedKeys?.Credentials?.userId) {
+        throw new Error("No user credentials found");
+      }
+
+      const response = await this.networkSecurity.secureRequest(
+        `/api/keys?id=${encodeURIComponent(id)}`,
         {
           method: "DELETE",
         }
       );
-    } catch (error: any) {
-      return this.handleApiError(error, "KeyDelete");
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Delete failed: ${errorData.error || 'Unknown error'}`);
+      }
+
+      console.log("PasswordDelete: Successfully deleted password");
+      return response;
+    } catch (error) {
+      console.error("PasswordDelete: Error occurred:", error);
+      return this.handleApiError(error, "PasswordDelete");
     }
   }
 
@@ -501,15 +516,32 @@ export class APIService {
 
   public static async PasswordDelete(id: string): Promise<Response> {
     try {
+      console.log("PasswordDelete: Starting deletion for id:", id);
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
-      return await this.networkSecurity.secureRequest(
-        `/api/passwords/${id}?userId=${storedKeys.Credentials.userId}`,
+      
+      if (!storedKeys?.Credentials?.userId) {
+        throw new Error("No user credentials found");
+      }
+
+      const response = await this.networkSecurity.secureRequest(
+        `/api/passwords?id=${encodeURIComponent(id)}`,
         {
           method: "DELETE",
         }
       );
-    } catch (error: any) {
-      return this.handleApiError(error, "passwordsDelete");
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Delete failed: ${errorData.error || 'Unknown error'}`);
+      }
+
+      console.log("PasswordDelete: Successfully deleted password");
+      return response;
+    } catch (error) {
+      console.error("PasswordDelete: Error occurred:", error);
+      return this.handleApiError(error, "PasswordDelete");
     }
   }
+
+
 }
