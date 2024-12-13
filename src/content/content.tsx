@@ -52,16 +52,16 @@ const FORM_SELECTORS = {
 class CredentialDetector {
   private observedForms: Set<HTMLFormElement> = new Set();
   private mutationObserver: MutationObserver;
+  private floatingButton!: HTMLButtonElement;
   private lastDetectedCredentials: {
     website: string;
     user: string;
     password: string;
     timestamp: number;
   } | null = null;
-  private detectionTimeout: NodeJS.Timeout | null = null;
+  private typingTimer: NodeJS.Timeout | null = null;
+  private readonly TYPING_TIMEOUT = 5000; // 5 seconds
   public isAutoFilling: boolean = false;
-  private lastDetectionTime: number = 0;
-  private readonly DETECTION_COOLDOWN = 10000; // 5 seconds cooldown
 
   constructor() {
     // Initialize mutation observer to detect dynamically added forms
@@ -69,6 +69,7 @@ class CredentialDetector {
       this.handleDOMChanges.bind(this)
     );
     this.setupMutationObserver();
+    this.createFloatingButton();
   }
 
   // Sets up the mutation observer to watch for changes in the DOM
@@ -303,26 +304,52 @@ class CredentialDetector {
       console.log("CONTENT:  Form elements found:", formElements);
       this.observedForms.add(form);
 
+      // Handle input changes with timer
+      const handleInput = () => {
+        // Clear any existing timer
+        if (this.typingTimer) {
+          clearTimeout(this.typingTimer);
+        }
+
+        // Show/hide save button based on password content
+        if (formElements.passwordField.value) {
+          this.floatingButton.style.display = 'block';
+        } else {
+          this.floatingButton.style.display = 'none';
+        }
+
+        // Set new timer
+        this.typingTimer = setTimeout(() => {
+          // Only proceed if we have a password
+          if (formElements.passwordField.value) {
+            const credentials = this.extractCredentials(formElements);
+            if (credentials) {
+              console.log(
+                "User stopped typing for 5 seconds, sending credentials"
+              );
+              chrome.runtime.sendMessage({
+                type: "PASSWORD_DETECTED",
+                data: credentials,
+              });
+            }
+          }
+        }, this.TYPING_TIMEOUT);
+      };
+
+      // Add input listeners to both password and username fields
+      formElements.passwordField.addEventListener("input", handleInput);
+      if (formElements.usernameField) {
+        formElements.usernameField.addEventListener("input", handleInput);
+      }
+
+      // Keep the submit handler
       form.addEventListener("submit", (e) => {
-        console.log("CONTENT:  Form submitted:", formElements);
+        if (this.typingTimer) {
+          clearTimeout(this.typingTimer);
+        }
         this.handleFormSubmission(e, formElements);
       });
 
-      formElements.passwordField.addEventListener(
-        "input",
-        this.debounce(() => {
-          console.log(
-            "CONTENT:  Input changed in password field:",
-            formElements
-          );
-          this.handleInputChange(formElements);
-        }, 500)
-      );
-
-      formElements.passwordField.addEventListener("focus", () => {
-        console.log("CONTENT:  Password field focused:", formElements);
-        this.handlePasswordFocus(formElements);
-      });
     } catch (error) {
       console.debug("Failed to attach listeners to form:", error);
     }
@@ -343,22 +370,21 @@ class CredentialDetector {
 
   // Handles input changes in the password field and notifies credential detection
   private async handleInputChange(formElements: FormMetadata): Promise<void> {
-    if (this.isAutoFilling || !this.isDetectionAllowed()) {
+    if (this.isAutoFilling) {
       return;
     }
 
     console.log("CONTENT: Handling input change:", formElements);
     const credentials = this.extractCredentials(formElements);
     if (credentials) {
-      this.lastDetectionTime = Date.now();
       console.log(
         "CONTENT: Credentials extracted on input change:",
         credentials
       );
-      if (this.detectionTimeout) {
-        clearTimeout(this.detectionTimeout);
+      if (this.typingTimer) {
+        clearTimeout(this.typingTimer);
       }
-      this.detectionTimeout = setTimeout(async () => {
+      this.typingTimer = setTimeout(async () => {
         try {
           await this.notifyCredentialDetection(
             credentials as NewEncryptedPassword
@@ -373,32 +399,66 @@ class CredentialDetector {
     }
   }
 
-  private isDetectionAllowed(): boolean {
-    const now = Date.now();
-    return now - this.lastDetectionTime >= this.DETECTION_COOLDOWN;
-  }
-
-  // Handles focus event on the password field and notifies credential detection
-  private async handlePasswordFocus(formElements: FormMetadata): Promise<void> {
-    console.log("CONTENT:  Handling password focus:", formElements);
-    const credentials = this.extractCredentials(formElements);
-    if (credentials) {
-      console.log(
-        "Notifying credential detection on password focus:",
-        credentials
-      );
-      await this.notifyCredentialDetection(credentials as NewEncryptedPassword);
-    }
-  }
-
-  private debounce(func: Function, wait: number): (...args: any[]) => void {
-    let timeout: NodeJS.Timeout | null = null;
-    return (...args: any[]) => {
-      if (timeout) {
-        clearTimeout(timeout);
+  // Creates a floating button for manual credential detection
+  private createFloatingButton(): void {
+    this.floatingButton = document.createElement('button');
+    this.floatingButton.innerHTML = 'Save Password';
+    this.floatingButton.style.cssText = `
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 10000;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: none;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      display: none;
+    `;
+    
+    this.floatingButton.addEventListener('mouseover', () => {
+      this.floatingButton.style.transform = 'scale(1.05)';
+      this.floatingButton.style.background = '#0056b3';
+    });
+    
+    this.floatingButton.addEventListener('mouseout', () => {
+      this.floatingButton.style.transform = 'scale(1)';
+      this.floatingButton.style.background = '#007bff';
+    });
+    
+    this.floatingButton.addEventListener('click', () => {
+      if (this.typingTimer) {
+        clearTimeout(this.typingTimer);
       }
-      timeout = setTimeout(() => func.apply(this, args), wait);
-    };
+      this.detectAndSaveCredentials();
+    });
+    
+    document.body.appendChild(this.floatingButton);
+  }
+
+  // Detects and saves credentials manually
+  private detectAndSaveCredentials(): void {
+    const forms = document.querySelectorAll("form");
+    forms.forEach((form) => {
+      try {
+        const formElements = this.findFormElements(form as HTMLFormElement);
+        const credentials = this.extractCredentials(formElements);
+        if (credentials?.website && credentials?.password) {
+          chrome.runtime.sendMessage({
+            type: "PASSWORD_DETECTED",
+            data: credentials,
+          });
+          // Hide button after saving
+          this.floatingButton.style.display = 'none';
+        }
+      } catch (error) {
+        console.debug("Failed to extract credentials from form:", error);
+      }
+    });
   }
 
   public initialize(): void {
@@ -434,7 +494,7 @@ class CredentialDetector {
 
     const timeDiff = Date.now() - this.lastDetectedCredentials.timestamp;
     return (
-      timeDiff < this.DETECTION_COOLDOWN &&
+      timeDiff < this.TYPING_TIMEOUT &&
       this.lastDetectedCredentials.website === newCredentials.website &&
       this.lastDetectedCredentials.user === newCredentials.user &&
       this.lastDetectedCredentials.password === newCredentials.password
