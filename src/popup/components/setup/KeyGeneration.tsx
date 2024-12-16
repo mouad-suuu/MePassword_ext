@@ -226,6 +226,9 @@ const KeyGeneration: React.FC = () => {
   return (
     <Card className="w-[380px] mx-auto">
       <CardHeader>
+      <div className="absolute top-4 right-4">
+        <UserButton afterSignOutUrl="/" />
+      </div>
         <CardTitle>
           {hasExistingSettings ? 'Restore Your Account' : 'Create New Keys'}
         </CardTitle>

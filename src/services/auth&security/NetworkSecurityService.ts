@@ -29,7 +29,8 @@ export class NetworkSecurityService {
     const userAgent = navigator.userAgent;
     const browser = this.getBrowserInfo(userAgent);
     const os = this.getOSInfo(userAgent);
-    return { browser, os };
+    const scource = "extension";
+    return { browser, os, scource };
   }
 
   private getBrowserInfo(userAgent: string): string {
@@ -110,6 +111,7 @@ export class NetworkSecurityService {
       headers.set('Authorization', `Bearer ${decryptedCredentials.authToken}`);
       headers.set('X-Device-Browser', deviceInfo.browser);
       headers.set('X-Device-OS', deviceInfo.os);
+      headers.set('X-Request-Source', deviceInfo.scource);
       headers.set('X-User-ID', decryptedCredentials.userId);
 
       // Update options with new headers
@@ -182,6 +184,13 @@ export class NetworkSecurityService {
     headers.set('x-nonce', nonce);
     headers.set('x-signature', signature);
     headers.set('Content-Type', 'application/json');
+    headers.set('X-User-ID', userId);
+    
+    // Add device information
+    const deviceInfo = await this.getDeviceInfo();
+    headers.set('X-Device-Browser', deviceInfo.browser);
+    headers.set('X-Device-OS', deviceInfo.os);
+    headers.set('X-Request-Source', deviceInfo.scource);
     
     // Ensure Authorization header is set
     if (!headers.has('Authorization')) {

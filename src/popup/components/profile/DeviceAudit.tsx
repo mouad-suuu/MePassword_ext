@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useUser } from "@clerk/chrome-extension";
+import { useClerk, useUser } from "@clerk/chrome-extension";
 import { RefreshCw, Laptop, Smartphone, Tablet } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { NetworkSecurityService } from "../../../services/auth&security/NetworkSecurityService";
@@ -23,12 +23,23 @@ export default function DeviceAudit() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deactivating, setDeactivating] = useState(false);
   const networkSecurity = NetworkSecurityService.getInstance();
+  const [sessionIds, setSessionIds] = useState<string[]>([]);
+  const { signOut } = useClerk();
+
+  const handleSignOutAllDevices = async () => {
+    try {
+      // Sign out from all sessions using removeSessions
+      await signOut();
+    } catch (err) {
+      console.error("Error signing out from all devices:", err);
+      setError(err instanceof Error ? err.message : 'Failed to sign out from all devices');
+    }
+  };
 
   const fetchDevices = async () => {
     try {
       setLoading(true);
       setError(null);
-
       const response = await networkSecurity.secureRequest(
         `/api/devices?userId=${encodeURIComponent(user?.id || '')}`,
         {
@@ -142,16 +153,14 @@ export default function DeviceAudit() {
           </p>
         )}
       </div>
-
       <Button
         variant="destructive"
         size="sm"
-        onClick={() => setConfirmOpen(true)}
+        onClick={handleSignOutAllDevices}
         className="w-full mt-4"
       >
         Sign Out All Devices
       </Button>
-
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent>
           <DialogHeader>
