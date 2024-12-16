@@ -556,5 +556,137 @@ export class APIService {
     }
   }
 
+  public static async SearchUsers(email: string): Promise<Response> {
+    try {
+      const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      const decryptedCredentials = await CredentialCryptoService.decryptCredentials(
+        storedKeys.Credentials,
+        {
+          key: storedKeys.AESKey,
+          iv: storedKeys.IV,
+          algorithm: "AES-GCM",
+          length: 256
+        }
+      );
+      const userId = decryptedCredentials.userId;
 
+      return await this.networkSecurity.secureRequest(
+        `/api/users/search?email=${encodeURIComponent(email)}&userId=${encodeURIComponent(userId)}`,
+        {
+          method: "GET",
+        }
+      );
+    } catch (error: any) {
+      return this.handleApiError(error, "SearchUsers");
+    }
+  }
+
+  public static async ShareItems(data: {
+    recipientEmail: string;
+    items: {
+      id: string;
+      website: string;
+      user: string;
+      password: string;
+    }[];
+    type: 'passwords' | 'keys';
+  }): Promise<Response> {
+    try {
+      const storedKeys = await StoringService.Keys.getKeysFromStorage();
+      const decryptedCredentials = await CredentialCryptoService.decryptCredentials(
+        storedKeys.Credentials,
+        {
+          key: storedKeys.AESKey,
+          iv: storedKeys.IV,
+          algorithm: "AES-GCM",
+          length: 256
+        }
+      );
+      const userId = decryptedCredentials.userId;
+
+      // Get recipient's public key
+      const recipientKeyResponse = await this.networkSecurity.secureRequest(
+        `/api/users/search?email=${encodeURIComponent(data.recipientEmail)}&userId=${encodeURIComponent(userId)}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!recipientKeyResponse.ok) {
+        throw new Error('Failed to get recipient information');
+      }
+
+      const recipientData = await recipientKeyResponse.json();
+      if (!recipientData || recipientData.length === 0) {
+        throw new Error('Recipient not found');
+      }
+
+      // Get recipient's settings to get their public key
+      const recipientSettings = await this.networkSecurity.secureRequest(
+        `/api/settings?userId=${encodeURIComponent(recipientData[0].id)}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!recipientSettings.ok) {
+        throw new Error('Failed to get recipient settings');
+      }
+
+      const settings = await recipientSettings.json();
+      if (!settings?.settings?.publicKey) {
+        throw new Error('Recipient has not set up their encryption keys');
+      }
+
+      // Import recipient's public key
+      const recipientPublicKey = await BaseEncryptionService.Utils.importRSAPublicKey(
+        settings.settings.publicKey
+      );
+
+      // Encrypt items with recipient's public key
+      const encryptedItems = await Promise.all(
+        data.items.map(async (item) => {
+          // For each field, check if it's already encrypted
+          const encryptedData = await BaseEncryptionService.Utils.encryptWithRSA(
+            {
+              website: item.website,
+              user: item.user,
+              password: item.password
+            },
+            recipientPublicKey
+          );
+
+          return {
+            id: item.id,
+            website: encryptedData.website,
+            user: encryptedData.user,
+            encrypted_password: encryptedData.password,  
+            owner_email: decryptedCredentials.email
+          };
+        })
+      );
+
+      // Share the encrypted items
+      const response = await this.networkSecurity.secureRequest(
+        `/api/share?userId=${encodeURIComponent(userId)}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            recipientEmail: data.recipientEmail,
+            items: encryptedItems,
+            type: data.type
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to share items');
+      }
+
+      return response;
+    } catch (error: any) {
+      return this.handleApiError(error, "ShareItems");
+    }
+  }
 }
