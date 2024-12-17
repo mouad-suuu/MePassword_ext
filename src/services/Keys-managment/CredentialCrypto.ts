@@ -188,6 +188,9 @@ export class CredentialCryptoService {
         id: uuidv4(),
         website: await CryptoUtils.encryptString(password.website, aesKey, iv),
         user: password.user,
+        owner_email: password.owner_email,
+        owner_id: password.owner_id,
+        updated_at: password.updated_at,
         password: await CryptoUtils.encryptString(
           password.password,
           aesKey,
@@ -209,7 +212,7 @@ export class CredentialCryptoService {
 
       return {
         ...encryptedData,
-        formData: metadata,
+   
       };
     } catch (error: any) {
       AdditionalMethods.logError(method, error);

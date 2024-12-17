@@ -41,10 +41,21 @@ export interface NewEncryptedPassword {
   id: string;
   website: string;
   user: string;
+  encrypted_password?: string;
   password: string;
-  formData?: LoginFormData;
+  owner_email: string;
+  owner_id?: string;
+  updated_at?: string;
+  MetaData?: PasswordMetadata;
 }
-
+export interface PasswordMetadata {
+  id: string;
+  createdAt: number;
+  modifiedAt: number;
+  lastAccessed: number;
+  version: number;
+  strength: "weak" | "medium" | "strong";
+}
 // types used in other types needed
 
 export interface AsymmetricKeys {

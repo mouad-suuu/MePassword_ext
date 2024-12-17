@@ -5,12 +5,12 @@ import { NewEncryptedPassword } from "../../../services/types";
 import EncryptionService from "../../../services/EncryptionService";
 import AddPasswordDialog from "./AddPasswordDialog";
 import ShareDialog from "../shared/ShareDialog";
+import { Badge } from "../ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { theme } from "../../them";
 
 const Passwords: React.FC = () => {
-  const [passwords, setPasswords] = useState<
-    { id: string; website: string; password: string; user: string }[]
-  >([]);
+  const [passwords, setPasswords] = useState<NewEncryptedPassword[]>([]);
   const [settings, setSettings] = useState<NewEncryptedPassword[]>([]);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showShareDialog, setShowShareDialog] = useState(false);
@@ -79,44 +79,51 @@ const Passwords: React.FC = () => {
       
       <div className="flex justify-between items-center">
         <h2 className={theme.text.heading}>Passwords</h2>
-        <div className="flex space-x-2">
-          {selectedItems.size > 0 && (
-            <>
-              <Button
-                onClick={() => setShowShareDialog(true)}
-                className="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-              >
-                <Share2 className="w-4 h-4 mr-1" />
-                Share ({selectedItems.size})
-              </Button>
-              <Button
-                onClick={handleDeleteSelected}
-                className="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center"
-              >
-                <Trash2 className="w-4 h-4 mr-1" />
-                Delete ({selectedItems.size})
-              </Button>
-            </>
-          )}
-          <Button
-            onClick={() => setShowAddDialog(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Add New
-          </Button>
-        </div>
+        <Button
+          onClick={() => setShowAddDialog(true)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          Add New
+        </Button>
       </div>
 
-      <div className="flex items-center mb-2">
-        <label className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            checked={selectedItems.size === passwords.length && passwords.length > 0}
-            onChange={handleSelectAll}
-            className="form-checkbox h-4 w-4 text-blue-600"
-          />
-          <span className="text-sm text-gray-600">Select All</span>
-        </label>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center space-x-2">
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={selectedItems.size === passwords.length && passwords.length > 0}
+              onChange={handleSelectAll}
+              className="form-checkbox h-4 w-4 text-blue-600"
+            />
+            <span className="text-sm text-gray-600">Select All</span>
+          </label>
+          {selectedItems.size > 0 && (
+            <span className="text-sm text-gray-500">
+              ({selectedItems.size} selected)
+            </span>
+          )}
+        </div>
+        {selectedItems.size > 0 && (
+          <div className="flex items-center space-x-2">
+            <Button
+              onClick={() => setShowShareDialog(true)}
+              variant="ghost"
+              className="p-2 hover:bg-gray-100 rounded-full"
+              title={`Share ${selectedItems.size} items`}
+            >
+              <Share2 className="w-4 h-4" />
+            </Button>
+            <Button
+              onClick={handleDeleteSelected}
+              variant="ghost"
+              className="p-2 hover:bg-gray-100 rounded-full"
+              title={`Delete ${selectedItems.size} items`}
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className="mt-4">
@@ -124,7 +131,10 @@ const Passwords: React.FC = () => {
           passwords.map((item) => (
             <PasswordItem
               key={item.id}
-              {...item}
+              website={item.website}
+              username={item.user}
+              password={item.password}
+              id={item.id}
               isSelected={selectedItems.has(item.id)}
               onSelect={() => {
                 const newSelected = new Set(selectedItems);
@@ -135,6 +145,8 @@ const Passwords: React.FC = () => {
                 }
                 setSelectedItems(newSelected);
               }}
+              owner_email={item.owner_email}
+              updated_at={item.updated_at}
             />
           ))
         ) : (
@@ -165,12 +177,27 @@ const Passwords: React.FC = () => {
   );
 };
 
-const PasswordItem: React.FC<
-  NewEncryptedPassword & {
-    isSelected: boolean;
-    onSelect: () => void;
-  }
-> = ({ id, website, user, password, isSelected, onSelect }) => {
+interface PasswordItemProps {
+  website: string;
+  username: string;
+  password: string;
+  id: string;
+  isSelected: boolean;
+  onSelect: () => void;
+  owner_email?: string;
+  updated_at?: string;
+}
+
+const PasswordItem: React.FC<PasswordItemProps> = ({
+  website,
+  username,
+  password,
+  id,
+  isSelected,
+  onSelect,
+  owner_email,
+  updated_at
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const copyToClipboard = (text: string) => {
@@ -178,22 +205,21 @@ const PasswordItem: React.FC<
   };
 
   const handleAutoFill = async () => {
-    try {
-      const [tab] = await chrome.tabs.query({
-        active: true,
-        currentWindow: true,
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    const tab = tabs[0];
+    if (tab.id) {
+      await chrome.tabs.sendMessage(tab.id, {
+        type: "AUTO_FILL_CREDENTIALS",
+        data: { user: username, password },
       });
-      if (tab.id) {
-        await chrome.tabs.sendMessage(tab.id, {
-          type: "AUTO_FILL_CREDENTIALS",
-          data: { user, password },
-        });
-        window.close();
-      }
-    } catch (error) {
-      console.error("Error auto-filling credentials:", error);
+      window.close();
     }
   };
+  const trimWebsiteUrl = (url: string) => {
+    return url.replace(/^(https?:\/\/)/, '');
+  };
+  const isShared = owner_email && owner_email !== "USER";
+  console.log('Password item:', { website, owner_email, isShared }); // Debug log
 
   return (
     <div className="bg-cyber-bg rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow border border-cyber-border">
@@ -206,8 +232,30 @@ const PasswordItem: React.FC<
             className="form-checkbox h-4 w-4 text-blue-600"
           />
           <div>
-            <h3 className="font-medium text-cyber-text-primary">{website}</h3>
-            <p className="text-xs text-cyber-text-secondary">{user}</p>
+            <div className="flex items-center gap-2">
+              <h3 className="font-medium text-cyber-text-primary">{trimWebsiteUrl(website)}</h3>
+              {isShared && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Badge 
+                      variant="secondary" 
+                      className="bg-blue-100 text-blue-800 hover:bg-blue-200 cursor-help px-2 py-0.5 text-xs inline-flex items-center"
+                    >
+                      Shared
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="p-2 bg-white shadow-lg rounded-md border">
+                    <p className="text-sm font-medium">Shared by: {owner_email}</p>
+                    {updated_at && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Last updated: {new Date(updated_at).toLocaleString()}
+                      </p>
+                    )}
+                  </TooltipContent>
+                </Tooltip>
+              )}
+            </div>
+            <p className="text-xs text-cyber-text-secondary">{username}</p>
           </div>
         </div>
         <div className="flex space-x-2">

@@ -1,5 +1,6 @@
 import {
   APISettingsPayload,
+  NewEncryptedPassword,
 } from "../types";
 
 import StoringService from "../StorageService";
@@ -177,6 +178,8 @@ export class APIService {
       website: string;
       user: string;
       password: string;
+      owner_email: string;
+      updated_at?: string;
     }[]
   > {
     try {
@@ -231,6 +234,8 @@ export class APIService {
         website: item.website,
         user: item.user,
         password: item.password,
+        owner_email: data.passwords[index].owner_email,
+        updated_at: data.passwords[index].updated_at,
       }));
     } catch (error: any) {
       return this.handleApiError(error, "PasswordsGet");
@@ -363,6 +368,8 @@ export class APIService {
       website: string;
       user: string;
       password: string;
+      owner_email: string;
+      updated_at?: string;
     }[]
   > {
     try {
@@ -386,6 +393,8 @@ export class APIService {
       );
 
       const data = await response.json();
+      console.log('###############API Response data:', data); // Debug log for entire response
+      console.log('First password in response:', data.passwords[0]); // Debug log for first password
 
       if (!storedKeys?.privateKey) {
         throw new Error("No private key found in stored credentials");
@@ -412,12 +421,23 @@ export class APIService {
         throw new Error("Decrypted data is not an array");
       }
 
-      return decryptedData.map((item, index) => ({
-        id: data.passwords[index].id,
-        website: item.website,
-        user: item.user,
-        password: item.password,
-      }));
+      const mappedPasswords = data.passwords.map((item: NewEncryptedPassword, index: number) => {
+        console.log('Mapping password item:', item); // Debug log for each item during mapping
+        return {
+          id: item.id,
+          website: decryptedData[index].website,
+          user: decryptedData[index].user,
+          password: decryptedData[index].password,
+          encrypted_password: item.encrypted_password,
+          owner_email: item.owner_email,
+          owner_id: item.owner_id,
+          updated_at: item.updated_at,
+          MetaData: item.MetaData
+        };
+      });
+
+      console.log('Final mapped passwords:', mappedPasswords); // Debug log for final result
+      return mappedPasswords;
     } catch (error: any) {
       return this.handleApiError(error, "PasswordsGet");
     }
@@ -646,7 +666,6 @@ export class APIService {
       // Encrypt items with recipient's public key
       const encryptedItems = await Promise.all(
         data.items.map(async (item) => {
-          // For each field, check if it's already encrypted
           const encryptedData = await BaseEncryptionService.Utils.encryptWithRSA(
             {
               website: item.website,
