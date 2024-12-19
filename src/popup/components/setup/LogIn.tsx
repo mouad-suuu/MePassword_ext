@@ -21,31 +21,7 @@ function LogIn() {
     const { goToSetup } = useAppNavigate();
     const [view, setView] = useState<AuthView>('main');
 
-    useEffect(() => {
-        if (isLoaded && isSignedIn && user) {
-            // Store the fresh token before navigating
-            const storeToken = async () => {
-                try {
-                    const token = await getToken();
-                    if (token && user.id) {
-                        const storedKeys = await StoringService.Keys.getKeysFromStorage();
-                        await StoringService.Keys.storeKeysToStorage({
-                            ...storedKeys,
-                            Credentials: {
-                                ...storedKeys.Credentials,
-                                authToken: token
-                            }
-                        });
-                    }
-                } catch (error) {
-                    console.error('[LogIn] Error storing token:', error);
-                }
-            };
-            
-            storeToken();
-            goToSetup();
-        }
-    }, [user, isLoaded, isSignedIn, goToSetup, getToken]);
+
 
     const renderAuthContent = () => {
         switch (view) {
