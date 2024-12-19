@@ -191,7 +191,7 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
                   id="website"
                   value={website}
                   onChange={(e) => setWebsite(e.target.value)}
-                  label="Website/Where to use"
+                  label="Website/app"
                   variant="standard"
                   required
                   disabled={isUpdateMode}

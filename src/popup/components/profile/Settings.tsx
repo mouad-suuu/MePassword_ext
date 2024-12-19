@@ -159,7 +159,7 @@ export const SettingsComponent: React.FC = () => {
         <SettingItem
           icon={<Fingerprint className="w-5 h-5 text-gray-600" />}
           title="Biometric Authentication"
-          description="Use Windows Hello or Touch ID for quick access"
+          description="Use Windows Hello face ID or Fingerprint for quick access and enhanced security."
         >
           <div className="flex items-center">
             <label className="relative inline-flex items-center cursor-pointer">

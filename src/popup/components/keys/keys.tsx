@@ -155,7 +155,6 @@ const Keys: React.FC = () => {
           </div>
         )}
       </div>
-
       <AddKeysDialog
         open={showAddDialog}
         onClose={() => {
@@ -164,7 +163,6 @@ const Keys: React.FC = () => {
         }}
         existingKeys={keys}
       />
-
       <ShareDialog
         open={showShareDialog}
         onClose={() => {

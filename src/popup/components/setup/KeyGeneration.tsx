@@ -230,12 +230,12 @@ const KeyGeneration: React.FC = () => {
         <UserButton afterSignOutUrl="/" />
       </div>
         <CardTitle>
-          {hasExistingSettings ? 'Restore Your Account' : 'Create New Keys'}
+          {hasExistingSettings ? 'Restore Your Account' : 'Create Encryption Keys'}
         </CardTitle>
         <CardDescription>
           {hasExistingSettings 
             ? 'Upload your backup file and enter your password to restore your account'
-            : 'Set up a new password to secure your account'
+            : 'Set up a password to access your account and log into it securely'
           }
         </CardDescription>
       </CardHeader>

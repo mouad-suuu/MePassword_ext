@@ -11,7 +11,6 @@ interface ProfileSectionProps {
   className?: string;
 }
 
-
 const ProfileSection: React.FC<ProfileSectionProps> = ({
   icon,
   title,
@@ -21,18 +20,15 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
   <div className={`flex items-start space-x-3 p-4 bg-white rounded-lg shadow ${className}`}>
     <div className="p-2 bg-blue-50 rounded-full">{icon}</div>
     <div className="flex-1">
-      <h3 className="font-medium text-gray-800">{title}</h3>
-      <div className="text-sm text-gray-600">{content}</div>
+      <h3 className="font-medium text-lg text-gray-800">{title}</h3>
+      <div className="text-sm mt-4 text-gray-600 w-full">{content}</div>
     </div>
   </div>
 );
 
-
 const Profile = () => {
   const { user, isLoaded } = useUser();
-  const [devices, setDevices] = useState<Device[]>([
- 
-  ]);
+  const [devices, setDevices] = useState<Device[]>([]);
 
   if (!isLoaded) {
     return <div className="p-4">Loading...</div>;
@@ -68,22 +64,37 @@ const Profile = () => {
       </div>
 
       <div className="space-y-3">
-      <ProfileSection
-        icon={<Monitor className="w-5 h-5 text-blue-600" />}
-        title="Connected Devices"
-        content={<DeviceAudit />}
-        className="bg-gray-50"
-      />
+        <DeviceAudit />
         
         <ProfileSection
           icon={<AlertTriangle className="w-5 h-5 text-yellow-600" />}
           title="Security Recommendations"
           content={
-            <ul className="list-disc list-inside mt-2">
-              <li>Set up a recovery email for account security</li>
-              <li>Review connected devices regularly</li>
-              <li>Use strong, unique passwords for each site</li>
-            </ul>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-5 h-5 mt-0.5 text-blue-600">
+                  <Shield className="w-full h-full" />
+                </div>
+                <p className="text-sm text-gray-600">Review your connected devices regularly to ensure account security</p>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-5 h-5 mt-0.5 text-blue-600">
+                  <Shield className="w-full h-full" />
+                </div>
+                <p className="text-sm text-gray-600">Keep your backup file in multiple secure locations. Don't worry - it's encrypted with your password!</p>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-5 h-5 mt-0.5 text-blue-600">
+                  <Shield className="w-full h-full" />
+                </div>
+                <div className="text-sm text-gray-600">
+                  <p className="mb-1">Create strong, unique passwords for each site using a consistent pattern:</p>
+                  <p className="ml-4 text-gray-500 italic">Example: YourName + SiteName + FavoriteNumber/Color</p>
+                </div>
+              </div>
+            </div>
           }
         />
       </div>

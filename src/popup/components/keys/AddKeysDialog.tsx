@@ -127,7 +127,6 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
           item.user.toLowerCase().trim() === username.toLowerCase().trim()
       );
 
-
       if (existingKey) {
         setIsSubmitting(false);
 
@@ -213,7 +212,8 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
                   id="website"
                   value={website}
                   onChange={(e) => setWebsite(e.target.value)}
-                  label="Website/Where to use"
+                  label="Platform/Chain"
+                  placeholder="e.g., Ethereum, AWS, MongoDB"
                   variant="standard"
                   required
                 />
@@ -221,7 +221,8 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  label="Username/Email"
+                  label="Key Type/Name"
+                  placeholder="e.g., Private Key, API Key, ENV Variable"
                   variant="standard"
                   required
                 />
@@ -230,7 +231,8 @@ const AddKeysDialog: React.FC<AddKeysDialogProps> = ({
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  label="The Key"
+                  label="Secret Value"
+                  placeholder="Enter your private key, API key, or secret"
                   variant="standard"
                   required
                 />

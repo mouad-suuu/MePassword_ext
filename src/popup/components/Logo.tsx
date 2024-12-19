@@ -18,8 +18,8 @@ export const Logo: React.FC<LogoProps> = ({ size = 'medium', clickable = false }
     <img
       src={logoUrl}
       alt="MePassword Logo"
-      width={size === 'small' ? 16 : size === 'medium' ? 48 : 128}
-      height={size === 'small' ? 16 : size === 'medium' ? 48 : 128}
+      width={size === 'small' ? 30: size === 'medium' ? 48 : 128}
+      height={size === 'small' ? 30 : size === 'medium' ? 48 : 128}
       className="rounded-sm"
     />
   );

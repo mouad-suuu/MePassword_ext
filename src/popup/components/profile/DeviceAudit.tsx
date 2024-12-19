@@ -13,6 +13,7 @@ interface Device {
   deviceName?: string;
   lastActive: string;
   sessionActive: boolean;
+  source: string;
 }
 
 export default function DeviceAudit() {
@@ -120,9 +121,9 @@ export default function DeviceAudit() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="bg-white rounded-lg shadow p-4 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">Device Audit</h3>
+        <h3 className="text-lg font-semibold text-gray-800">Connected Devices</h3>
         <Button
           variant="outline"
           size="sm"
@@ -133,21 +134,35 @@ export default function DeviceAudit() {
           Refresh
         </Button>
       </div>
-
       <div className="space-y-3">
         {devices?.map((device) => (
           <div
             key={device.id}
-            className="flex items-center justify-between p-3 bg-white rounded-lg border"
+            className="flex flex-col p-3 bg-white rounded-lg border"
           >
-            <div className="flex items-center gap-3">
-              {getDeviceIcon(device)}
-              <div>
-                <p className="font-medium">{getDeviceName(device)}</p>
-                <p className="text-xs text-gray-400">
-                  Last active: {new Date(device.lastActive).toLocaleString()}
-                </p>
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-3">
+                {getDeviceIcon(device)}
+                <div>
+                  <p className="font-medium">{getDeviceName(device)}</p>
+                  <p className="text-xs text-gray-500">
+                    Last active: {new Date(device.lastActive).toLocaleString()}
+                  </p>
+                </div>
               </div>
+            </div>
+            {device.deviceName && (
+              <p className="text-sm text-gray-600 mb-2">Device name: {device.deviceName}</p>
+            )}
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-600">Source: {device.source}</p>
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                device.sessionActive
+                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                  : 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400'
+              }`}>
+                {device.sessionActive ? 'Active' : 'Inactive'}
+              </span>
             </div>
           </div>
         ))}

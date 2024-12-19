@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
-import { Lock } from "lucide-react";
+import { Lock, Fingerprint, Key, Shield } from "lucide-react";
 import { WebAuthnService } from "../../../services/auth&security/WebAuthnService";
 import { KeyStorage } from "../../../services/storage/KeyStorage";
 import { UserButton } from "@clerk/chrome-extension";
@@ -12,6 +12,7 @@ import StoringService from "../../../services/StorageService";
 import { CryptoUtils } from "../../../services/Keys-managment/CryptoUtils";
 import { useNavigate } from "react-router-dom";
 import { SessionSettings } from "../../../services/types";
+import { Logo } from "../Logo";
 
 const PasswordPromptContent: React.FC = () => {
   const navigate = useNavigate();
@@ -155,43 +156,59 @@ const PasswordPromptContent: React.FC = () => {
       </div>
       <Card className="w-[350px]">
         <CardHeader className="pb-2 pt-4">
-          <CardTitle>Enter Master Password</CardTitle>
-          <CardDescription>Unlock your password vault</CardDescription>
+          <div className="flex flex-col items-center text-center">
+            <div className="p-3 bg-blue-100 rounded-full mb-4">
+              <Logo size="medium" />
+            </div>
+            <CardTitle className="text-2xl font-bold">Welcome Back!</CardTitle>
+            <CardDescription className="text-gray-600 mt-2">
+              Securely access your vault with your master password or biometric authentication
+            </CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
+        
             <div className="space-y-2">
-              <Input
-                type="password"
-                placeholder="Enter your master password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={isLoading}
-                className="w-full"
-              />
+              <div className="relative">
+                <Input
+                  type="password"
+                  placeholder="Enter your master password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={isLoading}
+                  className="w-full pl-10 py-6"
+                />
+                <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              </div>
               {errorMessage && (
-                <p className="text-sm text-red-500">{errorMessage}</p>
+                <p className="text-sm text-red-500 flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-red-500 rounded-full"></span>
+                  {errorMessage}
+                </p>
               )}
             </div>
-            <div className="space-y-2">
+            
+            <div className="flex items-center gap-3">
               <Button 
                 type="submit" 
-                className="w-full"
+                className="flex-1 py-6 transition-all duration-200 hover:scale-[0.99] bg-blue-600 hover:bg-blue-700"
                 disabled={isLoading}
               >
-                <Lock className="mr-2 h-4 w-4" />
+                <Lock className="mr-2 h-5 w-5" />
                 {isLoading ? "Verifying..." : "Unlock"}
               </Button>
+           
               {isBiometricAvailable && (
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handleBiometricAuth}
                   disabled={isLoading}
-                  className="w-full"
+                  className="w-12 h-12 rounded-full transition-all duration-200 hover:scale-[0.99] border-blue-600 hover:bg-blue-500 hover:border-blue-500 hover:text-white flex items-center justify-center p-0"
                 >
-                  {isLoading ? "Verifying..." : "Use Biometric"}
+                  <Fingerprint className="h-5 w-5 text-cyne-600 hover:text-white" />
                 </Button>
               )}
             </div>
