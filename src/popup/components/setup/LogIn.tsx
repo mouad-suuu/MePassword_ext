@@ -8,10 +8,14 @@ import {
     SignUp as ClerkSignUp
 } from '@clerk/chrome-extension'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
-import { useEffect } from "react";
 import { useAppNavigate } from '../../routes';
 import { Button } from "../ui/button";
 import { Logo } from "../Logo";
+
+// Note: Due to Chrome Extension limitations and security considerations,
+// social provider authentication (Google, Facebook, etc.) is only available
+// in the web application version of MePassword. The extension uses email/password
+// authentication for better security and reliability.
 
 type AuthView = 'main' | 'signin' | 'signup';
 
@@ -67,7 +71,7 @@ function LogIn() {
                         <CardHeader className="text-center">
                             <div className="flex justify-center mb-4">
                                 <Logo clickable={true} />
-                            </div>
+                            </div>  
                             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-[hsl(222.2,47.4%,11.2%)] to-[hsl(217.2,32.6%,17.5%)] bg-clip-text text-transparent">
                                 MePassword
                             </CardTitle>
@@ -77,6 +81,9 @@ function LogIn() {
                                 </p>
                                 <p className="text-sm text-muted-foreground">
                                     Where security meets simplicity
+                                </p>
+                                <p className="text-xs text-muted-foreground mt-4">
+                                    Note: Social login options (Google, Facebook, etc.) are available in our web app at <a href="me-password-web.vercel.app" className="text-blue-500 hover:underline">me-password</a>, google chrom policies doesn't allow it.
                                 </p>
                             </CardDescription>
                         </CardHeader>
