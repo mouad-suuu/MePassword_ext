@@ -31,27 +31,13 @@ export class CredentialCryptoService {
     };
     formattedOutput: string;
   }> {
-    console.log("[encryptCredentials] Starting encryption:", {
-      hasAuthToken: !!credentials?.authToken,
-      hasEmail: !!credentials?.email,
-      hasUsername: !!credentials?.username,
-      hasUserId: !!credentials?.userId,
-      hasPassword: !!credentials?.password
-    });
+
 
     const key = await CryptoUtils.importAESKey(aesKey.key);
     const iv = CryptoUtils.base64ToBuffer(aesKey.iv);
 
     const encryptField = async (field: string, value: string) => {
-      console.log(`[encryptCredentials] Encrypting ${field}:`, {
-        inputLength: value?.length,
-        inputPreview: value?.substring(0, 50)
-      });
       const result = await CryptoUtils.encryptString(value, key, iv);
-      console.log(`[encryptCredentials] Successfully encrypted ${field}:`, {
-        outputLength: result?.length,
-        outputPreview: result?.substring(0, 50)
-      });
       return result;
     };
 
@@ -76,7 +62,6 @@ export class CredentialCryptoService {
       encryptedData.authToken,
     ].join("\n");
 
-    console.log("[encryptCredentials] Successfully encrypted all credentials");
     return { encryptedData, formattedOutput };
   }
 
@@ -97,45 +82,17 @@ export class CredentialCryptoService {
     password: string;
   }> {
     try {
-      console.log("[decryptCredentials] Starting credential decryption:", {
-        hasAuthToken: !!encryptedData?.authToken,
-        hasEmail: !!encryptedData?.email,
-        hasUsername: !!encryptedData?.username,
-        hasUserId: !!encryptedData?.userId,
-        hasPassword: !!encryptedData?.password,
-        hasAESKey: !!aesKey?.key,
-        hasIV: !!aesKey?.iv
-      });
 
       const key = await CryptoUtils.importAESKey(aesKey.key);
-      console.log("[decryptCredentials] AES key imported:", {
-        keyType: key?.type,
-        keyAlgorithm: key?.algorithm,
-        keyUsages: key?.usages
-      });
 
       const iv = CryptoUtils.base64ToBuffer(aesKey.iv);
-      console.log("[decryptCredentials] IV converted to buffer:", {
-        ivLength: iv?.length,
-        firstFewBytes: Array.from(iv?.slice(0, 4) || [])
-      });
 
-      console.log("[decryptCredentials] Starting individual field decryption");
       
       const decryptField = async (field: string, value: string) => {
         try {
           if (!value) return '';
           
-          console.log(`[decryptCredentials] Decrypting ${field}:`, {
-            inputLength: value?.length,
-            inputPreview: value?.substring(0, 50)
-          });
-          
           const result = await DecryptService.decryptString(value, key, iv);
-          console.log(`[decryptCredentials] Successfully decrypted ${field}:`, {
-            outputLength: result?.length,
-            outputPreview: result?.substring(0, 50)
-          });
           return result;
         } catch (error) {
           console.error(`[decryptCredentials] Failed to decrypt ${field}:`, error);
@@ -151,7 +108,6 @@ export class CredentialCryptoService {
         password: await decryptField('password', encryptedData.password),
       };
 
-      console.log("[decryptCredentials] Successfully processed all credentials");
       return decryptedData;
     } catch (error) {
       console.error("[decryptCredentials] Processing failed:", {
@@ -170,11 +126,6 @@ export class CredentialCryptoService {
   ): Promise<NewEncryptedPassword> {
     const method = "encryptPassword";
 
-    console.log("[DEBUG] Input password structure:", {
-      website: password?.website ? "[PRESENT]" : "[MISSING]",
-      user: password?.user ? "[PRESENT]" : "[MISSING]",
-      password: password?.password ? "[PRESENT]" : "[MISSING]",
-    });
 
     try {
       if (!password?.website || !password?.user || !password?.password) {
@@ -204,11 +155,6 @@ export class CredentialCryptoService {
         timestamp: "test",
       };
 
-      console.log("[DEBUG] Encrypted data structure:", {
-        metadata,
-        encryptedDataKeys: Object.keys(encryptedData),
-        ivLength: keySet.IV.length,
-      });
 
       return {
         ...encryptedData,

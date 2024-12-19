@@ -1,6 +1,4 @@
-Back: 
 chrome.action.onClicked.addListener((tab) => {
-  console.log("Extension icon clicked!");
 });
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {

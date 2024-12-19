@@ -46,7 +46,8 @@ const KeyGeneration: React.FC = () => {
         const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/settings?userId=${user.id}`, {
           method: 'HEAD',
           headers: {
-            'x-user-id': user.id
+            'x-user-id': user.id,
+            'X-Request-Source': 'extension',
           }
         });
 
@@ -102,7 +103,6 @@ const KeyGeneration: React.FC = () => {
     setError("");
 
     try {
-      console.log("Starting backup restoration process...");
       if (!backupFile || !password || !user) {
         throw new Error("Please select a backup file, enter your password, and ensure you're signed in");
       }

@@ -105,21 +105,17 @@ class CredentialDetector {
     }
     // Extracts credentials from the form elements
     extractCredentials(formElements) {
-        const { passwordField, usernameField } = formElements;
-        if (!passwordField.value) {
-            return null;
-        }
+        var _a, _b;
         const credentials = {
             website: window.location.origin,
-            user: usernameField === null || usernameField === void 0 ? void 0 : usernameField.value,
-            password: passwordField.value,
+            user: ((_a = formElements.usernameField) === null || _a === void 0 ? void 0 : _a.value) || "",
+            password: ((_b = formElements.passwordField) === null || _b === void 0 ? void 0 : _b.value) || "",
             formData: {
                 url: window.location.href,
                 title: document.title,
                 timestamp: new Date().toISOString(),
             },
         };
-        console.log("CONTENT:  Extracted credentials:", Object.assign(Object.assign({}, credentials), { password: "***" }));
         return credentials;
     }
     // Notifies about detected credentials and sends a message to the background script
@@ -129,8 +125,6 @@ class CredentialDetector {
         }
         this.lastDetectedCredentials = Object.assign(Object.assign({}, credentials), { timestamp: Date.now() });
         try {
-            console.log("CONTENT: Sending credential detection message to background");
-            // Check if chrome.runtime is defined and available
             if (chrome.runtime && chrome.runtime.id) {
                 await chrome.runtime.sendMessage({
                     type: "PASSWORD_DETECTED",
@@ -138,31 +132,25 @@ class CredentialDetector {
                 });
             }
             else {
-                console.warn("CONTENT: Chrome runtime not available, extension may need to be reloaded");
+                throw new Error("Extension needs to be reloaded to function properly");
             }
         }
         catch (error) {
-            // Handle specific error types
             if (error === "Extension context invalidated.") {
-                console.warn("CONTENT: Extension context invalidated. Please refresh the page.");
+                throw new Error("Please refresh the page to continue using MePassword");
             }
             else {
-                console.error("CONTENT: Error sending credential detection message:", error);
+                throw new Error("Unable to save credentials. Please try again later");
             }
-            // Don't throw the error - we want to fail gracefully
         }
     }
     // Handles changes in the DOM and processes new elements
     async handleDOMChanges(mutations) {
-        console.log("CONTENT:  DOM changes detected:", mutations);
         for (const mutation of mutations) {
-            console.log("CONTENT:  Processing mutation:", mutation);
-            if (mutation.type === "childList") {
+            if (mutation.addedNodes.length > 0) {
                 const addedNodes = Array.from(mutation.addedNodes);
-                console.log("CONTENT:  Added nodes:", addedNodes);
                 for (const node of addedNodes) {
                     if (node instanceof HTMLElement) {
-                        console.log("CONTENT:  Processing new element:", node);
                         await this.processNewElement(node);
                     }
                 }
@@ -171,27 +159,22 @@ class CredentialDetector {
     }
     // Processes a new element added to the DOM
     async processNewElement(element) {
-        console.log("CONTENT:  Processing new element:", element);
-        const forms = element.querySelectorAll("form");
-        console.log("CONTENT:  Found forms:", forms);
-        forms.forEach((form) => {
-            console.log("CONTENT:  Attaching listeners to form:", form);
-            this.attachFormListeners(form);
-        });
-        const passwordFields = element.querySelectorAll(FORM_SELECTORS.PASSWORD_INPUTS.join(","));
-        console.log("CONTENT:  Found password fields:", passwordFields);
-        passwordFields.forEach((field) => {
-            const parentForm = field.closest("form");
-            if (!parentForm) {
-                console.log("CONTENT:  Creating virtual form for password field:", field);
+        const forms = element.tagName === "FORM"
+            ? [element]
+            : Array.from(element.getElementsByTagName("form"));
+        for (const form of forms) {
+            await this.attachFormListeners(form);
+        }
+        const passwordFields = Array.from(element.querySelectorAll(FORM_SELECTORS.PASSWORD_INPUTS.join(",")));
+        for (const field of passwordFields) {
+            if (!field.form) {
                 this.createVirtualForm(field);
             }
-        });
+        }
     }
     // Creates a virtual form for a password field if it doesn't belong to a form
     createVirtualForm(passwordField) {
         var _a;
-        console.log("CONTENT:  Creating virtual form for password field:", passwordField);
         const virtualForm = document.createElement("form");
         virtualForm.setAttribute("data-virtual-form", "true");
         (_a = passwordField.parentElement) === null || _a === void 0 ? void 0 : _a.insertBefore(virtualForm, passwordField);
@@ -222,14 +205,11 @@ class CredentialDetector {
     }
     // Attaches event listeners to the form for submission and input changes
     attachFormListeners(form) {
-        console.log("CONTENT:  Attaching form listeners for form:", form);
         if (this.observedForms.has(form)) {
-            console.log("CONTENT:  Form already observed:", form);
             return;
         }
         try {
             const formElements = this.findFormElements(form);
-            console.log("CONTENT:  Form elements found:", formElements);
             this.observedForms.add(form);
             // Handle input changes with timer
             const handleInput = () => {
@@ -250,11 +230,7 @@ class CredentialDetector {
                     if (formElements.passwordField.value) {
                         const credentials = this.extractCredentials(formElements);
                         if (credentials) {
-                            console.log("User stopped typing for 5 seconds, sending credentials");
-                            chrome.runtime.sendMessage({
-                                type: "PASSWORD_DETECTED",
-                                data: credentials,
-                            });
+                            this.notifyCredentialDetection(credentials);
                         }
                     }
                 }, this.TYPING_TIMEOUT);
@@ -273,16 +249,19 @@ class CredentialDetector {
             });
         }
         catch (error) {
-            console.debug("Failed to attach listeners to form:", error);
+            // Handle error
         }
     }
     // Handles form submission and extracts credentials
     async handleFormSubmission(event, formElements) {
-        console.log("CONTENT:  Handling form submission:", formElements);
         const credentials = this.extractCredentials(formElements);
-        if ((credentials === null || credentials === void 0 ? void 0 : credentials.website) && (credentials === null || credentials === void 0 ? void 0 : credentials.user) && (credentials === null || credentials === void 0 ? void 0 : credentials.password)) {
-            console.log("CONTENT:  Extracted credentials:", credentials);
-            await this.notifyCredentialDetection(credentials);
+        if (credentials === null || credentials === void 0 ? void 0 : credentials.password) {
+            try {
+                await this.notifyCredentialDetection(credentials);
+            }
+            catch (error) {
+                // Error message will be handled by notifyCredentialDetection
+            }
         }
     }
     // Handles input changes in the password field and notifies credential detection
@@ -290,21 +269,14 @@ class CredentialDetector {
         if (this.isAutoFilling) {
             return;
         }
-        console.log("CONTENT: Handling input change:", formElements);
         const credentials = this.extractCredentials(formElements);
-        if (credentials) {
-            console.log("CONTENT: Credentials extracted on input change:", credentials);
-            if (this.typingTimer) {
-                clearTimeout(this.typingTimer);
+        if (credentials === null || credentials === void 0 ? void 0 : credentials.password) {
+            try {
+                await this.notifyCredentialDetection(credentials);
             }
-            this.typingTimer = setTimeout(async () => {
-                try {
-                    await this.notifyCredentialDetection(credentials);
-                }
-                catch (error) {
-                    console.warn("CONTENT: Failed to notify credential detection:", error);
-                }
-            }, 1000);
+            catch (error) {
+                // Error message will be handled by notifyCredentialDetection
+            }
         }
     }
     // Creates a floating button for manual credential detection
@@ -360,21 +332,18 @@ class CredentialDetector {
                 }
             }
             catch (error) {
-                console.debug("Failed to extract credentials from form:", error);
+                // Handle error
             }
         });
     }
     initialize() {
-        console.log("CONTENT:  Initializing CredentialDetector...");
         document.querySelectorAll("form").forEach((form) => {
-            console.log("CONTENT:  Attaching listeners to existing form:", form);
             this.attachFormListeners(form);
         });
         document
             .querySelectorAll(FORM_SELECTORS.PASSWORD_INPUTS.join(","))
             .forEach((field) => {
             if (!field.closest("form")) {
-                console.log("Creating virtual form for existing password field:", field);
                 this.createVirtualForm(field);
             }
         });
@@ -395,8 +364,6 @@ class CredentialDetector {
             this.lastDetectedCredentials.password === newCredentials.password);
     }
 }
-// Initialize the detector
-console.log("CONTENT:  Initializing CredentialDetector instance...");
 // Initialize the detector
 const detector = new CredentialDetector();
 detector.initialize();

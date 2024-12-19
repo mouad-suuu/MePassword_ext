@@ -28,6 +28,16 @@
       "128": "./assets/MePasswod.png"
     }
   },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -49,12 +59,6 @@
   },
   "host_permissions": [
     "https://*.clerk.com/*"
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": ["popup.html"],
-      "matches": ["<all_urls>"]
-    }
   ],
   "icons": {
     "16": "./assets/MePasswod.png",

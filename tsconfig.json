@@ -21,5 +21,5 @@
     "@/components/*": ["./src/popup/components/*"],
     "~features/*": ["./src/features/*"]
   },
-  "include": ["src"]
+  "include": ["src", "src/popup/components/Logo.tsx"]
 }

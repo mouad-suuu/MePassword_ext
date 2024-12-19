@@ -30,7 +30,6 @@ export class SessionManagementService {
 
   public static async initialize(): Promise<void> {
     try {
-      console.log("Static initialize called");
       const timestamp = Date.now();
       const defaultSettings: SessionSettings = {
         autoLockTime: 1000 * 60 * 5, // 5 minutes
@@ -51,7 +50,6 @@ export class SessionManagementService {
 
       while (!storedKeys && retryCount < maxRetries) {
         try {
-          console.log(`Attempt ${retryCount + 1} to get stored keys`);
           storedKeys = await StorageService.Keys.getKeysFromStorage();
           
           // Validate the required fields
@@ -78,20 +76,10 @@ export class SessionManagementService {
         throw new Error("No valid stored credentials found after retries");
       }
 
-      console.log("Successfully retrieved stored keys:", {
-        hasCredentials: !!storedKeys.Credentials,
-        hasUserId: !!storedKeys.Credentials.userId,
-        hasAESKey: !!storedKeys.AESKey,
-        hasIV: !!storedKeys.IV
-      });
 
-      // Store settings locally first
-      console.log("Storing default settings locally");
       await StorageService.SecureStorage.storeSettings(defaultSettings);
       await SessionManagementService.updateSessionSettings(defaultSettings);
 
-      // Construct and send settings to server
-      console.log("Decrypting stored credentials to get userId");
       const decryptedCredentials = await EncryptionService.CredentialCrypto.decryptCredentials(
         storedKeys.Credentials,
         {
@@ -109,13 +97,8 @@ export class SessionManagementService {
         deviceId: crypto.randomUUID(),
       };
 
-      console.log("Sending settings to the API");
       await EncryptionService.API.SettingsPut(settingsPayload as Partial<APISettingsPayload>);
       
-      // Register the device
-     
-      
-      console.log("Session initialized with default settings");
     } catch (error) {
       console.error("Failed to initialize session:", error);
       throw error;
@@ -123,17 +106,13 @@ export class SessionManagementService {
   }
 
   public static async getSessionSettings(): Promise<SessionSettings> {
-    console.log("Getting session settings");
     if (!this.sessionSettings) {
       try {
         this.sessionSettings = await KeyStorage.getSettingsFromStorage();
-        console.log("Retrieved settings from storage:", this.sessionSettings);
       } catch (error) {
         console.error("Failed to get settings:", error);
         throw error;
       }
-    } else {
-      console.log("Using cached session settings:", this.sessionSettings);
     }
     return this.sessionSettings;
   }
@@ -142,7 +121,6 @@ export class SessionManagementService {
     newSettings: Partial<SessionSettings>
   ): Promise<void> {
     try {
-      console.log("Updating session settings");
 
       // Get stored keys to access userId
       const storedKeys = await StorageService.Keys.getKeysFromStorage();
@@ -172,11 +150,9 @@ export class SessionManagementService {
       } as SessionSettings;
 
       // Store settings locally
-      console.log("Storing settings locally");
       await StorageService.SecureStorage.storeSettings(this.sessionSettings);
 
       // Get current settings from server
-      console.log("Getting current settings from server");
       const response = await SessionEncryptionService.API.SettingGet();
       const currentSettings = await response.json();
 
@@ -190,10 +166,8 @@ export class SessionManagementService {
       };
 
       // Update settings on server
-      console.log("Updating settings on server");
       await EncryptionService.API.SettingsPut(settingsPayload as Partial<APISettingsPayload>);
 
-      console.log("Session settings updated successfully");
     } catch (error) {
       console.error("Failed to update session settings:", error);
       throw error;
@@ -202,24 +176,18 @@ export class SessionManagementService {
 
   public static async getKeys(): Promise<KeySet> {
     if (!this.keys) {
-      console.log("Keys not found in memory, retrieving from storage.");
       this.keys = await KeyStorage.getKeysFromStorage();
-      console.log("Keys retrieved from storage:", this.keys);
     } else {
-      console.log("Using cached keys:", this.keys);
     }
     return this.keys;
   }
 
   public static async updateKeys(newKeys: KeySet): Promise<void> {
     this.keys = newKeys;
-    console.log("Updating keys.");
     await KeyStorage.storeKeys(newKeys);
-    console.log("Keys updated successfully.");
   }
 
   public static async clearSession(): Promise<void> {
-    console.log("Clearing session data.");
     try {
       // Clear local storage
       await StorageService.SecureStorage.storeSettings({} as SessionSettings);
@@ -236,7 +204,6 @@ export class SessionManagementService {
         console.warn("Could not clear server settings:", error);
       }
       
-      console.log("Session data cleared successfully.");
     } catch (error) {
       console.error("Error clearing session data:", error);
       throw error;
@@ -253,12 +220,10 @@ export class SessionManagementService {
 
       // If no settings exist, we consider the session expired
       if (!settings) {
-        console.log("No settings found, considering session expired");
         return true;
       }
 
       if (!settings.sessionStart || !settings.sessionTime) {
-        console.log("Invalid session settings: missing required fields");
         return true;
       }
 
@@ -266,12 +231,9 @@ export class SessionManagementService {
       const sessionExpiry = settings.sessionStart + settings.sessionTime;
       const remainingTime = sessionExpiry - currentTime;
 
-      AdditionalMethods.logTime("Time until session expiry", remainingTime);
-      AdditionalMethods.logTime("Session duration", settings.sessionTime);
 
       return currentTime >= sessionExpiry;
     } catch (error) {
-      console.log("Failed to check session expiration:", error);
       return true;
     }
   }
@@ -310,8 +272,6 @@ export class SessionManagementService {
       const shortLockExpiry = settings.autoLockStart + settings.autoLockTime;
       const remainingTime = shortLockExpiry - currentTime;
 
-      AdditionalMethods.logTime("Time until short lock expiry", remainingTime);
-      AdditionalMethods.logTime("Short lock duration", settings.autoLockTime);
 
       return currentTime <= shortLockExpiry;
     } catch (error) {
@@ -338,7 +298,6 @@ export class SessionManagementService {
    */
   async configureBiometric(enable: boolean = true) {
     try {
-      console.log("Configuring biometric:", enable);
 
       if (enable) {
         const isSupported = await WebAuthnService.isWebAuthnSupported();
@@ -372,7 +331,6 @@ export class SessionManagementService {
           };
 
           await SessionManagementService.updateSessionSettings(updatedSettings);
-          console.log("Biometric settings updated:", updatedSettings);
         } else {
           throw new Error("Failed to register biometric");
         }
@@ -394,7 +352,6 @@ export class SessionManagementService {
         };
 
         await SessionManagementService.updateSessionSettings(updatedSettings);
-        console.log("Biometric disabled:", updatedSettings);
       }
     } catch (error) {
       console.error("Error in configureBiometric:", error);

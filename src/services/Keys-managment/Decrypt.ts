@@ -8,22 +8,7 @@ class DecryptService {
     encryptedPassword: KeySet,
     keySet: KeySet
   ): Promise<UserCredentials> {
-    console.log("[DEBUG] Input encrypted password structure:", {
-      metadata: {
-        key: encryptedPassword?.AESKey,
-        algorithm: "AES-GCM",
-      },
-      encryptedDataKeys: encryptedPassword?.Credentials
-        ? Object.keys(encryptedPassword.Credentials)
-        : [],
-    });
-    console.log("[DEBUG] Input keySet structure:", {
-      dataKeyPresent: keySet?.AESKey ? true : false,
-      ivPresent: keySet?.IV ? true : false,
-    });
 
-    console.log("Starting password decryption...");
-    console.log("the data passed is:", encryptedPassword);
     try {
       if (!encryptedPassword || !keySet) {
         throw new Error("Invalid encryptedPassword or keySet provided");
@@ -68,11 +53,6 @@ class DecryptService {
       };
       
 
-      console.log("[DEBUG] Decrypted data structure:", {
-        decryptedDataKeys: Object.keys(decryptedData),
-      });
-
-      console.log("Password decrypted successfully");
       return decryptedData;
     } catch (error: any) {
       console.error("Password decryption failed:", error);

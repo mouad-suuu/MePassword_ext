@@ -26,9 +26,9 @@ export class WindowsHelloVerifier {
   // Back: This method should be restored with full security checks after development
   // Original implementation is commented out below
   public async verifyIdentity(operation: string): Promise<boolean> {
-    return true; // Temporarily disabled for development
+   
     
-    /* Original implementation:
+    // Original implementation:
     try {
       // Perform environment checks
       const environmentSafe = await this.verifyEnvironment();
@@ -44,7 +44,7 @@ export class WindowsHelloVerifier {
       this.handleSecurityViolation("Verification error occurred");
       return false;
     }
-    */
+
   }
 
   private async verifyEnvironment(): Promise<boolean> {
@@ -88,7 +88,7 @@ export class WindowsHelloVerifier {
 
   private checkDebugger(): boolean {
     const startTime = performance.now();
-    // debugger;
+   // debugger;
     return performance.now() - startTime < 100;
   }
 

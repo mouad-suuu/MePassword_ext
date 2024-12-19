@@ -11,38 +11,54 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import { useEffect } from "react";
 import { useAppNavigate } from '../../routes';
 import { Button } from "../ui/button";
-import { AppRoutes } from "../../routes";
+import { Logo } from "../Logo";
 
 type AuthView = 'main' | 'signin' | 'signup';
 
 function LogIn() {
     const { user, isLoaded } = useUser();
-    const { isSignedIn } = useAuth();
+    const { isSignedIn, getToken } = useAuth();
     const { goToSetup } = useAppNavigate();
     const [view, setView] = useState<AuthView>('main');
 
     useEffect(() => {
         if (isLoaded && isSignedIn && user) {
-            console.log("User authenticated, navigating to setup");
+            // Store the fresh token before navigating
+            const storeToken = async () => {
+                try {
+                    const token = await getToken();
+                    if (token && user.id) {
+                        const storedKeys = await StoringService.Keys.getKeysFromStorage();
+                        await StoringService.Keys.storeKeysToStorage({
+                            ...storedKeys,
+                            Credentials: {
+                                ...storedKeys.Credentials,
+                                authToken: token
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('[LogIn] Error storing token:', error);
+                }
+            };
+            
+            storeToken();
             goToSetup();
         }
-    }, [user, isLoaded, isSignedIn, goToSetup]);
+    }, [user, isLoaded, isSignedIn, goToSetup, getToken]);
 
     const renderAuthContent = () => {
         switch (view) {
             case 'signin':
                 return (
                     <Card className="w-full">
-                        <CardHeader>
-                            <CardTitle>Sign In</CardTitle>
-                            <CardDescription>Welcome back!</CardDescription>
-                        </CardHeader>
+                       
                         <CardContent>
                             <ClerkSignIn 
                                 redirectUrl={chrome.runtime.getURL('popup.html')}
                             />
                             <Button 
-                                className="mt-4 w-full" 
+                              className="mt-4 w-full border-2 border-[hsl(222.2,47.4%,11.2%)] bg-transparent hover:bg-[hsl(217.2,32.6%,17.5%)] hover:text-white transition-colors" 
                                 variant="ghost"
                                 onClick={() => setView('main')}
                             >
@@ -54,16 +70,13 @@ function LogIn() {
             case 'signup':
                 return (
                     <Card className="w-full">
-                        <CardHeader>
-                            <CardTitle>Create Account</CardTitle>
-                            <CardDescription>Join MePassword today!</CardDescription>
-                        </CardHeader>
+                       
                         <CardContent>
                             <ClerkSignUp 
                                 redirectUrl={chrome.runtime.getURL('popup.html')}
                             />
                             <Button 
-                                className="mt-4 w-full" 
+                                className="mt-4 w-full border-2 border-[hsl(222.2,47.4%,11.2%)] bg-transparent hover:bg-[hsl(217.2,32.6%,17.5%)] hover:text-white transition-colors" 
                                 variant="ghost"
                                 onClick={() => setView('main')}
                             >
@@ -75,24 +88,35 @@ function LogIn() {
             default:
                 return (
                     <Card className="w-full">
-                        <CardHeader>
-                            <CardTitle>Welcome to MePassword</CardTitle>
-                            <CardDescription>Sign in to access your passwords</CardDescription>
+                        <CardHeader className="text-center">
+                            <div className="flex justify-center mb-4">
+                                <Logo clickable={true} />
+                            </div>
+                            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-[hsl(222.2,47.4%,11.2%)] to-[hsl(217.2,32.6%,17.5%)] bg-clip-text text-transparent">
+                                MePassword
+                            </CardTitle>
+                            <CardDescription className="mt-3 space-y-2">
+                                <p className="font-medium text-base">
+                                    Your Digital Vault, Your Rules
+                                </p>
+                                <p className="text-sm text-muted-foreground">
+                                    Where security meets simplicity
+                                </p>
+                            </CardDescription>
                         </CardHeader>
-                        <CardContent className="flex justify-between gap-4">
+                        <CardContent className="space-y-4">
                             <Button 
-                                className="flex-1" 
+                                className="w-full rounded-md bg-gradient-to-r from-[hsl(222.2,47.4%,11.2%)] to-[hsl(217.2,32.6%,17.5%)] hover:opacity-90 transition-opacity text-white" 
                                 onClick={() => setView('signin')}
-                                variant="default"
                             >
                                 Sign In
                             </Button>
                             <Button 
-                                className="flex-1" 
-                                onClick={() => setView('signup')}
+                                className="w-full rounded-md border-2 border-[hsl(222.2,47.4%,11.2%)] bg-transparent hover:bg-[hsl(217.2,32.6%,17.5%)] hover:text-white transition-colors" 
                                 variant="outline"
+                                onClick={() => setView('signup')}
                             >
-                                Sign Up
+                                Create Account
                             </Button>
                         </CardContent>
                     </Card>
@@ -101,13 +125,9 @@ function LogIn() {
     };
 
     return (
-        <div className="flex min-w-[350px] h-[450px] items-center justify-center bg-background p-4">
+        <div className="flex min-h-screen items-center justify-center p-4">
             <SignedIn>
                 <Card>
-                    <CardHeader>
-                        <CardTitle>Welcome Back!</CardTitle>
-                        <CardDescription>You are already signed in.</CardDescription>
-                    </CardHeader>
                     <CardContent>
                         <Button onClick={goToSetup}>Continue to App</Button>
                     </CardContent>

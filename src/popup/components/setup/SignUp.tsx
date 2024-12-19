@@ -12,24 +12,16 @@ const SignUp = () => {
 
   useEffect(() => {
     const updateAuthToken = async () => {
-      console.log('[SignUp] Checking auth state:', { isLoaded, isSignedIn });
       
       if (isLoaded && isSignedIn) {
         try {
-          console.log('[SignUp] User is authenticated, updating token...');
           
           // Get the current stored keys
           const currentKeys = await SessionManagementService.getKeys();
-          console.log('[SignUp] Retrieved current keys:', { 
-            hasKeys: !!currentKeys,
-            hasCredentials: currentKeys ? !!currentKeys.Credentials : false 
-          });
-          
+   
           if (currentKeys) {
             // Get the new token from Clerk
-            console.log('[SignUp] Getting new token from Clerk...');
             const token = await getToken();
-            console.log('[SignUp] Got new token:', { hasToken: !!token });
             
             if (token) {
               // Update the auth token in the stored keys
@@ -41,15 +33,11 @@ const SignUp = () => {
                 }
               };
               
-              console.log('[SignUp] Updating stored keys with new token...');
               // Store the updated keys
               await SessionManagementService.updateKeys(updatedKeys);
-              console.log('[SignUp] Successfully updated auth token');
             }
           }
           
-          console.log('[SignUp] Navigating to setup page...');
-          // Navigate to setup page
           navigate(AppRoutes.SETUP);
         } catch (error) {
           console.error('[SignUp] Error updating auth token:', error);

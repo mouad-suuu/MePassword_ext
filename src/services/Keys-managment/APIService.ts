@@ -35,9 +35,7 @@ export class APIService {
 
   public static async SettingsPost(publicKey: string): Promise<Response> {
     try {
-      console.log("SettingsPost: Starting to send settings");
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
-      console.log("SettingsPost: Retrieved stored keys");
 
       if (!storedKeys || !storedKeys.Credentials) {
         throw new Error("No stored credentials found");
@@ -52,17 +50,14 @@ export class APIService {
           length: 256
         }
       );
-      console.log("SettingsPost: Credentials decrypted");
 
       if (!decryptedCredentials.userId) {
         throw new Error("User ID not found in credentials");
       }
-      console.log("Importing AES key...");
       const key = await CryptoUtils.importAESKey(storedKeys.AESKey);
       const iv = CryptoUtils.base64ToBuffer(storedKeys.IV);
 
       // Encrypt the password
-      console.log("Encrypting password...");
       const encryptedPassword = await CryptoUtils.encryptString(decryptedCredentials.password, key, iv);
 
       const settings: APISettingsPayload = {
@@ -79,14 +74,12 @@ export class APIService {
         body: JSON.stringify(settings),
       });
     } catch (error: any) {
-      console.error("SettingsPost error:", error);
       return this.handleApiError(error, "SettingsPost");
     }
   }
 
   public static async validatePassword(password: string): Promise<boolean> {
     try {
-      console.log("Validating the password:", password);
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
       const key = await CryptoUtils.importAESKey(storedKeys.AESKey);
       const iv = CryptoUtils.base64ToBuffer(storedKeys.IV);
@@ -102,7 +95,6 @@ export class APIService {
       );
 
       const jsonResponse = await response.json();
-      console.log("Password is valid:", jsonResponse.isValid);
       return jsonResponse.isValid;
     } catch (error: any) {
       return this.handleApiError(error, "SettingsPost");
@@ -111,16 +103,13 @@ export class APIService {
 
   public static async SettingGet(): Promise<Response> {
     try {
-      console.log("SettingGet: Starting to fetch settings");
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
-      console.log("SettingGet: Retrieved stored keys:", storedKeys ? "Keys found" : "No keys found");
       
       if (!storedKeys || !storedKeys.Credentials) {
         console.error("SettingGet: No stored credentials found");
         throw new Error("No stored credentials found");
       }
       
-      console.log("SettingGet: Starting credential decryption");
       const result = await CredentialCryptoService.decryptCredentials(
         storedKeys.Credentials,
         {
@@ -130,10 +119,8 @@ export class APIService {
           length: 256
         }
       );
-      console.log("SettingGet: Credentials decrypted successfully");
 
       const userId = result.userId || "";
-      console.log("SettingGet: Using userId:", userId ? "Valid ID found" : "No valid ID");
 
       return await this.networkSecurity.secureRequest(`/api/settings?userId=${encodeURIComponent(userId)}`, {
         method: "GET",
@@ -148,13 +135,6 @@ export class APIService {
     settings: Partial<APISettingsPayload>
   ): Promise<Response> {
     try {
-      console.log("SettingsPut: Starting to update settings", {
-        hasUserId: !!settings.userId,
-        userId: settings.userId,
-        hasPublicKey: !!settings.publicKey,
-        hasSessionSettings: !!settings.sessionSettings,
-        settings: JSON.stringify(settings)
-      });
 
       const response = await this.networkSecurity.secureRequest(
         "/api/settings",
@@ -164,7 +144,6 @@ export class APIService {
         }
       );
 
-      console.log("SettingsPut: Settings updated successfully");
       return response;
     } catch (error: any) {
       console.error("Error in SettingsPut:", error);
@@ -335,7 +314,6 @@ export class APIService {
 
   public static async KeyDelete(id: string): Promise<Response> {
     try {
-      console.log("PasswordDelete: Starting deletion for id:", id);
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
       
       if (!storedKeys?.Credentials?.userId) {
@@ -354,7 +332,6 @@ export class APIService {
         throw new Error(`Delete failed: ${errorData.error || 'Unknown error'}`);
       }
 
-      console.log("PasswordDelete: Successfully deleted password");
       return response;
     } catch (error) {
       console.error("PasswordDelete: Error occurred:", error);
@@ -393,8 +370,6 @@ export class APIService {
       );
 
       const data = await response.json();
-      console.log('###############API Response data:', data); // Debug log for entire response
-      console.log('First password in response:', data.passwords[0]); // Debug log for first password
 
       if (!storedKeys?.privateKey) {
         throw new Error("No private key found in stored credentials");
@@ -422,7 +397,6 @@ export class APIService {
       }
 
       const mappedPasswords = data.passwords.map((item: NewEncryptedPassword, index: number) => {
-        console.log('Mapping password item:', item); // Debug log for each item during mapping
         return {
           id: item.id,
           website: decryptedData[index].website,
@@ -436,7 +410,6 @@ export class APIService {
         };
       });
 
-      console.log('Final mapped passwords:', mappedPasswords); // Debug log for final result
       return mappedPasswords;
     } catch (error: any) {
       return this.handleApiError(error, "PasswordsGet");
@@ -549,7 +522,6 @@ export class APIService {
 
   public static async PasswordDelete(id: string): Promise<Response> {
     try {
-      console.log("PasswordDelete: Starting deletion for id:", id);
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
       
       if (!storedKeys?.Credentials?.userId) {
@@ -568,7 +540,6 @@ export class APIService {
         throw new Error(`Delete failed: ${errorData.error || 'Unknown error'}`);
       }
 
-      console.log("PasswordDelete: Successfully deleted password");
       return response;
     } catch (error) {
       console.error("PasswordDelete: Error occurred:", error);

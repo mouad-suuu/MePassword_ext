@@ -236,18 +236,5 @@ export class BackupSecurityService {
     }
   }
 
-  private async verifyKeyDerivation(key: CryptoKey): Promise<void> {
-    try {
-      const keyData = await window.crypto.subtle.exportKey("raw", key);
-      console.log("Key verification:", {
-        keyLength: keyData.byteLength * 8, // Should be 256 bits
-        algorithm: key.algorithm,
-        usages: key.usages,
-        extractable: key.extractable,
-      });
-    } catch (error) {
-      console.error("Key verification failed:", error);
-      throw error;
-    }
-  }
+ 
 }

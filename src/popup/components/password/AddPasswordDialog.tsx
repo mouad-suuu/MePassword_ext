@@ -34,7 +34,6 @@ const AddPasswordDialog: React.FC<AddPasswordDialogProps> = ({
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
   const handleClose = () => {
-    console.log("Closing dialog and resetting state");
     setWebsite("");
     setUsername("");
     setPassword("");

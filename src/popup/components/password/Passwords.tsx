@@ -22,7 +22,6 @@ const Passwords: React.FC = () => {
     const fetchPasswords = async () => {
       try {
         const passwords = await EncryptionService.API.PasswordsGet();
-        console.log("the passwords component: fetched passwords:", passwords);
         setPasswords(passwords);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -219,7 +218,6 @@ const PasswordItem: React.FC<PasswordItemProps> = ({
     return url.replace(/^(https?:\/\/)/, '');
   };
   const isShared = owner_email && owner_email !== "USER";
-  console.log('Password item:', { website, owner_email, isShared }); // Debug log
 
   return (
     <div className="bg-cyber-bg rounded-lg p-4 shadow mb-3 hover:shadow-md transition-shadow border border-cyber-border">
@@ -234,25 +232,15 @@ const PasswordItem: React.FC<PasswordItemProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-medium text-cyber-text-primary">{trimWebsiteUrl(website)}</h3>
-              {isShared && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Badge 
-                      variant="secondary" 
-                      className="bg-blue-100 text-blue-800 hover:bg-blue-200 cursor-help px-2 py-0.5 text-xs inline-flex items-center"
-                    >
-                      Shared
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="p-2 bg-white shadow-lg rounded-md border">
-                    <p className="text-sm font-medium">Shared by: {owner_email}</p>
-                    {updated_at && (
-                      <p className="text-xs text-gray-500 mt-1">
-                        Last updated: {new Date(updated_at).toLocaleString()}
-                      </p>
-                    )}
-                  </TooltipContent>
-                </Tooltip>
+              {owner_email && (
+                <Badge 
+                  variant="secondary" 
+                  className="bg-blue-100 text-blue-800 hover:bg-blue-200 cursor-help px-2 py-0.5 text-xs inline-flex items-center"
+                  title={`Shared by: ${owner_email}${updated_at ? `\nLast updated: ${new Date(updated_at).toLocaleString()}` : ''}`}
+                >
+                  <Share2 className="w-3 h-3 mr-1" />
+                  Shared
+                </Badge>
               )}
             </div>
             <p className="text-xs text-cyber-text-secondary">{username}</p>

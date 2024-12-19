@@ -123,29 +123,21 @@ const PasswordPromptContent: React.FC = () => {
     setErrorMessage("");
 
     try {
-      console.log("Getting stored keys...");
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
       if (!storedKeys) {
         throw new Error("No stored keys found");
       }
 
-      // Import the AES key and get IV
-      console.log("Importing AES key...");
       const key = await CryptoUtils.importAESKey(storedKeys.AESKey);
       const iv = CryptoUtils.base64ToBuffer(storedKeys.IV);
 
-      // Encrypt the password
-      console.log("Encrypting password...");
       const encryptedPassword = await CryptoUtils.encryptString(password, key, iv);
 
-      console.log("Validating password...");
       const isValid = await EncryptionService.API.validatePassword(password);
 
       if (isValid) {
-        console.log("Password validated successfully");
         await onPasswordVerified();
       } else {
-        console.log("Invalid password");
         setErrorMessage("Invalid password");
       }
     } catch (error) {

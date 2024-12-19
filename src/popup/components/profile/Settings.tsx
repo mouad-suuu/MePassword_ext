@@ -46,8 +46,6 @@ export const SettingsComponent: React.FC = () => {
       const respose = await EncryptionService.API.SettingGet();
       const settings = await respose.json();
       const sessionSettings = settings.settings.sessionSettings;
-      console.log("Parsed settings:", settings);
-      console.log("Session settings:", sessionSettings);
       setSettings({
         pushNotifications: sessionSettings.pushNotifications,
         autoLockTime: sessionSettings.autoLockTime,
@@ -71,7 +69,6 @@ export const SettingsComponent: React.FC = () => {
 
   const handleBiometricToggle = async (checked: boolean) => {
     try {
-      console.log("Toggling biometric:", checked);
       const sessionManager = new SessionManagementService();
       await sessionManager.configureBiometric(checked);
 
@@ -83,7 +80,6 @@ export const SettingsComponent: React.FC = () => {
 
       // Refresh settings from storage
       const updatedSettings = await KeyStorage.getSettingsFromStorage();
-      console.log("Updated settings after toggle:", updatedSettings);
     } catch (error) {
       console.error("Failed to configure biometric:", error);
       // Revert the checkbox if there's an error

@@ -48,7 +48,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.REACT_APP_SERVER_URL': JSON.stringify('http://localhost:3000'),
+      'process.env.REACT_APP_SERVER_URL': JSON.stringify('https://me-password-web.vercel.app'),
       'process.env.REACT_APP_AUTH_TOKEN': JSON.stringify('mouaadtester'),
       'process.env.REACT_APP_WEBHOOK_SECRET': JSON.stringify('whsec_7+5jw5tofgW2wYlWDTjFHrhaLcZVWzoU'),
       'process.env.CLERK_PUBLISHABLE_KEY': JSON.stringify('pk_test_bWVycnktZHJhZ29uLTk0LmNsZXJrLmFjY291bnRzLmRldiQ'),

@@ -43,7 +43,10 @@ export default function DeviceAudit() {
       const response = await networkSecurity.secureRequest(
         `/api/devices?userId=${encodeURIComponent(user?.id || '')}`,
         {
-          method: 'GET'
+          method: 'GET',
+          headers: {
+            'X-Request-Source': 'extension'
+          }
         }
       );
 
@@ -52,7 +55,6 @@ export default function DeviceAudit() {
       }
 
       const data = await response.json();
-      console.log("[DeviceAudit] Fetched devices:", data);
       setDevices(data.devices || []);
     } catch (err) {
       console.error("[DeviceAudit] Error fetching devices:", err);
@@ -70,6 +72,9 @@ export default function DeviceAudit() {
         '/api/devices',
         {
           method: 'POST',
+          headers: {
+            'X-Request-Source': 'extension'
+          },
           body: JSON.stringify({ action: 'deactivateAll' })
         }
       );

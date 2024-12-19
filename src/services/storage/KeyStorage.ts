@@ -18,7 +18,6 @@ export class KeyStorage {
    */
   public static async getKeysFromStorage(): Promise<KeySet> {
     try {
-      console.log("===========getting keys from windows storage=================");
       const keysJSON = await SecureStorageService.getKeysFromStorage();
       
       if (!keysJSON) {
@@ -37,17 +36,12 @@ export class KeyStorage {
   public static async storeKeys(keys: KeySet): Promise<void> {
     try {
       try {
-        console.log(
-          "===========Storing keysin windows storage================="
-        );
         await SecureStorageService.storeKeys(keys);
       } catch (error) {
         console.error("===============Error storing keys=====================");
       }
 
-      console.log("Storing keys in storage.");
       await SecureStorageService.storeKeys(keys);
-      console.log("Keys stored successfully.");
     } catch (error) {
       console.error("Error storing keys:", error);
     }
@@ -69,9 +63,7 @@ export class KeyStorage {
    */
   public static async storeSettings(settings: SessionSettings): Promise<void> {
     try {
-      console.log("Storing settings in storage.");
       await SecureStorageService.storeSettings(settings);
-      console.log("Settings stored successfully.");
     } catch (error) {
       console.error("Error storing settings:", error);
     }
