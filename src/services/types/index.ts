@@ -1,10 +1,14 @@
 // Types to be saved localy and by the user
+
+// in windows hello
 export interface KeySet {
   privateKey: string;
   AESKey: string;
   IV: string;
   Credentials: UserCredentials;
 }
+
+// in browser storage
 export interface SessionSettings {
   pushNotifications: boolean;
   autoLockTime: number;
@@ -19,7 +23,8 @@ export interface SessionSettings {
   lockOnLeave?: boolean;
   lastUpdated?: number;
 }
-// Keys to be genetated
+
+// encryption Keys to be genetated
 export interface EncryptionKeys {
   RSAkeys: AsymmetricKeys;
   AESKey: SymmetricKeys;
@@ -35,7 +40,8 @@ export interface APISettingsPayload {
   sessionSettings?: SessionSettings;
 }
 export type BiometricType = "face" | "fingerprint" | "none";
-// types to be sent to the server as passwords and keys
+// types to be sent to the server as passwords and keys, and the encrypted once are : websirte, user, password
+// and the rest is saved as it is
 
 export interface NewEncryptedPassword {
   id: string;
@@ -48,13 +54,13 @@ export interface NewEncryptedPassword {
   updated_at?: string;
   MetaData?: PasswordMetadata;
 }
-export interface PasswordMetadata {
+export interface Device {
   id: string;
-  createdAt: number;
-  modifiedAt: number;
-  lastAccessed: number;
-  version: number;
-  strength: "weak" | "medium" | "strong";
+  userId: string;
+  browser: string;
+  os: string;
+  lastActive: Date;
+  sessionActive: boolean;
 }
 // types used in other types needed
 
@@ -73,7 +79,14 @@ export interface AsymmetricKeys {
     protected: boolean;
   };
 }
-
+export interface PasswordMetadata {
+  id: string;
+  createdAt: number;
+  modifiedAt: number;
+  lastAccessed: number;
+  version: number;
+  strength: "weak" | "medium" | "strong";
+}
 export interface SymmetricKeys {
   key: string;
   algorithm: "AES-GCM";
@@ -89,15 +102,7 @@ export interface UserCredentials {
   userId:string;
 }
 
-// types to be used in the future ignore them
-export interface Device {
-  id: string;
-  userId: string;
-  browser: string;
-  os: string;
-  lastActive: Date;
-  sessionActive: boolean;
-}
+
 
 export interface LoginFormData {
   url: string;

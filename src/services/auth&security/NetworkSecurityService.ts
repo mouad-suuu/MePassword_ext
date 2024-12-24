@@ -12,9 +12,7 @@ export class NetworkSecurityService {
   private readonly SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:3000';
 
   private constructor() {
-    console.log('Environment Variables:', {
-      SERVER_URL: process.env.REACT_APP_SERVER_URL, 
-    });
+
    
   }
 
@@ -70,14 +68,7 @@ export class NetworkSecurityService {
       
       // Get stored credentials
       const storedKeys = await StoringService.Keys.getKeysFromStorage();
-      console.log("[secureRequest] Retrieved stored keys:", {
-        hasCredentials: !!storedKeys?.Credentials,
-        hasAESKey: !!storedKeys?.AESKey,
-        hasIV: !!storedKeys?.IV
-      });
-      console.log(
-        "#################### Start Decrypting credentials:", storedKeys.Credentials.authToken,storedKeys.Credentials.userId,storedKeys.Credentials.password
-      )
+   
       const decryptedCredentials = await CredentialCryptoService.decryptCredentials(
           {authToken: storedKeys.Credentials.authToken, userId: storedKeys.Credentials.userId, password: storedKeys.Credentials.password, email: storedKeys.Credentials.email},
           {
@@ -87,9 +78,7 @@ export class NetworkSecurityService {
               length: 256
           }
       );
-      console.log(
-        "#################### Decrypted credentials:", decryptedCredentials
-      )
+   
  
 
       // Store the auth token in the database if this is not the token storage endpoint
@@ -244,11 +233,7 @@ export class NetworkSecurityService {
 
   private async storeAuthToken(userId: string, token: string, email: string): Promise<void> {
     try {
-      console.log("[storeAuthToken] Starting token storage:", {
-        userId,
-        token: token,
-        email
-      });
+    
 
       const timestamp = new Date().toISOString();
       const nonce = crypto.randomUUID();
@@ -278,10 +263,7 @@ export class NetworkSecurityService {
         })
       });
 
-      console.log("[storeAuthToken] Token storage response:", {
-        status: response.status,
-        ok: response.ok
-      });
+  
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -289,7 +271,6 @@ export class NetworkSecurityService {
         throw new Error(`Failed to store token: ${response.status} - ${errorData.error || 'Unknown error'}`);
       }
 
-      console.log("[storeAuthToken] Token stored successfully");
     } catch (error) {
       console.error("[storeAuthToken] Error storing token:", error);
       throw error;

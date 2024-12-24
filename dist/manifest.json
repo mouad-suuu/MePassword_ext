@@ -5,44 +5,50 @@
   "description": "Password Management Extension",
   "permissions": [
     "storage",
-    "clipboardWrite",
-    "webAuthn",
-    "activeTab",
-    "scripting",
-    "notifications",
-    "windows",
-    "tabs",
-    "identity"
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*.clerk.com/*", 
+    "https://me-password-web.vercel.app/*"
   ],
   "content_scripts": [
     {
-      "matches": ["https://*/*", "http://*/*"],
+      "matches": [
+        "https://*.clerk.com/*",
+        "https://me-password-web.vercel.app/*"
+      ],
       "js": ["content.js"]
     }
   ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "./assets/MePasswod.png",
-      "48": "./assets/MePasswod.png",
-      "128": "./assets/MePasswod.png"
+      "16": "./assets/MePassword.png",
+      "48": "./assets/MePassword.png",
+      "128": "./assets/MePassword.png"
     }
   },
   "web_accessible_resources": [
     {
       "resources": ["popup.html"],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "https://*.clerk.com/*",
+        "https://me-password-web.vercel.app/*"
+      ]
     },
     {
       "resources": ["assets/*"],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "https://*.clerk.com/*",
+        "https://me-password-web.vercel.app/*"
+      ]
     }
   ],
   "background": {
     "service_worker": "background.js"
   },
   "oauth2": {
-    "client_id": "${CLERK_PUBLISHABLE_KEY}",
+    "client_id": "pk_test_bWVycnktZHJhZ29uLTk0LmNsZXJrLmFjY291bnRzLmRldiQ",
     "scopes": [
       "openid",
       "profile",
@@ -54,15 +60,13 @@
   },
   "externally_connectable": {
     "matches": [
-      "https://*.clerk.com/*"
+      "https://*.clerk.com/*",
+      "https://me-password-web.vercel.app/*"
     ]
   },
-  "host_permissions": [
-    "https://*.clerk.com/*"
-  ],
   "icons": {
-    "16": "./assets/MePasswod.png",
-    "48": "./assets/MePasswod.png",
-    "128": "./assets/MePasswod.png"
+    "16": "./assets/MePassword.png",
+    "48": "./assets/MePassword.png",
+    "128": "./assets/MePassword.png"
   }
 }
