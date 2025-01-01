@@ -201,7 +201,7 @@ export class SecureMemory {
     // Disable debugger
     setInterval(() => {
       const startTime = performance.now();
-      // debugger;
+    debugger;
       const endTime = performance.now();
 
       if (endTime - startTime > 100) {
